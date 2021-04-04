@@ -1,0 +1,58 @@
+{
+  "name": "demo-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "db:dropcreatedb": "dropdb <%= title %> --if-exists && createdb <%= title %>",
+    "db:migrate": "ts-node ../../node_modules/typeorm/cli.js migration:run",
+    "db:migrate:generate": "npm run build:core && ts-node ../../node_modules/typeorm/cli.js migration:generate -n $name",
+    "db:dropcreatedb:test": "dropdb <%= title %>_test --if-exists && createdb <%= title %>_test",
+    "db:seed": "ts-node ./src/db/runSeed.ts",
+    "db:init:local": "npm run build:core && npm run db:dropcreatedb && npm run db:migrate && npm run db:seed",
+    "test": "export NODE_ENV=test && npm run db:dropcreatedb:test && jest -i",
+    "build": "tsc",
+    "build:core": "cd ../core && npm run build && cd ../backend",
+    "build:all": "npm run build:core && npm run build",
+    "lint": "eslint src/**/*.ts",
+    "start": "tsc -w",
+    "sls:deploy:dev": "export NODE_ENV=development && npm run build:all && sls deploy",
+    "sls:remove:dev": "NODE_ENV=development sls remove",
+    "sls:migrate:dev": "NODE_ENV=development sls invoke -f migrate",
+    "sls:seed:dev": "NODE_ENV=development sls invoke -f seed"
+  },
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "@lambda-middleware/class-validator": "^1.0.1",
+    "@lambda-middleware/compose": "^1.2.0",
+    "@lambda-middleware/http-error-handler": "^1.0.1",
+    "aws-lambda": "^1.0.6",
+    "aws-sdk": "^2.747.0",
+    "aws-xray-sdk": "^3.2.0",
+    "aws-xray-sdk-postgres": "^3.2.0",
+    "class-validator": "^0.12.2",
+    "convict": "^6.0.0",
+    "dotenv": "^8.2.0",
+    "dotenv-flow": "^3.2.0",
+    "http-errors": "^1.8.0",
+    "reflect-metadata": "^0.1.13",
+    "tslib": "^1.11.2"
+  },
+  "devDependencies": {
+    "@babel/helper-validator-option": "^7.12.0",
+    "@types/aws-lambda": "^8.10.62",
+    "@types/convict": "^5.2.2",
+    "@types/dotenv-flow": "^3.1.0",
+    "@types/http-errors": "^1.8.0",
+    "@types/jest": "^26.0.18",
+    "@types/node": "^8.0.29",
+    "jest": "^26.6.0",
+    "ts-jest": "^26.5.4",
+    "ts-node": "3.3.0",
+    "typescript": "4.0.2"
+  },
+  "resolutions": {
+    "tslib": "1.11.2"
+  }
+}

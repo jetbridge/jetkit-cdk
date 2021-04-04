@@ -1,0 +1,20 @@
+{
+  // https://www.npmjs.com/package/@tsconfig/node12
+  "extends": "@tsconfig/node12/tsconfig.json",
+
+  "compilerOptions": {
+    "moduleResolution": "node", // modern
+    "resolveJsonModule": true, // allow importing JSON filees
+    "jsx": "preserve", // don't mangle JSX in intermediate phase
+    "experimentalDecorators": true, // enable decorators
+    "emitDecoratorMetadata": true, // for runtime use of decorators (typeORM)
+    // "baseUrl": "packages", // allow absolute path imports for all project packages
+
+    "noImplicitAny": true, // strictness
+    "noImplicitThis": true, // strictness
+    // "noUnusedLocals": true /* Report errors on unused locals. */,
+    // "noUnusedParameters": true /* Report errors on unused parameters. */,
+    "noImplicitReturns": true /* Report error when not all code paths in function return a value. */,
+    "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */
+  }
+}

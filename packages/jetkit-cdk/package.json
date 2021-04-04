@@ -1,0 +1,32 @@
+{
+  "name": "@jetkit/cdk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc -w"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@aws-cdk/assert": "1.96.0",
+    "@types/jest": "^26.0.10",
+    "@types/node": "10.17.27",
+    "aws-cdk": "1.96.0",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.2.0",
+    "ts-node": "^9.0.0"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-apigatewayv2": "^1.96.0",
+    "@aws-cdk/aws-apigatewayv2-integrations": "^1.96.0",
+    "@aws-cdk/aws-lambda": "^1.96.0",
+    "@aws-cdk/aws-lambda-nodejs": "^1.96.0",
+    "@aws-cdk/core": "1.96.0",
+    "@jdpnielsen/http-error": "^1.2.0",
+    "source-map-support": "^0.5.16",
+    "typeorm": "^0.2.32"
+  }
+}
