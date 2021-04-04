@@ -1,4 +1,4 @@
-import HttpError, { notFound, notImplemented } from "@jdpnielsen/http-error";
+import HttpError, { methodNotAllowed, notFound } from "@jdpnielsen/http-error";
 import {
   APIGatewayProxyHandlerV2,
   APIGatewayProxyEventV2,
@@ -18,10 +18,19 @@ const has = <K extends string>(
   x: object
 ): x is { [key in K]: RequestHandler } => key in x;
 
+async function raiseNotAllowed(event: APIGatewayProxyEventV2) {
+  throw methodNotAllowed(
+    `${event.requestContext.http.method.toUpperCase()} not allowed`
+  );
+  return "error";
+}
+
 export class CrudApiBase {
-  get: APIGatewayProxyHandlerV2 = async (event) => {
-    throw notImplemented("Get not implemented");
-  };
+  get: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
+  post: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
+  put: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
+  patch: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
+  delete: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
 
   /**
    * Handle a request by dispatching to appropriate handler.
@@ -33,15 +42,20 @@ export class CrudApiBase {
     context: Context
   ): Promise<APIGatewayProxyResultV2> => {
     const { http } = event.requestContext;
-    const { method, path, sourceIp } = http;
+    let { method, path, sourceIp } = http;
     const route = event.requestContext.routeKey;
 
-    debug("Route key:", route, "path:", path);
+    method = method.toLowerCase();
+    debug("Route key:", route, "path:", path, "method: ", method);
 
     try {
+      // look up handler based on method
       if (has(method, this)) {
         return this[method](event, context);
       }
+
+      // do fancier dispatching...
+      // either via route decorator or function name
 
       return notFound(`The path ${path} was not found`);
     } catch (ex) {
