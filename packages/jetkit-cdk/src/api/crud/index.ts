@@ -1,1 +1,1 @@
-export { CrudApiBase, RequestHandler } from "./base";
+export { CrudApiBase } from "./base";

@@ -1,4 +1,4 @@
-import { RequestHandler } from "../api/crud";
+import { RequestHandler } from "../api/base";
 
 export const safeHas = <K extends string>(
   key: K,

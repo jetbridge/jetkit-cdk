@@ -34,7 +34,7 @@ export class JetKitCdkApp extends CdkApp {
 
     // initialize app
     if (config) this.config = config;
-    this.resourceRegistry = { crudApis: [] };
+    this.resourceRegistry = { crudApis: [], apis: [] };
   }
 }
 

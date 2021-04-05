@@ -1,5 +1,4 @@
-import { CrudApiBase, RegisterCrudApi } from "@jetkit/cdk";
-
+import { CrudApiBase, RegisterCrudApi, Route } from "@jetkit/cdk";
 import { Column, Entity } from "typeorm";
 import { BaseModel } from "demo-repo";
 import { APIGatewayProxyHandlerV2 } from "aws-lambda";
@@ -16,6 +15,11 @@ export class Topic extends BaseModel {
 
 @RegisterCrudApi(app, { model: Topic, route: "/topic", memorySize: 512 })
 export class TopicCrudApi extends CrudApiBase {
+  @Route("/test")
+  async test() {
+    return "Testerino";
+  }
+
   post: APIGatewayProxyHandlerV2 = async () => "Posterino";
 }
 

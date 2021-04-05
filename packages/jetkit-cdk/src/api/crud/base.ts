@@ -1,54 +1,13 @@
-import HttpError, { methodNotAllowed, notFound } from "@jdpnielsen/http-error";
+import HttpError, { notFound } from "@jdpnielsen/http-error";
 import {
-  APIGatewayProxyHandlerV2,
   APIGatewayProxyEventV2,
   APIGatewayProxyResultV2,
   Context,
 } from "aws-lambda";
 import { debug } from "console";
-import { safeHas } from "../../util/type";
+import { ApiBase } from "../base";
 
-export type RequestHandler = (
-  event: APIGatewayProxyEventV2,
-  context?: Context
-) => Promise<APIGatewayProxyResultV2>;
-
-async function raiseNotAllowed(event: APIGatewayProxyEventV2) {
-  throw methodNotAllowed(
-    `${event.requestContext.http.method.toUpperCase()} not allowed`
-  );
-  return "error";
-}
-
-export class CrudApiBase {
-  get: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
-  post: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
-  put: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
-  patch: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
-  delete: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
-
-  routeMethodMap: Map<string, RequestHandler>;
-
-  constructor() {
-    this.routeMethodMap = new Map();
-  }
-
-  protected findHandler(
-    event: APIGatewayProxyEventV2
-  ): RequestHandler | undefined {
-    const httpMethod = event.requestContext.http.method.toLowerCase();
-
-    // do fancy dispatching...
-    // either via route decorator or function name
-
-    // look up handler based on method
-    if (safeHas(httpMethod, this)) {
-      return this[httpMethod];
-    }
-
-    return undefined;
-  }
-
+export class CrudApiBase extends ApiBase {
   /**
    * Handle a request by dispatching to appropriate handler.
    *
