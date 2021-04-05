@@ -1,3 +1,13 @@
-import { JetKitCdkApp } from "@jetkit/cdk";
+import { CorsHttpMethod, Duration, JetKitCdkApp } from "@jetkit/cdk";
 
-export const App = new JetKitCdkApp();
+export const App = new JetKitCdkApp({
+  config: {
+    api: {
+      corsPreflight: {
+        allowMethods: [CorsHttpMethod.ANY],
+        allowCredentials: true,
+        maxAge: Duration.days(10),
+      },
+    },
+  },
+});

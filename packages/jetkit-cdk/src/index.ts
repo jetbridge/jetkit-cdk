@@ -1,4 +1,4 @@
-export { IApp, JetKitCdkApp } from "./app";
+export { JetKitCdkApp } from "./app";
 export { CrudApi } from "./cdk/crud-api";
 export { CrudApiBase } from "./api/crud";
 
@@ -7,3 +7,7 @@ export {
   resourceRegistry,
   findCrudApiInRegistry,
 } from "./registry";
+
+// convient CDK utilities to have
+export { CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2";
+export { Duration } from "@aws-cdk/core";

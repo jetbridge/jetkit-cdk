@@ -26,6 +26,7 @@
     "@aws-cdk/aws-lambda-nodejs": "^1.96.0",
     "@aws-cdk/core": "1.96.0",
     "@jdpnielsen/http-error": "^1.2.0",
+    "callsites": "^3.1.0",
     "source-map-support": "^0.5.16",
     "typeorm": "^0.2.32"
   }

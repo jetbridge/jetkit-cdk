@@ -13,9 +13,9 @@ export class Topic extends BaseModel {
   name: string;
 }
 
-@RegisterCrudApi({ entry: __filename, model: Topic, route: "/topic" })
+@RegisterCrudApi({ model: Topic, route: "/topic", memorySize: 512 })
 export class TopicCrudApi extends CrudApiBase {
-  post: APIGatewayProxyHandlerV2 = async (event) => "Posterino";
+  post: APIGatewayProxyHandlerV2 = async () => "Posterino";
 }
 
 export const handler: APIGatewayProxyHandlerV2 = async (event, context) =>
