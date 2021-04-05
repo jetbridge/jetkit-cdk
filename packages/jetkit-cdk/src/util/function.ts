@@ -8,10 +8,8 @@ export function findDefiningFile(fnName: string): string | null {
   let definingIndex;
   const sites = callsites();
   for (const [index, site] of sites.entries()) {
-    console.log("site name", site.getFunctionName());
-
     if (site.getFunctionName() === fnName) {
-      // The next site is the site where the NodejsFunction was created
+      // The next site is the site where the function was called
       definingIndex = index + 1;
       break;
     }

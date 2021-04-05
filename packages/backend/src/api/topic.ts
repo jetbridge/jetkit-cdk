@@ -3,6 +3,7 @@ import { CrudApiBase, RegisterCrudApi } from "@jetkit/cdk";
 import { Column, Entity } from "typeorm";
 import { BaseModel } from "demo-repo";
 import { APIGatewayProxyHandlerV2 } from "aws-lambda";
+import { app } from "../app";
 
 /**
  * Forum topic
@@ -13,7 +14,7 @@ export class Topic extends BaseModel {
   name: string;
 }
 
-@RegisterCrudApi({ model: Topic, route: "/topic", memorySize: 512 })
+@RegisterCrudApi(app, { model: Topic, route: "/topic", memorySize: 512 })
 export class TopicCrudApi extends CrudApiBase {
   post: APIGatewayProxyHandlerV2 = async () => "Posterino";
 }

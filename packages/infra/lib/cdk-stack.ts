@@ -1,40 +1,31 @@
 import { CorsHttpMethod, HttpApi } from "@aws-cdk/aws-apigatewayv2";
 import * as cdk from "@aws-cdk/core";
 import { CfnOutput, Construct, Duration } from "@aws-cdk/core";
-import {
-  CrudApi,
-  CrudApiBase,
-  findCrudApiInRegistry,
-  resourceRegistry,
-} from "@jetkit/cdk";
+import { CrudApi, findCrudApiInRegistry, JetKitCdkApp } from "@jetkit/cdk";
 import { stackResources } from "demo-backend";
 
 export interface ICrudApisProps {
   httpApi: HttpApi;
+  app: JetKitCdkApp;
 }
 
 export class CrudApis extends Construct {
   constructor(scope: cdk.Construct, id: string, props: ICrudApisProps) {
     super(scope, id);
 
-    const { httpApi } = props;
-
-    console.log("resource registrry", resourceRegistry);
-    console.log("stack reseources", stackResources);
+    const { httpApi, app } = props;
 
     stackResources.forEach((crudApi) => {
-      const registryEntry = findCrudApiInRegistry(crudApi);
+      const registryEntry = findCrudApiInRegistry(app, crudApi);
       if (!registryEntry) {
         throw new Error(
           `Did not find ${crudApi} in route registry, did you define it with @RegisterCrudApi?`
         );
       }
 
-      console.log("reg entry", registryEntry);
       const name = registryEntry.apiClass.name;
-      console.log("name", name);
 
-      const api = new CrudApi(this, name, {
+      new CrudApi(this, name, {
         httpApi,
         path: registryEntry.route,
         ...registryEntry,
@@ -48,7 +39,7 @@ export class CrudApis extends Construct {
 }
 
 export class InfraStack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: JetKitCdkApp, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     const httpApi = new HttpApi(this, "Api", {
@@ -65,6 +56,6 @@ export class InfraStack extends cdk.Stack {
       },
     });
 
-    new CrudApis(this, "CrudApis", { httpApi });
+    new CrudApis(this, "CrudApis", { app: scope, httpApi });
   }
 }

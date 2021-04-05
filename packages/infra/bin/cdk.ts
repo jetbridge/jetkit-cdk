@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 import "source-map-support/register";
 import { InfraStack } from "../lib/cdk-stack";
-import * as cdk from "@aws-cdk/core";
+import { app } from "demo-backend";
 
-const app = new cdk.App();
 new InfraStack(app, "JKv2Demo", {
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,

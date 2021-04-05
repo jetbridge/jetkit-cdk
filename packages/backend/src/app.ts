@@ -1,6 +1,6 @@
 import { CorsHttpMethod, Duration, JetKitCdkApp } from "@jetkit/cdk";
 
-export const App = new JetKitCdkApp({
+export const app = new JetKitCdkApp({
   config: {
     api: {
       corsPreflight: {
