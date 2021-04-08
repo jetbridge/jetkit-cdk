@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CrudApiBase } from "./api/crud/base";
 import { BaseModel } from "demo-repo";
 import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs";
 import { findDefiningFile } from "./util/function";
 import { JetKitCdkApp } from "./app";
 import { ApiBase } from "./api/base";
+
+// export function getMeta()
 
 export function findApiInRegistry(
   app: JetKitCdkApp,
@@ -36,22 +39,27 @@ export interface IResourceRegistry {
 }
 
 export interface ApiConstructor {
-  new (...args: unknown[]): ApiBase;
+  new (...args: any[]): ApiBase;
 }
 export interface CrudApiConstructor {
-  new (...args: unknown[]): CrudApiBase;
+  new (...args: any[]): CrudApiBase;
+}
+export interface CrudApiMetaConstructor {
+  new (...args: any[]): CrudApiBase;
+  meta: ICrudApiRegistry;
+}
+
+interface ICrudApiWithMeta {
+  meta: ICrudApiRegistry;
 }
 
 /**
- * Decorator factory to register CRUD API view classes.
+ * Define CRUD API view class.
  */
-export function RegisterCrudApi(
-  app: JetKitCdkApp,
-  opts: Omit<ICrudApiRegistry, "apiClass">
-) {
+export function CrudApi(opts: Omit<ICrudApiRegistry, "apiClass">) {
   if (!opts.entry) {
     // guess entrypoint file from caller
-    const guessedEntry = findDefiningFile("RegisterCrudApi");
+    const guessedEntry = findDefiningFile("CrudApi");
     if (!guessedEntry)
       throw new Error(
         `Could not determine entry point, please define it in "entry"`
@@ -62,12 +70,17 @@ export function RegisterCrudApi(
   // return decorator
   return function <T extends CrudApiConstructor>(constructor: T) {
     // save the api config in registry
-    app.resourceRegistry.crudApis.push({
-      ...opts,
-      apiClass: constructor,
-      // routeMap: new Map(),
-    });
-    return constructor;
+    // app.resourceRegistry.crudApis.push({
+    //   ...opts,
+    //   apiClass: constructor,
+    //   // routeMap: new Map(),
+    // });
+    return class extends constructor {
+      static meta: ICrudApiRegistry = {
+        ...opts,
+        apiClass: constructor,
+      };
+    };
   };
 }
 

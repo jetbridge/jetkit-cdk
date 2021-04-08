@@ -28,9 +28,7 @@ export class ApiBase {
   patch: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
   delete: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
 
-  protected findHandler(
-    event: APIGatewayProxyEventV2
-  ): RequestHandler | undefined {
+  findHandler(event: APIGatewayProxyEventV2): RequestHandler | undefined {
     const httpContext = event.requestContext.http;
     const httpMethod = httpContext.method.toLowerCase();
     const route = event.requestContext.routeKey;

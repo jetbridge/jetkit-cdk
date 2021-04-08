@@ -38,7 +38,7 @@ export class CrudApiBase extends ApiBase {
   /**
    * Transform error caught during dispatch to an HTTP response.
    */
-  protected handleDispatchError(ex: Error): APIGatewayProxyResultV2 {
+  handleDispatchError(ex: Error): APIGatewayProxyResultV2 {
     if (ex instanceof HttpError) {
       // HTTP error handler
       console.warn(ex);

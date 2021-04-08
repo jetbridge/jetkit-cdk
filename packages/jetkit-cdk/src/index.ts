@@ -1,9 +1,9 @@
 export { JetKitCdkApp } from "./app";
-export { CrudApi } from "./cdk/api/crud";
+// export { CrudApi } from "./cdk/api/crud";
 export { CrudApiBase } from "./api/crud";
 
 export {
-  RegisterCrudApi,
+  CrudApi,
   findCrudApiInRegistry,
   Route,
   findApiInRegistry,
