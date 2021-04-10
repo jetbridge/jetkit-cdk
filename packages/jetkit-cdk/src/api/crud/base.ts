@@ -18,17 +18,18 @@ export class CrudApiBase extends ApiBase {
     context: Context
   ): Promise<APIGatewayProxyResultV2> => {
     const { http } = event.requestContext;
-    const { path } = http;
-    const route = event.requestContext.routeKey;
+    const { path, method } = http;
 
-    debug("Route key:", route, "path:", path);
+    debug(`➠ ${method} ${path}`);
 
     try {
       const handlerMethod = this.findHandler(event);
+      console.log("handlermethod", handlerMethod);
+
       if (handlerMethod) {
-        return handlerMethod(event, context);
+        return await handlerMethod(event, context);
       } else {
-        return notFound(`The path ${path} was not found`);
+        throw notFound(`The path ${path} was not found`);
       }
     } catch (ex) {
       return this.handleDispatchError(ex);

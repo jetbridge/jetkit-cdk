@@ -31,14 +31,14 @@ export class ApiBase {
   findHandler(event: APIGatewayProxyEventV2): RequestHandler | undefined {
     const httpContext = event.requestContext.http;
     const httpMethod = httpContext.method.toLowerCase();
-    const route = event.requestContext.routeKey;
-    console.log("ROUTE KEY", route);
+    const { path } = httpContext;
+    console.log("ROUTE KEY", path);
 
     // do fancy dispatching...
     // either via route decorator or function name
     console.log(`route method map on ${this}:`, this.routeMethodMap);
     if (this.routeMethodMap) {
-      const routeHandlerMethod = this.routeMethodMap.get(route);
+      const routeHandlerMethod = this.routeMethodMap.get(path);
       console.log("found routeHandlerMethod", routeHandlerMethod);
 
       if (routeHandlerMethod) return routeHandlerMethod;
