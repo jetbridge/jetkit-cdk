@@ -10,7 +10,7 @@ import {
   NodejsFunctionProps,
 } from "@aws-cdk/aws-lambda-nodejs";
 import { Construct } from "@aws-cdk/core";
-import { CrudApiConstructor } from "../../registry";
+import { WrappableConstructor } from "../../registry";
 
 export interface CrudApiProps extends NodejsFunctionProps {
   // top-level API
@@ -19,7 +19,7 @@ export interface CrudApiProps extends NodejsFunctionProps {
   // route
   path?: string;
 
-  apiClass: CrudApiConstructor;
+  apiClass: WrappableConstructor;
 }
 
 export class CrudApi extends Construct {

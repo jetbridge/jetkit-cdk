@@ -1,12 +1,13 @@
 export { JetKitCdkApp } from "./app";
-// export { CrudApi } from "./cdk/api/crud";
+export { CrudApi as CrudApiConstruct } from "./cdk/api/crud";
 export { CrudApiBase } from "./api/crud";
 
 export {
   CrudApi,
-  findCrudApiInRegistry,
   Route,
-  findApiInRegistry,
+  getJKMetadata,
+  hasJKMetadata,
+  WrappableConstructor,
 } from "./registry";
 
 // convient CDK utilities to have

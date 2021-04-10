@@ -24,6 +24,7 @@
   ],
   "dependencies": {
     "concurrently": "^5.3.0",
+    "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.25",
     "typescript": "^3.9.7"
   },

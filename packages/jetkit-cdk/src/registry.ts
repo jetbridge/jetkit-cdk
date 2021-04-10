@@ -5,32 +5,25 @@ import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs";
 import { findDefiningFile } from "./util/function";
 import { JetKitCdkApp } from "./app";
 import { ApiBase } from "./api/base";
+import "reflect-metadata";
 
-// export function getMeta()
+/**
+ * This module is responsible for attaching metadata to classes, methods, and properties to
+ * assist in the automated generation of cloud resources from application code.
+ */
 
-export function findApiInRegistry(
-  app: JetKitCdkApp,
-  api: ApiConstructor
-): IApiRegistry | undefined {
-  return app.resourceRegistry.apis.find((reg) => api == reg.apiClass);
-}
-export function findCrudApiInRegistry(
-  app: JetKitCdkApp,
-  api: CrudApiConstructor
-): ICrudApiRegistry | undefined {
-  return app.resourceRegistry.crudApis.find((reg) => api == reg.apiClass);
-}
+export const JK_V2_METADATA_KEY = "jk:v2:metadata";
 
 export interface IApiRegistry extends NodejsFunctionProps {
   route: string;
   entry?: string;
-  apiClass: ApiConstructor;
+  apiClass: WrappableConstructor;
   // routeMap?: Map<string, PropertyDescriptor>;
 }
 
 export interface ICrudApiRegistry extends IApiRegistry {
   model: typeof BaseModel;
-  apiClass: CrudApiConstructor;
+  apiClass: WrappableConstructor;
 }
 
 export interface IResourceRegistry {
@@ -38,19 +31,14 @@ export interface IResourceRegistry {
   apis: IApiRegistry[];
 }
 
-export interface ApiConstructor {
+/**
+ * A class that can be annotated with metadata.
+ */
+export interface WrappableConstructor {
   new (...args: any[]): ApiBase;
 }
-export interface CrudApiConstructor {
-  new (...args: any[]): CrudApiBase;
-}
-export interface CrudApiMetaConstructor {
-  new (...args: any[]): CrudApiBase;
-  meta: ICrudApiRegistry;
-}
-
-interface ICrudApiWithMeta {
-  meta: ICrudApiRegistry;
+export interface WrappedConstructor {
+  new (...args: any[]): ApiBase;
 }
 
 /**
@@ -68,41 +56,65 @@ export function CrudApi(opts: Omit<ICrudApiRegistry, "apiClass">) {
   }
 
   // return decorator
-  return function <T extends CrudApiConstructor>(constructor: T) {
-    // save the api config in registry
-    // app.resourceRegistry.crudApis.push({
-    //   ...opts,
-    //   apiClass: constructor,
-    //   // routeMap: new Map(),
-    // });
-    return class extends constructor {
-      static meta: ICrudApiRegistry = {
-        ...opts,
-        apiClass: constructor,
-      };
+  return function <T extends WrappableConstructor>(constructor: T) {
+    const meta: ICrudApiRegistry = {
+      ...opts,
+      apiClass: constructor,
     };
+    const AnnotatedClass = class extends constructor {};
+    Reflect.defineMetadata(JK_V2_METADATA_KEY, meta, AnnotatedClass);
+    return AnnotatedClass;
   };
 }
 
+export const getJKMetadata = <T extends WrappedConstructor>(
+  cls: T
+): ICrudApiRegistry => Reflect.getMetadata(JK_V2_METADATA_KEY, cls);
+
+export const getJKMemberMetadata = <T extends WrappedConstructor>(
+  cls: T,
+  propertyKey: string | symbol
+): ICrudApiRegistry | undefined =>
+  Reflect.getMetadata(JK_V2_METADATA_KEY, cls, propertyKey);
+
+export const hasJKMetadata = (
+  cls: WrappableConstructor
+): cls is WrappedConstructor => {
+  console.log(cls);
+
+  return Reflect.hasMetadata(JK_V2_METADATA_KEY, cls);
+};
 /**
  * Add a route to an Api view.
  */
-export function Route(path: string) {
+export function Route(route: string) {
   return function (
-    target: ApiBase,
+    target: WrappableConstructor, // class?
     propertyKey: string,
     descriptor: PropertyDescriptor
   ) {
-    console.log("map", target.routeMethodMap);
+    // console.log("map", target.routeMethodMap);
     console.log("target", target);
     console.log("propertyKey", propertyKey);
     console.log("descriptor", descriptor);
 
-    target.routeMethodMap = target.routeMethodMap || new Map();
+    const meta: IApiRegistry = {
+      route,
+      apiClass: target,
+    };
+
+    // associate property in the target class metadata with our metadata
+    Reflect.defineMetadata(
+      JK_V2_METADATA_KEY,
+      meta,
+      target.prototype,
+      propertyKey
+    );
+    // target.routeMethodMap = target.routeMethodMap || new Map();
 
     // XXX: we could save propertyKey (property name) or descriptor.value (func)
     // not sure which is better
-    target.routeMethodMap.set(path, descriptor.value);
+    // target.routeMethodMap.set(path, descriptor.value);
     // target.routeMethodMap.set(path, propertyKey);
   };
 }

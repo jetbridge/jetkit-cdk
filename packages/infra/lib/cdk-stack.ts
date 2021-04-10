@@ -1,18 +1,24 @@
 import { CorsHttpMethod, HttpApi } from "@aws-cdk/aws-apigatewayv2";
 import * as cdk from "@aws-cdk/core";
 import { CfnOutput, Construct, Duration } from "@aws-cdk/core";
-import { CrudApi, findCrudApiInRegistry, JetKitCdkApp } from "@jetkit/cdk";
+import {
+  // CrudApi,
+  // findCrudApiInRegistry,
+  JetKitCdkApp,
+  // WrappableConstructor,
+  getJKMetadata,
+  CrudApiConstruct,
+  hasJKMetadata,
+} from "@jetkit/cdk";
 import { stackResources } from "demo-backend";
-import { TopicCrudApi } from "../../backend/build/api/topic";
-import { CrudApiMetaConstructor } from "../../jetkit-cdk/build/registry";
+// import { TopicCrudApi } from "../../backend/build/api/topic";
 
 export interface ICrudApisProps {
   httpApi: HttpApi;
   app: JetKitCdkApp;
 }
 
-// function hasMeta(obj: any) is
-const apis = [TopicCrudApi as CrudApiMetaConstructor];
+// const apis = [TopicCrudApi as WrappableConstructor];
 
 export class CrudApis extends Construct {
   constructor(scope: cdk.Construct, id: string, props: ICrudApisProps) {
@@ -20,28 +26,26 @@ export class CrudApis extends Construct {
 
     const { httpApi, app } = props;
 
-    apis.forEach((crudApi) => {
-      // if ("meta" in crudApi) return;
+    stackResources.forEach((crudApi) => {
+      if (!hasJKMetadata(crudApi)) {
+        throw new Error(
+          `Did not find metadata on ${crudApi}, did you decorate it with @CrudApi?`
+        );
+      }
 
-      // const api = new crudApi();
-      const meta = crudApi.meta;
+      const meta = getJKMetadata(crudApi);
       console.log(meta);
 
-      // const meta = crudApi.meta;
-      // const registryEntry = findCrudApiInRegistry(app, crudApi);
-      // if (!registryEntry) {
-      //   throw new Error(
-      //     `Did not find ${crudApi} in route registry, did you define it with @RegisterCrudApi?`
-      //   );
-      // }
+      const name = meta.apiClass.name;
 
-      // const name = meta.apiClass.name;
+      new CrudApiConstruct(this, name, {
+        httpApi,
+        path: meta.route,
+        ...meta,
+      });
 
-      // new CrudApi(this, name, {
-      //   httpApi,
-      //   path: meta.route,
-      //   ...meta,
-      // });
+      // iterate over properties and see if any have metadata
+      // ...
     });
 
     new CfnOutput(this, `BaseUrl`, {
