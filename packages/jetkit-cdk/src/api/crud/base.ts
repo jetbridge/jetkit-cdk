@@ -5,6 +5,7 @@ import {
   Context,
 } from "aws-lambda";
 import { debug } from "console";
+import { WrappableConstructor } from "../../registry";
 import { ApiBase } from "../base";
 
 export class CrudApiBase extends ApiBase {
