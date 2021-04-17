@@ -18,6 +18,7 @@ plugins:
 ignorePatterns:
   - node_modules
   - build
+  - jest.config.js
 
 rules:
   "@typescript-eslint/explicit-module-boundary-types": off

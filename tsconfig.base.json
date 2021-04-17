@@ -9,6 +9,7 @@
     "experimentalDecorators": true, // enable decorators
     "emitDecoratorMetadata": true, // for runtime use of decorators (typeORM)
     // "baseUrl": "packages", // allow absolute path imports for all project packages
+    "strictPropertyInitialization": false, // for TypeORM
 
     "noImplicitAny": true, // strictness
     "noImplicitThis": true, // strictness

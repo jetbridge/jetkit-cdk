@@ -12,7 +12,6 @@
     "deploy:backend": "npm run build:core && cd packages/backend && npm run deploy:dev",
     "deploy:backend:prod": "npm run build:core && cd packages/backend && npm run deploy:prod",
     "deploy:infra": "cd packages/infra && cdk deploy",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "prettier:base": "./node_modules/.bin/prettier --config .prettierrc --write",
     "prettier": "npm run prettier:base -- '**/*.{js,ts,tsx,css,json,yaml,yml,md}'",
     "template:init": "script/initializeProject.sh"

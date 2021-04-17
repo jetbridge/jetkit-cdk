@@ -27,6 +27,10 @@ export interface ICrudApiMetadata extends IApiMetadata {
   apiClass: WrappableConstructor; // | ApiBase;
 }
 
+export interface ISubRouteApiMetadata extends IApiMetadata {
+  propertyKey: string;
+}
+
 /// getters/setters
 
 export const hasJKMetadata = (cls: MetadataTarget): cls is MetadataTarget =>
@@ -36,7 +40,7 @@ export const hasJKMemberMetadata = (
   cls: MetadataTarget,
   propertyKey: string | symbol
 ): cls is MetadataTarget =>
-  Reflect.hasMetadata(JK_V2_METADATA_KEY, cls, propertyKey);
+  Reflect.hasMetadata(propertyKey, cls, JK_V2_METADATA_KEY);
 
 export const getJKMetadata = <T extends MetadataTarget>(
   cls: T
@@ -45,8 +49,9 @@ export const getJKMetadata = <T extends MetadataTarget>(
 export const getJKMemberMetadata = <T extends MetadataTarget>(
   cls: T,
   propertyKey: string | symbol
-): ICrudApiMetadata | undefined =>
-  Reflect.getMetadata(JK_V2_METADATA_KEY, cls, propertyKey);
+): ISubRouteApiMetadata | undefined =>
+  // Reflect.getMetadata(JK_V2_METADATA_KEY, cls, propertyKey);
+  Reflect.getMetadata(propertyKey, cls, JK_V2_METADATA_KEY);
 
 export const setJKMetadata = <T extends MetadataTarget>(cls: T, value: any) =>
   Reflect.defineMetadata(JK_V2_METADATA_KEY, value, cls);
@@ -55,25 +60,11 @@ export const setJKMemberMetadata = <T extends MetadataTarget>(
   cls: T,
   propertyKey: string | symbol,
   value: any
-) => Reflect.defineMetadata(JK_V2_METADATA_KEY, value, cls, propertyKey);
+  // ) => Reflect.defineMetadata(JK_V2_METADATA_KEY, value, cls, propertyKey);
+) => Reflect.defineMetadata(propertyKey, value, cls, JK_V2_METADATA_KEY);
 
-export const getJKMetadataKeys = (cls: any) => {
-  console.log(
-    "KEYS ON",
-    cls,
-    typeof cls,
-    "=",
-    Reflect.getMetadataKeys(cls, JK_V2_METADATA_KEY)
-  );
-  console.log(
-    "KEYS ON",
-    cls,
-    typeof cls,
-    "==",
-    Reflect.getOwnMetadataKeys(cls, JK_V2_METADATA_KEY)
-  );
-  return Reflect.getOwnMetadataKeys(cls, JK_V2_METADATA_KEY);
-};
+export const getJKMetadataKeys = (cls: any) =>
+  Reflect.getOwnMetadataKeys(cls, JK_V2_METADATA_KEY);
 
 export const enumerateMetadata = (resources: MetadataTarget[]) =>
   resources.map((resource) => {
@@ -87,12 +78,10 @@ export const enumerateMetadata = (resources: MetadataTarget[]) =>
     return { meta, resource };
   });
 
-export const enumerateMethodMetadata = (target: MetadataTarget) => {
-  getJKMetadataKeys(target).forEach((k) => {
-    console.log(`checking for ${k} in ${target}`);
+export const enumerateMethodMetadata = (target: MetadataTarget) =>
+  getJKMetadataKeys(target).map((k) => {
+    if (!hasJKMemberMetadata(target, k))
+      throw new Error(`Failed to find ${k} in metadata for ${target}`);
 
-    if (!hasJKMemberMetadata(target, k)) return;
-
-    console.log("FOUND SOME");
+    return getJKMemberMetadata(target, k);
   });
-};

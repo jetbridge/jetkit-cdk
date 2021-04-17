@@ -4,6 +4,8 @@ import "reflect-metadata";
 import {
   IApiMetadata,
   ICrudApiMetadata,
+  ISubRouteApiMetadata,
+  MetadataTarget,
   setJKMemberMetadata,
   setJKMetadata,
 } from "./metadata";
@@ -40,9 +42,14 @@ export function CrudApi(opts: Omit<ICrudApiMetadata, "apiClass">) {
       ...opts,
       apiClass: constructor,
     };
+
     setJKMetadata(constructor, meta);
     return constructor;
   };
+}
+
+interface RoutePropertyDescriptor extends PropertyDescriptor {
+  value?: RequestHandler;
 }
 
 /**
@@ -54,22 +61,25 @@ export function SubRoute(route: string) {
   return function (
     target: ApiBase, // parent class
     propertyKey: string,
-    descriptor: PropertyDescriptor
+    descriptor: RoutePropertyDescriptor
   ) {
+    // get method
     const method = descriptor.value;
-    console.log("target", target);
-    console.log("propertyKey", propertyKey);
-    console.log("descriptor", descriptor);
+    if (!method)
+      throw new Error(
+        `Empty handler found on ${propertyKey} of ${target} using @SubRoute`
+      );
 
-    const meta: ICrudApiMetadata = {
+    // method handler metadata
+    const meta: ISubRouteApiMetadata = {
       route,
-      apiClass: target.constructor.prototype,
+      requestHandlerFunc: method,
+      propertyKey,
     };
 
-    console.log("Proto set", target.constructor);
-
     // associate property in the target class metadata with our metadata
-    setJKMemberMetadata(target.constructor, propertyKey, meta);
+    const metadataTarget: MetadataTarget = target.constructor;
+    setJKMemberMetadata(metadataTarget, propertyKey, meta);
   };
 }
 

@@ -39,11 +39,14 @@ export class ResourceGenerator extends Construct {
         ...meta,
       });
 
-      console.log("keys", getJKMetadataKeys(resource));
+      const metadataTarget: MetadataTarget = resource.constructor;
+      console.log("keys", getJKMetadataKeys(resource.constructor));
       console.log("ApiClass", apiClass);
       console.log("Ctor", apiClass.constructor);
+      console.log("Target=====", metadataTarget);
+
       // iterate over properties and see if any have metadata
-      enumerateMethodMetadata(meta.apiClass);
+      enumerateMethodMetadata(metadataTarget);
     });
   }
 }
