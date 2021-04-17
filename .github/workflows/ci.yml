@@ -20,5 +20,4 @@ jobs:
       - name: Unit Tests
         run: |
           cd packages/jetkit-cdk
-          npm ci
           npm test
