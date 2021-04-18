@@ -94,5 +94,6 @@ export function Route({ route }: IRouteProps) {
     };
 
     setJKMetadata(wrapped, meta);
+    return wrapped;
   };
 }

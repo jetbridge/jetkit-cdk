@@ -11,7 +11,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@aws-cdk/assert": "1.96.0",
+    "@aws-cdk/assert": "^1.96.0",
     "@babel/plugin-proposal-decorators": "^7.13.15",
     "@types/jest": "^26.0.10",
     "@types/node": "10.17.27",

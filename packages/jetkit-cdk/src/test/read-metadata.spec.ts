@@ -1,6 +1,3 @@
-import { Column, Entity } from "typeorm";
-import { BaseModel } from "demo-repo";
-import { APIGatewayProxyHandlerV2 } from "aws-lambda";
 import {
   enumerateMetadata,
   enumerateMethodMetadata,
@@ -9,31 +6,12 @@ import {
   getJKMetadataKeys,
   hasJKMetadata,
 } from "../metadata";
-import { CrudApi, Route, SubRoute } from "../registry";
-import { CrudApiBase } from "../api/crud/base";
-
-@Entity()
-export class Album extends BaseModel {
-  @Column({ nullable: true })
-  title: string;
-}
-
-@CrudApi({ model: Album, route: "/album", memorySize: 512 })
-export class AlbumCrudApi extends CrudApiBase {
-  @SubRoute("/test")
-  async test() {
-    return "Testerino";
-  }
-
-  post: APIGatewayProxyHandlerV2 = async () => "Posterino";
-}
-
-Route({ route: "/blargle" })(async function (event) {
-  return JSON.stringify({
-    message: "function route",
-    rawQueryString: event.rawQueryString,
-  });
-});
+import {
+  Album,
+  AlbumCrudApi,
+  blargleFunc,
+  wrappedBlargleFunc,
+} from "./sample-app";
 
 describe("Metadata decorators", () => {
   describe("@CrudApi decorator", () => {
@@ -68,13 +46,12 @@ describe("Metadata decorators", () => {
       const [{ meta, resource }] = enumerateMetadata([AlbumCrudApi]);
       expect(meta).toMatchObject({
         apiClass: AlbumCrudApi,
-        entry: __filename,
+        entry: /sample-app.ts$/,
         memorySize: 512,
         model: Album,
         route: "/album",
       });
       expect(resource).toBe(AlbumCrudApi);
-      expect(meta.entry).toMatch(/read-metadata.spec.ts/);
     });
 
     it("enumerates method metadata", () => {
@@ -86,6 +63,16 @@ describe("Metadata decorators", () => {
           route: "/test",
         },
       ]);
+    });
+  });
+
+  describe("Route()", () => {
+    it("stores metadata on functions", () => {
+      const funcMeta = getJKMetadata(wrappedBlargleFunc);
+      expect(funcMeta).toStrictEqual({
+        requestHandlerFunc: blargleFunc,
+        route: "/blargle",
+      });
     });
   });
 });
