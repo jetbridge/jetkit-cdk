@@ -7,26 +7,27 @@ import { AlbumCrudApi } from "./sample-app";
 import "@aws-cdk/assert/jest";
 import { SynthUtils } from "@aws-cdk/assert";
 
-describe("CRUD API construct generation", () => {
+describe("@CrudApi construct generation", () => {
+  const stack = new Stack();
+  const httpApi = new HttpApi(stack, "API");
+
+  // should create routes on httpApi
+  // and lambda handler function
+  new ResourceGeneratorConstruct(stack, "Gen", {
+    resources: [AlbumCrudApi],
+    httpApi,
+  });
+
+  console.log(SynthUtils.toCloudFormation(stack));
+
   it("generates APIGW routes", () => {
-    const stack = new Stack();
-    const httpApi = new HttpApi(stack, "API");
-
-    // should create routes on httpApi
-    // and lambda handler function
-    new ResourceGeneratorConstruct(stack, "Gen", {
-      resources: [AlbumCrudApi],
-      httpApi,
-    });
-
-    console.log(SynthUtils.toCloudFormation(stack));
-
     // should have routes
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "ANY /album",
     });
+  });
 
-    // should have handler function
+  it("creates lambda handler", () => {
     expect(stack).toHaveResource("AWS::Lambda::Function", {
       Handler: "index.handler",
       MemorySize: 512,
@@ -36,6 +37,24 @@ describe("CRUD API construct generation", () => {
           AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
         },
       },
+    });
+  });
+});
+
+describe("@SubRoute construct generation", () => {
+  const stack = new Stack();
+  const httpApi = new HttpApi(stack, "API");
+
+  // should create routes on httpApi
+  // and lambda handler function
+  new ResourceGeneratorConstruct(stack, "Gen", {
+    resources: [AlbumCrudApi],
+    httpApi,
+  });
+
+  it("generates APIGW routes", () => {
+    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
+      RouteKey: "PATCH /test",
     });
   });
 });

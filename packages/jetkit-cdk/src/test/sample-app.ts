@@ -4,6 +4,7 @@ import { RequestHandler } from "../api/base";
 import { Column, Entity } from "typeorm";
 import { BaseModel } from "demo-repo";
 import { APIGatewayProxyHandlerV2 } from "aws-lambda";
+import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 
 // sample database model
 @Entity()
@@ -13,10 +14,10 @@ export class Album extends BaseModel {
 }
 
 // sample CRUD view
-@CrudApi({ model: Album, route: "/album", memorySize: 512 })
+@CrudApi({ model: Album, path: "/album", memorySize: 512 })
 export class AlbumCrudApi extends CrudApiBase {
   // custom endpoint in the view
-  @SubRoute("/test")
+  @SubRoute("/test", { methods: [HttpMethod.PATCH] })
   async test() {
     return "Testerino";
   }
@@ -32,4 +33,4 @@ export const blargleFunc: RequestHandler = async (event) => {
     rawQueryString: event.rawQueryString,
   });
 };
-export const wrappedBlargleFunc = Route({ route: "/blargle" })(blargleFunc);
+export const wrappedBlargleFunc = Route({ path: "/blargle" })(blargleFunc);

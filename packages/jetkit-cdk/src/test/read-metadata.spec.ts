@@ -1,3 +1,4 @@
+import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 import {
   enumerateMetadata,
   enumerateMethodMetadata,
@@ -23,7 +24,7 @@ describe("Metadata decorators", () => {
       expect(getJKMetadata(AlbumCrudApi)).toMatchObject({
         model: Album,
         apiClass: AlbumCrudApi,
-        route: "/album",
+        path: "/album",
         memorySize: 512,
       });
     });
@@ -38,7 +39,7 @@ describe("Metadata decorators", () => {
       const methodMeta = getJKMemberMetadata(AlbumCrudApi, "test");
       expect(methodMeta).toMatchObject({
         propertyKey: "test",
-        route: "/test",
+        path: "/test",
       });
     });
 
@@ -49,7 +50,7 @@ describe("Metadata decorators", () => {
         entry: /sample-app.ts$/,
         memorySize: 512,
         model: Album,
-        route: "/album",
+        path: "/album",
       });
       expect(resource).toBe(AlbumCrudApi);
     });
@@ -60,7 +61,8 @@ describe("Metadata decorators", () => {
         {
           propertyKey: "test",
           requestHandlerFunc: AlbumCrudApi.prototype.test,
-          route: "/test",
+          path: "/test",
+          methods: [HttpMethod.PATCH],
         },
       ]);
     });
@@ -71,7 +73,7 @@ describe("Metadata decorators", () => {
       const funcMeta = getJKMetadata(wrappedBlargleFunc);
       expect(funcMeta).toStrictEqual({
         requestHandlerFunc: blargleFunc,
-        route: "/blargle",
+        path: "/blargle",
       });
     });
   });

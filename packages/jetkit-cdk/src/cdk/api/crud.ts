@@ -10,6 +10,7 @@ import {
   NodejsFunctionProps,
 } from "@aws-cdk/aws-lambda-nodejs";
 import { Construct } from "@aws-cdk/core";
+import { enumerateMethodMetadata, MetadataTarget } from "../../metadata";
 import { WrappableConstructor } from "../../registry";
 
 export interface CrudApiProps extends NodejsFunctionProps {
@@ -20,13 +21,15 @@ export interface CrudApiProps extends NodejsFunctionProps {
   path?: string;
 
   apiClass: WrappableConstructor;
+
+  resource: MetadataTarget;
 }
 
 export class CrudApi extends Construct {
   constructor(
     scope: Construct,
     id: string,
-    { httpApi, path = "/", apiClass, ...rest }: CrudApiProps
+    { httpApi, path = "/", apiClass, resource, ...rest }: CrudApiProps
   ) {
     super(scope, id);
 
@@ -46,7 +49,16 @@ export class CrudApi extends Construct {
     });
 
     // generate custom registered routes
-    apiClass;
+    // iterate over properties and see if any have metadata
+    enumerateMethodMetadata(resource).forEach((meta) => {
+      const { requestHandlerFunc, path, methods, ...subRouteRest } = meta;
+
+      httpApi.addRoutes({
+        path,
+        methods: methods,
+        integration: lambdaApiIntegration,
+      });
+    });
 
     // route to integration
     httpApi.addRoutes({

@@ -34,8 +34,8 @@ export class ResourceGenerator extends Construct {
       console.log(meta);
       const name = meta.apiClass.name;
       new CrudApiConstruct(this, name, {
+        resource,
         httpApi,
-        path: meta.route,
         ...meta,
       });
 
@@ -44,9 +44,6 @@ export class ResourceGenerator extends Construct {
       console.log("ApiClass", apiClass);
       console.log("Ctor", apiClass.constructor);
       console.log("Target=====", metadataTarget);
-
-      // iterate over properties and see if any have metadata
-      enumerateMethodMetadata(metadataTarget);
     });
   }
 }

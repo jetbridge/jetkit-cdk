@@ -6,6 +6,7 @@ import { ApiBase, RequestHandler } from "./api/base";
 import { WrappableConstructor, WrappedConstructor } from "./registry";
 import { BaseModel } from "demo-repo";
 import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs";
+import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 
 export const JK_V2_METADATA_KEY = "jk:v2:metadata";
 
@@ -17,14 +18,15 @@ export type MetadataTarget =
   | Function;
 
 export interface IApiMetadata extends NodejsFunctionProps {
-  route: string;
+  path: string;
   entry?: string;
   requestHandlerFunc?: RequestHandler;
+  methods?: HttpMethod[];
 }
 
 export interface ICrudApiMetadata extends IApiMetadata {
   model?: typeof BaseModel; // TODO: make not optional
-  apiClass: WrappableConstructor; // | ApiBase;
+  apiClass: WrappableConstructor;
 }
 
 export interface ISubRouteApiMetadata extends IApiMetadata {
@@ -50,8 +52,10 @@ export const getJKMemberMetadata = <T extends MetadataTarget>(
   cls: T,
   propertyKey: string | symbol
 ): ISubRouteApiMetadata | undefined =>
-  // Reflect.getMetadata(JK_V2_METADATA_KEY, cls, propertyKey);
   Reflect.getMetadata(propertyKey, cls, JK_V2_METADATA_KEY);
+// I think this  ^  is wrong and should be  v
+// Reflect.getMetadata(JK_V2_METADATA_KEY, cls, propertyKey);
+// but it doesn't work
 
 export const setJKMetadata = <T extends MetadataTarget>(cls: T, value: any) =>
   Reflect.defineMetadata(JK_V2_METADATA_KEY, value, cls);
@@ -83,5 +87,8 @@ export const enumerateMethodMetadata = (target: MetadataTarget) =>
     if (!hasJKMemberMetadata(target, k))
       throw new Error(`Failed to find ${k} in metadata for ${target}`);
 
-    return getJKMemberMetadata(target, k);
+    const meta = getJKMemberMetadata(target, k);
+    if (!meta) throw new Error(`Failed to find metadata for ${k} in ${target}`);
+
+    return meta;
   });

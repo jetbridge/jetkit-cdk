@@ -9,6 +9,7 @@ import {
   setJKMemberMetadata,
   setJKMetadata,
 } from "./metadata";
+import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 
 /**
  * This module is responsible for attaching metadata to classes, methods, and properties to
@@ -52,12 +53,15 @@ interface RoutePropertyDescriptor extends PropertyDescriptor {
   value?: RequestHandler;
 }
 
+export interface ISubRouteProps {
+  methods?: HttpMethod[];
+}
 /**
  * Add a route to an Api view.
  * Use this on class member functions.
  *
  */
-export function SubRoute(route: string) {
+export function SubRoute(path: string, props?: ISubRouteProps) {
   return function (
     target: ApiBase, // parent class
     propertyKey: string,
@@ -72,9 +76,10 @@ export function SubRoute(route: string) {
 
     // method handler metadata
     const meta: ISubRouteApiMetadata = {
-      route,
+      path,
       requestHandlerFunc: method,
       propertyKey,
+      ...props,
     };
 
     // associate property in the target class metadata with our metadata
@@ -84,12 +89,12 @@ export function SubRoute(route: string) {
 }
 
 interface IRouteProps {
-  route: string;
+  path: string;
 }
-export function Route({ route }: IRouteProps) {
+export function Route({ path }: IRouteProps) {
   return (wrapped: RequestHandler) => {
     const meta: IApiMetadata = {
-      route,
+      path,
       requestHandlerFunc: wrapped,
     };
 
