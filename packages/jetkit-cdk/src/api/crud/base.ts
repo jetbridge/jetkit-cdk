@@ -4,8 +4,6 @@ import {
   APIGatewayProxyResultV2,
   Context,
 } from "aws-lambda";
-import { debug } from "console";
-import { WrappableConstructor } from "../../registry";
 import { ApiBase } from "../base";
 
 export class CrudApiBase extends ApiBase {
@@ -21,7 +19,7 @@ export class CrudApiBase extends ApiBase {
     const { http } = event.requestContext;
     const { path, method } = http;
 
-    debug(`➠ ${method} ${path}`);
+    console.debug(`➠ ${method} ${path}`);
 
     try {
       const handlerMethod = this.findHandler(event);

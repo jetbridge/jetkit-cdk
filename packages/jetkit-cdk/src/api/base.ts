@@ -5,7 +5,6 @@ import {
   APIGatewayProxyResultV2,
   Context,
 } from "aws-lambda";
-import { WrappableConstructor } from "../registry";
 import { safeHas } from "../util/type";
 
 export type RequestHandler = (

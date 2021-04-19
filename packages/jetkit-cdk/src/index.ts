@@ -6,16 +6,15 @@ export { ApiBase } from "./api/base";
 
 export { CrudApi, Route, SubRoute, WrappableConstructor } from "./registry";
 export {
-  hasJKMetadata,
-  getJKMetadata,
-  setJKMetadata,
-  hasJKMemberMetadata,
-  getJKMemberMetadata,
-  setJKMemberMetadata,
-  getJKMetadataKeys as getMetadataKeys,
+  setMetadata,
+  hasMemberMetadata,
+  getMemberMetadata,
+  setMemberMetadata,
+  getMetadataKeys,
+  getSubRouteMetadata,
+  getCrudApiMetadata,
+  setCrudApiMetadata,
   MetadataTarget,
-  enumerateMetadata,
-  enumerateMethodMetadata,
 } from "./metadata";
 
 // convient CDK utilities to have

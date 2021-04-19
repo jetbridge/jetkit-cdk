@@ -13,7 +13,7 @@ export class Topic extends BaseModel {
   name: string;
 }
 
-@CrudApi({ model: Topic, route: "/topic", memorySize: 512 })
+@CrudApi({ model: Topic, path: "/topic", memorySize: 512 })
 export class TopicCrudApi extends CrudApiBase {
   @SubRoute("/test")
   async test() {
@@ -23,7 +23,7 @@ export class TopicCrudApi extends CrudApiBase {
   post: APIGatewayProxyHandlerV2 = async () => "Posterino";
 }
 
-Route({ route: "/blargle" })(async function (event) {
+Route({ path: "/blargle" })(async function (event) {
   return JSON.stringify({
     message: "function route",
     rawQueryString: event.rawQueryString,

@@ -8,14 +8,23 @@ import { BaseModel } from "demo-repo";
 import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs";
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 
-export const JK_V2_METADATA_KEY = "jk:v2:metadata";
+const JK_V2_METADATA_KEY = Symbol.for("jk:v2:metadata");
+
+// metadata map keys
+export const JK_V2_METADATA_CRUD_API_KEY = Symbol.for(
+  "jk:v2:metadata:crud:api"
+);
+// sub-route method inside a class
+export const JK_V2_METADATA_SUBROUTES_KEY = Symbol.for(
+  "jk:v2:metadata:subroutes"
+);
+// standalone function-level route
+export const JK_V2_METADATA_ROUTE_KEY = Symbol.for("jk:v2:metadata:route");
+
+export type ApiMetadataMap<V extends IApiMetadata> = Map<string, V>;
 
 // what types of objects can have metadata attached?
-export type MetadataTarget =
-  | WrappedConstructor
-  | RequestHandler
-  | ApiBase
-  | Function;
+export type MetadataTarget = WrappedConstructor | RequestHandler | ApiBase;
 
 export interface IApiMetadata extends NodejsFunctionProps {
   path: string;
@@ -35,60 +44,58 @@ export interface ISubRouteApiMetadata extends IApiMetadata {
 
 /// getters/setters
 
-export const hasJKMetadata = (cls: MetadataTarget): cls is MetadataTarget =>
-  Reflect.hasMetadata(JK_V2_METADATA_KEY, cls);
+export const setMetadata = <T extends MetadataTarget>(cls: T, value: any) =>
+  Reflect.defineMetadata(JK_V2_METADATA_KEY, value, cls);
 
-export const hasJKMemberMetadata = (
+// get/set our JKv2 metadata properties on a target
+export const hasMemberMetadata = (
   cls: MetadataTarget,
   propertyKey: string | symbol
 ): cls is MetadataTarget =>
-  Reflect.hasMetadata(propertyKey, cls, JK_V2_METADATA_KEY);
+  Reflect.hasMetadata(JK_V2_METADATA_KEY, cls, propertyKey);
 
-export const getJKMetadata = <T extends MetadataTarget>(
-  cls: T
-): ICrudApiMetadata => Reflect.getMetadata(JK_V2_METADATA_KEY, cls);
-
-export const getJKMemberMetadata = <T extends MetadataTarget>(
-  cls: T,
+export const getMemberMetadata = <V>(
+  target: MetadataTarget,
   propertyKey: string | symbol
-): ISubRouteApiMetadata | undefined =>
-  Reflect.getMetadata(propertyKey, cls, JK_V2_METADATA_KEY);
-// I think this  ^  is wrong and should be  v
-// Reflect.getMetadata(JK_V2_METADATA_KEY, cls, propertyKey);
-// but it doesn't work
+): V | undefined =>
+  Reflect.getMetadata(JK_V2_METADATA_KEY, target, propertyKey);
 
-export const setJKMetadata = <T extends MetadataTarget>(cls: T, value: any) =>
-  Reflect.defineMetadata(JK_V2_METADATA_KEY, value, cls);
-
-export const setJKMemberMetadata = <T extends MetadataTarget>(
-  cls: T,
+export const setMemberMetadata = (
+  target: MetadataTarget,
   propertyKey: string | symbol,
   value: any
-  // ) => Reflect.defineMetadata(JK_V2_METADATA_KEY, value, cls, propertyKey);
-) => Reflect.defineMetadata(propertyKey, value, cls, JK_V2_METADATA_KEY);
+) => Reflect.defineMetadata(JK_V2_METADATA_KEY, value, target, propertyKey);
 
-export const getJKMetadataKeys = (cls: any) =>
-  Reflect.getOwnMetadataKeys(cls, JK_V2_METADATA_KEY);
+export const getMetadataKeys = (target: MetadataTarget, key: string | symbol) =>
+  Reflect.getOwnMetadataKeys(target, key);
 
-export const enumerateMetadata = (resources: MetadataTarget[]) =>
-  resources.map((resource) => {
-    if (!hasJKMetadata(resource)) {
-      throw new Error(
-        `Did not find metadata on ${resource}, did you decorate it with @CrudApi?`
-      );
-    }
+// CRUD API
+export const hasCrudApiMetadata = (
+  cls: MetadataTarget
+): cls is MetadataTarget => hasMemberMetadata(cls, JK_V2_METADATA_CRUD_API_KEY);
+export const getCrudApiMetadata = (
+  cls: MetadataTarget
+): ICrudApiMetadata | undefined =>
+  getMemberMetadata(cls, JK_V2_METADATA_CRUD_API_KEY);
+export const setCrudApiMetadata = (
+  cls: MetadataTarget,
+  value: ICrudApiMetadata
+) => setMemberMetadata(cls, JK_V2_METADATA_CRUD_API_KEY, value);
 
-    const meta = getJKMetadata(resource);
-    return { meta, resource };
-  });
+// sub-routes
+export const getSubRouteMetadata = (
+  target: MetadataTarget
+): ApiMetadataMap<ISubRouteApiMetadata> =>
+  getMemberMetadata(target, JK_V2_METADATA_SUBROUTES_KEY) || new Map();
+export const setSubRouteMetadata = (
+  target: MetadataTarget,
+  value: ApiMetadataMap<ISubRouteApiMetadata>
+) => setMemberMetadata(target, JK_V2_METADATA_SUBROUTES_KEY, value);
 
-export const enumerateMethodMetadata = (target: MetadataTarget) =>
-  getJKMetadataKeys(target).map((k) => {
-    if (!hasJKMemberMetadata(target, k))
-      throw new Error(`Failed to find ${k} in metadata for ${target}`);
-
-    const meta = getJKMemberMetadata(target, k);
-    if (!meta) throw new Error(`Failed to find metadata for ${k} in ${target}`);
-
-    return meta;
-  });
+// plain function route
+export const getRouteMetadata = (
+  target: RequestHandler
+): IApiMetadata | undefined =>
+  getMemberMetadata(target, JK_V2_METADATA_ROUTE_KEY);
+export const setRouteMetadata = (target: RequestHandler, value: IApiMetadata) =>
+  setMemberMetadata(target, JK_V2_METADATA_ROUTE_KEY, value);

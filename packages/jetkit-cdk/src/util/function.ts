@@ -8,7 +8,11 @@ export function findDefiningFile(fnName: string): string | null {
   let definingIndex;
   const sites = callsites();
   for (const [index, site] of sites.entries()) {
-    if (site.getFunctionName() === fnName) {
+    console.log(
+      `---- ${site.getFileName()} -- ${site.getFunctionName()} - ${site.getMethodName()}`
+    );
+
+    if (site.getMethodName() == fnName || site.getFunctionName() === fnName) {
       // The next site is the site where the function was called
       definingIndex = index + 1;
       break;

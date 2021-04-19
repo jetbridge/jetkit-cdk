@@ -3,9 +3,8 @@
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2";
 import { Stack } from "@aws-cdk/core";
 import { ResourceGeneratorConstruct } from "..";
-import { AlbumCrudApi } from "./sample-app";
+import { AlbumCrudApi } from "./sampleApp";
 import "@aws-cdk/assert/jest";
-import { SynthUtils } from "@aws-cdk/assert";
 
 describe("@CrudApi construct generation", () => {
   const stack = new Stack();
@@ -17,8 +16,6 @@ describe("@CrudApi construct generation", () => {
     resources: [AlbumCrudApi],
     httpApi,
   });
-
-  console.log(SynthUtils.toCloudFormation(stack));
 
   it("generates APIGW routes", () => {
     // should have routes
@@ -35,6 +32,7 @@ describe("@CrudApi construct generation", () => {
       Environment: {
         Variables: {
           AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
+          IS_CLASS: "true",
         },
       },
     });
@@ -55,6 +53,20 @@ describe("@SubRoute construct generation", () => {
   it("generates APIGW routes", () => {
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "PATCH /test",
+    });
+  });
+
+  it("creates lambda handler", () => {
+    expect(stack).toHaveResource("AWS::Lambda::Function", {
+      Handler: "index.handler",
+      MemorySize: 512,
+      Runtime: "nodejs14.x",
+      Environment: {
+        Variables: {
+          AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
+          IS_SUB_ROUTE: "true",
+        },
+      },
     });
   });
 });

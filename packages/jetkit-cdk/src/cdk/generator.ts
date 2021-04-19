@@ -9,12 +9,12 @@
 import { Construct } from "@aws-cdk/core";
 import { CrudApi as CrudApiConstruct } from "./api/crud";
 import {
-  enumerateMetadata,
-  enumerateMethodMetadata,
-  getJKMetadataKeys,
+  getCrudApiMetadata,
+  getSubRouteMetadata,
   MetadataTarget,
 } from "../metadata";
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2";
+import { SubRouteApi } from "./api/subRoute";
 
 interface ResourceGeneratorProps {
   resources: MetadataTarget[];
@@ -22,28 +22,41 @@ interface ResourceGeneratorProps {
 }
 
 export class ResourceGenerator extends Construct {
-  constructor(
-    scope: Construct,
-    id: string,
-    { resources, httpApi }: ResourceGeneratorProps
-  ) {
+  constructor(scope: Construct, id: string, props: ResourceGeneratorProps) {
     super(scope, id);
 
-    enumerateMetadata(resources).forEach(({ meta, resource }) => {
-      const apiClass = meta.apiClass;
-      console.log(meta);
-      const name = meta.apiClass.name;
-      new CrudApiConstruct(this, name, {
-        resource,
-        httpApi,
-        ...meta,
-      });
+    props.resources.forEach((resource) => {
+      // CRUD API
+      const crudApi = getCrudApiMetadata(resource);
+      if (crudApi) {
+        const name = crudApi.apiClass.name;
+        new CrudApiConstruct(this, name, {
+          ...props,
+          ...crudApi,
+        });
+      }
 
-      const metadataTarget: MetadataTarget = resource.constructor;
-      console.log("keys", getJKMetadataKeys(resource.constructor));
-      console.log("ApiClass", apiClass);
-      console.log("Ctor", apiClass.constructor);
-      console.log("Target=====", metadataTarget);
+      // SubRoutes - methods with their own routes
+      // handled by the classes's handler
+      const subRoutes = getSubRouteMetadata(resource);
+      if (subRoutes) {
+        subRoutes.forEach((meta, subroutePath) => {
+          const {
+            requestHandlerFunc,
+            path: metaPath,
+            propertyKey,
+            ...metaRest
+          } = meta;
+          // TODO: include parent api class name in id
+          // TODO: do something with propertyKey and requestHandlerFunc
+          const path = metaPath || subroutePath;
+          new SubRouteApi(this, `SubRoute-${meta.propertyKey}`, {
+            ...props,
+            path,
+            ...metaRest,
+          });
+        });
+      }
     });
   }
 }

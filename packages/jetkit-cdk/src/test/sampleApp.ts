@@ -14,10 +14,22 @@ export class Album extends BaseModel {
 }
 
 // sample CRUD view
-@CrudApi({ model: Album, path: "/album", memorySize: 512 })
+@CrudApi({
+  model: Album,
+  path: "/album",
+  memorySize: 512,
+  environment: {
+    IS_CLASS: "true",
+  },
+})
 export class AlbumCrudApi extends CrudApiBase {
   // custom endpoint in the view
-  @SubRoute("/test", { methods: [HttpMethod.PATCH] })
+  @SubRoute("/test", {
+    methods: [HttpMethod.PATCH],
+    environment: {
+      IS_SUB_ROUTE: "true",
+    },
+  })
   async test() {
     return "Testerino";
   }

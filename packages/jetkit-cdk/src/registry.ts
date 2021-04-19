@@ -2,14 +2,17 @@ import { findDefiningFile } from "./util/function";
 import { ApiBase, RequestHandler } from "./api/base";
 import "reflect-metadata";
 import {
+  getSubRouteMetadata,
   IApiMetadata,
   ICrudApiMetadata,
   ISubRouteApiMetadata,
   MetadataTarget,
-  setJKMemberMetadata,
-  setJKMetadata,
+  setCrudApiMetadata,
+  setRouteMetadata,
+  setSubRouteMetadata,
 } from "./metadata";
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
+import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs";
 
 /**
  * This module is responsible for attaching metadata to classes, methods, and properties to
@@ -22,19 +25,27 @@ export interface WrappedConstructor {
   new (...args: unknown[]): ApiBase;
 }
 
+function guessEntrypoint(functionName: string): string {
+  // guess entrypoint file from caller
+  let guessedEntry;
+  try {
+    guessedEntry = findDefiningFile(functionName);
+  } catch (ex) {
+    console.error(ex);
+  }
+
+  if (!guessedEntry)
+    throw new Error(
+      `Could not determine entry point where ${functionName} was called, please define path to entrypoint file in "entry"`
+    );
+  return guessedEntry;
+}
+
 /**
  * Define CRUD API view class.
  */
 export function CrudApi(opts: Omit<ICrudApiMetadata, "apiClass">) {
-  if (!opts.entry) {
-    // guess entrypoint file from caller
-    const guessedEntry = findDefiningFile("CrudApi");
-    if (!guessedEntry)
-      throw new Error(
-        `Could not determine entry point, please define it in "entry"`
-      );
-    opts.entry = guessedEntry;
-  }
+  if (!opts.entry) opts.entry = guessEntrypoint("CrudApi");
 
   // return decorator
   return function <T extends WrappableConstructor>(constructor: T) {
@@ -44,7 +55,7 @@ export function CrudApi(opts: Omit<ICrudApiMetadata, "apiClass">) {
       apiClass: constructor,
     };
 
-    setJKMetadata(constructor, meta);
+    setCrudApiMetadata(constructor, meta);
     return constructor;
   };
 }
@@ -53,7 +64,7 @@ interface RoutePropertyDescriptor extends PropertyDescriptor {
   value?: RequestHandler;
 }
 
-export interface ISubRouteProps {
+export interface ISubRouteProps extends NodejsFunctionProps {
   methods?: HttpMethod[];
 }
 /**
@@ -79,12 +90,23 @@ export function SubRoute(path: string, props?: ISubRouteProps) {
       path,
       requestHandlerFunc: method,
       propertyKey,
+      entry: props?.entry || guessEntrypoint("SubRoute"),
       ...props,
     };
 
-    // associate property in the target class metadata with our metadata
-    const metadataTarget: MetadataTarget = target.constructor;
-    setJKMemberMetadata(metadataTarget, propertyKey, meta);
+    // update target class subroutes metadata map with our metadata
+
+    // assuming the function signature is correct - no way to check at runtime
+    const metadataTarget: MetadataTarget = target.constructor as RequestHandler;
+
+    // get map
+    const subroutesMap = getSubRouteMetadata(metadataTarget);
+
+    // add to map
+    subroutesMap.set(propertyKey, meta);
+
+    // set metadata
+    setSubRouteMetadata(metadataTarget, subroutesMap);
   };
 }
 
@@ -98,7 +120,7 @@ export function Route({ path }: IRouteProps) {
       requestHandlerFunc: wrapped,
     };
 
-    setJKMetadata(wrapped, meta);
+    setRouteMetadata(wrapped, meta);
     return wrapped;
   };
 }
