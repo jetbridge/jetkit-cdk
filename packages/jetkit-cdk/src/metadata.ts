@@ -29,8 +29,11 @@ export type MetadataTarget = WrappedConstructor | RequestHandler | ApiBase;
 export interface IApiMetadata extends NodejsFunctionProps {
   path: string;
   entry?: string;
-  requestHandlerFunc?: RequestHandler;
   methods?: HttpMethod[];
+}
+
+export interface IFunctionMetadata extends IApiMetadata {
+  requestHandlerFunc: RequestHandler;
 }
 
 export interface ICrudApiMetadata extends IApiMetadata {
@@ -40,6 +43,7 @@ export interface ICrudApiMetadata extends IApiMetadata {
 
 export interface ISubRouteApiMetadata extends IApiMetadata {
   propertyKey: string;
+  requestHandlerFunc?: RequestHandler;
 }
 
 /// getters/setters
@@ -95,7 +99,9 @@ export const setSubRouteMetadata = (
 // plain function route
 export const getRouteMetadata = (
   target: RequestHandler
-): IApiMetadata | undefined =>
+): IFunctionMetadata | undefined =>
   getMemberMetadata(target, JK_V2_METADATA_ROUTE_KEY);
-export const setRouteMetadata = (target: RequestHandler, value: IApiMetadata) =>
-  setMemberMetadata(target, JK_V2_METADATA_ROUTE_KEY, value);
+export const setRouteMetadata = (
+  target: RequestHandler,
+  value: IFunctionMetadata
+) => setMemberMetadata(target, JK_V2_METADATA_ROUTE_KEY, value);

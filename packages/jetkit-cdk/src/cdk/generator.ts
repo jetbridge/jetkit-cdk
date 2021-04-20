@@ -8,13 +8,16 @@
 
 import { Construct } from "@aws-cdk/core";
 import { CrudApi as CrudApiConstruct } from "./api/crud";
+import { Api as ApiConstruct } from "./api/api";
 import {
   getCrudApiMetadata,
+  getRouteMetadata,
   getSubRouteMetadata,
   MetadataTarget,
 } from "../metadata";
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2";
 import { SubRouteApi } from "./api/subRoute";
+import { RequestHandler } from "../api/base";
 
 interface ResourceGeneratorProps {
   resources: MetadataTarget[];
@@ -22,49 +25,80 @@ interface ResourceGeneratorProps {
 }
 
 export class ResourceGenerator extends Construct {
-  constructor(scope: Construct, id: string, props: ResourceGeneratorProps) {
+  httpApi: HttpApi;
+
+  constructor(
+    scope: Construct,
+    id: string,
+    { httpApi, resources }: ResourceGeneratorProps
+  ) {
     super(scope, id);
+    this.httpApi = httpApi;
 
-    props.resources.forEach((resource) => {
-      // CRUD API
-      const crudApi = getCrudApiMetadata(resource);
-      let crudApiConstruct: undefined | CrudApiConstruct;
-      if (crudApi) {
-        const name = crudApi.apiClass.name;
-        crudApiConstruct = new CrudApiConstruct(this, name, {
-          ...props,
-          ...crudApi,
-        });
-      }
+    // emit CDK constructs for specified resources
+    resources.forEach((resource) =>
+      this.generateConstructsForResource(resource)
+    );
+  }
 
-      // SubRoutes - methods with their own routes
-      // handled by the classes's handler
-      const subRoutes = getSubRouteMetadata(resource);
-      if (subRoutes) {
-        subRoutes.forEach((meta, subroutePath) => {
-          const {
-            requestHandlerFunc,
-            path: metaPath,
-            propertyKey,
-            ...metaRest
-          } = meta;
+  generateConstructsForResource(resource: MetadataTarget) {
+    this.generateConstructsForClass(resource);
+    this.generateConstructsForFunction(resource);
+  }
 
-          if (!crudApiConstruct)
-            throw new Error(
-              `${resource} defines SubRoute but no enclosing @CrudApi class found`
-            );
+  /**
+   * Create function handleer for a simple routed function.
+   */
+  generateConstructsForFunction(resource: MetadataTarget) {
+    const funcMeta = getRouteMetadata(resource as RequestHandler);
+    if (!funcMeta) return;
 
-          // TODO: include parent api class name in id
-          // TODO: do something with propertyKey and requestHandlerFunc
-          const path = metaPath || subroutePath;
-          new SubRouteApi(this, `SubRoute-${meta.propertyKey}`, {
-            ...props,
-            path,
-            ...metaRest,
-            parentApi: crudApiConstruct,
-          });
-        });
-      }
+    const { requestHandlerFunc, ...rest } = funcMeta;
+    const name = requestHandlerFunc?.name;
+    new ApiConstruct(this, `Func${name}`, {
+      httpApi: this.httpApi,
+      entry: funcMeta.entry,
+      ...rest,
     });
+  }
+
+  /**
+   * Create a handler function for the class and any additional
+   * routed methods inside it.
+   */
+  generateConstructsForClass(resource: MetadataTarget) {
+    // CRUD API
+    const crudApi = getCrudApiMetadata(resource);
+    let crudApiConstruct: undefined | CrudApiConstruct;
+    if (crudApi) {
+      const name = crudApi.apiClass.name;
+      crudApiConstruct = new CrudApiConstruct(this, `Class${name}`, {
+        httpApi: this.httpApi,
+        ...crudApi,
+      });
+    }
+
+    // SubRoutes - methods with their own routes
+    // handled by the classes's handler
+    const subRoutes = getSubRouteMetadata(resource);
+    if (subRoutes) {
+      subRoutes.forEach((meta, subroutePath) => {
+        const { path: metaPath, propertyKey, ...metaRest } = meta;
+
+        if (!crudApiConstruct)
+          throw new Error(
+            `${resource} defines SubRoute but no enclosing @CrudApi class found`
+          );
+
+        // TODO: include parent api class name in id
+        // TODO: do something with propertyKey and requestHandlerFunc
+        const path = metaPath || subroutePath;
+        new SubRouteApi(this, `SubRoute-${meta.propertyKey}`, {
+          path,
+          ...metaRest,
+          parentApi: crudApiConstruct,
+        });
+      });
+    }
   }
 }

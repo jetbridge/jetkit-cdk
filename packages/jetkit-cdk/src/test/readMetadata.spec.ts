@@ -41,9 +41,6 @@ describe("Metadata decorators", () => {
         requestHandlerFunc: AlbumCrudApi.prototype.test,
         path: "/test",
         methods: [HttpMethod.PATCH],
-        environment: {
-          LOG_LEVEL: "DEBUG",
-        },
       };
       expect(methodMeta.size).toBe(1);
       expect(methodMeta.get("test")).toMatchObject(expectedMeta);
@@ -53,9 +50,14 @@ describe("Metadata decorators", () => {
   describe("Route()", () => {
     it("stores metadata on functions", () => {
       const funcMeta = getRouteMetadata(wrappedBlargleFunc);
-      expect(funcMeta).toStrictEqual({
+      expect(funcMeta).toMatchObject({
+        entry: /test\/sampleApp.ts$/,
         requestHandlerFunc: blargleFunc,
         path: "/blargle",
+        methods: [HttpMethod.PUT],
+        environment: {
+          LOG_LEVEL: "WARN",
+        },
       });
     });
   });

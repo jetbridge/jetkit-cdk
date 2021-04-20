@@ -17,6 +17,8 @@ export interface ApiProps extends NodejsFunctionProps {
 
   // route
   path?: string;
+
+  methods?: HttpMethod[];
 }
 
 export class Api extends Construct {
@@ -24,11 +26,12 @@ export class Api extends Construct {
   lambdaApiIntegration: LambdaProxyIntegration;
   httpApi: HttpApi;
   path: string;
+  methods?: HttpMethod[];
 
   constructor(
     scope: Construct,
     id: string,
-    { httpApi, path = "/", ...rest }: ApiProps
+    { httpApi, methods, path = "/", ...rest }: ApiProps
   ) {
     super(scope, id);
 
@@ -49,6 +52,7 @@ export class Api extends Construct {
 
     this.httpApi = httpApi;
     this.path = path;
+    this.methods = methods;
 
     this.addRoutes();
   }
@@ -57,7 +61,7 @@ export class Api extends Construct {
     // * /path -> lambda integration
     this.httpApi.addRoutes({
       path: this.path,
-      methods: [HttpMethod.ANY],
+      methods: this.methods || [HttpMethod.ANY],
       integration: this.lambdaApiIntegration,
     });
   }

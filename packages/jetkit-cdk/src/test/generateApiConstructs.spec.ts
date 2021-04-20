@@ -1,9 +1,9 @@
 // Test that the correct AWS resources are generated from metadata
 
-import { HttpApi } from "@aws-cdk/aws-apigatewayv2";
+import { HttpApi, HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 import { Stack } from "@aws-cdk/core";
 import { ResourceGeneratorConstruct } from "..";
-import { AlbumCrudApi } from "./sampleApp";
+import { AlbumCrudApi, blargleFunc } from "./sampleApp";
 import "@aws-cdk/assert/jest";
 
 describe("@CrudApi construct generation", () => {
@@ -53,6 +53,35 @@ describe("@SubRoute construct generation", () => {
   it("generates APIGW routes", () => {
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "PATCH /album/test",
+    });
+  });
+});
+
+describe("@Route construct generation", () => {
+  const stack = new Stack();
+  const httpApi = new HttpApi(stack, "API");
+
+  // should create routes on httpApi
+  // and lambda handler function
+  new ResourceGeneratorConstruct(stack, "Gen", {
+    resources: [blargleFunc],
+    httpApi,
+  });
+
+  it("generates APIGW routes", () => {
+    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
+      RouteKey: "PUT /blargle",
+    });
+    expect(stack).toHaveResource("AWS::Lambda::Function", {
+      Environment: {
+        Variables: {
+          LOG_LEVEL: "WARN",
+          AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
+        },
+      },
+      Handler: "index.handler",
+      MemorySize: 384,
+      Runtime: "nodejs14.x",
     });
   });
 });

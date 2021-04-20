@@ -2,8 +2,8 @@ import { findDefiningFile } from "./util/function";
 import { ApiBase, RequestHandler } from "./api/base";
 import {
   getSubRouteMetadata,
-  IApiMetadata,
   ICrudApiMetadata,
+  IFunctionMetadata,
   ISubRouteApiMetadata,
   MetadataTarget,
   setCrudApiMetadata,
@@ -12,6 +12,7 @@ import {
 } from "./metadata";
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs";
+import fs from "fs";
 
 /**
  * This module is responsible for attaching metadata to classes, methods, and properties to
@@ -24,7 +25,7 @@ export interface WrappedConstructor {
   new (...args: unknown[]): ApiBase;
 }
 
-function guessEntrypoint(functionName: string): string {
+function guessEntrypoint(functionName: string | null): string {
   // guess entrypoint file from caller
   let guessedEntry;
   try {
@@ -33,7 +34,7 @@ function guessEntrypoint(functionName: string): string {
     console.error(ex);
   }
 
-  if (!guessedEntry)
+  if (!guessedEntry || !fs.existsSync(guessedEntry))
     throw new Error(
       `Could not determine entry point where ${functionName} was called, please define path to entrypoint file in "entry"`
     );
@@ -63,15 +64,17 @@ interface RoutePropertyDescriptor extends PropertyDescriptor {
   value?: RequestHandler;
 }
 
-export interface ISubRouteProps extends NodejsFunctionProps {
+export interface IRouteProps extends NodejsFunctionProps {
+  path: string;
   methods?: HttpMethod[];
 }
+
 /**
  * Add a route to an Api view.
  * Use this on class methods that are inside a @CrudApi class.
  *
  */
-export function SubRoute(path: string, props?: ISubRouteProps) {
+export function SubRoute({ path, methods }: IRouteProps) {
   return function (
     target: ApiBase, // parent class
     propertyKey: string,
@@ -86,11 +89,10 @@ export function SubRoute(path: string, props?: ISubRouteProps) {
 
     // method handler metadata
     const meta: ISubRouteApiMetadata = {
-      path,
       requestHandlerFunc: method,
       propertyKey,
-      entry: props?.entry || guessEntrypoint("Object.<anonymous>.__decorate"), // really lame but we don't see method names in decorator call sites idk why
-      ...props,
+      methods,
+      path,
     };
 
     // update target class subroutes metadata map with our metadata
@@ -109,13 +111,15 @@ export function SubRoute(path: string, props?: ISubRouteProps) {
   };
 }
 
-interface IRouteProps {
-  path: string;
-}
-export function Route({ path }: IRouteProps) {
+export function Route(props: IRouteProps) {
   return (wrapped: RequestHandler) => {
-    const meta: IApiMetadata = {
-      path,
+    // super terrible hack to guess where decorator was applied
+    // FIXME: figure out how to find file containing call site of decorator
+    const entry = props.entry || guessEntrypoint(null);
+
+    const meta: IFunctionMetadata = {
+      ...props,
+      entry,
       requestHandlerFunc: wrapped,
     };
 

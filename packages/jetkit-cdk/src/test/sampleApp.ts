@@ -24,7 +24,8 @@ export class Album extends BaseModel {
 })
 export class AlbumCrudApi extends CrudApiBase {
   // custom endpoint in the view
-  @SubRoute("/test", {
+  @SubRoute({
+    path: "/test",
     methods: [HttpMethod.PATCH],
     environment: {
       LOG_LEVEL: "DEBUG",
@@ -45,4 +46,11 @@ export const blargleFunc: RequestHandler = async (event) => {
     rawQueryString: event.rawQueryString,
   });
 };
-export const wrappedBlargleFunc = Route({ path: "/blargle" })(blargleFunc);
+export const wrappedBlargleFunc = Route({
+  path: "/blargle",
+  methods: [HttpMethod.PUT],
+  memorySize: 384,
+  environment: {
+    LOG_LEVEL: "WARN",
+  },
+})(blargleFunc);
