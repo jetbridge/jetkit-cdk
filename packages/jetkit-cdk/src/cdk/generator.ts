@@ -28,9 +28,10 @@ export class ResourceGenerator extends Construct {
     props.resources.forEach((resource) => {
       // CRUD API
       const crudApi = getCrudApiMetadata(resource);
+      let crudApiConstruct: undefined | CrudApiConstruct;
       if (crudApi) {
         const name = crudApi.apiClass.name;
-        new CrudApiConstruct(this, name, {
+        crudApiConstruct = new CrudApiConstruct(this, name, {
           ...props,
           ...crudApi,
         });
@@ -47,6 +48,12 @@ export class ResourceGenerator extends Construct {
             propertyKey,
             ...metaRest
           } = meta;
+
+          if (!crudApiConstruct)
+            throw new Error(
+              `${resource} defines SubRoute but no enclosing @CrudApi class found`
+            );
+
           // TODO: include parent api class name in id
           // TODO: do something with propertyKey and requestHandlerFunc
           const path = metaPath || subroutePath;
@@ -54,6 +61,7 @@ export class ResourceGenerator extends Construct {
             ...props,
             path,
             ...metaRest,
+            parentApi: crudApiConstruct,
           });
         });
       }

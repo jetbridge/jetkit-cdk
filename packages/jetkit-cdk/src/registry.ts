@@ -1,6 +1,5 @@
 import { findDefiningFile } from "./util/function";
 import { ApiBase, RequestHandler } from "./api/base";
-import "reflect-metadata";
 import {
   getSubRouteMetadata,
   IApiMetadata,
@@ -69,7 +68,7 @@ export interface ISubRouteProps extends NodejsFunctionProps {
 }
 /**
  * Add a route to an Api view.
- * Use this on class member functions.
+ * Use this on class methods that are inside a @CrudApi class.
  *
  */
 export function SubRoute(path: string, props?: ISubRouteProps) {
@@ -90,7 +89,7 @@ export function SubRoute(path: string, props?: ISubRouteProps) {
       path,
       requestHandlerFunc: method,
       propertyKey,
-      entry: props?.entry || guessEntrypoint("SubRoute"),
+      entry: props?.entry || guessEntrypoint("Object.<anonymous>.__decorate"), // really lame but we don't see method names in decorator call sites idk why
       ...props,
     };
 

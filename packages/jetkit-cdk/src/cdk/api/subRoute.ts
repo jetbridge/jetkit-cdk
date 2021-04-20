@@ -1,30 +1,31 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 import { Construct } from "@aws-cdk/core";
+import { Api } from "./api";
 
-import { Api, ApiProps } from "./api";
-
-interface ISubRouteApiProps extends ApiProps {
+interface ISubRouteApiProps {
   methods?: HttpMethod[];
+  parentApi: Api;
+  path: string;
 }
 
-export class SubRouteApi extends Api {
-  methods?: HttpMethod[];
-
+export class SubRouteApi extends Construct {
   constructor(
     scope: Construct,
     id: string,
-    { methods, ...rest }: ISubRouteApiProps
+    { methods, parentApi, path }: ISubRouteApiProps
   ) {
-    super(scope, id, rest);
-    this.methods = methods;
-  }
+    super(scope, id);
 
-  addRoutes() {
-    // * /path -> lambda integration
-    this.httpApi.addRoutes({
-      path: this.path,
-      methods: this.methods || [HttpMethod.ANY],
-      integration: this.lambdaApiIntegration,
+    // join parent path and our path together
+    if (!path.startsWith("/")) path = `/${path}`;
+    path = parentApi.path + path;
+
+    // add our route to the existing parent API's handler function
+    // it will know how to find our method and call it
+    parentApi.httpApi.addRoutes({
+      path,
+      methods: methods || [HttpMethod.ANY],
+      integration: parentApi.lambdaApiIntegration,
     });
   }
 }

@@ -19,7 +19,7 @@ export class Album extends BaseModel {
   path: "/album",
   memorySize: 512,
   environment: {
-    IS_CLASS: "true",
+    LOG_LEVEL: "DEBUG",
   },
 })
 export class AlbumCrudApi extends CrudApiBase {
@@ -27,7 +27,7 @@ export class AlbumCrudApi extends CrudApiBase {
   @SubRoute("/test", {
     methods: [HttpMethod.PATCH],
     environment: {
-      IS_SUB_ROUTE: "true",
+      LOG_LEVEL: "DEBUG",
     },
   })
   async test() {

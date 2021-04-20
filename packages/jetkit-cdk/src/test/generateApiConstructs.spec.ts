@@ -32,7 +32,7 @@ describe("@CrudApi construct generation", () => {
       Environment: {
         Variables: {
           AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
-          IS_CLASS: "true",
+          LOG_LEVEL: "DEBUG",
         },
       },
     });
@@ -52,21 +52,7 @@ describe("@SubRoute construct generation", () => {
 
   it("generates APIGW routes", () => {
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
-      RouteKey: "PATCH /test",
-    });
-  });
-
-  it("creates lambda handler", () => {
-    expect(stack).toHaveResource("AWS::Lambda::Function", {
-      Handler: "index.handler",
-      MemorySize: 512,
-      Runtime: "nodejs14.x",
-      Environment: {
-        Variables: {
-          AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
-          IS_SUB_ROUTE: "true",
-        },
-      },
+      RouteKey: "PATCH /album/test",
     });
   });
 });

@@ -26,7 +26,7 @@ describe("Metadata decorators", () => {
         model: Album,
         path: "/album",
         environment: {
-          IS_CLASS: "true",
+          LOG_LEVEL: "DEBUG",
         },
       });
     });
@@ -42,7 +42,7 @@ describe("Metadata decorators", () => {
         path: "/test",
         methods: [HttpMethod.PATCH],
         environment: {
-          IS_SUB_ROUTE: "true",
+          LOG_LEVEL: "DEBUG",
         },
       };
       expect(methodMeta.size).toBe(1);
