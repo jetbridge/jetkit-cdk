@@ -79,7 +79,7 @@ describe("@Route construct generation", () => {
           AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
         },
       },
-      Handler: "index.handler",
+      Handler: "index.blargleFunc",
       MemorySize: 384,
       Runtime: "nodejs14.x",
     });

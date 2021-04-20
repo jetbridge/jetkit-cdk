@@ -15,7 +15,7 @@ export class Topic extends BaseModel {
 
 @CrudApi({ model: Topic, path: "/topic", memorySize: 512 })
 export class TopicCrudApi extends CrudApiBase {
-  @SubRoute("/test")
+  @SubRoute({ path: "/test" })
   async test() {
     return "Testerino";
   }

@@ -116,10 +116,12 @@ export function Route(props: IRouteProps) {
     // super terrible hack to guess where decorator was applied
     // FIXME: figure out how to find file containing call site of decorator
     const entry = props.entry || guessEntrypoint(null);
+    const handler = props.handler || wrapped.name;
 
     const meta: IFunctionMetadata = {
       ...props,
       entry,
+      handler,
       requestHandlerFunc: wrapped,
     };
 
