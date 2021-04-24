@@ -1,9 +1,18 @@
+// app
 export { JetKitCdkApp } from "./app";
+
+// cdk
 export { CrudApi as CrudApiConstruct } from "./cdk/api/crud";
 export { ResourceGenerator as ResourceGeneratorConstruct } from "./cdk/generator";
+// convient CDK utilities to have
+export { CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2";
+export { Duration } from "@aws-cdk/core";
+
+// api
 export { CrudApiBase } from "./api/crud";
 export { ApiBase, APIEvent } from "./api/base";
 
+// metadata
 export { CrudApi, Route, SubRoute, WrappableConstructor } from "./registry";
 export {
   setMetadata,
@@ -17,9 +26,8 @@ export {
   MetadataTarget,
 } from "./metadata";
 
-// convient CDK utilities to have
-export { CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2";
-export { Duration } from "@aws-cdk/core";
+// database
+export { BaseModel } from "./database/baseModel";
 
 // breaking API change version
 export const JETKIT_VERSION_MAJOR = 0;

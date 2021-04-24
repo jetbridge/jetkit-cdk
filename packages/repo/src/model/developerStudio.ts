@@ -1,12 +1,12 @@
-import { Column, OneToMany, Entity } from "typeorm"
-import { BaseModel } from "./baseModel"
-import { Game } from "./game"
+import { Column, OneToMany, Entity } from "typeorm";
+import { BaseModel } from "@jetkit/cdk";
+import { Game } from "./game";
 
 @Entity()
 export class DeveloperStudio extends BaseModel {
-    @Column({ nullable: true })
-    name: string
+  @Column({ nullable: true })
+  name: string;
 
-    @OneToMany(() => Game, (game) => game.developerStudio)
-    games: Game[]
+  @OneToMany(() => Game, (game) => game.developerStudio)
+  games: Game[];
 }

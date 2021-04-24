@@ -36,7 +36,7 @@ export async function queryHandler(event: APIEvent) {
   });
 }
 // define route & lambda
-export const blargRoute = Route({
+export const queryRoute = Route({
   path: "/blargle",
   memorySize: 1024,
 })(queryHandler);

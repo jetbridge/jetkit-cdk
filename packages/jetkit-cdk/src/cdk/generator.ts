@@ -43,19 +43,19 @@ export class ResourceGenerator extends Construct {
 
   generateConstructsForResource(resource: MetadataTarget) {
     this.generateConstructsForClass(resource);
-    this.generateConstructsForFunction(resource);
+    this.generateConstructsForFunction(resource as RequestHandler);
   }
 
   /**
    * Create function handler for a simple routed function.
    */
-  generateConstructsForFunction(resource: MetadataTarget) {
-    const funcMeta = getRouteMetadata(resource as RequestHandler);
+  generateConstructsForFunction(resource: RequestHandler) {
+    const funcMeta = getRouteMetadata(resource);
     if (!funcMeta) return;
 
     const { requestHandlerFunc, ...rest } = funcMeta;
     const name = requestHandlerFunc.name;
-    new ApiConstruct(this, `Func${name}`, {
+    new ApiConstruct(this, `Func-${name}`, {
       httpApi: this.httpApi,
       entry: funcMeta.entry,
       ...rest,
@@ -72,7 +72,7 @@ export class ResourceGenerator extends Construct {
     let crudApiConstruct: undefined | CrudApiConstruct;
     if (crudApi) {
       const name = crudApi.apiClass.name;
-      crudApiConstruct = new CrudApiConstruct(this, `Class${name}`, {
+      crudApiConstruct = new CrudApiConstruct(this, `Class-${name}`, {
         httpApi: this.httpApi,
         ...crudApi,
       });
