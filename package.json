@@ -1,6 +1,6 @@
 {
   "name": "@jetkit/cdk",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "Cloud-native serverless development mini-framework",
   "main": "build/index.js",
   "types": "build/index.d.ts",
