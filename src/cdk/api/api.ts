@@ -21,7 +21,7 @@ export interface ApiProps extends NodejsFunctionProps {
   methods?: HttpMethod[];
 }
 
-export class Api extends Construct {
+export class ApiView extends Construct {
   handlerFunction: NodejsFunction;
   lambdaApiIntegration: LambdaProxyIntegration;
   httpApi: HttpApi;

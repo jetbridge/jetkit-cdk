@@ -6,18 +6,17 @@
  * API routes and lambda function handlers.
  */
 
+import { HttpApi } from "@aws-cdk/aws-apigatewayv2";
 import { Construct } from "@aws-cdk/core";
-import { CrudApi as CrudApiConstruct } from "./api/crud";
-import { Api as ApiConstruct } from "./api/api";
+import { RequestHandler } from "../api/base";
 import {
-  getCrudApiMetadata,
+  getApiViewMetadata,
   getRouteMetadata,
   getSubRouteMetadata,
   MetadataTarget,
 } from "../metadata";
-import { HttpApi } from "@aws-cdk/aws-apigatewayv2";
+import { ApiView as ApiViewConstruct } from "./api/api";
 import { SubRouteApi } from "./api/subRoute";
-import { RequestHandler } from "../api/base";
 
 interface ResourceGeneratorProps {
   resources: MetadataTarget[];
@@ -55,7 +54,7 @@ export class ResourceGenerator extends Construct {
 
     const { requestHandlerFunc, ...rest } = funcMeta;
     const name = requestHandlerFunc.name;
-    new ApiConstruct(this, `Func-${name}`, {
+    new ApiViewConstruct(this, `Func-${name}`, {
       httpApi: this.httpApi,
       entry: funcMeta.entry,
       ...rest,
@@ -67,14 +66,14 @@ export class ResourceGenerator extends Construct {
    * routed methods inside it.
    */
   generateConstructsForClass(resource: MetadataTarget) {
-    // CRUD API
-    const crudApi = getCrudApiMetadata(resource);
-    let crudApiConstruct: undefined | CrudApiConstruct;
-    if (crudApi) {
-      const name = crudApi.apiClass.name;
-      crudApiConstruct = new CrudApiConstruct(this, `Class-${name}`, {
+    // API view
+    const apiViewMeta = getApiViewMetadata(resource);
+    let apiViewConstruct: undefined | ApiViewConstruct;
+    if (apiViewMeta) {
+      const name = apiViewMeta.apiClass.name;
+      apiViewConstruct = new ApiViewConstruct(this, `Class-${name}`, {
         httpApi: this.httpApi,
-        ...crudApi,
+        ...apiViewMeta,
       });
     }
 
@@ -86,9 +85,9 @@ export class ResourceGenerator extends Construct {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { path: metaPath, propertyKey, ...metaRest } = meta;
 
-        if (!crudApiConstruct)
+        if (!apiViewConstruct)
           throw new Error(
-            `${resource} defines SubRoute but no enclosing @CrudApi class found`
+            `${resource} defines SubRoute but no enclosing @ApiView class found`
           );
 
         // TODO: include parent api class name in id
@@ -97,7 +96,7 @@ export class ResourceGenerator extends Construct {
         new SubRouteApi(this, `SubRoute-${meta.propertyKey}`, {
           path,
           ...metaRest,
-          parentApi: crudApiConstruct,
+          parentApi: apiViewConstruct,
         });
       });
     }

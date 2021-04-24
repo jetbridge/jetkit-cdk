@@ -4,16 +4,16 @@ import "@aws-cdk/assert/jest";
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2";
 import { Stack } from "@aws-cdk/core";
 import { ResourceGeneratorConstruct } from "..";
-import { AlbumCrudApi, blargleFunc, blargleFuncInner } from "./sampleApp";
+import { AlbumApi, topSongsHandler, topSongsFuncInner } from "./sampleApp";
 
-describe("@CrudApi construct generation", () => {
+describe("@ApiView construct generation", () => {
   const stack = new Stack();
   const httpApi = new HttpApi(stack, "API");
 
   // should create routes on httpApi
   // and lambda handler function
   new ResourceGeneratorConstruct(stack, "Gen", {
-    resources: [AlbumCrudApi],
+    resources: [AlbumApi],
     httpApi,
   });
 
@@ -46,13 +46,18 @@ describe("@SubRoute construct generation", () => {
   // should create routes on httpApi
   // and lambda handler function
   new ResourceGeneratorConstruct(stack, "Gen", {
-    resources: [AlbumCrudApi],
+    resources: [AlbumApi],
     httpApi,
   });
 
-  it("generates APIGW routes", () => {
+  it("generates APIGW DELETE route", () => {
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
-      RouteKey: "PATCH /album/test",
+      RouteKey: "DELETE /album/{albumId}/like",
+    });
+  });
+  it("generates APIGW POST route", () => {
+    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
+      RouteKey: "POST /album/{albumId}/like",
     });
   });
 });
@@ -64,13 +69,13 @@ describe("@Route construct generation", () => {
   // should create routes on httpApi
   // and lambda handler function
   new ResourceGeneratorConstruct(stack, "Gen", {
-    resources: [blargleFunc, blargleFuncInner],
+    resources: [topSongsHandler, topSongsFuncInner],
     httpApi,
   });
 
   it("generates endpoints for standalone functions", () => {
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
-      RouteKey: "PUT /blargle",
+      RouteKey: "PUT /top-songs",
     });
     expect(stack).toHaveResource("AWS::Lambda::Function", {
       Environment: {
@@ -79,7 +84,7 @@ describe("@Route construct generation", () => {
           AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
         },
       },
-      Handler: "index.blargleFunc",
+      Handler: "index.topSongsHandler",
       MemorySize: 384,
       Runtime: "nodejs14.x",
     });
@@ -87,7 +92,7 @@ describe("@Route construct generation", () => {
 
   it("generates endpoints for wrapped functions", () => {
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
-      RouteKey: "PUT /blargleInner",
+      RouteKey: "PUT /top-songs-inner",
     });
     expect(stack).toHaveResource("AWS::Lambda::Function", {
       Environment: {
@@ -96,7 +101,7 @@ describe("@Route construct generation", () => {
           AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
         },
       },
-      Handler: "index.blargleFuncInner",
+      Handler: "index.topSongsHandler",
       MemorySize: 384,
       Runtime: "nodejs14.x",
     });

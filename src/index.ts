@@ -3,7 +3,9 @@ export { JetKitCdkApp } from "./app";
 
 // cdk
 export { CrudApi as CrudApiConstruct } from "./cdk/api/crud";
+export { ApiView as ApiViewConstruct } from "./cdk/api/api";
 export { ResourceGenerator as ResourceGeneratorConstruct } from "./cdk/generator";
+
 // convient CDK utilities to have
 export { CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2";
 export { Duration } from "@aws-cdk/core";
@@ -21,10 +23,10 @@ export {
   setMemberMetadata,
   getMetadataKeys,
   getSubRouteMetadata,
+  getApiViewMetadata,
+  setApiViewMetadata,
   getCrudApiMetadata,
   setCrudApiMetadata,
-  getApiViewMetadata as getApiMetadata,
-  setApiViewMetadata as setApiMetadata,
   MetadataTarget,
 } from "./metadata";
 

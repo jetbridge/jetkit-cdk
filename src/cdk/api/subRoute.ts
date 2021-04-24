@@ -1,10 +1,10 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 import { Construct } from "@aws-cdk/core";
-import { Api } from "./api";
+import { ApiView } from "./api";
 
 interface ISubRouteApiProps {
   methods?: HttpMethod[];
-  parentApi: Api;
+  parentApi: ApiView;
   path: string;
 }
 

@@ -6,7 +6,7 @@ This module provides tools for defining RESTful API views with code
 and generating cloud infrastructure using [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/home.html).
 
 ![CI](https://github.com/TypeStrong/typedoc/workflows/CI/badge.svg)
-![NPM Version](https://badge.fury.io/js/typedoc.svg)
+![NPM Version](https://badge.fury.io/js/jetkit-cdk.svg)
 
 ## Documentation
 
@@ -16,8 +16,14 @@ For more detailed documentation, the changelog, and TypeDoc documentation render
 
 TypeDoc runs on Node.js and is available as a NPM package.
 
-```text
-npm install typedoc --save-dev
+```shell
+npm install @jetkit/cdk
 ```
 
-## Usage
+# Examples
+
+## API View
+```typescript
+
+
+```

@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// Wrappers for getting/setting metadata on classes and class properties
 
+/**
+ * Wrappers for getting/setting metadata on classes and class properties
+ */
+import "reflect-metadata";
 import { ApiViewBase, RequestHandler } from "./api/base";
 import { BaseModel } from "./database/baseModel";
 import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs";
@@ -34,7 +37,7 @@ export type ApiMetadataMap<V extends IApiMetadata> = Map<string, V>;
 export type MetadataTarget = RequestHandler | MetadataTargetConstructor;
 
 /**
- * Metadata describing any API route and function.
+ * Metadata describing any API route and lambda function.
  */
 export interface IApiMetadata extends NodejsFunctionProps {
   path: string;
@@ -47,6 +50,13 @@ export interface IApiMetadata extends NodejsFunctionProps {
  */
 export interface IFunctionMetadata extends IApiMetadata {
   requestHandlerFunc: RequestHandler;
+}
+
+/**
+ * APIView class.
+ */
+export interface IApiViewClassMetadata extends IApiMetadata {
+  apiClass: MetadataTargetConstructor;
 }
 
 /**
@@ -95,10 +105,12 @@ export const getMetadataKeys = (target: MetadataTarget, key: string | symbol) =>
 // API view
 export const getApiViewMetadata = (
   cls: MetadataTarget
-): IApiMetadata | undefined =>
+): IApiViewClassMetadata | undefined =>
   getMemberMetadata(cls, JK_V2_METADATA_API_VIEW_KEY);
-export const setApiViewMetadata = (cls: MetadataTarget, value: IApiMetadata) =>
-  setMemberMetadata(cls, JK_V2_METADATA_API_VIEW_KEY, value);
+export const setApiViewMetadata = (
+  cls: MetadataTarget,
+  value: IApiViewClassMetadata
+) => setMemberMetadata(cls, JK_V2_METADATA_API_VIEW_KEY, value);
 
 // CRUD API
 export const getCrudApiMetadata = (

@@ -4,12 +4,13 @@ import fs from "fs";
 import { ApiViewBase, RequestHandler } from "./api/base";
 import {
   getSubRouteMetadata,
-  ICrudApiMetadata,
+  IApiMetadata,
+  IApiViewClassMetadata,
   IFunctionMetadata,
   ISubRouteApiMetadata,
   MetadataTarget,
   MetadataTargetConstructor,
-  setCrudApiMetadata,
+  setApiViewMetadata,
   setRouteMetadata,
   setSubRouteMetadata,
 } from "./metadata";
@@ -46,20 +47,20 @@ function guessEntrypoint(functionName: string | null): string {
 /**
  * Define API view class routing properties.
  *
- * Adds metadata used when generating API route and lambda function.
+ * Saves metadata on the class for generation of CDK resources.
  */
-export function ApiView(opts: Omit<ICrudApiMetadata, "apiClass">) {
+export function ApiView(opts: Omit<IApiMetadata, "apiClass">) {
   if (!opts.entry) opts.entry = guessEntrypoint("ApiView");
 
   // return decorator
   return function <T extends MetadataTargetConstructor>(constructor: T) {
     // save metadata
-    const meta: ICrudApiMetadata = {
+    const meta: IApiViewClassMetadata = {
       ...opts,
       apiClass: constructor,
     };
 
-    setCrudApiMetadata(constructor, meta);
+    setApiViewMetadata(constructor, meta);
     return constructor;
   };
 }
@@ -75,8 +76,9 @@ export interface IRouteProps extends NodejsFunctionProps {
 
 /**
  * Add a route to an Api view.
- * Use this on class methods that are inside a @CrudApi class.
+ * Use this on class methods that are inside an @ApiView class.
  *
+ * Saves metadata on the method for generation of CDK resources.
  */
 export function SubRoute({ path, methods }: IRouteProps) {
   return function (
@@ -115,6 +117,16 @@ export function SubRoute({ path, methods }: IRouteProps) {
   };
 }
 
+/**
+ * Defines a route and lambda handler for a function.
+ *
+ * Saves metadata on the function for generation of CDK resources.
+ *
+ * N.B. in order for the lambda entry handler to locate your function it must be named and exported
+ * or you can manually provide the name of the exported handler in `props.handler`.
+ * @param props configure route and any other lambda function properties including memory allocation and environment variables.
+ * @returns
+ */
 export function Route(props: IRouteProps) {
   return (wrapped: RequestHandler) => {
     // here we figure out the entrypoint path and function handler name:

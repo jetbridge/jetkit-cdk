@@ -1,24 +1,18 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 import {
-  getCrudApiMetadata,
+  getApiViewMetadata,
   getRouteMetadata,
   getSubRouteMetadata,
 } from "../metadata";
-import {
-  Album,
-  AlbumCrudApi,
-  blargleFunc,
-  blargleFuncInner,
-} from "./sampleApp";
+import { AlbumApi, topSongsFuncInner, topSongsHandler } from "./sampleApp";
 
 describe("Metadata decorators", () => {
-  describe("@CrudApi decorator", () => {
+  describe("@ApiView decorator", () => {
     it("stores metadata", () => {
-      expect(getCrudApiMetadata(AlbumCrudApi)).toMatchObject({
-        apiClass: AlbumCrudApi,
+      expect(getApiViewMetadata(AlbumApi)).toMatchObject({
+        apiClass: AlbumApi,
         entry: /sample-app.ts$/,
         memorySize: 512,
-        model: Album,
         path: "/album",
         environment: {
           LOG_LEVEL: "DEBUG",
@@ -30,26 +24,26 @@ describe("Metadata decorators", () => {
   describe("@SubRoute decorator", () => {
     it("stores metadata for subroutes", () => {
       // get meta
-      const methodMeta = getSubRouteMetadata(AlbumCrudApi);
+      const methodMeta = getSubRouteMetadata(AlbumApi);
       const expectedMeta = {
-        propertyKey: "test",
-        requestHandlerFunc: AlbumCrudApi.prototype.test,
-        path: "/test",
-        methods: [HttpMethod.PATCH],
+        propertyKey: "like",
+        requestHandlerFunc: AlbumApi.prototype.like,
+        path: "/{albumId}/like",
+        methods: [HttpMethod.POST, HttpMethod.DELETE],
       };
       expect(methodMeta.size).toBe(1);
-      expect(methodMeta.get("test")).toMatchObject(expectedMeta);
+      expect(methodMeta.get("like")).toMatchObject(expectedMeta);
     });
   });
 
   describe("Route()", () => {
     it("stores metadata on functions with separate Route() call", () => {
-      const funcMeta = getRouteMetadata(blargleFunc);
+      const funcMeta = getRouteMetadata(topSongsHandler);
       expect(funcMeta).toMatchObject({
         entry: /test\/sampleApp.ts$/,
-        handler: "blargleFunc",
-        requestHandlerFunc: blargleFunc,
-        path: "/blargle",
+        handler: "topSongsHandler",
+        requestHandlerFunc: topSongsHandler,
+        path: "/top-songs",
         methods: [HttpMethod.PUT],
         environment: {
           LOG_LEVEL: "WARN",
@@ -57,12 +51,12 @@ describe("Metadata decorators", () => {
       });
     });
     it("stores metadata on functions wrapped with Route()", () => {
-      const funcMeta = getRouteMetadata(blargleFuncInner);
+      const funcMeta = getRouteMetadata(topSongsFuncInner);
       expect(funcMeta).toMatchObject({
         entry: /test\/sampleApp.ts$/,
-        handler: "blargleFuncInner",
-        requestHandlerFunc: blargleFuncInner,
-        path: "/blargleInner",
+        handler: "topSongsFuncInner",
+        requestHandlerFunc: topSongsFuncInner,
+        path: "/top-songs-inner",
         methods: [HttpMethod.PUT],
         environment: {
           LOG_LEVEL: "WARN",
