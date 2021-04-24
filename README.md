@@ -20,7 +20,7 @@ Optional support for TypeORM using the Aurora Serverless Data API and convenient
 
 ## Documentation
 
-...
+Guides and API reference can be found at [https://jetbridge.github.io/jetkit-cdk/](https://jetbridge.github.io/jetkit-cdk/).
 
 ## Installation
 
