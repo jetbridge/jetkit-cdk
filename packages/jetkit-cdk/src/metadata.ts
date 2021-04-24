@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Wrappers for getting/setting metadata on classes and class properties
 
-import { ApiBase, RequestHandler } from "./api/base";
+import { ApiView, RequestHandler } from "./api/base";
 import { WrappableConstructor, WrappedConstructor } from "./registry";
 import { BaseModel } from "demo-repo";
 import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs";
@@ -24,7 +24,7 @@ export const JK_V2_METADATA_ROUTE_KEY = Symbol.for("jk:v2:metadata:route");
 export type ApiMetadataMap<V extends IApiMetadata> = Map<string, V>;
 
 // what types of objects can have metadata attached?
-export type MetadataTarget = WrappedConstructor | RequestHandler | ApiBase;
+export type MetadataTarget = WrappedConstructor | RequestHandler | ApiView;
 
 export interface IApiMetadata extends NodejsFunctionProps {
   path: string;

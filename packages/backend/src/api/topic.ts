@@ -1,4 +1,4 @@
-import { CrudApiBase, CrudApi, Route, SubRoute, APIEvent } from "@jetkit/cdk";
+import { CrudApiView, CrudApi, Route, SubRoute, APIEvent } from "@jetkit/cdk";
 import { Column, Entity } from "typeorm";
 import { BaseModel } from "demo-repo";
 import { APIGatewayProxyHandlerV2 } from "aws-lambda";
@@ -19,7 +19,7 @@ export class Topic extends BaseModel {
   memorySize: 512,
   // handler: "TopicCrudApi.dispatch",
 })
-export class TopicCrudApi extends CrudApiBase {
+export class TopicCrudApi extends CrudApiView {
   @SubRoute({ path: "/test" })
   async test() {
     return "Testerino";
@@ -36,7 +36,7 @@ export async function queryHandler(event: APIEvent) {
   });
 }
 // define route & lambda
-export const queryRoute = Route({
+Route({
   path: "/blargle",
   memorySize: 1024,
 })(queryHandler);

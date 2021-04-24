@@ -1,7 +1,7 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs";
 import fs from "fs";
-import { ApiBase, RequestHandler } from "./api/base";
+import { ApiView, RequestHandler } from "./api/base";
 import {
   getSubRouteMetadata,
   ICrudApiMetadata,
@@ -20,9 +20,9 @@ import { findDefiningFile } from "./util/function";
  */
 
 // probably not needed types
-export type WrappableConstructor = typeof ApiBase;
+export type WrappableConstructor = typeof ApiView;
 export interface WrappedConstructor {
-  new (...args: unknown[]): ApiBase;
+  new (...args: unknown[]): ApiView;
 }
 
 function guessEntrypoint(functionName: string | null): string {
@@ -76,7 +76,7 @@ export interface IRouteProps extends NodejsFunctionProps {
  */
 export function SubRoute({ path, methods }: IRouteProps) {
   return function (
-    target: ApiBase, // parent class
+    target: ApiView, // parent class
     propertyKey: string,
     descriptor: RoutePropertyDescriptor
   ) {

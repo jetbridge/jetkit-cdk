@@ -1,6 +1,6 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 import { APIGatewayProxyHandlerV2 } from "aws-lambda";
-import { BaseModel } from "@jetkit/cdk";
+import { BaseModel } from "../database/baseModel";
 import { Column, Entity } from "typeorm";
 import { APIEvent } from "../api/base";
 import { CrudApiView } from "../api/crud/base";
@@ -22,7 +22,7 @@ export class Album extends BaseModel {
     LOG_LEVEL: "DEBUG",
   },
 })
-export class AlbumCrudApi extends CrudApiBase {
+export class AlbumCrudApi extends CrudApiView {
   // custom endpoint in the view
   @SubRoute({
     path: "/test",
