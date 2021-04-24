@@ -3,7 +3,7 @@ export { JetKitCdkApp } from "./app"
 
 // cdk
 export { CrudApi as CrudApiConstruct } from "./cdk/api/crud"
-export { ApiView as ApiViewConstruct } from "./cdk/api/api"
+export { ApiView as ApiViewConstruct, ApiProps as ApiViewConstructProps } from "./cdk/api/api"
 export { ResourceGenerator as ResourceGeneratorConstruct } from "./cdk/generator"
 
 // convient CDK utilities to have

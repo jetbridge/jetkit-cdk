@@ -47,6 +47,7 @@ import { ApiView, Route, SubRoute } from "../registry"
   environment: {
     LOG_LEVEL: "DEBUG",
   },
+  bundling: { minify: true, metafile: true, sourceMap: true },
 })
 export class AlbumApi extends ApiViewBase {
   // custom endpoint in the view

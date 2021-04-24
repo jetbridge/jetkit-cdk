@@ -5,10 +5,14 @@ import { NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { Construct } from "@aws-cdk/core"
 
 export interface ApiProps extends NodejsFunctionProps {
-  // top-level API
+  /**
+   * API Gateway HTTP API
+   */
   httpApi: HttpApi
 
-  // route
+  /**
+   * Route
+   */
   path?: string
 
   methods?: HttpMethod[]
