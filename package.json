@@ -16,7 +16,7 @@
     "build": "tsc",
     "docs": "typedoc",
     "prepare": "husky install",
-    "prepack": "npm build"
+    "prepack": "npm run build"
   },
   "author": "",
   "license": "MIT",
