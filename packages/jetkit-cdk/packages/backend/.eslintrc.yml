@@ -1,0 +1,4 @@
+env:
+  browser: false
+ignorePatterns:
+  - "jest.config.js"

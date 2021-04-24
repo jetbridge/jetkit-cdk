@@ -1,0 +1,28 @@
+[build]
+  publish = "packages/frontend/build/"
+  # ghetto build & link in core module until netlify supports npm v7
+  command = """
+  npm i -g typescript@4.0.3 && \
+  cd packages/core && \
+  npm i && \
+  npm run build && \
+  cd ../frontend && \
+  npm i ../core && \
+  npm i && \
+  npm run build
+  """
+
+[context.branch-deploy.environment]
+  NODE_ENV = "development"
+[context.deploy-preview]
+  NODE_ENV = "development"
+
+[context.production]
+  [context.production.environment]
+    # REACT_APP_BASE_URL = "https://api.foo.com/prd"
+
+# for react-router
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

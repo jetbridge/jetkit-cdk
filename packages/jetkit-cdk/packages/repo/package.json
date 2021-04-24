@@ -1,0 +1,36 @@
+{
+  "name": "demo-repo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src/**/*.ts",
+    "db:init:local": "npm run db:dropcreatedb && npm run db:migrate && npm run seed:run",
+    "db:init:remote:dev": "npm run db:migrate && npm run seed:run",
+    "db:dropcreatedb": "dropdb <%= title %> --if-exists && createdb <%= title %>",
+    "db:dropcreatedb:test": "dropdb <%= title %>_test --if-exists && createdb <%= title %>_test",
+    "db:migrate:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n $name",
+    "db:migrate": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config",
+    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
+  },
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "class-validator": "^0.12.2",
+    "ts-node": "^9.0.0",
+    "typeorm": "^0.2.26",
+    "typeorm-naming-strategies": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/faker": "^5.1.2",
+    "@types/node": "^14.11.8",
+    "@types/pg": "^7.14.5",
+    "faker": "^5.1.0",
+    "fishery": "^1.0.1"
+  }
+}
