@@ -96,13 +96,21 @@
 <span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">APIEvent</span><span style="color: #000000">, </span><span style="color: #001080">ApiViewBase</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;../api/base&quot;</span>
 <span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">ApiView</span><span style="color: #000000">, </span><span style="color: #001080">Route</span><span style="color: #000000">, </span><span style="color: #001080">SubRoute</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;../registry&quot;</span>
 
-<span style="color: #000000">@</span><span style="color: #795E26">ApiView</span><span style="color: #000000">({</span>
-<span style="color: #000000">  </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/album&quot;</span><span style="color: #000000">,</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">lambdaOpts</span><span style="color: #000000"> = {</span>
 <span style="color: #000000">  </span><span style="color: #001080">memorySize:</span><span style="color: #000000"> </span><span style="color: #098658">512</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">entry:</span><span style="color: #000000"> </span><span style="color: #001080">__filename</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">bundling:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">minify:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">sourceMap:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">  },</span>
 <span style="color: #000000">  </span><span style="color: #001080">environment:</span><span style="color: #000000"> {</span>
 <span style="color: #000000">    </span><span style="color: #001080">LOG_LEVEL:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;DEBUG&quot;</span><span style="color: #000000">,</span>
 <span style="color: #000000">  },</span>
-<span style="color: #000000">  </span><span style="color: #001080">bundling:</span><span style="color: #000000"> { </span><span style="color: #001080">minify:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">, </span><span style="color: #001080">metafile:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">, </span><span style="color: #001080">sourceMap:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> },</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #000000">@</span><span style="color: #795E26">ApiView</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/album&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  ...</span><span style="color: #001080">lambdaOpts</span><span style="color: #000000">,</span>
 <span style="color: #000000">})</span>
 <span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">AlbumApi</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">ApiViewBase</span><span style="color: #000000"> {</span>
 <span style="color: #000000">  </span><span style="color: #008000">// custom endpoint in the view</span>
@@ -144,20 +152,14 @@
 <span style="color: #795E26">Route</span><span style="color: #000000">({</span>
 <span style="color: #000000">  </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/top-songs&quot;</span><span style="color: #000000">,</span>
 <span style="color: #000000">  </span><span style="color: #001080">methods:</span><span style="color: #000000"> [</span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">PUT</span><span style="color: #000000">],</span>
-<span style="color: #000000">  </span><span style="color: #001080">memorySize:</span><span style="color: #000000"> </span><span style="color: #098658">384</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">environment:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">LOG_LEVEL:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;WARN&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  },</span>
+<span style="color: #000000">  ...</span><span style="color: #001080">lambdaOpts</span><span style="color: #000000">,</span>
 <span style="color: #000000">})(</span><span style="color: #001080">topSongsHandler</span><span style="color: #000000">)</span>
 
 <span style="color: #008000">// alternate, uglier way of writing the same thing</span>
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">topSongsFuncInner</span><span style="color: #000000"> = </span><span style="color: #795E26">Route</span><span style="color: #000000">({</span>
 <span style="color: #000000">  </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/top-songs-inner&quot;</span><span style="color: #000000">,</span>
 <span style="color: #000000">  </span><span style="color: #001080">methods:</span><span style="color: #000000"> [</span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">PUT</span><span style="color: #000000">],</span>
-<span style="color: #000000">  </span><span style="color: #001080">memorySize:</span><span style="color: #000000"> </span><span style="color: #098658">384</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">environment:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">LOG_LEVEL:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;WARN&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  },</span>
+<span style="color: #000000">  ...</span><span style="color: #001080">lambdaOpts</span><span style="color: #000000">,</span>
 <span style="color: #000000">  </span><span style="color: #008000">// this function name should match the exported name</span>
 <span style="color: #000000">  </span><span style="color: #008000">// or you must specify the exported function name in `handler`</span>
 <span style="color: #000000">})(</span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">topSongsFuncInner</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000">: </span><span style="color: #267F99">APIEvent</span><span style="color: #000000">) {</span>
