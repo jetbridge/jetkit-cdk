@@ -28,7 +28,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - run: npm ci
-      # - run: npm test
+      - run: npm test
       - name: Automated Version Bump
         uses: "phips28/gh-action-bump-version@master"
         env:
