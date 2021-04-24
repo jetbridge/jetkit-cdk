@@ -1,9 +1,7 @@
 {
   "name": "demo-infra",
   "version": "0.1.0",
-  "bin": {
-    "cdk": "bin/cdk.js"
-  },
+  "private": true,
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",

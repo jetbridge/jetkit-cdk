@@ -2,6 +2,7 @@
   "name": "demo",
   "version": "1.0.0",
   "description": "",
+  "private": true,
   "scripts": {
     "start:core": "cd packages/core && npm start",
     "start:backend": "cd packages/backend && npm start",
