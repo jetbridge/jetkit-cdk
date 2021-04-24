@@ -15,7 +15,7 @@ export { CrudApiViewBase } from "./api/crud/base"
 export { ApiViewBase, APIEvent } from "./api/base"
 
 // metadata
-export { ApiView as CrudApi, Route, SubRoute } from "./registry"
+export { ApiView, Route, SubRoute } from "./registry"
 export {
   setMetadata,
   hasMemberMetadata,

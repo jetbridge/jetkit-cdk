@@ -37,12 +37,11 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: git clean -xfd
-      - name: Version and publish to npm
-        uses: bcomnes/npm-bump@v1.0.4
-        with:
-          git_email: mischa@jetbridge.com
-          git_username: ${{ github.actor }}
-          newversion: patch # ${{ github.event.inputs.newversion }}
-          push_version_commit: true # if your prePublishOnly step pushes git commits, you can omit this input or set it to false.
-          github_token: ${{ secrets.GITHUB_TOKEN }} # built in actions token.  Passed tp gh-release if in use.
-          npm_token: ${{ secrets.NPM_TOKEN }} # user set secret token generated at npm
+      - name: "Automated Version Bump"
+        uses: "phips28/gh-action-bump-version@master"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: mikeal/merge-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
