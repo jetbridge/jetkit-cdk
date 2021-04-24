@@ -30,11 +30,11 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm ci
       - run: npm test
-      - name: "Automated Version Bump"
+      - name: Automated Version Bump
         uses: "phips28/gh-action-bump-version@master"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: mikeal/merge-release@master
+      - name: Publish
+        run: npm publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
