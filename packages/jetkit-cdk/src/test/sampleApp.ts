@@ -1,6 +1,6 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 import { APIGatewayProxyHandlerV2 } from "aws-lambda";
-import { BaseModel } from "demo-repo";
+import { BaseModel } from "@jetkit/cdk";
 import { Column, Entity } from "typeorm";
 import { APIEvent } from "../api/base";
 import { CrudApiBase } from "../api/crud/base";
