@@ -6,6 +6,11 @@ import { Stack } from "@aws-cdk/core"
 import { ResourceGeneratorConstruct } from ".."
 import { AlbumApi, topSongsHandler, topSongsFuncInner } from "./sampleApp"
 
+const defaultEnvVars = {
+  NODE_OPTIONS: "--enable-source-maps",
+  AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
+}
+
 describe("@ApiView construct generation", () => {
   const stack = new Stack()
   const httpApi = new HttpApi(stack, "API")
@@ -31,8 +36,8 @@ describe("@ApiView construct generation", () => {
       Runtime: "nodejs14.x",
       Environment: {
         Variables: {
-          AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
           LOG_LEVEL: "DEBUG",
+          ...defaultEnvVars,
         },
       },
     })
@@ -81,7 +86,7 @@ describe("@Route construct generation", () => {
       Environment: {
         Variables: {
           LOG_LEVEL: "WARN",
-          AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
+          ...defaultEnvVars,
         },
       },
       Handler: "index.topSongsHandler",
@@ -98,7 +103,7 @@ describe("@Route construct generation", () => {
       Environment: {
         Variables: {
           LOG_LEVEL: "WARN",
-          AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
+          ...defaultEnvVars,
         },
       },
       Handler: "index.topSongsHandler",
