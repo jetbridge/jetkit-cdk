@@ -4,7 +4,7 @@
 
 import { ApiView, RequestHandler } from "./api/base";
 import { WrappableConstructor, WrappedConstructor } from "./registry";
-import { BaseModel } from "demo-repo";
+import { BaseModel } from "./database/baseModel";
 import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs";
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 
