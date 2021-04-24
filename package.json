@@ -4,7 +4,7 @@
   "description": "Cloud-native serverless development mini-framework",
   "main": "build/index.js",
   "types": "build/index.d.ts",
-  "type": "module",
+  "type": "commonjs",
   "private": false,
   "repository": {
     "type": "git",
