@@ -14,6 +14,11 @@ export interface ApiProps extends NodejsFunctionProps {
   methods?: HttpMethod[]
 }
 
+/**
+ * API endpoint CDK construct.
+ *
+ * Defines a route and Lambda function handler on an HttpApi.
+ */
 export class ApiView extends Construct {
   handlerFunction: NodejsFunction
   lambdaApiIntegration: LambdaProxyIntegration
@@ -46,7 +51,7 @@ export class ApiView extends Construct {
     this.addRoutes()
   }
 
-  addRoutes() {
+  private addRoutes() {
     // * /path -> lambda integration
     this.httpApi.addRoutes({
       path: this.path,

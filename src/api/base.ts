@@ -22,8 +22,38 @@ async function raiseNotAllowed(event: APIGatewayProxyEventV2) {
  *
  * @example
  * ```typescript
+ *@ApiView({
+ *  path: "/album",
+ *  memorySize: 512,
+ *  environment: {
+ *    LOG_LEVEL: "DEBUG",
+ *  },
+ *})
+ *export class AlbumApi extends ApiViewBase {
+ *  // custom endpoint in the view
+ *  @SubRoute({
+ *    path: "/{albumId}/like", // will be /album/123/like
+ *    methods: [HttpMethod.POST, HttpMethod.DELETE],
+ *    environment: {
+ *      LOG_LEVEL: "DEBUG",
+ *    },
+ *  })
+ *  async like(event: APIEvent) {
+ *    const albumId = event.pathParameters?.albumId
+ *    if (!albumId) throw badRequest("albumId is required in path")
  *
+ *    const method = event.requestContext.http.method
  *
+ *    // POST - mark album as liked
+ *    if (method == HttpMethod.POST) return `Liked album ${albumId}`
+ *    // DELETE - unmark album as liked
+ *    else if (method == HttpMethod.DELETE) return `Unliked album ${albumId}`
+ *    else return methodNotAllowed()
+ *  }
+ *
+ *  // define POST handler
+ *  post: APIGatewayProxyHandlerV2 = async () => "Created new album"
+ *}
  * ```
  */
 export class ApiViewBase {
