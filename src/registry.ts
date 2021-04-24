@@ -1,7 +1,7 @@
-import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
-import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs";
-import fs from "fs";
-import { ApiViewBase, RequestHandler } from "./api/base";
+import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
+import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
+import fs from "fs"
+import { ApiViewBase, RequestHandler } from "./api/base"
 import {
   getSubRouteMetadata,
   IApiMetadata,
@@ -13,8 +13,8 @@ import {
   setApiViewMetadata,
   setRouteMetadata,
   setSubRouteMetadata,
-} from "./metadata";
-import { findDefiningFile } from "./util/function";
+} from "./metadata"
+import { findDefiningFile } from "./util/function"
 
 /**
  * This module is responsible for attaching metadata to classes, methods, and properties to
@@ -30,18 +30,18 @@ import { findDefiningFile } from "./util/function";
  */
 function guessEntrypoint(functionName: string | null): string {
   // guess entrypoint file from caller
-  let guessedEntry;
+  let guessedEntry
   try {
-    guessedEntry = findDefiningFile(functionName);
+    guessedEntry = findDefiningFile(functionName)
   } catch (ex) {
-    console.error(ex);
+    console.error(ex)
   }
 
   if (!guessedEntry || !fs.existsSync(guessedEntry))
     throw new Error(
       `Could not determine entry point where ${functionName} was called, please define path to entrypoint file in "entry"`
-    );
-  return guessedEntry;
+    )
+  return guessedEntry
 }
 
 /**
@@ -50,7 +50,7 @@ function guessEntrypoint(functionName: string | null): string {
  * Saves metadata on the class for generation of CDK resources.
  */
 export function ApiView(opts: Omit<IApiMetadata, "apiClass">) {
-  if (!opts.entry) opts.entry = guessEntrypoint("ApiView");
+  if (!opts.entry) opts.entry = guessEntrypoint("ApiView")
 
   // return decorator
   return function <T extends MetadataTargetConstructor>(constructor: T) {
@@ -58,20 +58,20 @@ export function ApiView(opts: Omit<IApiMetadata, "apiClass">) {
     const meta: IApiViewClassMetadata = {
       ...opts,
       apiClass: constructor,
-    };
+    }
 
-    setApiViewMetadata(constructor, meta);
-    return constructor;
-  };
+    setApiViewMetadata(constructor, meta)
+    return constructor
+  }
 }
 
 interface RoutePropertyDescriptor extends PropertyDescriptor {
-  value?: RequestHandler;
+  value?: RequestHandler
 }
 
 export interface IRouteProps extends NodejsFunctionProps {
-  path: string;
-  methods?: HttpMethod[];
+  path: string
+  methods?: HttpMethod[]
 }
 
 /**
@@ -87,11 +87,8 @@ export function SubRoute({ path, methods }: IRouteProps) {
     descriptor: RoutePropertyDescriptor
   ) {
     // get method
-    const method = descriptor.value;
-    if (!method)
-      throw new Error(
-        `Empty handler found on ${propertyKey} of ${target} using @SubRoute`
-      );
+    const method = descriptor.value
+    if (!method) throw new Error(`Empty handler found on ${propertyKey} of ${target} using @SubRoute`)
 
     // method handler metadata
     const meta: ISubRouteApiMetadata = {
@@ -99,22 +96,22 @@ export function SubRoute({ path, methods }: IRouteProps) {
       propertyKey,
       methods,
       path,
-    };
+    }
 
     // update target class subroutes metadata map with our metadata
 
     // assuming the function signature is correct - no way to check at runtime
-    const metadataTarget: MetadataTarget = target.constructor as RequestHandler;
+    const metadataTarget: MetadataTarget = target.constructor as RequestHandler
 
     // get map
-    const subroutesMap = getSubRouteMetadata(metadataTarget);
+    const subroutesMap = getSubRouteMetadata(metadataTarget)
 
     // add to map
-    subroutesMap.set(propertyKey, meta);
+    subroutesMap.set(propertyKey, meta)
 
     // set metadata
-    setSubRouteMetadata(metadataTarget, subroutesMap);
-  };
+    setSubRouteMetadata(metadataTarget, subroutesMap)
+  }
 }
 
 /**
@@ -133,8 +130,8 @@ export function Route(props: IRouteProps) {
 
     // super terrible hack to guess where decorator was applied
     // FIXME: figure out how to find file containing call site of decorator
-    const entry = props.entry || guessEntrypoint(null);
-    const handler = props.handler || wrapped.name;
+    const entry = props.entry || guessEntrypoint(null)
+    const handler = props.handler || wrapped.name
     if (!handler) {
       // we need to know the name of the function and it needs to be exported
       // in order to define the lambda entrypoint handler.
@@ -144,7 +141,7 @@ export function Route(props: IRouteProps) {
       // decorated but I've no clue how to get that.
       throw new Error(
         `This function is unnamed. Please define it using "async function foo() {...}" or explicitly pass the exported handler name to Route().\nFunction:\n${wrapped}\n\nThis is necessary to define the entrypoint handler name for the lambda function configuration.`
-      );
+      )
     }
 
     const meta: IFunctionMetadata = {
@@ -152,9 +149,9 @@ export function Route(props: IRouteProps) {
       entry,
       handler,
       requestHandlerFunc: wrapped,
-    };
+    }
 
-    setRouteMetadata(wrapped, meta);
-    return wrapped;
-  };
+    setRouteMetadata(wrapped, meta)
+    return wrapped
+  }
 }

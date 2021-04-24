@@ -1,24 +1,20 @@
-import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
-import { Construct } from "@aws-cdk/core";
-import { ApiView } from "./api";
+import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
+import { Construct } from "@aws-cdk/core"
+import { ApiView } from "./api"
 
 interface ISubRouteApiProps {
-  methods?: HttpMethod[];
-  parentApi: ApiView;
-  path: string;
+  methods?: HttpMethod[]
+  parentApi: ApiView
+  path: string
 }
 
 export class SubRouteApi extends Construct {
-  constructor(
-    scope: Construct,
-    id: string,
-    { methods, parentApi, path }: ISubRouteApiProps
-  ) {
-    super(scope, id);
+  constructor(scope: Construct, id: string, { methods, parentApi, path }: ISubRouteApiProps) {
+    super(scope, id)
 
     // join parent path and our path together
-    if (!path.startsWith("/")) path = `/${path}`;
-    path = parentApi.path + path;
+    if (!path.startsWith("/")) path = `/${path}`
+    path = parentApi.path + path
 
     // add our route to the existing parent API's handler function
     // it will know how to find our method and call it
@@ -26,6 +22,6 @@ export class SubRouteApi extends Construct {
       path,
       methods: methods || [HttpMethod.ANY],
       integration: parentApi.lambdaApiIntegration,
-    });
+    })
   }
 }

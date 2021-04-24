@@ -1,4 +1,4 @@
-import { ApiViewBase } from "../base";
+import { ApiViewBase } from "../base"
 
 // TODO: add C R U D features
 /**

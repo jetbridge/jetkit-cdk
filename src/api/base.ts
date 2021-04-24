@@ -1,25 +1,15 @@
-import HttpError, { methodNotAllowed, notFound } from "@jdpnielsen/http-error";
-import {
-  APIGatewayProxyEventV2,
-  APIGatewayProxyHandlerV2,
-  APIGatewayProxyResultV2,
-  Context,
-} from "aws-lambda";
-import { safeHas } from "../util/type";
+import HttpError, { methodNotAllowed, notFound } from "@jdpnielsen/http-error"
+import { APIGatewayProxyEventV2, APIGatewayProxyHandlerV2, APIGatewayProxyResultV2, Context } from "aws-lambda"
+import { safeHas } from "../util/type"
 
 // HTTP request payload
-export { APIGatewayProxyEventV2 as APIEvent };
+export { APIGatewayProxyEventV2 as APIEvent }
 
-export type RequestHandler = (
-  event: APIGatewayProxyEventV2,
-  context?: Context
-) => Promise<APIGatewayProxyResultV2>;
+export type RequestHandler = (event: APIGatewayProxyEventV2, context?: Context) => Promise<APIGatewayProxyResultV2>
 
 async function raiseNotAllowed(event: APIGatewayProxyEventV2) {
-  throw methodNotAllowed(
-    `${event.requestContext.http.method.toUpperCase()} not allowed`
-  );
-  return "error";
+  throw methodNotAllowed(`${event.requestContext.http.method.toUpperCase()} not allowed`)
+  return "error"
 }
 
 /**
@@ -37,36 +27,36 @@ async function raiseNotAllowed(event: APIGatewayProxyEventV2) {
  * ```
  */
 export class ApiViewBase {
-  routeMethodMap?: Map<string, RequestHandler>;
+  routeMethodMap?: Map<string, RequestHandler>
 
-  get: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
-  post: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
-  put: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
-  patch: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
-  delete: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
+  get: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event)
+  post: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event)
+  put: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event)
+  patch: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event)
+  delete: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event)
 
   findHandler(event: APIGatewayProxyEventV2): RequestHandler | undefined {
-    const httpContext = event.requestContext.http;
-    const httpMethod = httpContext.method.toLowerCase();
-    const { path } = httpContext;
-    console.log("ROUTE KEY", path);
+    const httpContext = event.requestContext.http
+    const httpMethod = httpContext.method.toLowerCase()
+    const { path } = httpContext
+    console.log("ROUTE KEY", path)
 
     // do fancy dispatching...
     // either via route decorator or function name
-    console.log(`route method map on ${this}:`, this.routeMethodMap);
+    console.log(`route method map on ${this}:`, this.routeMethodMap)
     if (this.routeMethodMap) {
-      const routeHandlerMethod = this.routeMethodMap.get(path);
-      console.log("found routeHandlerMethod", routeHandlerMethod);
+      const routeHandlerMethod = this.routeMethodMap.get(path)
+      console.log("found routeHandlerMethod", routeHandlerMethod)
 
-      if (routeHandlerMethod) return routeHandlerMethod;
+      if (routeHandlerMethod) return routeHandlerMethod
     }
 
     // look up handler based on method
     if (safeHas(httpMethod, this)) {
-      return this[httpMethod];
+      return this[httpMethod]
     }
 
-    return undefined;
+    return undefined
   }
 
   /**
@@ -74,28 +64,25 @@ export class ApiViewBase {
    *
    * @param event APIGW Lambda event
    */
-  dispatch = async (
-    event: APIGatewayProxyEventV2,
-    context: Context
-  ): Promise<APIGatewayProxyResultV2> => {
-    const { http } = event.requestContext;
-    const { path, method } = http;
+  dispatch = async (event: APIGatewayProxyEventV2, context: Context): Promise<APIGatewayProxyResultV2> => {
+    const { http } = event.requestContext
+    const { path, method } = http
 
-    console.debug(`➠ ${method} ${path}`);
+    console.debug(`➠ ${method} ${path}`)
 
     try {
-      const handlerMethod = this.findHandler(event);
-      console.log("handlermethod", handlerMethod);
+      const handlerMethod = this.findHandler(event)
+      console.log("handlermethod", handlerMethod)
 
       if (handlerMethod) {
-        return await handlerMethod(event, context);
+        return await handlerMethod(event, context)
       } else {
-        throw notFound(`The path ${path} was not found`);
+        throw notFound(`The path ${path} was not found`)
       }
     } catch (ex) {
-      return this.handleDispatchError(ex);
+      return this.handleDispatchError(ex)
     }
-  };
+  }
 
   /**
    * Transform error caught during dispatch to an HTTP response.
@@ -103,17 +90,17 @@ export class ApiViewBase {
   handleDispatchError(ex: Error): APIGatewayProxyResultV2 {
     if (ex instanceof HttpError) {
       // HTTP error handler
-      console.warn(ex);
+      console.warn(ex)
       return {
         statusCode: ex.statusCode,
         body: ex.message || ex.name,
-      };
+      }
     }
 
     // unhandled exception
-    console.error(ex);
+    console.error(ex)
     return {
       statusCode: 500,
-    };
+    }
   }
 }

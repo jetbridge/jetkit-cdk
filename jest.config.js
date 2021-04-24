@@ -3,8 +3,7 @@ module.exports = {
   moduleNameMapper: {
     // Mocks out all these file formats when tests are run
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
-    "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-      "identity-obj-proxy",
+    "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "identity-obj-proxy",
   },
   roots: ["./src"],
   globals: {
@@ -16,12 +15,6 @@ module.exports = {
   transform: {
     "^.+\\.tsx?$": "ts-jest",
   },
-  transformIgnorePatterns: [
-    "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$",
-  ],
-  collectCoverageFrom: [
-    "**/*.{ts,tsx}",
-    "!**/node_modules/**",
-    "!**/vendor/**",
-  ],
-};
+  transformIgnorePatterns: ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$"],
+  collectCoverageFrom: ["**/*.{ts,tsx}", "!**/node_modules/**", "!**/vendor/**"],
+}

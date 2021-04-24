@@ -1,19 +1,16 @@
-import {
-  CorsPreflightOptions,
-  CorsHttpMethod,
-} from "@aws-cdk/aws-apigatewayv2";
-import { BundlingOptions } from "@aws-cdk/aws-lambda-nodejs";
-import { App as CdkApp } from "@aws-cdk/core";
+import { CorsPreflightOptions, CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2"
+import { BundlingOptions } from "@aws-cdk/aws-lambda-nodejs"
+import { App as CdkApp } from "@aws-cdk/core"
 
 export interface IAppProps {
-  config?: IAppConfig;
+  config?: IAppConfig
 }
 
 export interface IAppConfig {
   api: {
-    corsPreflight?: CorsPreflightOptions;
-  };
-  bundle?: BundlingOptions;
+    corsPreflight?: CorsPreflightOptions
+  }
+  bundle?: BundlingOptions
 }
 
 /**
@@ -23,14 +20,14 @@ export interface IAppConfig {
  * utilities like configuration and logging.
  */
 export class JetKitCdkApp extends CdkApp {
-  config: IAppConfig;
+  config: IAppConfig
 
   constructor({ config }: IAppProps) {
-    super();
+    super()
 
     // initialize app
-    if (config) this.config = config;
+    if (config) this.config = config
   }
 }
 
-export { CorsPreflightOptions, CorsHttpMethod };
+export { CorsPreflightOptions, CorsHttpMethod }

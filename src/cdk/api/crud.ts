@@ -1,3 +1,3 @@
-import { ApiView } from "./api";
+import { ApiView } from "./api"
 
 export class CrudApi extends ApiView {}

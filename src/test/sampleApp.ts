@@ -1,8 +1,8 @@
-import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
-import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error";
-import { APIGatewayProxyHandlerV2 } from "aws-lambda";
-import { APIEvent, ApiViewBase } from "../api/base";
-import { ApiView, Route, SubRoute } from "../registry";
+import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
+import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
+import { APIGatewayProxyHandlerV2 } from "aws-lambda"
+import { APIEvent, ApiViewBase } from "../api/base"
+import { ApiView, Route, SubRoute } from "../registry"
 
 @ApiView({
   path: "/album",
@@ -21,20 +21,20 @@ export class AlbumApi extends ApiViewBase {
     },
   })
   async like(event: APIEvent) {
-    const albumId = event.pathParameters?.albumId;
-    if (!albumId) throw badRequest("albumId is required in path");
+    const albumId = event.pathParameters?.albumId
+    if (!albumId) throw badRequest("albumId is required in path")
 
-    const method = event.requestContext.http.method;
+    const method = event.requestContext.http.method
 
     // POST - mark album as liked
-    if (method == HttpMethod.POST) return `Liked album ${albumId}`;
+    if (method == HttpMethod.POST) return `Liked album ${albumId}`
     // DELETE - unmark album as liked
-    else if (method == HttpMethod.DELETE) return `Unliked album ${albumId}`;
-    else return methodNotAllowed();
+    else if (method == HttpMethod.DELETE) return `Unliked album ${albumId}`
+    else return methodNotAllowed()
   }
 
   // define POST handler
-  post: APIGatewayProxyHandlerV2 = async () => "Created new album";
+  post: APIGatewayProxyHandlerV2 = async () => "Created new album"
 }
 
 // a simple standalone function with a route attached
@@ -42,7 +42,7 @@ export async function topSongsHandler(event: APIEvent) {
   return JSON.stringify({
     message: "function route",
     rawQueryString: event.rawQueryString,
-  });
+  })
 }
 // define route and lambda properties
 Route({
@@ -52,7 +52,7 @@ Route({
   environment: {
     LOG_LEVEL: "WARN",
   },
-})(topSongsHandler);
+})(topSongsHandler)
 
 // alternate, uglier way of writing the same thing
 const topSongsFuncInner = Route({
@@ -65,6 +65,6 @@ const topSongsFuncInner = Route({
   // this function name should match the exported name
   // or you must specify the exported function name in `handler`
 })(async function topSongsFuncInner(event: APIEvent) {
-  return `cookies: ${event.cookies}`;
-});
-export { topSongsFuncInner };
+  return `cookies: ${event.cookies}`
+})
+export { topSongsFuncInner }
