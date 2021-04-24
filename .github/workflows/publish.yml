@@ -1,12 +1,6 @@
 name: Version and Release
 
 on:
-  workflow_dispatch:
-    inputs:
-      newversion:
-        description: "Semantic Version Bump Type (major minor patch)"
-        required: false
-        default: patch
   push:
     branches:
       - master
@@ -36,7 +30,6 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm ci
       - run: npm test
-      - run: git clean -xfd
       - name: "Automated Version Bump"
         uses: "phips28/gh-action-bump-version@master"
         env:
