@@ -9,6 +9,7 @@ export { ResourceGenerator as ResourceGeneratorConstruct } from "./cdk/generator
 // convient CDK utilities to have
 export { CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2"
 export { Duration } from "@aws-cdk/core"
+export { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 
 // api
 export { CrudApiViewBase } from "./api/crud/base"

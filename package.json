@@ -1,6 +1,6 @@
 {
   "name": "@jetkit/cdk",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -22,11 +22,6 @@
   "license": "MIT",
   "devDependencies": {
     "@aws-cdk/assert": "^1.100.0",
-    "@aws-cdk/aws-apigatewayv2": "^1.100.0",
-    "@aws-cdk/aws-apigatewayv2-integrations": "^1.100.0",
-    "@aws-cdk/aws-lambda": "^1.100.0",
-    "@aws-cdk/aws-lambda-nodejs": "^1.100.0",
-    "@aws-cdk/core": "1.100.0",
     "@babel/plugin-proposal-decorators": "^7.13.15",
     "@tsconfig/node14": "^1.0.0",
     "@types/aws-lambda": "^8.10.75",
@@ -43,6 +38,11 @@
     "typedoc": "^0.20.36"
   },
   "dependencies": {
+    "@aws-cdk/aws-apigatewayv2": "^1.100.0",
+    "@aws-cdk/aws-apigatewayv2-integrations": "^1.100.0",
+    "@aws-cdk/aws-lambda": "^1.100.0",
+    "@aws-cdk/aws-lambda-nodejs": "^1.100.0",
+    "@aws-cdk/core": "1.100.0",
     "@jdpnielsen/http-error": "^1.2.0",
     "aws-lambda": "^1.0.6",
     "callsites": "^3.1.0",

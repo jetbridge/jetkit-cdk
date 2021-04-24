@@ -49,7 +49,7 @@ function guessEntrypoint(functionName: string | null): string {
  *
  * Saves metadata on the class for generation of CDK resources.
  */
-export function ApiView(opts: Omit<IApiMetadata, "apiClass">) {
+export function ApiView(opts: IApiMetadata) {
   if (!opts.entry) opts.entry = guessEntrypoint("ApiView")
 
   // return decorator
