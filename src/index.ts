@@ -1,5 +1,5 @@
 // app
-export { JetKitCdkApp } from "./app"
+export { JetKitCdkApp } from "./app/cdk"
 
 // cdk
 export { CrudApi as CrudApiConstruct } from "./cdk/api/crud"
