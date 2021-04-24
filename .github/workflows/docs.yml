@@ -17,7 +17,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ env.node_version }}
-          registry-url: "https://registry.npmjs.org"
       - uses: actions/cache@v2
         with:
           path: ~/.npm
@@ -28,8 +27,7 @@ jobs:
       - name: Generate docs
         run: npm run docs
       - name: Publish generated content to GitHub Pages
-        uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
+        uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
-          dir: docs
           branch: gh-pages
-          token: ${{ secrets.GITHUB_TOKEN }}
+          folder: docs
