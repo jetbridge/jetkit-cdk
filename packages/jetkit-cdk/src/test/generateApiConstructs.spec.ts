@@ -4,7 +4,7 @@ import "@aws-cdk/assert/jest";
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2";
 import { Stack } from "@aws-cdk/core";
 import { ResourceGeneratorConstruct } from "..";
-import { AlbumCrudApi, blargleFunc } from "./sampleApp";
+import { AlbumCrudApi, blargleFunc, blargleFuncInner } from "./sampleApp";
 
 describe("@CrudApi construct generation", () => {
   const stack = new Stack();
@@ -64,11 +64,11 @@ describe("@Route construct generation", () => {
   // should create routes on httpApi
   // and lambda handler function
   new ResourceGeneratorConstruct(stack, "Gen", {
-    resources: [blargleFunc],
+    resources: [blargleFunc, blargleFuncInner],
     httpApi,
   });
 
-  it("generates APIGW routes", () => {
+  it("generates endpoints for standalone functions", () => {
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "PUT /blargle",
     });
@@ -80,6 +80,23 @@ describe("@Route construct generation", () => {
         },
       },
       Handler: "index.blargleFunc",
+      MemorySize: 384,
+      Runtime: "nodejs14.x",
+    });
+  });
+
+  it("generates endpoints for wrapped functions", () => {
+    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
+      RouteKey: "PUT /blargleInner",
+    });
+    expect(stack).toHaveResource("AWS::Lambda::Function", {
+      Environment: {
+        Variables: {
+          LOG_LEVEL: "WARN",
+          AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
+        },
+      },
+      Handler: "index.blargleFuncInner",
       MemorySize: 384,
       Runtime: "nodejs14.x",
     });
