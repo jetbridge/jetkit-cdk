@@ -8,7 +8,8 @@ on:
         required: false
         default: patch
   push:
-    - master
+    branches:
+      - master
 
 env:
   node_version: 15
