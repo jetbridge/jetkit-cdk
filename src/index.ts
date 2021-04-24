@@ -12,21 +12,16 @@ export { Duration } from "@aws-cdk/core"
 
 // api
 export { CrudApiViewBase } from "./api/crud/base"
-export { ApiViewBase, APIEvent } from "./api/base"
+export { ApiViewBase, APIEvent, RequestHandler } from "./api/base"
 
 // metadata
-export { ApiView, Route, SubRoute } from "./registry"
+export { ApiView, Route, SubRoute, IRouteProps } from "./registry"
 export {
-  setMetadata,
-  hasMemberMetadata,
-  getMemberMetadata,
-  setMemberMetadata,
-  getMetadataKeys,
-  getSubRouteMetadata,
-  getApiViewMetadata,
-  setApiViewMetadata,
-  getCrudApiMetadata,
-  setCrudApiMetadata,
+  IApiMetadata,
+  IApiViewClassMetadata,
+  ICrudApiMetadata,
+  IFunctionMetadata,
+  ISubRouteApiMetadata,
   MetadataTarget,
 } from "./metadata"
 
