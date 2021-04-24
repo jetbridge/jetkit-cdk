@@ -2,9 +2,9 @@
   "name": "@jetkit/cdk",
   "version": "0.0.22",
   "description": "Cloud-native serverless development mini-framework",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
-  "type": "commonjs",
+  "types": "build/esm/index.d.ts",
+  "main": "./build/cjs/index.js",
+  "module": "./build/esm/index.js",
   "private": false,
   "repository": {
     "type": "git",
@@ -14,7 +14,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "start": "tsc -w",
-    "build": "tsc",
+    "build": "npm run tsc",
+    "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
     "docs": "typedoc",
     "prepare": "husky install",
     "prepack": "npm run build"

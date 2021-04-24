@@ -1,8 +1,8 @@
 import { HttpApi, HttpMethod, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
-import { Runtime } from "@aws-cdk/aws-lambda"
 import { NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { Construct } from "@aws-cdk/core"
+import { Node14Func } from "../lambda/node14func"
 
 export interface ApiProps extends NodejsFunctionProps {
   /**
@@ -34,13 +34,7 @@ export class ApiView extends Construct {
     super(scope, id)
 
     // lambda handler
-    this.handlerFunction = new NodejsFunction(this, `ApiHandler${id}`, {
-      runtime: Runtime.NODEJS_14_X,
-      ...rest,
-
-      // https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/node-reusing-connections.html
-      awsSdkConnectionReuse: true,
-    })
+    this.handlerFunction = new Node14Func(this, "Api${id}", rest)
 
     // lambda API integration
     this.lambdaApiIntegration = new LambdaProxyIntegration({

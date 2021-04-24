@@ -2,10 +2,11 @@
   "extends": "@tsconfig/node14/tsconfig.json",
 
   "compilerOptions": {
-    "outDir": "./build", // redirect output structure to the directory
+    "outDir": "./build/esm", // redirect output structure to the directory
 
     // I hope this works someday!
-    //"module": "es2020" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
+    "module": "es2020" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
+    "esModuleInterop": true, // needed?
 
     "moduleResolution": "node", // modern
     "resolveJsonModule": true, // allow importing JSON filees
