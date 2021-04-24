@@ -3,7 +3,7 @@ import { APIGatewayProxyHandlerV2 } from "aws-lambda";
 import { BaseModel } from "@jetkit/cdk";
 import { Column, Entity } from "typeorm";
 import { APIEvent } from "../api/base";
-import { CrudApiBase } from "../api/crud/base";
+import { CrudApiView } from "../api/crud/base";
 import { CrudApi, Route, SubRoute } from "../registry";
 
 // sample database model

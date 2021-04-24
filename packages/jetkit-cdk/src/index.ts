@@ -9,8 +9,8 @@ export { CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2";
 export { Duration } from "@aws-cdk/core";
 
 // api
-export { CrudApiBase } from "./api/crud";
-export { ApiBase, APIEvent } from "./api/base";
+export { CrudApiView } from "./api/crud/base";
+export { ApiView, APIEvent } from "./api/base";
 
 // metadata
 export { CrudApi, Route, SubRoute, WrappableConstructor } from "./registry";

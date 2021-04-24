@@ -1,1 +1,0 @@
-export { CrudApiBase } from "./base";
