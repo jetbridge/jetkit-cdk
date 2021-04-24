@@ -36,6 +36,7 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm ci
       - run: npm test
+      - run: git clean -xfd
       - name: Version and publish to npm
         uses: bcomnes/npm-bump@v1.0.4
         with:
