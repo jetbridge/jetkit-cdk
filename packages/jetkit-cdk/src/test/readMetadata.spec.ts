@@ -9,7 +9,7 @@ import {
   Album,
   AlbumCrudApi,
   blargleFunc,
-  wrappedBlargleFunc,
+  blargleFuncInner,
 } from "./sampleApp";
 
 describe("Metadata decorators", () => {
@@ -48,12 +48,26 @@ describe("Metadata decorators", () => {
   });
 
   describe("Route()", () => {
-    it("stores metadata on functions", () => {
-      const funcMeta = getRouteMetadata(wrappedBlargleFunc);
+    it("stores metadata on functions with separate Route() call", () => {
+      const funcMeta = getRouteMetadata(blargleFunc);
       expect(funcMeta).toMatchObject({
         entry: /test\/sampleApp.ts$/,
+        handler: "blargleFunc",
         requestHandlerFunc: blargleFunc,
         path: "/blargle",
+        methods: [HttpMethod.PUT],
+        environment: {
+          LOG_LEVEL: "WARN",
+        },
+      });
+    });
+    it("stores metadata on functions wrapped with Route()", () => {
+      const funcMeta = getRouteMetadata(blargleFuncInner);
+      expect(funcMeta).toMatchObject({
+        entry: /test\/sampleApp.ts$/,
+        handler: "blargleFuncInner",
+        requestHandlerFunc: blargleFuncInner,
+        path: "/blargleInner",
         methods: [HttpMethod.PUT],
         environment: {
           LOG_LEVEL: "WARN",

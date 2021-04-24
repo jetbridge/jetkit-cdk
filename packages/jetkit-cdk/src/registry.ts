@@ -1,4 +1,6 @@
-import { findDefiningFile } from "./util/function";
+import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
+import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs";
+import fs from "fs";
 import { ApiBase, RequestHandler } from "./api/base";
 import {
   getSubRouteMetadata,
@@ -10,9 +12,7 @@ import {
   setRouteMetadata,
   setSubRouteMetadata,
 } from "./metadata";
-import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
-import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs";
-import fs from "fs";
+import { findDefiningFile } from "./util/function";
 
 /**
  * This module is responsible for attaching metadata to classes, methods, and properties to
@@ -113,10 +113,23 @@ export function SubRoute({ path, methods }: IRouteProps) {
 
 export function Route(props: IRouteProps) {
   return (wrapped: RequestHandler) => {
+    // here we figure out the entrypoint path and function handler name:
+
     // super terrible hack to guess where decorator was applied
     // FIXME: figure out how to find file containing call site of decorator
     const entry = props.entry || guessEntrypoint(null);
     const handler = props.handler || wrapped.name;
+    if (!handler) {
+      // we need to know the name of the function and it needs to be exported
+      // in order to define the lambda entrypoint handler.
+      // if the function was defined anonymously (e.g. `const foo = async(event) => {...}`)
+      // then the name will be blank.
+      // it would be better to get the _exported_ name of the function that is being
+      // decorated but I've no clue how to get that.
+      throw new Error(
+        `This function is unnamed. Please define it using "async function foo() {...}" or explicitly pass the exported handler name to Route().\nFunction:\n${wrapped}\n\nThis is necessary to define the entrypoint handler name for the lambda function configuration.`
+      );
+    }
 
     const meta: IFunctionMetadata = {
       ...props,

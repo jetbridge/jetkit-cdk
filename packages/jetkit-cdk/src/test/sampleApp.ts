@@ -1,10 +1,10 @@
-import { CrudApi, Route, SubRoute } from "../registry";
-import { CrudApiBase } from "../api/crud/base";
-import { RequestHandler } from "../api/base";
-import { Column, Entity } from "typeorm";
-import { BaseModel } from "demo-repo";
-import { APIGatewayProxyHandlerV2 } from "aws-lambda";
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
+import { APIGatewayProxyHandlerV2 } from "aws-lambda";
+import { BaseModel } from "demo-repo";
+import { Column, Entity } from "typeorm";
+import { APIEvent } from "../api/base";
+import { CrudApiBase } from "../api/crud/base";
+import { CrudApi, Route, SubRoute } from "../registry";
 
 // sample database model
 @Entity()
@@ -40,13 +40,13 @@ export class AlbumCrudApi extends CrudApiBase {
 }
 
 // a simple standalone function with a route attached
-export const blargleFunc: RequestHandler = async (event) => {
+export async function blargleFunc(event: APIEvent) {
   return JSON.stringify({
     message: "function route",
     rawQueryString: event.rawQueryString,
   });
-};
-export const wrappedBlargleFunc = Route({
+}
+Route({
   path: "/blargle",
   methods: [HttpMethod.PUT],
   memorySize: 384,
@@ -54,3 +54,16 @@ export const wrappedBlargleFunc = Route({
     LOG_LEVEL: "WARN",
   },
 })(blargleFunc);
+
+// alternate, uglier way of writing the same thing
+const blargleFuncInner = Route({
+  path: "/blargleInner",
+  methods: [HttpMethod.PUT],
+  memorySize: 384,
+  environment: {
+    LOG_LEVEL: "WARN",
+  },
+})(async function blargleFuncInner(event: APIEvent) {
+  return `cookies: ${event.cookies}`;
+});
+export { blargleFuncInner };

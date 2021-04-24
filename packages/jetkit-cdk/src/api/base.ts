@@ -7,6 +7,9 @@ import {
 } from "aws-lambda";
 import { safeHas } from "../util/type";
 
+// HTTP request payload
+export { APIGatewayProxyEventV2 as APIEvent };
+
 export type RequestHandler = (
   event: APIGatewayProxyEventV2,
   context?: Context

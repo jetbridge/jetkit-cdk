@@ -1,10 +1,10 @@
 // Test that the correct AWS resources are generated from metadata
 
-import { HttpApi, HttpMethod } from "@aws-cdk/aws-apigatewayv2";
+import "@aws-cdk/assert/jest";
+import { HttpApi } from "@aws-cdk/aws-apigatewayv2";
 import { Stack } from "@aws-cdk/core";
 import { ResourceGeneratorConstruct } from "..";
 import { AlbumCrudApi, blargleFunc } from "./sampleApp";
-import "@aws-cdk/assert/jest";
 
 describe("@CrudApi construct generation", () => {
   const stack = new Stack();

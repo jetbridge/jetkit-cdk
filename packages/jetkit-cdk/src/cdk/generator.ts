@@ -47,14 +47,14 @@ export class ResourceGenerator extends Construct {
   }
 
   /**
-   * Create function handleer for a simple routed function.
+   * Create function handler for a simple routed function.
    */
   generateConstructsForFunction(resource: MetadataTarget) {
     const funcMeta = getRouteMetadata(resource as RequestHandler);
     if (!funcMeta) return;
 
     const { requestHandlerFunc, ...rest } = funcMeta;
-    const name = requestHandlerFunc?.name;
+    const name = requestHandlerFunc.name;
     new ApiConstruct(this, `Func${name}`, {
       httpApi: this.httpApi,
       entry: funcMeta.entry,
@@ -83,6 +83,7 @@ export class ResourceGenerator extends Construct {
     const subRoutes = getSubRouteMetadata(resource);
     if (subRoutes) {
       subRoutes.forEach((meta, subroutePath) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { path: metaPath, propertyKey, ...metaRest } = meta;
 
         if (!crudApiConstruct)
