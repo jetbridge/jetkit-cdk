@@ -9,8 +9,7 @@
     "test:watch": "jest --watch",
     "start": "tsc -w",
     "build": "tsc",
-    "docs": "typedoc",
-    "prepare": "husky install"
+    "docs": "typedoc"
   },
   "author": "",
   "license": "MIT",
@@ -23,7 +22,6 @@
     "@types/node": "10.17.27",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "aws-cdk": "1.100.0",
-    "husky": "^6.0.0",
     "jest": "^26.4.2",
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
