@@ -80,16 +80,23 @@
 								<li class="tsd-kind-class"><a href="classes/resourcegeneratorconstruct.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Construct</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-external">
+						<section class="tsd-index-section ">
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/apievent.html" class="tsd-kind-icon">APIEvent</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/iapimetadata.html" class="tsd-kind-icon">IApi<wbr>Metadata</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/iapiviewclassmetadata.html" class="tsd-kind-icon">IApi<wbr>View<wbr>Class<wbr>Metadata</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/icrudapimetadata.html" class="tsd-kind-icon">ICrud<wbr>Api<wbr>Metadata</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/ifunctionmetadata.html" class="tsd-kind-icon">IFunction<wbr>Metadata</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/irouteprops.html" class="tsd-kind-icon">IRoute<wbr>Props</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/isubrouteapimetadata.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Api<wbr>Metadata</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias"><a href="modules.html#metadatatarget" class="tsd-kind-icon">Metadata<wbr>Target</a></li>
+								<li class="tsd-kind-type-alias"><a href="modules.html#requesthandler" class="tsd-kind-icon">Request<wbr>Handler</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -98,16 +105,6 @@
 								<li class="tsd-kind-function"><a href="modules.html#apiview" class="tsd-kind-icon">Api<wbr>View</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#route" class="tsd-kind-icon">Route</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#subroute" class="tsd-kind-icon">Sub<wbr>Route</a></li>
-								<li class="tsd-kind-function"><a href="modules.html#getapiviewmetadata" class="tsd-kind-icon">get<wbr>Api<wbr>View<wbr>Metadata</a></li>
-								<li class="tsd-kind-function"><a href="modules.html#getcrudapimetadata" class="tsd-kind-icon">get<wbr>Crud<wbr>Api<wbr>Metadata</a></li>
-								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#getmembermetadata" class="tsd-kind-icon">get<wbr>Member<wbr>Metadata</a></li>
-								<li class="tsd-kind-function"><a href="modules.html#getmetadatakeys" class="tsd-kind-icon">get<wbr>Metadata<wbr>Keys</a></li>
-								<li class="tsd-kind-function"><a href="modules.html#getsubroutemetadata" class="tsd-kind-icon">get<wbr>Sub<wbr>Route<wbr>Metadata</a></li>
-								<li class="tsd-kind-function"><a href="modules.html#hasmembermetadata" class="tsd-kind-icon">has<wbr>Member<wbr>Metadata</a></li>
-								<li class="tsd-kind-function"><a href="modules.html#setapiviewmetadata" class="tsd-kind-icon">set<wbr>Api<wbr>View<wbr>Metadata</a></li>
-								<li class="tsd-kind-function"><a href="modules.html#setcrudapimetadata" class="tsd-kind-icon">set<wbr>Crud<wbr>Api<wbr>Metadata</a></li>
-								<li class="tsd-kind-function"><a href="modules.html#setmembermetadata" class="tsd-kind-icon">set<wbr>Member<wbr>Metadata</a></li>
-								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#setmetadata" class="tsd-kind-icon">set<wbr>Metadata</a></li>
 							</ul>
 						</section>
 					</div>
@@ -118,12 +115,46 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="metadatatarget" class="tsd-anchor"></a>
 					<h3>Metadata<wbr>Target</h3>
-					<div class="tsd-signature tsd-kind-icon">Metadata<wbr>Target<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RequestHandler</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">MetadataTargetConstructor</span></div>
+					<div class="tsd-signature tsd-kind-icon">Metadata<wbr>Target<span class="tsd-signature-symbol">:</span> <a href="modules.html#requesthandler" class="tsd-signature-type" data-tsd-kind="Type alias">RequestHandler</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">MetadataTargetConstructor</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2740cde/src/metadata.ts#L31">src/metadata.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4afa926/src/metadata.ts#L31">src/metadata.ts:31</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias">
+					<a name="requesthandler" class="tsd-anchor"></a>
+					<h3>Request<wbr>Handler</h3>
+					<div class="tsd-signature tsd-kind-icon">Request<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="interfaces/apievent.html" class="tsd-signature-type" data-tsd-kind="Interface">APIEvent</a>, context<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Context</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">APIGatewayProxyResultV2</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4afa926/src/api/base.ts#L8">src/api/base.ts:8</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="interfaces/apievent.html" class="tsd-signature-type" data-tsd-kind="Interface">APIEvent</a>, context<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Context</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">APIGatewayProxyResultV2</span><span class="tsd-signature-symbol">&gt;</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>event: <a href="interfaces/apievent.html" class="tsd-signature-type" data-tsd-kind="Interface">APIEvent</a></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> context: <span class="tsd-signature-type">Context</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">APIGatewayProxyResultV2</span><span class="tsd-signature-symbol">&gt;</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -132,13 +163,13 @@
 					<a name="apiview" class="tsd-anchor"></a>
 					<h3>Api<wbr>View</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">Api<wbr>View<span class="tsd-signature-symbol">(</span>opts<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Omit</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IApiMetadata</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">&quot;apiClass&quot;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span>&lt;T&gt;<span class="tsd-signature-symbol">(</span>constructor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></li>
+						<li class="tsd-signature tsd-kind-icon">Api<wbr>View<span class="tsd-signature-symbol">(</span>opts<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Omit</span><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/iapimetadata.html" class="tsd-signature-type" data-tsd-kind="Interface">IApiMetadata</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">&quot;apiClass&quot;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span>&lt;T&gt;<span class="tsd-signature-symbol">(</span>constructor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2740cde/src/registry.ts#L52">src/registry.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4afa926/src/registry.ts#L52">src/registry.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -150,7 +181,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>opts: <span class="tsd-signature-type">Omit</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IApiMetadata</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">&quot;apiClass&quot;</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>opts: <span class="tsd-signature-type">Omit</span><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/iapimetadata.html" class="tsd-signature-type" data-tsd-kind="Interface">IApiMetadata</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">&quot;apiClass&quot;</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns &lt;T&gt;<span class="tsd-signature-symbol">(</span>constructor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></h4>
@@ -185,13 +216,13 @@
 					<a name="route" class="tsd-anchor"></a>
 					<h3>Route</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">Route<span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IRouteProps</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>wrapped<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RequestHandler</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">RequestHandler</span></li>
+						<li class="tsd-signature tsd-kind-icon">Route<span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><a href="interfaces/irouteprops.html" class="tsd-signature-type" data-tsd-kind="Interface">IRouteProps</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>wrapped<span class="tsd-signature-symbol">: </span><a href="modules.html#requesthandler" class="tsd-signature-type" data-tsd-kind="Type alias">RequestHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="modules.html#requesthandler" class="tsd-signature-type" data-tsd-kind="Type alias">RequestHandler</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2740cde/src/registry.ts#L127">src/registry.ts:127</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4afa926/src/registry.ts#L127">src/registry.ts:127</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -205,27 +236,27 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>props: <span class="tsd-signature-type">IRouteProps</span></h5>
+									<h5>props: <a href="interfaces/irouteprops.html" class="tsd-signature-type" data-tsd-kind="Interface">IRouteProps</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>configure route and any other lambda function properties including memory allocation and environment variables.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>wrapped<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RequestHandler</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">RequestHandler</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>wrapped<span class="tsd-signature-symbol">: </span><a href="modules.html#requesthandler" class="tsd-signature-type" data-tsd-kind="Type alias">RequestHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="modules.html#requesthandler" class="tsd-signature-type" data-tsd-kind="Type alias">RequestHandler</a></h4>
 							<ul class="tsd-parameters">
 								<li class="tsd-parameter-signature">
 									<ul class="tsd-signatures tsd-kind-type-literal">
-										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>wrapped<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RequestHandler</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RequestHandler</span></li>
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>wrapped<span class="tsd-signature-symbol">: </span><a href="modules.html#requesthandler" class="tsd-signature-type" data-tsd-kind="Type alias">RequestHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="modules.html#requesthandler" class="tsd-signature-type" data-tsd-kind="Type alias">RequestHandler</a></li>
 									</ul>
 									<ul class="tsd-descriptions">
 										<li class="tsd-description">
 											<h4 class="tsd-parameters-title">Parameters</h4>
 											<ul class="tsd-parameters">
 												<li>
-													<h5>wrapped: <span class="tsd-signature-type">RequestHandler</span></h5>
+													<h5>wrapped: <a href="modules.html#requesthandler" class="tsd-signature-type" data-tsd-kind="Type alias">RequestHandler</a></h5>
 												</li>
 											</ul>
-											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">RequestHandler</span></h4>
+											<h4 class="tsd-returns-title">Returns <a href="modules.html#requesthandler" class="tsd-signature-type" data-tsd-kind="Type alias">RequestHandler</a></h4>
 										</li>
 									</ul>
 								</li>
@@ -237,13 +268,13 @@
 					<a name="subroute" class="tsd-anchor"></a>
 					<h3>Sub<wbr>Route</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">Sub<wbr>Route<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IRouteProps</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><a href="classes/apiviewbase.html" class="tsd-signature-type" data-tsd-kind="Class">ApiViewBase</a>, propertyKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, descriptor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RoutePropertyDescriptor</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">Sub<wbr>Route<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><a href="interfaces/irouteprops.html" class="tsd-signature-type" data-tsd-kind="Interface">IRouteProps</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><a href="classes/apiviewbase.html" class="tsd-signature-type" data-tsd-kind="Class">ApiViewBase</a>, propertyKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, descriptor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RoutePropertyDescriptor</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2740cde/src/registry.ts#L83">src/registry.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4afa926/src/registry.ts#L83">src/registry.ts:83</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -256,7 +287,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>__namedParameters: <span class="tsd-signature-type">IRouteProps</span></h5>
+									<h5>__namedParameters: <a href="interfaces/irouteprops.html" class="tsd-signature-type" data-tsd-kind="Interface">IRouteProps</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><a href="classes/apiviewbase.html" class="tsd-signature-type" data-tsd-kind="Class">ApiViewBase</a>, propertyKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, descriptor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RoutePropertyDescriptor</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h4>
@@ -284,272 +315,6 @@
 									</ul>
 								</li>
 							</ul>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="getapiviewmetadata" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Api<wbr>View<wbr>Metadata</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Api<wbr>View<wbr>Metadata<span class="tsd-signature-symbol">(</span>cls<span class="tsd-signature-symbol">: </span><a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">IApiViewClassMetadata</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2740cde/src/metadata.ts#L90">src/metadata.ts:90</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>cls: <a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">IApiViewClassMetadata</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="getcrudapimetadata" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Crud<wbr>Api<wbr>Metadata</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Crud<wbr>Api<wbr>Metadata<span class="tsd-signature-symbol">(</span>cls<span class="tsd-signature-symbol">: </span><a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ICrudApiMetadata</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2740cde/src/metadata.ts#L96">src/metadata.ts:96</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>cls: <a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ICrudApiMetadata</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
-					<a name="getmembermetadata" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Member<wbr>Metadata</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Member<wbr>Metadata&lt;V&gt;<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a>, propertyKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">V</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2740cde/src/metadata.ts#L81">src/metadata.ts:81</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>V</h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>target: <a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></h5>
-								</li>
-								<li>
-									<h5>propertyKey: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">V</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="getmetadatakeys" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Metadata<wbr>Keys</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Metadata<wbr>Keys<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2740cde/src/metadata.ts#L87">src/metadata.ts:87</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>target: <a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></h5>
-								</li>
-								<li>
-									<h5>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="getsubroutemetadata" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Sub<wbr>Route<wbr>Metadata</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Sub<wbr>Route<wbr>Metadata<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ApiMetadataMap</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ISubRouteApiMetadata</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2740cde/src/metadata.ts#L102">src/metadata.ts:102</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>target: <a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ApiMetadataMap</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ISubRouteApiMetadata</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="hasmembermetadata" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> has<wbr>Member<wbr>Metadata</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">has<wbr>Member<wbr>Metadata<span class="tsd-signature-symbol">(</span>cls<span class="tsd-signature-symbol">: </span><a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a>, propertyKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">cls</span><span class="tsd-signature-symbol"> is </span><a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2740cde/src/metadata.ts#L78">src/metadata.ts:78</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>cls: <a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></h5>
-								</li>
-								<li>
-									<h5>propertyKey: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">cls</span><span class="tsd-signature-symbol"> is </span><a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="setapiviewmetadata" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> set<wbr>Api<wbr>View<wbr>Metadata</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Api<wbr>View<wbr>Metadata<span class="tsd-signature-symbol">(</span>cls<span class="tsd-signature-symbol">: </span><a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IApiViewClassMetadata</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2740cde/src/metadata.ts#L92">src/metadata.ts:92</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>cls: <a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></h5>
-								</li>
-								<li>
-									<h5>value: <span class="tsd-signature-type">IApiViewClassMetadata</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="setcrudapimetadata" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> set<wbr>Crud<wbr>Api<wbr>Metadata</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Crud<wbr>Api<wbr>Metadata<span class="tsd-signature-symbol">(</span>cls<span class="tsd-signature-symbol">: </span><a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ICrudApiMetadata</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2740cde/src/metadata.ts#L98">src/metadata.ts:98</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>cls: <a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></h5>
-								</li>
-								<li>
-									<h5>value: <span class="tsd-signature-type">ICrudApiMetadata</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="setmembermetadata" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> set<wbr>Member<wbr>Metadata</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Member<wbr>Metadata<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a>, propertyKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2740cde/src/metadata.ts#L84">src/metadata.ts:84</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>target: <a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></h5>
-								</li>
-								<li>
-									<h5>propertyKey: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span></h5>
-								</li>
-								<li>
-									<h5>value: <span class="tsd-signature-type">any</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
-					<a name="setmetadata" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> set<wbr>Metadata</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Metadata&lt;T&gt;<span class="tsd-signature-symbol">(</span>cls<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2740cde/src/metadata.ts#L74">src/metadata.ts:74</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>T<span class="tsd-signature-symbol">: </span><a href="modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>cls: <span class="tsd-signature-type">T</span></h5>
-								</li>
-								<li>
-									<h5>value: <span class="tsd-signature-type">any</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -595,8 +360,29 @@
 					<li class=" tsd-kind-interface tsd-is-external">
 						<a href="interfaces/apievent.html" class="tsd-kind-icon">APIEvent</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/iapimetadata.html" class="tsd-kind-icon">IApi<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/iapiviewclassmetadata.html" class="tsd-kind-icon">IApi<wbr>View<wbr>Class<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/icrudapimetadata.html" class="tsd-kind-icon">ICrud<wbr>Api<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ifunctionmetadata.html" class="tsd-kind-icon">IFunction<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irouteprops.html" class="tsd-kind-icon">IRoute<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/isubrouteapimetadata.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Api<wbr>Metadata</a>
+					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="modules.html#metadatatarget" class="tsd-kind-icon">Metadata<wbr>Target</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#requesthandler" class="tsd-kind-icon">Request<wbr>Handler</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#apiview" class="tsd-kind-icon">Api<wbr>View</a>
@@ -606,36 +392,6 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#subroute" class="tsd-kind-icon">Sub<wbr>Route</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#getapiviewmetadata" class="tsd-kind-icon">get<wbr>Api<wbr>View<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#getcrudapimetadata" class="tsd-kind-icon">get<wbr>Crud<wbr>Api<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="modules.html#getmembermetadata" class="tsd-kind-icon">get<wbr>Member<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#getmetadatakeys" class="tsd-kind-icon">get<wbr>Metadata<wbr>Keys</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#getsubroutemetadata" class="tsd-kind-icon">get<wbr>Sub<wbr>Route<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#hasmembermetadata" class="tsd-kind-icon">has<wbr>Member<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#setapiviewmetadata" class="tsd-kind-icon">set<wbr>Api<wbr>View<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#setcrudapimetadata" class="tsd-kind-icon">set<wbr>Crud<wbr>Api<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#setmembermetadata" class="tsd-kind-icon">set<wbr>Member<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="modules.html#setmetadata" class="tsd-kind-icon">set<wbr>Metadata</a>
 					</li>
 				</ul>
 			</nav>
@@ -655,6 +411,9 @@
 				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 		</div>
 	</div>
