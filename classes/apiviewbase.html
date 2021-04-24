@@ -75,8 +75,38 @@
 					Define custom sub-paths with @SubRoute().</p>
 					<dl class="tsd-comment-tags">
 						<dt>example</dt>
-						<dd><pre><code class="language-typescript">
+						<dd><pre><code class="language-typescript"><span style="color: #000000">@</span><span style="color: #795E26">ApiView</span><span style="color: #000000">({</span>
+<span style="color: #000000"> </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/album&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> </span><span style="color: #001080">memorySize:</span><span style="color: #000000"> </span><span style="color: #098658">512</span><span style="color: #000000">,</span>
+<span style="color: #000000"> </span><span style="color: #001080">environment:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">   </span><span style="color: #001080">LOG_LEVEL:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;DEBUG&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000"> },</span>
+<span style="color: #000000">})</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">AlbumApi</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">ApiViewBase</span><span style="color: #000000"> {</span>
+<span style="color: #000000"> </span><span style="color: #008000">// custom endpoint in the view</span>
+<span style="color: #000000"> @</span><span style="color: #795E26">SubRoute</span><span style="color: #000000">({</span>
+<span style="color: #000000">   </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/{albumId}/like&quot;</span><span style="color: #000000">, </span><span style="color: #008000">// will be /album/123/like</span>
+<span style="color: #000000">   </span><span style="color: #001080">methods:</span><span style="color: #000000"> [</span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">POST</span><span style="color: #000000">, </span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">DELETE</span><span style="color: #000000">],</span>
+<span style="color: #000000">   </span><span style="color: #001080">environment:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">     </span><span style="color: #001080">LOG_LEVEL:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;DEBUG&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">   },</span>
+<span style="color: #000000"> })</span>
+<span style="color: #000000"> </span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #795E26">like</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000">: </span><span style="color: #267F99">APIEvent</span><span style="color: #000000">) {</span>
+<span style="color: #000000">   </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">albumId</span><span style="color: #000000"> = </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">pathParameters</span><span style="color: #000000">?.</span><span style="color: #001080">albumId</span>
+<span style="color: #000000">   </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (!</span><span style="color: #001080">albumId</span><span style="color: #000000">) </span><span style="color: #AF00DB">throw</span><span style="color: #000000"> </span><span style="color: #795E26">badRequest</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;albumId is required in path&quot;</span><span style="color: #000000">)</span>
 
+<span style="color: #000000">   </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">method</span><span style="color: #000000"> = </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">requestContext</span><span style="color: #000000">.</span><span style="color: #001080">http</span><span style="color: #000000">.</span><span style="color: #001080">method</span>
+
+<span style="color: #000000">   </span><span style="color: #008000">// POST - mark album as liked</span>
+<span style="color: #000000">   </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">method</span><span style="color: #000000"> == </span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">POST</span><span style="color: #000000">) </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #A31515">`Liked album </span><span style="color: #0000FF">${</span><span style="color: #001080">albumId</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span>
+<span style="color: #000000">   </span><span style="color: #008000">// DELETE - unmark album as liked</span>
+<span style="color: #000000">   </span><span style="color: #AF00DB">else</span><span style="color: #000000"> </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">method</span><span style="color: #000000"> == </span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">DELETE</span><span style="color: #000000">) </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #A31515">`Unliked album </span><span style="color: #0000FF">${</span><span style="color: #001080">albumId</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span>
+<span style="color: #000000">   </span><span style="color: #AF00DB">else</span><span style="color: #000000"> </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #795E26">methodNotAllowed</span><span style="color: #000000">()</span>
+<span style="color: #000000"> }</span>
+
+<span style="color: #000000"> </span><span style="color: #008000">// define POST handler</span>
+<span style="color: #000000"> </span><span style="color: #795E26">post</span><span style="color: #000000">: </span><span style="color: #267F99">APIGatewayProxyHandlerV2</span><span style="color: #000000"> = </span><span style="color: #0000FF">async</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;Created new album&quot;</span>
+<span style="color: #000000">}</span>
 </code></pre>
 						</dd>
 					</dl>
@@ -152,7 +182,7 @@
 					<div class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">APIGatewayProxyHandlerV2</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4afa926/src/api/base.ts#L36">src/api/base.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/c33fee2/src/api/base.ts#L66">src/api/base.ts:66</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -162,7 +192,7 @@
 					<div class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">APIGatewayProxyHandlerV2</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4afa926/src/api/base.ts#L32">src/api/base.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/c33fee2/src/api/base.ts#L62">src/api/base.ts:62</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -172,7 +202,7 @@
 					<div class="tsd-signature tsd-kind-icon">patch<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">APIGatewayProxyHandlerV2</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4afa926/src/api/base.ts#L35">src/api/base.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/c33fee2/src/api/base.ts#L65">src/api/base.ts:65</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -182,7 +212,7 @@
 					<div class="tsd-signature tsd-kind-icon">post<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">APIGatewayProxyHandlerV2</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4afa926/src/api/base.ts#L33">src/api/base.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/c33fee2/src/api/base.ts#L63">src/api/base.ts:63</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -192,7 +222,7 @@
 					<div class="tsd-signature tsd-kind-icon">put<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">APIGatewayProxyHandlerV2</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4afa926/src/api/base.ts#L34">src/api/base.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/c33fee2/src/api/base.ts#L64">src/api/base.ts:64</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -202,7 +232,7 @@
 					<div class="tsd-signature tsd-kind-icon">route<wbr>Method<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../modules.html#requesthandler" class="tsd-signature-type" data-tsd-kind="Type alias">RequestHandler</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4afa926/src/api/base.ts#L30">src/api/base.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/c33fee2/src/api/base.ts#L60">src/api/base.ts:60</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -219,7 +249,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4afa926/src/api/base.ts#L67">src/api/base.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/c33fee2/src/api/base.ts#L97">src/api/base.ts:97</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -253,7 +283,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4afa926/src/api/base.ts#L38">src/api/base.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/c33fee2/src/api/base.ts#L68">src/api/base.ts:68</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -276,7 +306,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4afa926/src/api/base.ts#L90">src/api/base.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/c33fee2/src/api/base.ts#L120">src/api/base.ts:120</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -426,6 +456,9 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
 			</ul>
 		</div>
 	</div>
