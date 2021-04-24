@@ -4,6 +4,7 @@
   "description": "",
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "private": false,
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",

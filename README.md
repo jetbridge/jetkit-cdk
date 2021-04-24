@@ -5,8 +5,8 @@ An opinionated toolkit for building cloud-native serverless applications.
 This module provides tools for defining RESTful API views with code
 and generating cloud infrastructure using [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/home.html).
 
-![CI](https://github.com/TypeStrong/typedoc/workflows/CI/badge.svg)
-![NPM Version](https://badge.fury.io/js/jetkit-cdk.svg)
+[![Tests](https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml/badge.svg)](https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml)
+[![npm version](https://badge.fury.io/js/%40jetkit%2Fcdk.svg)](https://badge.fury.io/js/%40jetkit%2Fcdk)
 
 ## Documentation
 
