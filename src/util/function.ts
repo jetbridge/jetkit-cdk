@@ -8,6 +8,7 @@ export function findDefiningFile(fnName: string | null): string | null {
   let definingIndex
   const sites = callsites()
   for (const [index, site] of sites.entries()) {
+    console.log(`CALL SITE: ${site.getFunctionName()} - ${site.getFileName()}`)
     if (site.getFunctionName() === fnName) {
       // The next site is the site where the function was called
       definingIndex = index + 1
