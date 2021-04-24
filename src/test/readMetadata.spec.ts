@@ -3,7 +3,6 @@ import {
   getCrudApiMetadata,
   getRouteMetadata,
   getSubRouteMetadata,
-  hasCrudApiMetadata,
 } from "../metadata";
 import {
   Album,
@@ -14,10 +13,6 @@ import {
 
 describe("Metadata decorators", () => {
   describe("@CrudApi decorator", () => {
-    it("has metadata", () => {
-      expect(hasCrudApiMetadata(AlbumCrudApi)).toBeTruthy();
-    });
-
     it("stores metadata", () => {
       expect(getCrudApiMetadata(AlbumCrudApi)).toMatchObject({
         apiClass: AlbumCrudApi,

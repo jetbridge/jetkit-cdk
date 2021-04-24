@@ -2,17 +2,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Wrappers for getting/setting metadata on classes and class properties
 
-import { ApiView, RequestHandler } from "./api/base";
-import { WrappableConstructor, WrappedConstructor } from "./registry";
+import { ApiViewBase, RequestHandler } from "./api/base";
 import { BaseModel } from "./database/baseModel";
 import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs";
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 
+/**
+ * A class we can apply @ApiView to.
+ */
+export type MetadataTargetConstructor = typeof ApiViewBase;
+
 const JK_V2_METADATA_KEY = Symbol.for("jk:v2:metadata");
 
 // metadata map keys
+export const JK_V2_METADATA_API_VIEW_KEY = Symbol.for(
+  "jk:v2:metadata:api:view"
+);
 export const JK_V2_METADATA_CRUD_API_KEY = Symbol.for(
-  "jk:v2:metadata:crud:api"
+  "jk:v2:metadata:api:crud"
 );
 // sub-route method inside a class
 export const JK_V2_METADATA_SUBROUTES_KEY = Symbol.for(
@@ -24,23 +31,35 @@ export const JK_V2_METADATA_ROUTE_KEY = Symbol.for("jk:v2:metadata:route");
 export type ApiMetadataMap<V extends IApiMetadata> = Map<string, V>;
 
 // what types of objects can have metadata attached?
-export type MetadataTarget = WrappedConstructor | RequestHandler | ApiView;
+export type MetadataTarget = RequestHandler | MetadataTargetConstructor;
 
+/**
+ * Metadata describing any API route and function.
+ */
 export interface IApiMetadata extends NodejsFunctionProps {
   path: string;
   entry?: string;
   methods?: HttpMethod[];
 }
 
+/**
+ * Function route.
+ */
 export interface IFunctionMetadata extends IApiMetadata {
   requestHandlerFunc: RequestHandler;
 }
 
+/**
+ * CRUD view.
+ */
 export interface ICrudApiMetadata extends IApiMetadata {
   model?: typeof BaseModel; // TODO: make not optional
-  apiClass: WrappableConstructor;
+  apiClass: MetadataTargetConstructor;
 }
 
+/**
+ * Sub-route method in an APIView class.
+ */
 export interface ISubRouteApiMetadata extends IApiMetadata {
   propertyKey: string;
   requestHandlerFunc?: RequestHandler;
@@ -73,10 +92,15 @@ export const setMemberMetadata = (
 export const getMetadataKeys = (target: MetadataTarget, key: string | symbol) =>
   Reflect.getOwnMetadataKeys(target, key);
 
-// CRUD API
-export const hasCrudApiMetadata = (
+// API view
+export const getApiViewMetadata = (
   cls: MetadataTarget
-): cls is MetadataTarget => hasMemberMetadata(cls, JK_V2_METADATA_CRUD_API_KEY);
+): IApiMetadata | undefined =>
+  getMemberMetadata(cls, JK_V2_METADATA_API_VIEW_KEY);
+export const setApiViewMetadata = (cls: MetadataTarget, value: IApiMetadata) =>
+  setMemberMetadata(cls, JK_V2_METADATA_API_VIEW_KEY, value);
+
+// CRUD API
 export const getCrudApiMetadata = (
   cls: MetadataTarget
 ): ICrudApiMetadata | undefined =>

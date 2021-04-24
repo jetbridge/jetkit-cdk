@@ -1,13 +1,14 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs";
 import fs from "fs";
-import { ApiView, RequestHandler } from "./api/base";
+import { ApiViewBase, RequestHandler } from "./api/base";
 import {
   getSubRouteMetadata,
   ICrudApiMetadata,
   IFunctionMetadata,
   ISubRouteApiMetadata,
   MetadataTarget,
+  MetadataTargetConstructor,
   setCrudApiMetadata,
   setRouteMetadata,
   setSubRouteMetadata,
@@ -19,12 +20,13 @@ import { findDefiningFile } from "./util/function";
  * assist in the automated generation of cloud resources from application code.
  */
 
-// probably not needed types
-export type WrappableConstructor = typeof ApiView;
-export interface WrappedConstructor {
-  new (...args: unknown[]): ApiView;
-}
-
+/**
+ * Search call stack for a function with a given name.
+ * Not reliable for decorators.
+ *
+ * @param functionName callsite function name.
+ * @returns path where function callsite was found.
+ */
 function guessEntrypoint(functionName: string | null): string {
   // guess entrypoint file from caller
   let guessedEntry;
@@ -42,13 +44,15 @@ function guessEntrypoint(functionName: string | null): string {
 }
 
 /**
- * Define CRUD API view class.
+ * Define API view class routing properties.
+ *
+ * Adds metadata used when generating API route and lambda function.
  */
-export function CrudApi(opts: Omit<ICrudApiMetadata, "apiClass">) {
-  if (!opts.entry) opts.entry = guessEntrypoint("CrudApi");
+export function ApiView(opts: Omit<ICrudApiMetadata, "apiClass">) {
+  if (!opts.entry) opts.entry = guessEntrypoint("ApiView");
 
   // return decorator
-  return function <T extends WrappableConstructor>(constructor: T) {
+  return function <T extends MetadataTargetConstructor>(constructor: T) {
     // save metadata
     const meta: ICrudApiMetadata = {
       ...opts,
@@ -76,7 +80,7 @@ export interface IRouteProps extends NodejsFunctionProps {
  */
 export function SubRoute({ path, methods }: IRouteProps) {
   return function (
-    target: ApiView, // parent class
+    target: ApiViewBase, // parent class
     propertyKey: string,
     descriptor: RoutePropertyDescriptor
   ) {

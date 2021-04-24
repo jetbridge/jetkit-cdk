@@ -2,9 +2,8 @@ import { HttpMethod } from "@aws-cdk/aws-apigatewayv2";
 import { APIGatewayProxyHandlerV2 } from "aws-lambda";
 import { BaseModel } from "../database/baseModel";
 import { Column, Entity } from "typeorm";
-import { APIEvent } from "../api/base";
-import { CrudApiView } from "../api/crud/base";
-import { CrudApi, Route, SubRoute } from "../registry";
+import { APIEvent, ApiViewBase } from "../api/base";
+import { ApiView, Route, SubRoute } from "../registry";
 
 // sample database model
 @Entity()
@@ -13,8 +12,7 @@ export class Album extends BaseModel {
   title: string;
 }
 
-// sample CRUD view
-@CrudApi({
+@ApiView({
   model: Album,
   path: "/album",
   memorySize: 512,
@@ -22,7 +20,7 @@ export class Album extends BaseModel {
     LOG_LEVEL: "DEBUG",
   },
 })
-export class AlbumCrudApi extends CrudApiView {
+export class AlbumCrudApi extends ApiViewBase {
   // custom endpoint in the view
   @SubRoute({
     path: "/test",

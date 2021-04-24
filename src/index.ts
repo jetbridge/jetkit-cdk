@@ -9,11 +9,11 @@ export { CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2";
 export { Duration } from "@aws-cdk/core";
 
 // api
-export { CrudApiView } from "./api/crud/base";
-export { ApiView, APIEvent } from "./api/base";
+export { CrudApiViewBase } from "./api/crud/base";
+export { ApiViewBase, APIEvent } from "./api/base";
 
 // metadata
-export { CrudApi, Route, SubRoute, WrappableConstructor } from "./registry";
+export { ApiView as CrudApi, Route, SubRoute } from "./registry";
 export {
   setMetadata,
   hasMemberMetadata,
@@ -23,11 +23,10 @@ export {
   getSubRouteMetadata,
   getCrudApiMetadata,
   setCrudApiMetadata,
+  getApiViewMetadata as getApiMetadata,
+  setApiViewMetadata as setApiMetadata,
   MetadataTarget,
 } from "./metadata";
 
 // database
 export { BaseModel } from "./database/baseModel";
-
-// breaking API change version
-export const JETKIT_VERSION_MAJOR = 0;

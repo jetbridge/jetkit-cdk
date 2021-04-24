@@ -1,7 +1,23 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "@tsconfig/node14/tsconfig.json",
+
   "compilerOptions": {
     "outDir": "./build", // redirect output structure to the directory
+
+    "moduleResolution": "node", // modern
+    "resolveJsonModule": true, // allow importing JSON filees
+    "jsx": "preserve", // don't mangle JSX in intermediate phase
+    "experimentalDecorators": true, // enable decorators
+    "emitDecoratorMetadata": true, // for runtime use of decorators (typeORM)
+    // "baseUrl": "packages", // allow absolute path imports for all project packages
+    "strictPropertyInitialization": false, // for TypeORM
+
+    "noImplicitAny": true, // strictness
+    "noImplicitThis": true, // strictness
+    // "noUnusedLocals": true /* Report errors on unused locals. */,
+    // "noUnusedParameters": true /* Report errors on unused parameters. */,
+    "noImplicitReturns": true /* Report error when not all code paths in function return a value. */,
+    "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */,
     "incremental": true /* Enable incremental compilation */,
     "target": "ESNEXT" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */,
     "module": "commonjs" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,

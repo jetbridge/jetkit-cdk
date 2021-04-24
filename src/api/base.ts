@@ -29,8 +29,14 @@ async function raiseNotAllowed(event: APIGatewayProxyEventV2) {
  *
  * Methods with HTTP verb names (get, post, patch, etc) are called.
  * Define custom sub-paths with @SubRoute().
+ *
+ * @example
+ * ```typescript
+ *
+ *
+ * ```
  */
-export class ApiView {
+export class ApiViewBase {
   routeMethodMap?: Map<string, RequestHandler>;
 
   get: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event);
