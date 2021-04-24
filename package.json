@@ -23,6 +23,11 @@
   "author": "JetBridge Software Inc.",
   "license": "MIT",
   "devDependencies": {
+    "@aws-cdk/aws-apigatewayv2": "^1.100.0",
+    "@aws-cdk/aws-apigatewayv2-integrations": "^1.100.0",
+    "@aws-cdk/aws-lambda": "^1.100.0",
+    "@aws-cdk/aws-lambda-nodejs": "^1.100.0",
+    "@aws-cdk/core": "1.100.0",
     "@aws-cdk/assert": "^1.100.0",
     "@babel/plugin-proposal-decorators": "^7.13.15",
     "@tsconfig/node14": "^1.0.0",
@@ -44,11 +49,6 @@
     "typedoc": "^0.20.36"
   },
   "dependencies": {
-    "@aws-cdk/aws-apigatewayv2": "^1.100.0",
-    "@aws-cdk/aws-apigatewayv2-integrations": "^1.100.0",
-    "@aws-cdk/aws-lambda": "^1.100.0",
-    "@aws-cdk/aws-lambda-nodejs": "^1.100.0",
-    "@aws-cdk/core": "1.100.0",
     "@jdpnielsen/http-error": "^1.2.0"
   },
   "peerDependencies": {
