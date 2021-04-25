@@ -54,44 +54,11 @@ async function raiseNotAllowed(event: ApiEvent) {
 /**
  * A view with method-based routing.
  *
- * Subclass APIView to define your own class-based API endpoints.
+ * Subclass {@link ApiViewBase} to define your own class-based API endpoints.
  *
- * Methods with HTTP verb names (get, post, patch, etc) are called.
- * Define custom sub-paths with @SubRoute().
+ * Methods with HTTP verb names (get, post, patch, etc) are called automatically.
+ * Define custom sub-paths with {@link SubRoute}.
  *
- * @example
- * ```typescript
- * @ApiView({
- *   path: "/album",
- *   memorySize: 512,
- *   environment: {
- *     LOG_LEVEL: "DEBUG",
- *   },
- * })
- * export class AlbumApi extends ApiViewBase {
- *   // custom endpoint in the view
- *   @SubRoute({
- *     path: "/{albumId}/like",  // will be /album/123/like
- *     methods: [HttpMethod.POST, HttpMethod.DELETE],
- *   })
- *   async like(event: ApiEvent) {
- *     const albumId = event.pathParameters?.albumId
- *     if (!albumId) throw badRequest("albumId is required in path")
- *
- *     const method = event.requestContext.http.method
- *
- *     // POST - mark album as liked
- *     if (method == HttpMethod.POST) return `Liked album ${albumId}`
- *     // DELETE - unmark album as liked
- *     else if (method == HttpMethod.DELETE) return `Unliked album ${albumId}`
- *     else return methodNotAllowed()
- *   }
- *
- *   // define POST handler
- *   post: RequestHandler = async () => "Created new album"
- * }
- * export const handler = apiViewHandler(__filename, AlbumApi)
- * ```
  */
 export class ApiViewBase {
   get: RequestHandler = async (event) => raiseNotAllowed(event)
