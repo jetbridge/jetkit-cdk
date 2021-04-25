@@ -1,11 +1,3 @@
-/**
- * Given a list of application resources with metadata attached,
- * generate appropriate CDK resources.
- *
- * e.g. Parse a list of API classes and their methods and generate
- * API routes and lambda function handlers.
- */
-
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
 import { Construct } from "@aws-cdk/core"
 import { RequestHandler } from "../api/base"
@@ -13,11 +5,37 @@ import { getApiViewMetadata, getRouteMetadata, getSubRouteMetadata, MetadataTarg
 import { ApiView as ApiViewConstruct } from "./api/api"
 import { SubRouteApi } from "./api/subRoute"
 
-interface ResourceGeneratorProps {
+/**
+ * CDK {@link Construct} that automatically generates cloud resources
+ * based on metadata defined on your application code using
+ * {@link Route}, {@link ApiView}, {@link SubRoute}.
+ *
+ * @module
+ */
+
+export interface ResourceGeneratorProps {
+  /**
+   * A list of resources to generate cloud resources for.
+   *
+   * Generates API Gateway routes and Lambda functions.
+   */
   resources: MetadataTarget[]
+
+  /**
+   * The {@link HttpApi} to attach routes to.
+   */
   httpApi: HttpApi
 }
 
+/**
+ * Given a list of application resources with metadata attached,
+ * generate appropriate CDK resources.
+ *
+ * This construct ingests a list of API classes and their methods and generates
+ * API routes and lambda function handlers.
+ *
+ * @category Construct
+ */
 export class ResourceGenerator extends Construct {
   httpApi: HttpApi
 

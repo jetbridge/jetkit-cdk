@@ -4,6 +4,9 @@ import { NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { Construct } from "@aws-cdk/core"
 import { Node14Func } from "../lambda/node14func"
 
+/**
+ * @category Construct
+ */
 export interface ApiProps extends NodejsFunctionProps {
   /**
    * API Gateway HTTP API
@@ -22,6 +25,8 @@ export interface ApiProps extends NodejsFunctionProps {
  * API endpoint CDK construct.
  *
  * Defines a route and Lambda function handler on an HttpApi.
+ *
+ * @category Construct
  */
 export class ApiView extends Construct {
   handlerFunction: NodejsFunction
@@ -34,7 +39,7 @@ export class ApiView extends Construct {
     super(scope, id)
 
     // lambda handler
-    this.handlerFunction = new Node14Func(this, "Api${id}", rest)
+    this.handlerFunction = new Node14Func(this, `Api${id}`, rest)
 
     // lambda API integration
     this.lambdaApiIntegration = new LambdaProxyIntegration({

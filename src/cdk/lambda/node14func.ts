@@ -6,6 +6,9 @@ import { Runtime } from "@aws-cdk/aws-lambda"
 
 export type Node14FuncProps = NodejsFunctionProps
 
+/**
+ * @category Construct
+ */
 export class Node14Func extends NodejsFunction {
   constructor(scope: Construct, id: string, props: Node14FuncProps) {
     let { environment, runtime, awsSdkConnectionReuse, ...rest } = props

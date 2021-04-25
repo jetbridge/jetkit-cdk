@@ -1,7 +1,7 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
 import { APIGatewayProxyHandlerV2 } from "aws-lambda"
-import { APIEvent, ApiViewBase } from "../api/base"
+import { APIEvent, ApiViewBase, RequestHandler } from "../api/base"
 import { ApiView, Route, SubRoute } from "../registry"
 
 @ApiView({
@@ -13,13 +13,14 @@ import { ApiView, Route, SubRoute } from "../registry"
   bundling: { minify: true, metafile: true, sourceMap: true },
 })
 export class AlbumApi extends ApiViewBase {
+  // define POST handler
+  post: APIGatewayProxyHandlerV2 = async () => "Created new album"
+
   // custom endpoint in the view
+  // routes to the ApiView function
   @SubRoute({
     path: "/{albumId}/like", // will be /album/123/like
     methods: [HttpMethod.POST, HttpMethod.DELETE],
-    environment: {
-      LOG_LEVEL: "DEBUG",
-    },
   })
   async like(event: APIEvent) {
     const albumId = event.pathParameters?.albumId
@@ -33,10 +34,8 @@ export class AlbumApi extends ApiViewBase {
     else if (method == HttpMethod.DELETE) return `Unliked album ${albumId}`
     else return methodNotAllowed()
   }
-
-  // define POST handler
-  post: APIGatewayProxyHandlerV2 = async () => "Created new album"
 }
+export const handler: RequestHandler = async (event, context) => new AlbumApi().dispatch(event, context)
 
 // a simple standalone function with a route attached
 export async function topSongsHandler(event: APIEvent) {

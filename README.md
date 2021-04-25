@@ -38,7 +38,7 @@ npm install @jetkit/cdk
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
 import { APIGatewayProxyHandlerV2 } from "aws-lambda"
-import { APIEvent, ApiViewBase } from "../api/base"
+import { APIEvent, ApiViewBase, RequestHandler } from "../api/base"
 import { ApiView, Route, SubRoute } from "../registry"
 
 const lambdaOpts = {
@@ -59,12 +59,10 @@ const lambdaOpts = {
 })
 export class AlbumApi extends ApiViewBase {
   // custom endpoint in the view
+  // routes to the ApiView function
   @SubRoute({
     path: "/{albumId}/like", // will be /album/123/like
     methods: [HttpMethod.POST, HttpMethod.DELETE],
-    environment: {
-      LOG_LEVEL: "DEBUG",
-    },
   })
   async like(event: APIEvent) {
     const albumId = event.pathParameters?.albumId
@@ -82,6 +80,8 @@ export class AlbumApi extends ApiViewBase {
   // define POST handler
   post: APIGatewayProxyHandlerV2 = async () => "Created new album"
 }
+
+export const handler: RequestHandler = async (event, context) => new AlbumApi().dispatch(event, context)
 ```
 
 ### Handler Function With Route

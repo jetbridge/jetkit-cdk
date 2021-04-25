@@ -19,6 +19,8 @@ import { findDefiningFile } from "./util/function"
 /**
  * This module is responsible for attaching metadata to classes, methods, and properties to
  * assist in the automated generation of cloud resources from application code.
+ *
+ * @module
  */
 
 /**
@@ -27,6 +29,7 @@ import { findDefiningFile } from "./util/function"
  *
  * @param functionName callsite function name.
  * @returns path where function callsite was found.
+ *
  */
 function guessEntrypoint(functionName: string | null): string {
   // guess entrypoint file from caller
@@ -48,6 +51,8 @@ function guessEntrypoint(functionName: string | null): string {
  * Define API view class routing properties.
  *
  * Saves metadata on the class for generation of CDK resources.
+ *
+ * @category Decorator
  */
 export function ApiView(opts: IApiMetadata) {
   if (!opts.entry) opts.entry = guessEntrypoint("ApiView")
@@ -69,6 +74,11 @@ interface RoutePropertyDescriptor extends PropertyDescriptor {
   value?: RequestHandler
 }
 
+export interface ISubRouteProps {
+  path: string
+  methods?: HttpMethod[]
+}
+
 export interface IRouteProps extends NodejsFunctionProps {
   path: string
   methods?: HttpMethod[]
@@ -79,8 +89,10 @@ export interface IRouteProps extends NodejsFunctionProps {
  * Use this on class methods that are inside an @ApiView class.
  *
  * Saves metadata on the method for generation of CDK resources.
+ *
+ * @category Decorator
  */
-export function SubRoute({ path, methods }: IRouteProps) {
+export function SubRoute({ path, methods }: ISubRouteProps) {
   return function (
     target: ApiViewBase, // parent class
     propertyKey: string,
@@ -123,6 +135,8 @@ export function SubRoute({ path, methods }: IRouteProps) {
  * or you can manually provide the name of the exported handler in `props.handler`.
  * @param props configure route and any other lambda function properties including memory allocation and environment variables.
  * @returns
+ *
+ * @category Decorator
  */
 export function Route(props: IRouteProps) {
   return (wrapped: RequestHandler) => {

@@ -2,12 +2,17 @@ import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { Construct } from "@aws-cdk/core"
 import { ApiView } from "./api"
 
-interface ISubRouteApiProps {
+export interface ISubRouteApiProps {
   methods?: HttpMethod[]
   parentApi: ApiView
   path: string
 }
 
+/**
+ * Route chained off an existing route and function.
+ *
+ * @category Construct
+ */
 export class SubRouteApi extends Construct {
   constructor(scope: Construct, id: string, { methods, parentApi, path }: ISubRouteApiProps) {
     super(scope, id)

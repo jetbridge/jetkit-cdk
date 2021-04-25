@@ -12,7 +12,7 @@ export { Duration } from "@aws-cdk/core"
 
 // api
 export { CrudApiViewBase } from "./api/crud/base"
-export { ApiViewBase, APIEvent, RequestHandler } from "./api/base"
+export { ApiViewBase, APIEvent, RequestHandler, apiViewHandler } from "./api/base"
 
 // metadata
 export { ApiView, Route, SubRoute, IRouteProps } from "./registry"

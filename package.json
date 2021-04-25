@@ -56,5 +56,15 @@
   },
   "lint-staged": {
     "*.{js,css,md}": "prettier --write"
-  }
+  },
+  "keywords": [
+    "aws",
+    "cdk",
+    "serverless",
+    "lambda",
+    "iac",
+    "rest",
+    "typescript",
+    "api"
+  ]
 }
