@@ -24,35 +24,11 @@ import { findDefiningFile } from "./util/function"
  */
 
 /**
- * Search call stack for a function with a given name.
- * Not reliable for decorators.
- *
- * @param functionName callsite function name.
- * @returns path where function callsite was found.
- *
- */
-function guessEntrypoint(functionName: string | null): string {
-  // guess entrypoint file from caller
-  let guessedEntry
-  try {
-    guessedEntry = findDefiningFile(functionName)
-  } catch (ex) {
-    console.error(ex)
-  }
-
-  if (!guessedEntry || !fs.existsSync(guessedEntry))
-    throw new Error(
-      `Could not determine entry point where ${functionName} was called, please define path to entrypoint file in "entry"`
-    )
-  return guessedEntry
-}
-
-/**
  * Define API view class routing properties.
  *
  * Saves metadata on the class for generation of CDK resources.
  *
- * @category Decorator
+ * @category Metadata Decorator
  */
 export function ApiView(opts: IApiMetadata) {
   if (!opts.entry) opts.entry = guessEntrypoint("ApiView")
@@ -90,7 +66,7 @@ export interface IRouteProps extends NodejsFunctionProps {
  *
  * Saves metadata on the method for generation of CDK resources.
  *
- * @category Decorator
+ * @category Metadata Decorator
  */
 export function SubRoute({ path, methods }: ISubRouteProps) {
   return function (
@@ -136,7 +112,7 @@ export function SubRoute({ path, methods }: ISubRouteProps) {
  * @param props configure route and any other lambda function properties including memory allocation and environment variables.
  * @returns
  *
- * @category Decorator
+ * @category Metadata Decorator
  */
 export function Route(props: IRouteProps) {
   return (wrapped: RequestHandler) => {
@@ -168,4 +144,28 @@ export function Route(props: IRouteProps) {
     setRouteMetadata(wrapped, meta)
     return wrapped
   }
+}
+
+/**
+ * Search call stack for a function with a given name.
+ * Not reliable for decorators.
+ *
+ * @param functionName callsite function name.
+ * @returns path where function callsite was found.
+ *
+ */
+function guessEntrypoint(functionName: string | null): string {
+  // guess entrypoint file from caller
+  let guessedEntry
+  try {
+    guessedEntry = findDefiningFile(functionName)
+  } catch (ex) {
+    console.error(ex)
+  }
+
+  if (!guessedEntry || !fs.existsSync(guessedEntry))
+    throw new Error(
+      `Could not determine entry point where ${functionName} was called, please define path to entrypoint file in "entry"`
+    )
+  return guessedEntry
 }
