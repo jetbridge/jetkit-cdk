@@ -68,6 +68,7 @@ export class AlbumApi extends ApiViewBase {
     if (method == HttpMethod.POST) return `Liked album ${albumId}`
     // DELETE - unmark album as liked
     else if (method == HttpMethod.DELETE) return `Unliked album ${albumId}`
+    // should never be reached
     else return methodNotAllowed()
   }
 }
