@@ -132,12 +132,13 @@ export class ApiViewBase {
 
   protected matchHttpVerbMethod(viewMeta: IApiViewClassMetadata, event: ApiEvent): RequestHandler | undefined {
     const routeKey = event.routeKey
-    const method = event.requestContext.http.method.toUpperCase() as HttpMethod
+    let method = event.requestContext.http.method as HttpMethod
 
     // route key matches base route?
     if (!this.matchesRouteKey(routeKey, method, viewMeta.path, viewMeta.methods)) return undefined
 
     // look up handler based on HTTP verb e.g. this.post()
+    method = method.toLowerCase() as HttpMethod
     if (safeHas(method, this)) {
       return this[method]
     }
@@ -150,7 +151,7 @@ export class ApiViewBase {
     event: ApiEvent
   ): RequestHandler | undefined {
     const routeKey = event.routeKey
-    const method = event.requestContext.http.method.toUpperCase() as HttpMethod
+    const method = event.requestContext.http.method as HttpMethod
 
     // given route key "POST /album/{albumId}/like"
     // we should match any subRoute with that configuration
@@ -165,7 +166,8 @@ export class ApiViewBase {
   }
 
   protected matchesRouteKey(routeKey: string, method: HttpMethod, path: string, methods?: HttpMethod[]): boolean {
-    const matchAnyMethod = methods?.includes(HttpMethod.ANY)
+    const matchAnyMethod = !methods || methods.includes(HttpMethod.ANY)
+    method = method.toUpperCase() as HttpMethod
 
     // method match?
     if (!methods?.includes(method) && !matchAnyMethod) return false
@@ -195,16 +197,19 @@ export class ApiViewBase {
 
     console.debug(`➠ ${method} ${path}`)
 
+    // dispatch based on API Gateway Proxy V2 event
     try {
+      // find method to call
       const handlerMethod = this.findHandler(event)
-      console.log("handlermethod", handlerMethod)
-
       if (handlerMethod) {
+        // call handler
         return await handlerMethod(event, context)
       } else {
+        // 404
         throw notFound(`The path ${path} was not found`)
       }
     } catch (ex) {
+      // exception raised
       return this.handleDispatchError(ex)
     }
   }
