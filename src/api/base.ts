@@ -135,7 +135,7 @@ export class ApiViewBase {
     let method = event.requestContext.http.method as HttpMethod
 
     // route key matches base route?
-    if (!this.matchesRouteKey(routeKey, method, viewMeta.path, viewMeta.methods)) return undefined
+    if (!this.matchesRouteKey(routeKey, method, viewMeta.path, viewMeta.methods, false)) return undefined
 
     // look up handler based on HTTP verb e.g. this.post()
     method = method.toLowerCase() as HttpMethod
@@ -165,7 +165,13 @@ export class ApiViewBase {
     return undefined
   }
 
-  protected matchesRouteKey(routeKey: string, method: HttpMethod, path: string, methods?: HttpMethod[]): boolean {
+  protected matchesRouteKey(
+    routeKey: string,
+    method: HttpMethod,
+    path: string,
+    methods?: HttpMethod[],
+    canMatchAnyMethod = true
+  ): boolean {
     const matchAnyMethod = !methods || methods.includes(HttpMethod.ANY)
     method = method.toUpperCase() as HttpMethod
 
@@ -180,7 +186,7 @@ export class ApiViewBase {
     if (matchRouteKey === routeKey) return true
 
     // special case - ANY
-    if (matchAnyMethod && matchAnyRouteKey == `${HttpMethod.ANY} ${path}`) return true
+    if (canMatchAnyMethod && matchAnyMethod && matchAnyRouteKey == `${HttpMethod.ANY} ${path}`) return true
 
     return false
   }
@@ -206,7 +212,7 @@ export class ApiViewBase {
         return await handlerMethod(event, context)
       } else {
         // 404
-        throw notFound(`The path ${path} was not found`)
+        throw notFound(`The path ${method} ${path} was not found`)
       }
     } catch (ex) {
       // exception raised

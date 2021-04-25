@@ -43,7 +43,7 @@ describe("ApiViewBase", () => {
         routeKey: "/album",
       })
 
-      expect(view.findHandler(request as ApiEvent)).toEqual(AlbumApi.prototype.post)
+      expect(view.findHandler(request as ApiEvent)).toEqual(view.post)
     })
 
     it("locates appropriate method based on request", () => {
@@ -53,7 +53,7 @@ describe("ApiViewBase", () => {
         routeKey: "/album/{albumId}/like",
       })
 
-      expect(view.findHandler(request as ApiEvent)).toEqual(AlbumApi.prototype.like)
+      expect(view.findHandler(request as ApiEvent)).toEqual(view.like)
     })
 
     it("locates appropriate method with ANY verb", () => {
