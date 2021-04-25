@@ -38,29 +38,20 @@ npm install @jetkit/cdk
 ```typescript
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
-import { APIGatewayProxyHandlerV2 } from "aws-lambda"
-import { APIEvent, ApiViewBase, RequestHandler, apiViewHandler, ApiView, Route, SubRoute } from "@jetkit/cdk"
+import { ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "../api/base"
+import { ApiView, Route, SubRoute } from "@jetkit/cdk"
 
-// define optional properties for our functions
-const lambdaOpts = {
+@ApiView({
+  path: "/album",
   memorySize: 512,
-  bundling: {
-    minify: true,
-    sourceMap: true,
-  },
   environment: {
     LOG_LEVEL: "DEBUG",
   },
-}
-
-@ApiView({
-  // base route
-  path: "/album",
-  ...lambdaOpts,
+  bundling: { minify: true, metafile: true, sourceMap: true },
 })
 export class AlbumApi extends ApiViewBase {
   // define POST handler
-  post: APIGatewayProxyHandlerV2 = async () => "Created new album"
+  post = async () => "Created new album"
 
   // custom endpoint in the view
   // routes to the ApiView function
@@ -68,7 +59,7 @@ export class AlbumApi extends ApiViewBase {
     path: "/{albumId}/like", // will be /album/123/like
     methods: [HttpMethod.POST, HttpMethod.DELETE],
   })
-  async like(event: APIEvent) {
+  async like(event: ApiEvent): ApiResponse {
     const albumId = event.pathParameters?.albumId
     if (!albumId) throw badRequest("albumId is required in path")
 
@@ -81,9 +72,7 @@ export class AlbumApi extends ApiViewBase {
     else return methodNotAllowed()
   }
 }
-
-// entry point for the file
-export const handler = apiViewHandler(__filename, TopicCrudApi)
+export const handler = apiViewHandler(__filename, AlbumApi)
 ```
 
 ### Handler Function With Route
