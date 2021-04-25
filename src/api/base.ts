@@ -1,6 +1,15 @@
+import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import HttpError, { methodNotAllowed, notFound } from "@jdpnielsen/http-error"
-import { APIGatewayProxyEventV2, APIGatewayProxyHandlerV2, APIGatewayProxyResultV2, Context } from "aws-lambda"
-import { getApiViewMetadata } from "../metadata"
+import { APIGatewayProxyEventV2, APIGatewayProxyResultV2, Context } from "aws-lambda"
+import { ApiEvent } from ".."
+import {
+  ApiMetadataMap,
+  getApiViewMetadata,
+  getSubRouteMetadata,
+  IApiViewClassMetadata,
+  ISubRouteApiMetadata,
+  MetadataTarget,
+} from "../metadata"
 import { safeHas } from "../util/type"
 
 /**
@@ -35,9 +44,9 @@ export type ApiResponse = Promise<APIGatewayProxyResultV2>
  *
  * @category Helper
  */
-export type RequestHandler = (event: APIGatewayProxyEventV2, context: Context) => ApiResponse
+export type RequestHandler = (event: ApiEvent, context: Context) => ApiResponse
 
-async function raiseNotAllowed(event: APIGatewayProxyEventV2) {
+async function raiseNotAllowed(event: ApiEvent) {
   throw methodNotAllowed(`${event.requestContext.http.method.toUpperCase()} not allowed`)
   return "error"
 }
@@ -65,7 +74,7 @@ async function raiseNotAllowed(event: APIGatewayProxyEventV2) {
  *     path: "/{albumId}/like",  // will be /album/123/like
  *     methods: [HttpMethod.POST, HttpMethod.DELETE],
  *   })
- *   async like(event: APIEvent) {
+ *   async like(event: ApiEvent) {
  *     const albumId = event.pathParameters?.albumId
  *     if (!albumId) throw badRequest("albumId is required in path")
  *
@@ -79,19 +88,17 @@ async function raiseNotAllowed(event: APIGatewayProxyEventV2) {
  *   }
  *
  *   // define POST handler
- *   post: APIGatewayProxyHandlerV2 = async () => "Created new album"
+ *   post: RequestHandler = async () => "Created new album"
  * }
  * export const handler = apiViewHandler(__filename, AlbumApi)
  * ```
  */
 export class ApiViewBase {
-  routeMethodMap?: Map<string, RequestHandler>
-
-  get: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event)
-  post: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event)
-  put: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event)
-  patch: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event)
-  delete: APIGatewayProxyHandlerV2 = async (event) => raiseNotAllowed(event)
+  get: RequestHandler = async (event) => raiseNotAllowed(event)
+  post: RequestHandler = async (event) => raiseNotAllowed(event)
+  put: RequestHandler = async (event) => raiseNotAllowed(event)
+  patch: RequestHandler = async (event) => raiseNotAllowed(event)
+  delete: RequestHandler = async (event) => raiseNotAllowed(event)
 
   /**
    * Look up appropriate method to handle an incoming request for this view.
@@ -101,28 +108,79 @@ export class ApiViewBase {
    * @param event API Gateway Proxy v2 Lambda event
    * @returns handler method to process request
    */
-  protected findHandler(event: APIGatewayProxyEventV2): RequestHandler | undefined {
-    const httpContext = event.requestContext.http
-    const httpMethod = httpContext.method.toLowerCase()
-    const { path } = httpContext
-    console.log("ROUTE KEY", path)
-
+  findHandler(event: ApiEvent): RequestHandler | undefined {
     // do fancy dispatching...
     // either via route decorator or function name
-    console.log(`route method map on ${this}:`, this.routeMethodMap)
-    if (this.routeMethodMap) {
-      const routeHandlerMethod = this.routeMethodMap.get(path)
-      console.log("found routeHandlerMethod", routeHandlerMethod)
 
-      if (routeHandlerMethod) return routeHandlerMethod
+    const apiViewClass = this.constructor as MetadataTarget
+    const viewMeta = getApiViewMetadata(apiViewClass)
+    const subRouteMetaMap = getSubRouteMetadata(apiViewClass)
+    if (!viewMeta) throw new Error(`Metadata for dispatch not found on API view ${apiViewClass}`)
+
+    // try to match a @SubRoute
+    if (subRouteMetaMap) {
+      const subRouteHandlerMethod = this.matchSubRoute(viewMeta, subRouteMetaMap, event)
+      if (subRouteHandlerMethod) return subRouteHandlerMethod
     }
 
-    // look up handler based on method
-    if (safeHas(httpMethod, this)) {
-      return this[httpMethod]
+    // get(), post(), etc
+    const verbHandler = this.matchHttpVerbMethod(viewMeta, event)
+    if (verbHandler) return verbHandler
+
+    return undefined
+  }
+
+  protected matchHttpVerbMethod(viewMeta: IApiViewClassMetadata, event: ApiEvent): RequestHandler | undefined {
+    const routeKey = event.routeKey
+    const method = event.requestContext.http.method.toUpperCase() as HttpMethod
+
+    // route key matches base route?
+    if (!this.matchesRouteKey(routeKey, method, viewMeta.path, viewMeta.methods)) return undefined
+
+    // look up handler based on HTTP verb e.g. this.post()
+    if (safeHas(method, this)) {
+      return this[method]
+    }
+    return undefined
+  }
+
+  protected matchSubRoute(
+    viewMeta: IApiViewClassMetadata,
+    subRouteMetaMap: ApiMetadataMap<ISubRouteApiMetadata>,
+    event: ApiEvent
+  ): RequestHandler | undefined {
+    const routeKey = event.routeKey
+    const method = event.requestContext.http.method.toUpperCase() as HttpMethod
+
+    // given route key "POST /album/{albumId}/like"
+    // we should match any subRoute with that configuration
+    for (const meta of subRouteMetaMap.values()) {
+      const { methods, path, requestHandlerFunc } = meta
+      // full path is parent path + subRoute path
+      const fullPath = viewMeta.path + path
+      if (this.matchesRouteKey(routeKey, method, fullPath, methods)) return requestHandlerFunc
     }
 
     return undefined
+  }
+
+  protected matchesRouteKey(routeKey: string, method: HttpMethod, path: string, methods?: HttpMethod[]): boolean {
+    const matchAnyMethod = methods?.includes(HttpMethod.ANY)
+
+    // method match?
+    if (!methods?.includes(method) && !matchAnyMethod) return false
+
+    // routeKey to match e.g. "POST /album/{albumId}/like"
+    const matchRouteKey = `${method} ${path}`
+    const matchAnyRouteKey = matchRouteKey.replace(method, HttpMethod.ANY)
+
+    // route key match?
+    if (matchRouteKey === routeKey) return true
+
+    // special case - ANY
+    if (matchAnyMethod && matchAnyRouteKey == `${HttpMethod.ANY} ${path}`) return true
+
+    return false
   }
 
   /**
@@ -131,7 +189,7 @@ export class ApiViewBase {
    * @param event API Gateway Proxy v2 Lambda event
    * @param context Lambda invocation context
    */
-  dispatch = async (event: APIGatewayProxyEventV2, context: Context): Promise<APIGatewayProxyResultV2> => {
+  dispatch = async (event: ApiEvent, context: Context): ApiResponse => {
     const { http } = event.requestContext
     const { path, method } = http
 

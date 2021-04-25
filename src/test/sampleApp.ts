@@ -1,6 +1,5 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
-import { APIGatewayProxyHandlerV2 } from "aws-lambda"
 import { ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "../api/base"
 import { ApiView, Route, SubRoute } from "../registry"
 
@@ -14,7 +13,7 @@ import { ApiView, Route, SubRoute } from "../registry"
 })
 export class AlbumApi extends ApiViewBase {
   // define POST handler
-  post: APIGatewayProxyHandlerV2 = async () => "Created new album"
+  post = async () => "Created new album"
 
   // custom endpoint in the view
   // routes to the ApiView function

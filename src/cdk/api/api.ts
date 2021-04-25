@@ -59,7 +59,7 @@ export class ApiView extends ApiViewMixin implements IEndpoint {
     super(scope, id)
 
     // lambda handler
-    this.handlerFunction = new Node14Func(this, `Api${id}`, rest)
+    this.handlerFunction = new Node14Func(this, `View${id}`, rest)
 
     // lambda API integration
     this.lambdaApiIntegration = new LambdaProxyIntegration({
