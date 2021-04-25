@@ -69,7 +69,7 @@ describe("ApiViewBase", () => {
 
       const request = makeApiEvent({
         method: HttpMethod.POST,
-        path: "/proxy",
+        path: "/proxy/sub",
         routeKey: "/proxy/sub",
       })
 

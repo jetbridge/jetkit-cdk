@@ -138,13 +138,13 @@ export class ApiViewBase {
 
     // routeKey to match e.g. "POST /album/{albumId}/like"
     const matchRouteKey = `${method} ${path}`
-    const matchAnyRouteKey = matchRouteKey.replace(method, HttpMethod.ANY)
+    const matchAnyRouteKey = `${HttpMethod.ANY} ${path}`
 
     // route key match?
     if (matchRouteKey === routeKey) return true
 
     // special case - ANY
-    if (matchAnyMethod && matchAnyRouteKey == `${HttpMethod.ANY} ${routeKey}`) return true
+    if (matchAnyMethod && matchAnyRouteKey === routeKey) return true
 
     return false
   }
