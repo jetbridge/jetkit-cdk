@@ -93,7 +93,7 @@
 				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">HttpMethod</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@aws-cdk/aws-apigatewayv2&quot;</span>
 <span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">badRequest</span><span style="color: #000000">, </span><span style="color: #001080">methodNotAllowed</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@jdpnielsen/http-error&quot;</span>
 <span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">APIGatewayProxyHandlerV2</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;aws-lambda&quot;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">APIEvent</span><span style="color: #000000">, </span><span style="color: #001080">ApiViewBase</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;../api/base&quot;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">APIEvent</span><span style="color: #000000">, </span><span style="color: #001080">ApiViewBase</span><span style="color: #000000">, </span><span style="color: #001080">RequestHandler</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;../api/base&quot;</span>
 <span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">ApiView</span><span style="color: #000000">, </span><span style="color: #001080">Route</span><span style="color: #000000">, </span><span style="color: #001080">SubRoute</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;../registry&quot;</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">lambdaOpts</span><span style="color: #000000"> = {</span>
@@ -114,12 +114,10 @@
 <span style="color: #000000">})</span>
 <span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">AlbumApi</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">ApiViewBase</span><span style="color: #000000"> {</span>
 <span style="color: #000000">  </span><span style="color: #008000">// custom endpoint in the view</span>
+<span style="color: #000000">  </span><span style="color: #008000">// routes to the ApiView function</span>
 <span style="color: #000000">  @</span><span style="color: #795E26">SubRoute</span><span style="color: #000000">({</span>
 <span style="color: #000000">    </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/{albumId}/like&quot;</span><span style="color: #000000">, </span><span style="color: #008000">// will be /album/123/like</span>
 <span style="color: #000000">    </span><span style="color: #001080">methods:</span><span style="color: #000000"> [</span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">POST</span><span style="color: #000000">, </span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">DELETE</span><span style="color: #000000">],</span>
-<span style="color: #000000">    </span><span style="color: #001080">environment:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">      </span><span style="color: #001080">LOG_LEVEL:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;DEBUG&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">    },</span>
 <span style="color: #000000">  })</span>
 <span style="color: #000000">  </span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #795E26">like</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000">: </span><span style="color: #267F99">APIEvent</span><span style="color: #000000">) {</span>
 <span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">albumId</span><span style="color: #000000"> = </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">pathParameters</span><span style="color: #000000">?.</span><span style="color: #001080">albumId</span>
@@ -137,6 +135,8 @@
 <span style="color: #000000">  </span><span style="color: #008000">// define POST handler</span>
 <span style="color: #000000">  </span><span style="color: #795E26">post</span><span style="color: #000000">: </span><span style="color: #267F99">APIGatewayProxyHandlerV2</span><span style="color: #000000"> = </span><span style="color: #0000FF">async</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;Created new album&quot;</span>
 <span style="color: #000000">}</span>
+
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #795E26">handler</span><span style="color: #000000">: </span><span style="color: #267F99">RequestHandler</span><span style="color: #000000"> = </span><span style="color: #0000FF">async</span><span style="color: #000000"> (</span><span style="color: #001080">event</span><span style="color: #000000">, </span><span style="color: #001080">context</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">AlbumApi</span><span style="color: #000000">().</span><span style="color: #795E26">dispatch</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000">, </span><span style="color: #001080">context</span><span style="color: #000000">)</span>
 </code></pre>
 				<a href="#handler-function-with-route" id="handler-function-with-route" style="color: inherit; text-decoration: none;">
 					<h3>Handler Function With Route</h3>
@@ -245,6 +245,9 @@
 					<li class=" tsd-kind-function">
 						<a href="modules.html#subroute" class="tsd-kind-icon">Sub<wbr>Route</a>
 					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#apiviewhandler" class="tsd-kind-icon">api<wbr>View<wbr>Handler</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -266,6 +269,9 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
