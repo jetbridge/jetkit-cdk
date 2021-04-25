@@ -66,44 +66,43 @@ export class ApiViewBase {
   put: RequestHandler = async (event) => raiseNotAllowed(event)
   patch: RequestHandler = async (event) => raiseNotAllowed(event)
   delete: RequestHandler = async (event) => raiseNotAllowed(event)
+  head: RequestHandler = async (event) => raiseNotAllowed(event)
+  options: RequestHandler = async (event) => raiseNotAllowed(event)
 
   /**
    * Look up appropriate method to handle an incoming request for this view.
-   *
-   *
    *
    * @param event API Gateway Proxy v2 Lambda event
    * @returns handler method to process request
    */
   findHandler(event: ApiEvent): RequestHandler | undefined {
-    // do fancy dispatching...
-    // either via route decorator or function name
-
+    // figure out where to route `event`
+    const method = event.requestContext.http.method as HttpMethod
+    const routeKey = event.routeKey
+    // get metadata
     const apiViewClass = this.constructor as MetadataTarget
     const viewMeta = getApiViewMetadata(apiViewClass)
     const subRouteMetaMap = getSubRouteMetadata(apiViewClass)
     if (!viewMeta) throw new Error(`Metadata for dispatch not found on API view ${apiViewClass}`)
 
-    // try to match a @SubRoute
-    if (subRouteMetaMap) {
-      const subRouteHandlerMethod = this.matchSubRoute(viewMeta, subRouteMetaMap, event)
-      if (subRouteHandlerMethod) return subRouteHandlerMethod
+    // is this request for the default view or a sub route?
+    // does the route key match the base route?
+    if (this.matchesRouteKey(routeKey, method, viewMeta.path, viewMeta.methods)) {
+      // get(), post(), etc
+      const verbHandler = this.matchHttpVerbMethod(method)
+      if (verbHandler) return verbHandler
+    } else {
+      // try to match a @SubRoute
+      if (subRouteMetaMap) {
+        const subRouteHandlerMethod = this.matchSubRoute(viewMeta, subRouteMetaMap, routeKey, method)
+        if (subRouteHandlerMethod) return subRouteHandlerMethod
+      }
     }
-
-    // get(), post(), etc
-    const verbHandler = this.matchHttpVerbMethod(viewMeta, event)
-    if (verbHandler) return verbHandler
 
     return undefined
   }
 
-  protected matchHttpVerbMethod(viewMeta: IApiViewClassMetadata, event: ApiEvent): RequestHandler | undefined {
-    const routeKey = event.routeKey
-    let method = event.requestContext.http.method as HttpMethod
-
-    // route key matches base route?
-    if (!this.matchesRouteKey(routeKey, method, viewMeta.path, viewMeta.methods, false)) return undefined
-
+  protected matchHttpVerbMethod(method: HttpMethod): RequestHandler | undefined {
     // look up handler based on HTTP verb e.g. this.post()
     method = method.toLowerCase() as HttpMethod
     if (safeHas(method, this)) {
@@ -115,11 +114,9 @@ export class ApiViewBase {
   protected matchSubRoute(
     viewMeta: IApiViewClassMetadata,
     subRouteMetaMap: ApiMetadataMap<ISubRouteApiMetadata>,
-    event: ApiEvent
+    routeKey: string,
+    method: HttpMethod
   ): RequestHandler | undefined {
-    const routeKey = event.routeKey
-    const method = event.requestContext.http.method as HttpMethod
-
     // given route key "POST /album/{albumId}/like"
     // we should match any subRoute with that configuration
     for (const meta of subRouteMetaMap.values()) {
@@ -132,13 +129,7 @@ export class ApiViewBase {
     return undefined
   }
 
-  protected matchesRouteKey(
-    routeKey: string,
-    method: HttpMethod,
-    path: string,
-    methods?: HttpMethod[],
-    canMatchAnyMethod = true
-  ): boolean {
+  protected matchesRouteKey(routeKey: string, method: HttpMethod, path: string, methods?: HttpMethod[]): boolean {
     const matchAnyMethod = !methods || methods.includes(HttpMethod.ANY)
     method = method.toUpperCase() as HttpMethod
 
@@ -153,7 +144,7 @@ export class ApiViewBase {
     if (matchRouteKey === routeKey) return true
 
     // special case - ANY
-    if (canMatchAnyMethod && matchAnyMethod && matchAnyRouteKey == `${HttpMethod.ANY} ${path}`) return true
+    if (matchAnyMethod && matchAnyRouteKey == `${HttpMethod.ANY} ${routeKey}`) return true
 
     return false
   }

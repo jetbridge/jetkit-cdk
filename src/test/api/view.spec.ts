@@ -70,11 +70,27 @@ describe("ApiViewBase", () => {
       const request = makeApiEvent({
         method: HttpMethod.POST,
         path: "/proxy",
-        routeKey: "/sub",
+        routeKey: "/proxy/sub",
       })
 
       const anyView = new AnyApi()
-      expect(anyView.findHandler(request as ApiEvent)).toEqual(AnyApi.prototype.handler)
+      expect(anyView.findHandler(request as ApiEvent)).toEqual(anyView.handler)
+    })
+
+    it("locates appropriate class route with any method", () => {
+      @ApiView({
+        path: "/proxy",
+      })
+      class AnyApi extends ApiViewBase {}
+
+      const request = makeApiEvent({
+        method: HttpMethod.POST,
+        path: "/proxy",
+        routeKey: "/proxy",
+      })
+
+      const anyView = new AnyApi()
+      expect(anyView.findHandler(request as ApiEvent)).toEqual(anyView.post)
     })
 
     it("locates no method based on request if no match on routeKey", () => {

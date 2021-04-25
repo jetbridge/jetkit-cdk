@@ -48,11 +48,11 @@ export abstract class ApiViewMixin extends Construct {
  * @category Construct
  */
 export class ApiView extends ApiViewMixin implements IEndpoint {
-  handlerFunction: Node14Func
   httpApi: HttpApi
   path?: string
   methods?: HttpMethod[]
 
+  handlerFunction: Node14Func
   lambdaApiIntegration: LambdaProxyIntegration
 
   constructor(scope: Construct, id: string, { httpApi, methods, path = "/", ...rest }: ApiProps) {
