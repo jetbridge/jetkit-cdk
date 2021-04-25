@@ -38,8 +38,7 @@ npm install @jetkit/cdk
 ```typescript
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
-import { ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "../api/base"
-import { ApiView, Route, SubRoute } from "@jetkit/cdk"
+import { ApiView, Route, SubRoute, ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "@jetkit/cdk"
 
 @ApiView({
   path: "/album",
