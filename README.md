@@ -13,8 +13,9 @@ and generating cloud infrastructure using [AWS CDK](https://docs.aws.amazon.com/
 We want to build maintainable and scalable cloud-first applications, with cloud resources generated from application code.
 
 Using AWS CDK we can automate generating API Gateway routes and Lambda functions from class and function metadata.
-Each class or function view is a self-contained Lambda function that only pulls in the dependencies needed for its functioning, keeping startup times low and applications modular.
-Get all of the power of a minimal web framework without cramming your entire app into a single Lambda.
+Each class or function view is a self-contained Lambda function that only pulls in the dependencies needed for its
+functioning, keeping startup times low and applications modular.
+Get the utility of a minimal web framework without cramming your entire app into a single Lambda.
 
 Optional support for TypeORM using the Aurora Serverless Data API and convenient helpers for CRUD, serialization, tracing, and error handling will be added soon.
 
@@ -38,12 +39,11 @@ npm install @jetkit/cdk
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
 import { APIGatewayProxyHandlerV2 } from "aws-lambda"
-import { APIEvent, ApiViewBase, RequestHandler } from "../api/base"
-import { ApiView, Route, SubRoute } from "../registry"
+import { APIEvent, ApiViewBase, RequestHandler, apiViewHandler, ApiView, Route, SubRoute } from "@jetkit/cdk"
 
+// define optional properties for our functions
 const lambdaOpts = {
   memorySize: 512,
-  entry: __filename,
   bundling: {
     minify: true,
     sourceMap: true,
@@ -54,10 +54,14 @@ const lambdaOpts = {
 }
 
 @ApiView({
+  // base route
   path: "/album",
   ...lambdaOpts,
 })
 export class AlbumApi extends ApiViewBase {
+  // define POST handler
+  post: APIGatewayProxyHandlerV2 = async () => "Created new album"
+
   // custom endpoint in the view
   // routes to the ApiView function
   @SubRoute({
@@ -76,12 +80,10 @@ export class AlbumApi extends ApiViewBase {
     else if (method == HttpMethod.DELETE) return `Unliked album ${albumId}`
     else return methodNotAllowed()
   }
-
-  // define POST handler
-  post: APIGatewayProxyHandlerV2 = async () => "Created new album"
 }
 
-export const handler: RequestHandler = async (event, context) => new AlbumApi().dispatch(event, context)
+// entry point for the file
+export const handler = apiViewHandler(__filename, TopicCrudApi)
 ```
 
 ### Handler Function With Route

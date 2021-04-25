@@ -1,7 +1,7 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
 import { APIGatewayProxyHandlerV2 } from "aws-lambda"
-import { APIEvent, ApiViewBase, RequestHandler } from "../api/base"
+import { ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "../api/base"
 import { ApiView, Route, SubRoute } from "../registry"
 
 @ApiView({
@@ -22,7 +22,7 @@ export class AlbumApi extends ApiViewBase {
     path: "/{albumId}/like", // will be /album/123/like
     methods: [HttpMethod.POST, HttpMethod.DELETE],
   })
-  async like(event: APIEvent) {
+  async like(event: ApiEvent): ApiResponse {
     const albumId = event.pathParameters?.albumId
     if (!albumId) throw badRequest("albumId is required in path")
 
@@ -35,10 +35,10 @@ export class AlbumApi extends ApiViewBase {
     else return methodNotAllowed()
   }
 }
-export const handler: RequestHandler = async (event, context) => new AlbumApi().dispatch(event, context)
+export const handler = apiViewHandler(__filename, AlbumApi)
 
 // a simple standalone function with a route attached
-export async function topSongsHandler(event: APIEvent) {
+export async function topSongsHandler(event: ApiEvent) {
   return JSON.stringify({
     message: "function route",
     rawQueryString: event.rawQueryString,
@@ -64,7 +64,7 @@ const topSongsFuncInner = Route({
   },
   // this function name should match the exported name
   // or you must specify the exported function name in `handler`
-})(async function topSongsFuncInner(event: APIEvent) {
+})(async function topSongsFuncInner(event: ApiEvent) {
   return `cookies: ${event.cookies}`
 })
 export { topSongsFuncInner }

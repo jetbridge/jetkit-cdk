@@ -1,5 +1,6 @@
 import HttpError, { methodNotAllowed, notFound } from "@jdpnielsen/http-error"
 import { APIGatewayProxyEventV2, APIGatewayProxyHandlerV2, APIGatewayProxyResultV2, Context } from "aws-lambda"
+import { getApiViewMetadata } from "../metadata"
 import { safeHas } from "../util/type"
 
 /**
@@ -23,14 +24,18 @@ import { safeHas } from "../util/type"
  *
  * @category Helper
  */
-export { APIGatewayProxyEventV2 as APIEvent }
+export { APIGatewayProxyEventV2 as ApiEvent }
+/**
+ * Valid reponse types from a {@link RequestHandler}.
+ */
+export type ApiResponse = Promise<APIGatewayProxyResultV2>
 
 /**
  * Type of an API request handler.
  *
  * @category Helper
  */
-export type RequestHandler = (event: APIGatewayProxyEventV2, context: Context) => Promise<APIGatewayProxyResultV2>
+export type RequestHandler = (event: APIGatewayProxyEventV2, context: Context) => ApiResponse
 
 async function raiseNotAllowed(event: APIGatewayProxyEventV2) {
   throw methodNotAllowed(`${event.requestContext.http.method.toUpperCase()} not allowed`)
@@ -76,7 +81,7 @@ async function raiseNotAllowed(event: APIGatewayProxyEventV2) {
  *   // define POST handler
  *   post: APIGatewayProxyHandlerV2 = async () => "Created new album"
  * }
- * export const handler = apiViewHandler(MyApiView)
+ * export const handler = apiViewHandler(__filename, AlbumApi)
  * ```
  */
 export class ApiViewBase {
@@ -168,11 +173,12 @@ export class ApiViewBase {
 }
 
 /**
- * Helper function to generate a lambda handler for an {@link ApiView} class.
+ * Helper function to generate a lambda handler for an {@link ApiViewBase} class.
  * It should be exported as `handler`. This is the default `handler` name used when generating
  * the lambda function. You may change it but be sure the exported name matches the
  * {@link IApiMetadata.handler} parameter.
  *
+ * @param filename Should be `__filename`. Tells Lambda where to find your entrypoint
  * @param apiView A subclass of ApiViewBase
  * @returns Lambda entrypoint handler to dispatch to the appropriate view method
  *
@@ -180,7 +186,15 @@ export class ApiViewBase {
  *
  * @example
  * ```typescript
- * export const handler = apiViewHandler(MyApiView)
+ * export const handler = apiViewHandler(__filename, MyApiView)
  * ```
  */
-export const apiViewHandler = (apiView: typeof ApiViewBase): RequestHandler => new apiView().dispatch
+export const apiViewHandler = (filename: string, apiView: typeof ApiViewBase): RequestHandler => {
+  // add entry=filename to metadata
+  const viewMeta = getApiViewMetadata(apiView)
+  if (!viewMeta) throw new Error(`apiViewHandler() called on ${apiView} but it is not decorated with @ApiView`)
+
+  if (!viewMeta.entry && filename) viewMeta.entry = filename
+
+  return new apiView().dispatch
+}

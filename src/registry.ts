@@ -31,6 +31,7 @@ import { findDefiningFile } from "./util/function"
  * @category Metadata Decorator
  */
 export function ApiView(opts: IApiMetadata) {
+  // try to guess the filename where this decorator is being applied
   if (!opts.entry) opts.entry = guessEntrypoint("ApiView")
 
   // return decorator
@@ -150,22 +151,20 @@ export function Route(props: IRouteProps) {
  * Search call stack for a function with a given name.
  * Not reliable for decorators.
  *
- * @param functionName callsite function name.
- * @returns path where function callsite was found.
+ * @param functionName callsite function name
+ * @returns path where function callsite was found
  *
  */
-function guessEntrypoint(functionName: string | null): string {
+function guessEntrypoint(functionName: string | null): string | undefined {
   // guess entrypoint file from caller
-  let guessedEntry
-  try {
-    guessedEntry = findDefiningFile(functionName)
-  } catch (ex) {
-    console.error(ex)
+  const guessedEntry = findDefiningFile(functionName)
+
+  if (!guessedEntry || !fs.existsSync(guessedEntry)) {
+    // throw new Error(
+    //   `Could not determine entry point where ${functionName} was called, please define path to entrypoint file in "entry"`
+    // )
+    return undefined
   }
 
-  if (!guessedEntry || !fs.existsSync(guessedEntry))
-    throw new Error(
-      `Could not determine entry point where ${functionName} was called, please define path to entrypoint file in "entry"`
-    )
   return guessedEntry
 }

@@ -11,7 +11,7 @@ export type Node14FuncProps = NodejsFunctionProps
  */
 export class Node14Func extends NodejsFunction {
   constructor(scope: Construct, id: string, props: Node14FuncProps) {
-    let { environment, runtime, awsSdkConnectionReuse, ...rest } = props
+    let { environment, runtime, awsSdkConnectionReuse, bundling, ...rest } = props
 
     // default to source maps enabled
     environment ||= {}
@@ -23,11 +23,19 @@ export class Node14Func extends NodejsFunction {
     // https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/node-reusing-connections.html
     if (typeof awsSdkConnectionReuse === "undefined") awsSdkConnectionReuse = true
 
+    bundling ||= {}
+    let { keepNames, ...bundlingRest } = bundling
+    if (typeof keepNames == "undefined") keepNames = true
+
     const newProps = {
       ...rest,
       awsSdkConnectionReuse,
       environment,
       runtime,
+      bundling: {
+        keepNames,
+        bundlingRest,
+      },
     }
 
     super(scope, id, newProps)
