@@ -77,7 +77,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="tsd-signature-type">Construct</span>
+						<span class="tsd-signature-type">ApiViewMixin</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">ApiViewConstruct</span>
@@ -89,6 +89,12 @@
 							</li>
 						</ul>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><span class="tsd-signature-type">IEndpoint</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -112,10 +118,10 @@
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="apiviewconstruct.html#path" class="tsd-kind-icon">path</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="apiviewconstruct.html#addroutes" class="tsd-kind-icon">add<wbr>Routes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="apiviewconstruct.html#addroutes" class="tsd-kind-icon">add<wbr>Routes</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="apiviewconstruct.html#onprepare" class="tsd-kind-icon">on<wbr>Prepare</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="apiviewconstruct.html#onsynthesize" class="tsd-kind-icon">on<wbr>Synthesize</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="apiviewconstruct.html#onvalidate" class="tsd-kind-icon">on<wbr>Validate</a></li>
@@ -140,9 +146,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides Construct.constructor</p>
+								<p>Overrides ApiViewMixin.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4cdd7a8/src/cdk/api/api.ts#L36">src/cdk/api/api.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0657f51/src/cdk/api/api.ts#L56">src/cdk/api/api.ts:56</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -167,10 +173,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="handlerfunction" class="tsd-anchor"></a>
 					<h3>handler<wbr>Function</h3>
-					<div class="tsd-signature tsd-kind-icon">handler<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">NodejsFunction</span></div>
+					<div class="tsd-signature tsd-kind-icon">handler<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Node14Func</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4cdd7a8/src/cdk/api/api.ts#L32">src/cdk/api/api.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0657f51/src/cdk/api/api.ts#L55">src/cdk/api/api.ts:55</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -179,8 +185,9 @@
 					<h3>http<wbr>Api</h3>
 					<div class="tsd-signature tsd-kind-icon">http<wbr>Api<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HttpApi</span></div>
 					<aside class="tsd-sources">
+						<p>Implementation of IEndpoint.httpApi</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4cdd7a8/src/cdk/api/api.ts#L34">src/cdk/api/api.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0657f51/src/cdk/api/api.ts#L51">src/cdk/api/api.ts:51</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -190,7 +197,7 @@
 					<div class="tsd-signature tsd-kind-icon">lambda<wbr>Api<wbr>Integration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">LambdaProxyIntegration</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4cdd7a8/src/cdk/api/api.ts#L33">src/cdk/api/api.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0657f51/src/cdk/api/api.ts#L56">src/cdk/api/api.ts:56</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -199,8 +206,9 @@
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> methods</h3>
 					<div class="tsd-signature tsd-kind-icon">methods<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HttpMethod</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
+						<p>Implementation of IEndpoint.methods</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4cdd7a8/src/cdk/api/api.ts#L36">src/cdk/api/api.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0657f51/src/cdk/api/api.ts#L53">src/cdk/api/api.ts:53</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -209,7 +217,7 @@
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> node</h3>
 					<div class="tsd-signature tsd-kind-icon">node<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ConstructNode</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from Construct.node</p>
+						<p>Inherited from ApiViewMixin.node</p>
 						<ul>
 							<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:70</li>
 						</ul>
@@ -227,30 +235,38 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="path" class="tsd-anchor"></a>
-					<h3>path</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> path</h3>
 					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
+						<p>Implementation of IEndpoint.path</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4cdd7a8/src/cdk/api/api.ts#L35">src/cdk/api/api.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0657f51/src/cdk/api/api.ts#L52">src/cdk/api/api.ts:52</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="addroutes" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> add<wbr>Routes</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Routes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					<h3>add<wbr>Routes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Routes<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IAddRoutes</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from ApiViewMixin.addRoutes</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/4cdd7a8/src/cdk/api/api.ts#L57">src/cdk/api/api.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0657f51/src/cdk/api/api.ts#L33">src/cdk/api/api.ts:33</a></li>
 								</ul>
 							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>__namedParameters: <span class="tsd-signature-type">IAddRoutes</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -264,7 +280,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from Construct.onPrepare</p>
+								<p>Inherited from ApiViewMixin.onPrepare</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:97</li>
 								</ul>
@@ -297,7 +313,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from Construct.onSynthesize</p>
+								<p>Inherited from ApiViewMixin.onSynthesize</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:107</li>
 								</ul>
@@ -336,7 +352,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from Construct.onValidate</p>
+								<p>Inherited from ApiViewMixin.onValidate</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:84</li>
 								</ul>
@@ -367,7 +383,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from Construct.prepare</p>
+								<p>Inherited from ApiViewMixin.prepare</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:130</li>
 								</ul>
@@ -400,7 +416,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from Construct.synthesize</p>
+								<p>Inherited from ApiViewMixin.synthesize</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:140</li>
 								</ul>
@@ -439,7 +455,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from Construct.toString</p>
+								<p>Inherited from ApiViewMixin.toString</p>
 								<ul>
 									<li>Defined in node_modules/constructs/lib/construct.d.ts:363</li>
 								</ul>
@@ -467,7 +483,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from Construct.validate</p>
+								<p>Inherited from ApiViewMixin.validate</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:117</li>
 								</ul>
@@ -498,7 +514,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from Construct.isConstruct</p>
+								<p>Inherited from ApiViewMixin.isConstruct</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:64</li>
 								</ul>
@@ -539,6 +555,9 @@
 						<a href="../enums/corshttpmethod.html" class="tsd-kind-icon">Cors<wbr>Http<wbr>Method</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="albumapi.html" class="tsd-kind-icon">Album<wbr>Api</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="apiviewbase.html" class="tsd-kind-icon">Api<wbr>View<wbr>Base</a>
 					</li>
 				</ul>
@@ -567,7 +586,7 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="apiviewconstruct.html#path" class="tsd-kind-icon">path</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="apiviewconstruct.html#addroutes" class="tsd-kind-icon">add<wbr>Routes</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
@@ -617,7 +636,7 @@
 						<a href="resourcegeneratorconstruct.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Construct</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
-						<a href="../interfaces/apievent.html" class="tsd-kind-icon">APIEvent</a>
+						<a href="../interfaces/apievent.html" class="tsd-kind-icon">Api<wbr>Event</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/apiviewconstructprops.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct<wbr>Props</a>
@@ -640,6 +659,15 @@
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/isubrouteapimetadata.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Api<wbr>Metadata</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/isubrouteprops.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/resourcegeneratorprops.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../modules.html#apiresponse" class="tsd-kind-icon">Api<wbr>Response</a>
+					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../modules.html#metadatatarget" class="tsd-kind-icon">Metadata<wbr>Target</a>
 					</li>
@@ -657,6 +685,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../modules.html#apiviewhandler" class="tsd-kind-icon">api<wbr>View<wbr>Handler</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../modules.html#topsongshandler" class="tsd-kind-icon">top<wbr>Songs<wbr>Handler</a>
 					</li>
 				</ul>
 			</nav>
@@ -682,9 +713,6 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
 			</ul>
 		</div>
 	</div>

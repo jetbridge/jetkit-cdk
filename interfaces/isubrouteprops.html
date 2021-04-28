@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>BaseModel | @jetkit/cdk</title>
+	<title>ISubRouteProps | @jetkit/cdk</title>
 	<meta name="description" content="Documentation for @jetkit/cdk">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">@jetkit/cdk</a>
 				</li>
 				<li>
-					<a href="basemodel.html">BaseModel</a>
+					<a href="isubrouteprops.html">ISubRouteProps</a>
 				</li>
 			</ul>
-			<h1>Class BaseModel</h1>
+			<h1>Interface ISubRouteProps</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">BaseModel</span>
+						<span class="target">ISubRouteProps</span>
 					</li>
 				</ul>
 			</section>
@@ -78,68 +78,34 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="basemodel.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="basemodel.html#createdat" class="tsd-kind-icon">created<wbr>At</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="basemodel.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="basemodel.html#updatedat" class="tsd-kind-icon">updated<wbr>At</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="isubrouteprops.html#methods" class="tsd-kind-icon">methods</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="isubrouteprops.html#path" class="tsd-kind-icon">path</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Base<wbr>Model<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="basemodel.html" class="tsd-signature-type" data-tsd-kind="Class">BaseModel</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="basemodel.html" class="tsd-signature-type" data-tsd-kind="Class">BaseModel</a></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="createdat" class="tsd-anchor"></a>
-					<h3>created<wbr>At</h3>
-					<div class="tsd-signature tsd-kind-icon">created<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="methods" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> methods</h3>
+					<div class="tsd-signature tsd-kind-icon">methods<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HttpMethod</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0657f51/src/database/baseModel.ts#L8">src/database/baseModel.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0657f51/src/registry.ts#L56">src/registry.ts:56</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="id" class="tsd-anchor"></a>
-					<h3>id</h3>
-					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="path" class="tsd-anchor"></a>
+					<h3>path</h3>
+					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0657f51/src/database/baseModel.ts#L5">src/database/baseModel.ts:5</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="updatedat" class="tsd-anchor"></a>
-					<h3>updated<wbr>At</h3>
-					<div class="tsd-signature tsd-kind-icon">updated<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0657f51/src/database/baseModel.ts#L11">src/database/baseModel.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0657f51/src/registry.ts#L55">src/registry.ts:55</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -159,79 +125,73 @@
 						<a href="../enums/corshttpmethod.html" class="tsd-kind-icon">Cors<wbr>Http<wbr>Method</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="albumapi.html" class="tsd-kind-icon">Album<wbr>Api</a>
+						<a href="../classes/albumapi.html" class="tsd-kind-icon">Album<wbr>Api</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="apiviewbase.html" class="tsd-kind-icon">Api<wbr>View<wbr>Base</a>
+						<a href="../classes/apiviewbase.html" class="tsd-kind-icon">Api<wbr>View<wbr>Base</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="apiviewconstruct.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct</a>
+						<a href="../classes/apiviewconstruct.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/basemodel.html" class="tsd-kind-icon">Base<wbr>Model</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/crudapiconstruct.html" class="tsd-kind-icon">Crud<wbr>Api<wbr>Construct</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/crudapiviewbase.html" class="tsd-kind-icon">Crud<wbr>Api<wbr>View<wbr>Base</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
+						<a href="../classes/duration.html" class="tsd-kind-icon">Duration</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/jetkitcdkapp.html" class="tsd-kind-icon">Jet<wbr>Kit<wbr>Cdk<wbr>App</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/resourcegeneratorconstruct.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Construct</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-external">
+						<a href="apievent.html" class="tsd-kind-icon">Api<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="apiviewconstructprops.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="iapimetadata.html" class="tsd-kind-icon">IApi<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="iapiviewclassmetadata.html" class="tsd-kind-icon">IApi<wbr>View<wbr>Class<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="icrudapimetadata.html" class="tsd-kind-icon">ICrud<wbr>Api<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="ifunctionmetadata.html" class="tsd-kind-icon">IFunction<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="irouteprops.html" class="tsd-kind-icon">IRoute<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="isubrouteapimetadata.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Api<wbr>Metadata</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class">
-						<a href="basemodel.html" class="tsd-kind-icon">Base<wbr>Model</a>
+					<li class="current tsd-kind-interface">
+						<a href="isubrouteprops.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Props</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="basemodel.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="isubrouteprops.html#methods" class="tsd-kind-icon">methods</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="basemodel.html#createdat" class="tsd-kind-icon">created<wbr>At</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="basemodel.html#id" class="tsd-kind-icon">id</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="basemodel.html#updatedat" class="tsd-kind-icon">updated<wbr>At</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="isubrouteprops.html#path" class="tsd-kind-icon">path</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="crudapiconstruct.html" class="tsd-kind-icon">Crud<wbr>Api<wbr>Construct</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="crudapiviewbase.html" class="tsd-kind-icon">Crud<wbr>Api<wbr>View<wbr>Base</a>
-					</li>
-					<li class=" tsd-kind-class tsd-is-external">
-						<a href="duration.html" class="tsd-kind-icon">Duration</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="jetkitcdkapp.html" class="tsd-kind-icon">Jet<wbr>Kit<wbr>Cdk<wbr>App</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="resourcegeneratorconstruct.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Construct</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-is-external">
-						<a href="../interfaces/apievent.html" class="tsd-kind-icon">Api<wbr>Event</a>
-					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/apiviewconstructprops.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct<wbr>Props</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iapimetadata.html" class="tsd-kind-icon">IApi<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iapiviewclassmetadata.html" class="tsd-kind-icon">IApi<wbr>View<wbr>Class<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/icrudapimetadata.html" class="tsd-kind-icon">ICrud<wbr>Api<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/ifunctionmetadata.html" class="tsd-kind-icon">IFunction<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/irouteprops.html" class="tsd-kind-icon">IRoute<wbr>Props</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/isubrouteapimetadata.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Api<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/isubrouteprops.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Props</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/resourcegeneratorprops.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Props</a>
+						<a href="resourcegeneratorprops.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../modules.html#apiresponse" class="tsd-kind-icon">Api<wbr>Response</a>
