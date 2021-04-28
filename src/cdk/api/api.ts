@@ -1,13 +1,15 @@
 import { HttpApi, HttpMethod, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
-import { NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
+import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { Construct } from "@aws-cdk/core"
 import { Node14Func } from "../lambda/node14func"
 
 /**
  * @category Construct
  */
-export interface ApiProps extends NodejsFunctionProps {
+export interface ApiProps extends NodejsFunctionProps, IEndpoint {}
+
+export interface IEndpoint {
   /**
    * API Gateway HTTP API
    */
@@ -18,7 +20,24 @@ export interface ApiProps extends NodejsFunctionProps {
    */
   path?: string
 
+  /**
+   * Enabled {@link HttpMethod}s for route
+   */
   methods?: HttpMethod[]
+}
+
+export interface IAddRoutes extends IEndpoint {
+  lambdaApiIntegration: LambdaProxyIntegration
+}
+export abstract class ApiViewMixin extends Construct {
+  addRoutes({ methods, path = "/", httpApi, lambdaApiIntegration }: IAddRoutes) {
+    // * /path -> lambda integration
+    httpApi.addRoutes({
+      path,
+      methods: methods || [HttpMethod.ANY],
+      integration: lambdaApiIntegration,
+    })
+  }
 }
 
 /**
@@ -28,18 +47,19 @@ export interface ApiProps extends NodejsFunctionProps {
  *
  * @category Construct
  */
-export class ApiView extends Construct {
-  handlerFunction: NodejsFunction
-  lambdaApiIntegration: LambdaProxyIntegration
+export class ApiView extends ApiViewMixin implements IEndpoint {
   httpApi: HttpApi
-  path: string
+  path?: string
   methods?: HttpMethod[]
+
+  handlerFunction: Node14Func
+  lambdaApiIntegration: LambdaProxyIntegration
 
   constructor(scope: Construct, id: string, { httpApi, methods, path = "/", ...rest }: ApiProps) {
     super(scope, id)
 
     // lambda handler
-    this.handlerFunction = new Node14Func(this, `Api${id}`, rest)
+    this.handlerFunction = new Node14Func(this, `View${id}`, rest)
 
     // lambda API integration
     this.lambdaApiIntegration = new LambdaProxyIntegration({
@@ -51,15 +71,6 @@ export class ApiView extends Construct {
     this.path = path
     this.methods = methods
 
-    this.addRoutes()
-  }
-
-  private addRoutes() {
-    // * /path -> lambda integration
-    this.httpApi.addRoutes({
-      path: this.path,
-      methods: this.methods || [HttpMethod.ANY],
-      integration: this.lambdaApiIntegration,
-    })
+    this.addRoutes({ httpApi, methods, path, lambdaApiIntegration: this.lambdaApiIntegration })
   }
 }

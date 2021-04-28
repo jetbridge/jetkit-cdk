@@ -13,8 +13,9 @@ and generating cloud infrastructure using [AWS CDK](https://docs.aws.amazon.com/
 We want to build maintainable and scalable cloud-first applications, with cloud resources generated from application code.
 
 Using AWS CDK we can automate generating API Gateway routes and Lambda functions from class and function metadata.
-Each class or function view is a self-contained Lambda function that only pulls in the dependencies needed for its functioning, keeping startup times low and applications modular.
-Get all of the power of a minimal web framework without cramming your entire app into a single Lambda.
+Each class or function view is a self-contained Lambda function that only pulls in the dependencies needed for its
+functioning, keeping startup times low and applications modular.
+Get the utility of a minimal web framework without cramming your entire app into a single Lambda.
 
 Optional support for TypeORM using the Aurora Serverless Data API and convenient helpers for CRUD, serialization, tracing, and error handling will be added soon.
 
@@ -37,34 +38,27 @@ npm install @jetkit/cdk
 ```typescript
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
-import { APIGatewayProxyHandlerV2 } from "aws-lambda"
-import { APIEvent, ApiViewBase, RequestHandler } from "../api/base"
-import { ApiView, Route, SubRoute } from "../registry"
-
-const lambdaOpts = {
-  memorySize: 512,
-  entry: __filename,
-  bundling: {
-    minify: true,
-    sourceMap: true,
-  },
-  environment: {
-    LOG_LEVEL: "DEBUG",
-  },
-}
+import { ApiView, Route, SubRoute, ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "@jetkit/cdk"
 
 @ApiView({
   path: "/album",
-  ...lambdaOpts,
+  memorySize: 512,
+  environment: {
+    LOG_LEVEL: "DEBUG",
+  },
+  bundling: { minify: true, metafile: true, sourceMap: true },
 })
 export class AlbumApi extends ApiViewBase {
+  // define POST handler
+  post = async () => "Created new album"
+
   // custom endpoint in the view
   // routes to the ApiView function
   @SubRoute({
     path: "/{albumId}/like", // will be /album/123/like
     methods: [HttpMethod.POST, HttpMethod.DELETE],
   })
-  async like(event: APIEvent) {
+  async like(event: ApiEvent): ApiResponse {
     const albumId = event.pathParameters?.albumId
     if (!albumId) throw badRequest("albumId is required in path")
 
@@ -74,14 +68,11 @@ export class AlbumApi extends ApiViewBase {
     if (method == HttpMethod.POST) return `Liked album ${albumId}`
     // DELETE - unmark album as liked
     else if (method == HttpMethod.DELETE) return `Unliked album ${albumId}`
+    // should never be reached
     else return methodNotAllowed()
   }
-
-  // define POST handler
-  post: APIGatewayProxyHandlerV2 = async () => "Created new album"
 }
-
-export const handler: RequestHandler = async (event, context) => new AlbumApi().dispatch(event, context)
+export const handler = apiViewHandler(__filename, AlbumApi)
 ```
 
 ### Handler Function With Route
