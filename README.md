@@ -79,28 +79,75 @@ export const handler = apiViewHandler(__filename, AlbumApi)
 
 ```typescript
 // a simple standalone function with a route attached
-export async function topSongsHandler(event: APIEvent) {
-  return JSON.stringify({
-    message: "function route",
-    rawQueryString: event.rawQueryString,
-  })
+export async function topSongsHandler(event: ApiEvent) {
+  return "top songs"
 }
 // define route and lambda properties
 Route({
   path: "/top-songs",
   methods: [HttpMethod.PUT],
-  ...lambdaOpts,
+  memorySize: 384,
+  environment: {
+    LOG_LEVEL: "WARN",
+  },
 })(topSongsHandler)
 
 // alternate, uglier way of writing the same thing
 const topSongsFuncInner = Route({
   path: "/top-songs-inner",
   methods: [HttpMethod.PUT],
-  ...lambdaOpts,
+  memorySize: 384,
+  environment: {
+    LOG_LEVEL: "WARN",
+  },
   // this function name should match the exported name
   // or you must specify the exported function name in `handler`
-})(async function topSongsFuncInner(event: APIEvent) {
-  return `cookies: ${event.cookies}`
+})(async function topSongsFuncInner(event: ApiEvent) {
+  return "top songs"
 })
 export { topSongsFuncInner }
+```
+
+### CDK Stack
+
+To start from scratch:
+
+```shell
+npm install -g aws-cdk
+cdk init app --language typescript
+npm install @jetkit/cdk @aws-cdk/core @aws-cdk/aws-apigatewayv2
+```
+
+See the [guide](https://docs.aws.amazon.com/cdk/latest/guide/hello_world.html) for more details.
+
+---
+
+To generate API Gateway routes and Lambda function handlers from your application code:
+
+```typescript
+import { CorsHttpMethod, HttpApi } from "@aws-cdk/aws-apigatewayv2"
+import { Construct, Duration, Stack, StackProps, App } from "@aws-cdk/core"
+import { ResourceGeneratorConstruct } from "@jetkit/cdk"
+
+export class InfraStack extends Stack {
+  constructor(scope: App, id: string, props?: StackProps) {
+    super(scope, id, props)
+
+    // create API Gateway
+    const httpApi = new HttpApi(this, "Api", {
+      corsPreflight: {
+        allowHeaders: ["Authorization"],
+        allowMethods: [CorsHttpMethod.ANY],
+        allowOrigins: ["*"],
+        maxAge: Duration.days(10),
+      },
+    })
+
+    // transmute your app code into infrastructure
+    new ResourceGeneratorConstruct(this, "Generator", {
+      resources: [AlbumApi, topSongsHandler], // supply your API views and functions here
+      httpApi,
+    })
+  }
+}
 ```
