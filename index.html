@@ -133,30 +133,70 @@
 					<h3>Handler Function With Route</h3>
 				</a>
 				<pre><code class="language-typescript"><span style="color: #008000">// a simple standalone function with a route attached</span>
-<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">topSongsHandler</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000">: </span><span style="color: #267F99">APIEvent</span><span style="color: #000000">) {</span>
-<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #267F99">JSON</span><span style="color: #000000">.</span><span style="color: #795E26">stringify</span><span style="color: #000000">({</span>
-<span style="color: #000000">    </span><span style="color: #001080">message:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;function route&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">rawQueryString:</span><span style="color: #000000"> </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">rawQueryString</span><span style="color: #000000">,</span>
-<span style="color: #000000">  })</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">topSongsHandler</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000">: </span><span style="color: #267F99">ApiEvent</span><span style="color: #000000">) {</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;top songs&quot;</span>
 <span style="color: #000000">}</span>
 <span style="color: #008000">// define route and lambda properties</span>
 <span style="color: #795E26">Route</span><span style="color: #000000">({</span>
 <span style="color: #000000">  </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/top-songs&quot;</span><span style="color: #000000">,</span>
 <span style="color: #000000">  </span><span style="color: #001080">methods:</span><span style="color: #000000"> [</span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">PUT</span><span style="color: #000000">],</span>
-<span style="color: #000000">  ...</span><span style="color: #001080">lambdaOpts</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">memorySize:</span><span style="color: #000000"> </span><span style="color: #098658">384</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">environment:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">LOG_LEVEL:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;WARN&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  },</span>
 <span style="color: #000000">})(</span><span style="color: #001080">topSongsHandler</span><span style="color: #000000">)</span>
 
 <span style="color: #008000">// alternate, uglier way of writing the same thing</span>
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">topSongsFuncInner</span><span style="color: #000000"> = </span><span style="color: #795E26">Route</span><span style="color: #000000">({</span>
 <span style="color: #000000">  </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/top-songs-inner&quot;</span><span style="color: #000000">,</span>
 <span style="color: #000000">  </span><span style="color: #001080">methods:</span><span style="color: #000000"> [</span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">PUT</span><span style="color: #000000">],</span>
-<span style="color: #000000">  ...</span><span style="color: #001080">lambdaOpts</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">memorySize:</span><span style="color: #000000"> </span><span style="color: #098658">384</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">environment:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">LOG_LEVEL:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;WARN&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  },</span>
 <span style="color: #000000">  </span><span style="color: #008000">// this function name should match the exported name</span>
 <span style="color: #000000">  </span><span style="color: #008000">// or you must specify the exported function name in `handler`</span>
-<span style="color: #000000">})(</span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">topSongsFuncInner</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000">: </span><span style="color: #267F99">APIEvent</span><span style="color: #000000">) {</span>
-<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #A31515">`cookies: </span><span style="color: #0000FF">${</span><span style="color: #001080">event</span><span style="color: #000000FF">.</span><span style="color: #001080">cookies</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span>
+<span style="color: #000000">})(</span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">topSongsFuncInner</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000">: </span><span style="color: #267F99">ApiEvent</span><span style="color: #000000">) {</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;top songs&quot;</span>
 <span style="color: #000000">})</span>
 <span style="color: #AF00DB">export</span><span style="color: #000000"> { </span><span style="color: #001080">topSongsFuncInner</span><span style="color: #000000"> }</span>
+</code></pre>
+				<a href="#cdk-stack" id="cdk-stack" style="color: inherit; text-decoration: none;">
+					<h3>CDK Stack</h3>
+				</a>
+				<p>To start from scratch:</p>
+				<pre><code class="language-shell"><span style="color: #000000">npm install -g aws-cdk</span>
+<span style="color: #000000">cdk init app --language typescript</span>
+<span style="color: #000000">npm install @jetkit/cdk @aws-cdk/core @aws-cdk/aws-apigatewayv2</span>
+</code></pre>
+				<p>See the <a href="https://docs.aws.amazon.com/cdk/latest/guide/hello_world.html">guide</a> for more details.</p>
+				<hr>
+				<p>To generate API Gateway routes and Lambda function handlers from your application code:</p>
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">CorsHttpMethod</span><span style="color: #000000">, </span><span style="color: #001080">HttpApi</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@aws-cdk/aws-apigatewayv2&quot;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Construct</span><span style="color: #000000">, </span><span style="color: #001080">Duration</span><span style="color: #000000">, </span><span style="color: #001080">Stack</span><span style="color: #000000">, </span><span style="color: #001080">StackProps</span><span style="color: #000000">, </span><span style="color: #001080">App</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@aws-cdk/core&quot;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">ResourceGeneratorConstruct</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@jetkit/cdk&quot;</span>
+
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">InfraStack</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">Stack</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">constructor</span><span style="color: #000000">(</span><span style="color: #001080">scope</span><span style="color: #000000">: </span><span style="color: #267F99">App</span><span style="color: #000000">, </span><span style="color: #001080">id</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #001080">props</span><span style="color: #000000">?: </span><span style="color: #267F99">StackProps</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">super</span><span style="color: #000000">(</span><span style="color: #001080">scope</span><span style="color: #000000">, </span><span style="color: #001080">id</span><span style="color: #000000">, </span><span style="color: #001080">props</span><span style="color: #000000">)</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// create API Gateway</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">httpApi</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">HttpApi</span><span style="color: #000000">(</span><span style="color: #0000FF">this</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;Api&quot;</span><span style="color: #000000">, {</span>
+<span style="color: #000000">      </span><span style="color: #001080">corsPreflight:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">allowHeaders:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;Authorization&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">        </span><span style="color: #001080">allowMethods:</span><span style="color: #000000"> [</span><span style="color: #001080">CorsHttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">ANY</span><span style="color: #000000">],</span>
+<span style="color: #000000">        </span><span style="color: #001080">allowOrigins:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;*&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">        </span><span style="color: #001080">maxAge:</span><span style="color: #000000"> </span><span style="color: #001080">Duration</span><span style="color: #000000">.</span><span style="color: #795E26">days</span><span style="color: #000000">(</span><span style="color: #098658">10</span><span style="color: #000000">),</span>
+<span style="color: #000000">      },</span>
+<span style="color: #000000">    })</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// transmute your app code into infrastructure</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">ResourceGeneratorConstruct</span><span style="color: #000000">(</span><span style="color: #0000FF">this</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;Generator&quot;</span><span style="color: #000000">, {</span>
+<span style="color: #000000">      </span><span style="color: #001080">resources:</span><span style="color: #000000"> [</span><span style="color: #001080">AlbumApi</span><span style="color: #000000">, </span><span style="color: #001080">topSongsHandler</span><span style="color: #000000">], </span><span style="color: #008000">// supply your API views and functions here</span>
+<span style="color: #000000">      </span><span style="color: #001080">httpApi</span><span style="color: #000000">,</span>
+<span style="color: #000000">    })</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
 </code></pre>
 			</div>
 		</div>
