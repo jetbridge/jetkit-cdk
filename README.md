@@ -151,3 +151,7 @@ export class InfraStack extends Stack {
   }
 }
 ```
+
+### Super Quickstart
+
+Use this monorepo project template: [jkv2-ts-template](https://github.com/jetbridge/jkv2-ts-template)
