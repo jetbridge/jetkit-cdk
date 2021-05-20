@@ -29,6 +29,7 @@
     "@ts-morph/bootstrap": "^0.9.1",
     "@tsconfig/node14": "^1.0.0",
     "@types/aws-lambda": "^8.10.75",
+    "@types/convict": "^6.0.2",
     "@types/jest": "^26.0.10",
     "@types/node": "10.17.27",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
@@ -52,7 +53,8 @@
     "@aws-cdk/aws-lambda": "^1.100.0",
     "@aws-cdk/aws-lambda-nodejs": "^1.100.0",
     "@aws-cdk/core": "1.100.0",
-    "@jdpnielsen/http-error": "^1.2.0"
+    "@jdpnielsen/http-error": "^1.2.0",
+    "convict": "^6.1.0"
   },
   "peerDependencies": {
     "typeorm": "*"

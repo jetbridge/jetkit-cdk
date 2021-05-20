@@ -22,7 +22,7 @@ describe("README examples", () => {
 })
 
 function compile(input: string): void {
-  const project = createProjectSync({ tsConfigFilePath: "tsconfig.json" })
+  const project = createProjectSync({ tsConfigFilePath: "tsconfig.json", compilerOptions: { noEmit: true } })
 
   // hack to make it possible to import the project source files instead of "@jetkit/cdk"
   input = input.replace('from "@jetkit/cdk"', 'from "./src/index"')

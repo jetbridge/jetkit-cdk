@@ -1,9 +1,9 @@
 # JetKit/CDK
 
-An opinionated toolkit for building cloud-native serverless applications.
+An anti-framework for building cloud-native serverless applications.
 
-This module provides tools for defining RESTful API views with code
-and generating cloud infrastructure using [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/home.html).
+This module provides convenient tools for write RESTful API views
+and generating cloud infrastructure with [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/home.html).
 
 [![Tests](https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml/badge.svg)](https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml)
 [![npm version](https://badge.fury.io/js/%40jetkit%2Fcdk.svg)](https://badge.fury.io/js/%40jetkit%2Fcdk)
@@ -64,7 +64,7 @@ export class AlbumApi extends ApiViewBase {
 
     const method = event.requestContext.http.method
 
-    // POST - mark album as liked
+    // POST - mark album as **liked**
     if (method == HttpMethod.POST) return `Liked album ${albumId}`
     // DELETE - unmark album as liked
     else if (method == HttpMethod.DELETE) return `Unliked album ${albumId}`
