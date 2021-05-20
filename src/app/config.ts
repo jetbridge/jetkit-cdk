@@ -24,10 +24,10 @@ const defaults: IConfig = {
     corsPreflight: {},
   },
 }
-const schema = convict(defaults)
+// const schema = convict(defaults)
 
 export class Config<T> {
-  constructor(config: Partial<IConfig<T>>) {
+  constructor(private readonly config: Partial<IConfig<T>>) {
     // merge with defaults
   }
 }

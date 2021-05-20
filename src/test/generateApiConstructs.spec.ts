@@ -3,8 +3,10 @@
 import "@aws-cdk/assert/jest"
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
 import { Stack } from "@aws-cdk/core"
-import { ResourceGeneratorConstruct } from ".."
-import { AlbumApi, topSongsHandler, topSongsFuncInner } from "./sampleApp"
+import { ApiViewConstruct, ResourceGeneratorConstruct } from ".."
+import { AlbumApi, topSongsFuncInner, topSongsHandler } from "./sampleApp"
+
+const bundleBannerMsg = "--- cool bundlings mon ---"
 
 const defaultEnvVars = {
   NODE_OPTIONS: "--enable-source-maps",
@@ -17,9 +19,14 @@ describe("@ApiView construct generation", () => {
 
   // should create routes on httpApi
   // and lambda handler function
-  new ResourceGeneratorConstruct(stack, "Gen", {
+  const generator = new ResourceGeneratorConstruct(stack, "Gen", {
     resources: [AlbumApi],
     httpApi,
+    functionOptions: {
+      bundling: {
+        banner: bundleBannerMsg,
+      },
+    },
   })
 
   it("generates APIGW routes", () => {
@@ -41,6 +48,11 @@ describe("@ApiView construct generation", () => {
         },
       },
     })
+
+    // are defaults passed through?
+    const classView = generator.node.findChild("Class-AlbumApi") as ApiViewConstruct
+    const handlerFunction = classView.handlerFunction
+    expect(handlerFunction.bundling).toMatchObject({ banner: bundleBannerMsg })
   })
 })
 

@@ -1,8 +1,10 @@
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
+import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { Construct } from "@aws-cdk/core"
+import deepmerge from "deepmerge"
 import { RequestHandler } from "../api/base"
 import { getApiViewMetadata, getRouteMetadata, getSubRouteMetadata, MetadataTarget } from "../metadata"
-import { ApiView as ApiViewConstruct } from "./api/api"
+import { ApiProps, ApiView as ApiViewConstruct } from "./api/api"
 import { SubRouteApi } from "./api/subRoute"
 
 /**
@@ -25,6 +27,11 @@ export interface ResourceGeneratorProps {
    * The {@link HttpApi} to attach routes to.
    */
   httpApi: HttpApi
+
+  /**
+   * Default Lambda function options.
+   */
+  functionOptions?: NodejsFunctionProps
 }
 
 /**
@@ -38,10 +45,12 @@ export interface ResourceGeneratorProps {
  */
 export class ResourceGenerator extends Construct {
   httpApi: HttpApi
+  functionOptions?: NodejsFunctionProps
 
-  constructor(scope: Construct, id: string, { httpApi, resources }: ResourceGeneratorProps) {
+  constructor(scope: Construct, id: string, { httpApi, resources, functionOptions }: ResourceGeneratorProps) {
     super(scope, id)
     this.httpApi = httpApi
+    this.functionOptions = functionOptions
 
     // emit CDK constructs for specified resources
     resources.forEach((resource) => this.generateConstructsForResource(resource))
@@ -78,9 +87,13 @@ export class ResourceGenerator extends Construct {
     let apiViewConstruct: undefined | ApiViewConstruct
     if (apiViewMeta) {
       const name = apiViewMeta.apiClass.name
+
+      // merge defaults with config in meta
+      const mergedOptions: Omit<ApiProps, "httpApi"> = deepmerge(this.functionOptions || {}, apiViewMeta)
+
       apiViewConstruct = new ApiViewConstruct(this, `Class-${name}`, {
         httpApi: this.httpApi,
-        ...apiViewMeta,
+        ...mergedOptions,
       })
     }
 
