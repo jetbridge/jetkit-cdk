@@ -3,8 +3,10 @@ import * as fs from "fs"
 import * as path from "path"
 import { default as SimpleMarkdown } from "simple-markdown"
 
+const projectRootDir = path.join(__dirname, "..", "..")
+
 describe("README examples", () => {
-  const readmePath = path.join(__dirname, "..", "..", "README.md")
+  const readmePath = path.join(projectRootDir, "README.md")
   const readmeContents = fs.readFileSync(readmePath)
 
   // extract examples
@@ -22,10 +24,15 @@ describe("README examples", () => {
 })
 
 function compile(input: string): void {
-  const project = createProjectSync({ tsConfigFilePath: "tsconfig.json", compilerOptions: { noEmit: true } })
-
-  // hack to make it possible to import the project source files instead of "@jetkit/cdk"
-  input = input.replace('from "@jetkit/cdk"', 'from "./src/index"')
+  const project = createProjectSync({
+    tsConfigFilePath: "tsconfig.json",
+    compilerOptions: {
+      baseUrl: projectRootDir,
+      paths: {
+        "@jetkit/cdk": ["src/index"],
+      },
+    },
+  })
 
   // build program
   project.createSourceFile("example.ts", input)
