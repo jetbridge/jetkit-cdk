@@ -2,6 +2,7 @@ import { App as CdkApp } from "@aws-cdk/core"
 import { IConfig } from "./config"
 
 export interface IAppProps<ConfigT extends IConfig> {
+  // Presently unused
   config?: ConfigT
 }
 
