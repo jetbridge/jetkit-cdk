@@ -2,7 +2,7 @@
 
 An anti-framework for building cloud-native serverless applications.
 
-This module provides convenient tools for write RESTful API views
+This module provides convenient tools for writing RESTful API views
 and generating cloud infrastructure with [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/home.html).
 
 [![Tests](https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml/badge.svg)](https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml)
