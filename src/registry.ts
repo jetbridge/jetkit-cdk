@@ -4,14 +4,14 @@ import fs from "fs"
 import { ApiViewBase, RequestHandler } from "./api/base"
 import {
   getSubRouteMetadata,
-  IApiMetadata,
+  IFunctionMetadataBase,
   IApiViewClassMetadata,
   IFunctionMetadata,
   ISubRouteApiMetadata,
   MetadataTarget,
   MetadataTargetConstructor,
   setApiViewMetadata,
-  setRouteMetadata,
+  setFunctionMetadata,
   setSubRouteMetadata,
 } from "./metadata"
 import { findDefiningFile } from "./util/function"
@@ -30,7 +30,7 @@ import { findDefiningFile } from "./util/function"
  *
  * @category Metadata Decorator
  */
-export function ApiView(opts: IApiMetadata) {
+export function ApiView(opts: IFunctionMetadataBase) {
   // try to guess the filename where this decorator is being applied
   if (!opts.entry) opts.entry = guessEntrypoint("ApiView")
 
@@ -104,18 +104,18 @@ export function SubRoute({ path, methods }: ISubRouteProps) {
 }
 
 /**
- * Defines a route and lambda handler for a function.
+ * Defines a Lambda function.
  *
  * Saves metadata on the function for generation of CDK resources.
  *
- * N.B. in order for the lambda entry handler to locate your function it must be named and exported
+ * N.B. in order for the Lambda entry handler to locate your function it must be named and exported
  * or you can manually provide the name of the exported handler in `props.handler`.
- * @param props configure route and any other lambda function properties including memory allocation and environment variables.
+ * @param props configure optional API route and any other lambda function properties including memory allocation and environment variables.
  * @returns
  *
  * @category Metadata Decorator
  */
-export function Route(props: IRouteProps) {
+export function Lambda(props: IRouteProps) {
   return (wrapped: RequestHandler) => {
     // here we figure out the entrypoint path and function handler name:
 
@@ -142,7 +142,7 @@ export function Route(props: IRouteProps) {
       requestHandlerFunc: wrapped,
     }
 
-    setRouteMetadata(wrapped, meta)
+    setFunctionMetadata(wrapped, meta)
     return wrapped
   }
 }

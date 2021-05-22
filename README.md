@@ -38,7 +38,7 @@ npm install @jetkit/cdk
 ```typescript
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
-import { ApiView, Route, SubRoute, ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "@jetkit/cdk"
+import { ApiView, SubRoute, ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "@jetkit/cdk"
 
 @ApiView({
   path: "/album",
@@ -79,14 +79,14 @@ export const handler = apiViewHandler(__filename, AlbumApi)
 
 ```typescript
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
-import { Route, ApiEvent } from "@jetkit/cdk"
+import { Lambda, ApiEvent } from "@jetkit/cdk"
 
 // a simple standalone function with a route attached
 export async function topSongsHandler(event: ApiEvent) {
   return "top songs"
 }
 // define route and lambda properties
-Route({
+Lambda({
   path: "/top-songs",
   methods: [HttpMethod.PUT],
   memorySize: 384,
@@ -96,7 +96,7 @@ Route({
 })(topSongsHandler)
 
 // alternate, uglier way of writing the same thing
-const topSongsFuncInner = Route({
+const topSongsFuncInner = Lambda({
   path: "/top-songs-inner",
   methods: [HttpMethod.PUT],
   memorySize: 384,

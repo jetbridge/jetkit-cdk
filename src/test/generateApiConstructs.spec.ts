@@ -79,7 +79,7 @@ describe("@SubRoute construct generation", () => {
   })
 })
 
-describe("@Route construct generation", () => {
+describe("@Lambda construct generation", () => {
   const stack = new Stack()
   const httpApi = new HttpApi(stack, "API")
 

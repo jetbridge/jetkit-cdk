@@ -1,7 +1,7 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
 import { ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "../api/base"
-import { ApiView, Route, SubRoute } from "../registry"
+import { ApiView, Lambda, SubRoute } from "../registry"
 
 @ApiView({
   path: "/album",
@@ -44,7 +44,7 @@ export async function topSongsHandler(event: ApiEvent) {
   })
 }
 // define route and lambda properties
-Route({
+Lambda({
   path: "/top-songs",
   methods: [HttpMethod.PUT],
   memorySize: 384,
@@ -54,7 +54,7 @@ Route({
 })(topSongsHandler)
 
 // alternate, uglier way of writing the same thing
-const topSongsFuncInner = Route({
+const topSongsFuncInner = Lambda({
   path: "/top-songs-inner",
   methods: [HttpMethod.PUT],
   memorySize: 384,
