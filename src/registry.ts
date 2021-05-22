@@ -131,7 +131,7 @@ export function Lambda(props: IRouteProps) {
       // it would be better to get the _exported_ name of the function that is being
       // decorated but I've no clue how to get that.
       throw new Error(
-        `This function is unnamed. Please define it using "async function foo() {...}" or explicitly pass the exported handler name to Route().\nFunction:\n${wrapped}\n\nThis is necessary to define the entrypoint handler name for the lambda function configuration.`
+        `This function is unnamed. Please define it using "async function foo() {...}" or explicitly pass the exported handler name to Lambda().\nFunction:\n${wrapped}\n\nThis is necessary to define the entrypoint handler name for the lambda function configuration.`
       )
     }
 

@@ -10,7 +10,7 @@ import { SubRouteApi } from "./api/subRoute"
 /**
  * CDK {@link Construct} that automatically generates cloud resources
  * based on metadata defined on your application code using
- * {@link Route}, {@link ApiView}, {@link SubRoute}.
+ * {@link Lambda}, {@link ApiView}, {@link SubRoute}.
  *
  * @module
  */
