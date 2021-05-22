@@ -64,7 +64,7 @@ export class AlbumApi extends ApiViewBase {
 
     const method = event.requestContext.http.method
 
-    // POST - mark album as **liked**
+    // POST - mark album as liked
     if (method == HttpMethod.POST) return `Liked album ${albumId}`
     // DELETE - unmark album as liked
     else if (method == HttpMethod.DELETE) return `Unliked album ${albumId}`

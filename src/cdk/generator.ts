@@ -88,7 +88,7 @@ export class ResourceGenerator extends Construct {
     if (apiViewMeta) {
       const name = apiViewMeta.apiClass.name
 
-      // merge defaults with config in meta
+      // merge function option defaults with options from attached metadata (from decorator)
       const mergedOptions: Omit<ApiProps, "httpApi"> = deepmerge(this.functionOptions || {}, apiViewMeta)
 
       apiViewConstruct = new ApiViewConstruct(this, `Class-${name}`, {
