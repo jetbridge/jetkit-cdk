@@ -1,7 +1,7 @@
+# JetKit/CDK
+
 [![Tests](https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml/badge.svg)](https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml)
 [![npm version](https://badge.fury.io/js/%40jetkit%2Fcdk.svg)](https://badge.fury.io/js/%40jetkit%2Fcdk)
-
-# JetKit/CDK
 
 An anti-framework for building cloud-native serverless applications.
 
