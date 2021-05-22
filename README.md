@@ -158,3 +158,9 @@ export class InfraStack extends Stack {
 ### Super Quickstart
 
 Use this monorepo project template: [jkv2-ts-template](https://github.com/jetbridge/jkv2-ts-template)
+
+## How It Works
+
+This library provides decorators that can be attached to view classes, methods, and functions. The decorator attaches metadata in the form of options for constructing the Lambda function and optionally API Gateway routes.
+
+It also includes some convenient [CDK L3 constructs](https://docs.aws.amazon.com/cdk/latest/guide/constructs.html) to generate the Lambda functions and API Gateway routes from your decorated application code.
