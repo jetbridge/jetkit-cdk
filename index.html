@@ -170,6 +170,9 @@
 <span style="color: #000000">npm install @jetkit/cdk @aws-cdk/core @aws-cdk/aws-apigatewayv2</span>
 </code></pre>
 				<p>See the <a href="https://docs.aws.amazon.com/cdk/latest/guide/hello_world.html">guide</a> for more details.</p>
+				<p>To deploy your stack:</p>
+				<pre><code class="language-shell"><span style="color: #000000">cdk deploy</span>
+</code></pre>
 				<hr>
 				<p>To generate API Gateway routes and Lambda function handlers from your application code:</p>
 				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">CorsHttpMethod</span><span style="color: #000000">, </span><span style="color: #001080">HttpApi</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@aws-cdk/aws-apigatewayv2&quot;</span>
@@ -192,7 +195,7 @@
 
 <span style="color: #000000">    </span><span style="color: #008000">// transmute your app code into infrastructure</span>
 <span style="color: #000000">    </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">ResourceGeneratorConstruct</span><span style="color: #000000">(</span><span style="color: #0000FF">this</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;Generator&quot;</span><span style="color: #000000">, {</span>
-<span style="color: #000000">      </span><span style="color: #001080">resources:</span><span style="color: #000000"> [</span><span style="color: #001080">AlbumApi</span><span style="color: #000000">, </span><span style="color: #001080">topSongsHandler</span><span style="color: #000000">], </span><span style="color: #008000">// supply your API views and functions here</span>
+<span style="color: #000000">      </span><span style="color: #001080">resources:</span><span style="color: #000000"> [</span><span style="color: #001080">AlbumApi</span><span style="color: #000000">, </span><span style="color: #001080">topSongsHandler</span><span style="color: #000000">], </span><span style="color: #008000">// supply your functions and view classes here</span>
 <span style="color: #000000">      </span><span style="color: #001080">httpApi</span><span style="color: #000000">,</span>
 <span style="color: #000000">    })</span>
 <span style="color: #000000">  }</span>
