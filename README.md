@@ -168,3 +168,7 @@ export class InfraStack extends Stack {
 This library provides decorators that can be attached to view classes, methods, and functions. The decorator attaches metadata in the form of options for constructing the Lambda function and optionally API Gateway routes.
 
 It also includes some convenient [CDK L3 constructs](https://docs.aws.amazon.com/cdk/latest/guide/constructs.html) to generate the Lambda functions and API Gateway routes from your decorated application code.
+
+### Local Development
+
+AWS SAM supports [running CDK applications locally](https://aws.amazon.com/blogs/compute/better-together-aws-sam-and-aws-cdk/) (in beta).
