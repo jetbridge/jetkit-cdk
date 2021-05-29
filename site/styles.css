@@ -4,18 +4,19 @@
 
 
 /* Custom default button */
-.btn-secondary {
+.btn-light{
   color: #333;
   text-shadow: none; /* Prevent inheritance from `body` */
-  background-color: #fff;
+  /* background-color: #fff; */
 }
 
-.btn-secondary:hover,
-.btn-secondary:focus {
+.btn-light:hover,
+.btn-light:focus {
   background-color: #58a6ff;
   text-decoration: none;
   text-shadow: none; /* Prevent inheritance from `body` */
-  color: #333;
+  color: #000;
+  border: 1px solid #58a6ff;
 }
 
 /*
