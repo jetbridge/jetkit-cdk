@@ -91,7 +91,7 @@ export async function topSongsHandler(event: ApiEvent) {
 Lambda({
   path: "/top-songs",
   methods: [HttpMethod.GET],
-  memorySize: 384
+  memorySize: 384,
   environment: {
     LOG_LEVEL: "WARN",
   },
