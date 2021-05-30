@@ -125,6 +125,12 @@ npm install @jetkit/cdk @aws-cdk/core @aws-cdk/aws-apigatewayv2
 
 See the [guide](https://docs.aws.amazon.com/cdk/latest/guide/hello_world.html) for more details.
 
+To deploy your stack:
+
+```shell
+cdk deploy
+```
+
 ---
 
 To generate API Gateway routes and Lambda function handlers from your application code:
@@ -150,7 +156,7 @@ export class InfraStack extends Stack {
 
     // transmute your app code into infrastructure
     new ResourceGeneratorConstruct(this, "Generator", {
-      resources: [AlbumApi, topSongsHandler], // supply your API views and functions here
+      resources: [AlbumApi, topSongsHandler], // supply your functions and view classes here
       httpApi,
     })
   }
