@@ -26,6 +26,7 @@
   "devDependencies": {
     "@aws-cdk/assert": "^1.100.0",
     "@babel/plugin-proposal-decorators": "^7.13.15",
+    "@ts-morph/bootstrap": "^0.9.1",
     "@tsconfig/node14": "^1.0.0",
     "@types/aws-lambda": "^8.10.75",
     "@types/jest": "^26.0.10",
@@ -39,6 +40,7 @@
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
     "reflect-metadata": "^0.1.13",
+    "simple-markdown": "^0.7.3",
     "source-map-support": "^0.5.16",
     "ts-jest": "^26.2.0",
     "ts-node": "^9.0.0",

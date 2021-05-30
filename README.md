@@ -78,6 +78,9 @@ export const handler = apiViewHandler(__filename, AlbumApi)
 ### Handler Function With Route
 
 ```typescript
+import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
+import { Route, ApiEvent } from "@jetkit/cdk"
+
 // a simple standalone function with a route attached
 export async function topSongsHandler(event: ApiEvent) {
   return "top songs"
@@ -133,7 +136,7 @@ To generate API Gateway routes and Lambda function handlers from your applicatio
 ```typescript
 import { CorsHttpMethod, HttpApi } from "@aws-cdk/aws-apigatewayv2"
 import { Construct, Duration, Stack, StackProps, App } from "@aws-cdk/core"
-import { ResourceGeneratorConstruct } from "@jetkit/cdk"
+import { ResourceGeneratorConstruct, AlbumApi, topSongsHandler } from "@jetkit/cdk"
 
 export class InfraStack extends Stack {
   constructor(scope: App, id: string, props?: StackProps) {
