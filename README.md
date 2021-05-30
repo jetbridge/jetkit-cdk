@@ -3,12 +3,14 @@
 [![Tests](https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml/badge.svg)](https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml)
 [![npm version](https://badge.fury.io/js/%40jetkit%2Fcdk.svg)](https://badge.fury.io/js/%40jetkit%2Fcdk)
 
-An anti-framework for building cloud-native serverless applications.
+An [anti-framework](https://spiegelmock.com/2021/05/29/frameworkless-web-applications-aws-cdk/) for building cloud-native serverless applications.
 
 This module provides convenient tools for writing Lambda functions, RESTful API views,
 and generating cloud infrastructure with [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/home.html).
 
 ## Motivation
+
+[Frameworkless web applications](https://spiegelmock.com/2021/05/29/frameworkless-web-applications-aws-cdk/).
 
 We want to build maintainable and scalable cloud-first applications, with cloud resources generated from application code.
 
@@ -21,13 +23,17 @@ functioning, keeping startup times low and applications modular.
 
 Guides and API reference can be found at [https://jetkit.dev/docs/](https://jetkit.dev/docs/).
 
+### Super Quickstart
+
+Use this monorepo project template: [typescript-cdk-template](https://github.com/jetbridge/typescript-cdk-template).
+
 ## Installation
 
 ```shell
 npm install @jetkit/cdk
 ```
 
-## Examples
+## Synopsis
 
 ### API View
 
@@ -84,8 +90,8 @@ export async function topSongsHandler(event: ApiEvent) {
 // define route and lambda properties
 Lambda({
   path: "/top-songs",
-  methods: [HttpMethod.PUT],
-  memorySize: 384,
+  methods: [HttpMethod.GET],
+  memorySize: 384
   environment: {
     LOG_LEVEL: "WARN",
   },
@@ -94,7 +100,7 @@ Lambda({
 // alternate, uglier way of writing the same thing
 const topSongsFuncInner = Lambda({
   path: "/top-songs-inner",
-  methods: [HttpMethod.PUT],
+  methods: [HttpMethod.GET],
   memorySize: 384,
   environment: {
     LOG_LEVEL: "WARN",
@@ -150,10 +156,6 @@ export class InfraStack extends Stack {
   }
 }
 ```
-
-### Super Quickstart
-
-Use this monorepo project template: [jkv2-ts-template](https://github.com/jetbridge/jkv2-ts-template)
 
 ## How It Works
 
