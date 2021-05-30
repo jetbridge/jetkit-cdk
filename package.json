@@ -24,15 +24,16 @@
   "author": "JetBridge Software Inc.",
   "license": "MIT",
   "devDependencies": {
-    "@aws-cdk/assert": "^1.100.0",
+    "@aws-cdk/assert": "1.105.0",
     "@babel/plugin-proposal-decorators": "^7.13.15",
     "@ts-morph/bootstrap": "^0.9.1",
     "@tsconfig/node14": "^1.0.0",
     "@types/aws-lambda": "^8.10.75",
-    "@types/jest": "^26.0.10",
+    "@types/convict": "^6.0.2",
+    "@types/jest": "26.0.23",
     "@types/node": "10.17.27",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "aws-cdk": "1.100.0",
+    "aws-cdk": "1.105.0",
     "aws-lambda": "^1.0.6",
     "callsites": "^3.1.0",
     "husky": "^6.0.0",
@@ -49,12 +50,14 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
-    "@aws-cdk/aws-apigatewayv2": "^1.100.0",
-    "@aws-cdk/aws-apigatewayv2-integrations": "^1.100.0",
-    "@aws-cdk/aws-lambda": "^1.100.0",
-    "@aws-cdk/aws-lambda-nodejs": "^1.100.0",
-    "@aws-cdk/core": "1.100.0",
-    "@jdpnielsen/http-error": "^1.2.0"
+    "@aws-cdk/aws-apigatewayv2": "1.105.0",
+    "@aws-cdk/aws-apigatewayv2-integrations": "1.105.0",
+    "@aws-cdk/aws-lambda": "1.105.0",
+    "@aws-cdk/aws-lambda-nodejs": "1.105.0",
+    "@aws-cdk/core": "1.105.0",
+    "@jdpnielsen/http-error": "^1.2.0",
+    "convict": "^6.1.0",
+    "deepmerge": "^4.2.2"
   },
   "peerDependencies": {
     "typeorm": "*"

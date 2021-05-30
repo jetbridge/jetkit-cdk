@@ -1,33 +1,23 @@
-import { CorsPreflightOptions, CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2"
-import { BundlingOptions } from "@aws-cdk/aws-lambda-nodejs"
 import { App as CdkApp } from "@aws-cdk/core"
+import { IConfig } from "./config"
 
-export interface IAppProps {
-  config?: IAppConfig
-}
-
-export interface IAppConfig {
-  api: {
-    corsPreflight?: CorsPreflightOptions
-  }
-  bundle?: BundlingOptions
+export interface IAppProps<ConfigT extends IConfig> {
+  // Presently unused
+  config?: ConfigT
 }
 
 /**
- * Top-level application context/god object.
+ * Your CDK application.
  *
- * I'm thinking this could contain really basic framework
- * utilities like configuration and logging.
+ * You may provide a configuration to apply
  */
-export class JetKitCdkApp extends CdkApp {
-  config: IAppConfig
+export class JetKitCdkApp<ConfigT extends IConfig> extends CdkApp {
+  config: ConfigT
 
-  constructor({ config }: IAppProps) {
+  constructor({ config }: IAppProps<ConfigT>) {
     super()
 
     // initialize app
     if (config) this.config = config
   }
 }
-
-export { CorsPreflightOptions, CorsHttpMethod }
