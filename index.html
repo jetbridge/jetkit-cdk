@@ -61,39 +61,41 @@
 				<a href="#jetkitcdk" id="jetkitcdk" style="color: inherit; text-decoration: none;">
 					<h1>JetKit/CDK</h1>
 				</a>
-				<p>An anti-framework for building cloud-native serverless applications.</p>
-				<p>This module provides convenient tools for writing RESTful API views
-				and generating cloud infrastructure with <a href="https://docs.aws.amazon.com/cdk/latest/guide/home.html">AWS CDK</a>.</p>
 				<p><a href="https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml"><img src="https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml/badge.svg" alt="Tests"></a>
 				<a href="https://badge.fury.io/js/%40jetkit%2Fcdk"><img src="https://badge.fury.io/js/%40jetkit%2Fcdk.svg" alt="npm version"></a></p>
+				<p>An <a href="https://spiegelmock.com/2021/05/29/frameworkless-web-applications-aws-cdk/">anti-framework</a> for building cloud-native serverless applications.</p>
+				<p>This module provides convenient tools for writing Lambda functions, RESTful API views,
+				and generating cloud infrastructure with <a href="https://docs.aws.amazon.com/cdk/latest/guide/home.html">AWS CDK</a>.</p>
 				<a href="#motivation" id="motivation" style="color: inherit; text-decoration: none;">
 					<h2>Motivation</h2>
 				</a>
+				<p><a href="https://spiegelmock.com/2021/05/29/frameworkless-web-applications-aws-cdk/">Frameworkless web applications</a>.</p>
 				<p>We want to build maintainable and scalable cloud-first applications, with cloud resources generated from application code.</p>
-				<p>Using AWS CDK we can automate generating API Gateway routes and Lambda functions from class and function metadata.
-					Each class or function view is a self-contained Lambda function that only pulls in the dependencies needed for its
-					functioning, keeping startup times low and applications modular.
-				Get the utility of a minimal web framework without cramming your entire app into a single Lambda.</p>
-				<p>Optional support for TypeORM using the Aurora Serverless Data API and convenient helpers for CRUD, serialization, tracing, and error handling will be added soon.</p>
+				<p>Using AWS CDK we can automate generating API Gateway routes and Lambda functions from class and function metadata.</p>
+				<p>Each class or function view is a self-contained Lambda function that only pulls in the dependencies needed for its
+				functioning, keeping startup times low and applications modular.</p>
 				<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
 					<h2>Documentation</h2>
 				</a>
-				<p>Guides and API reference can be found at <a href="https://jetbridge.github.io/jetkit-cdk/">https://jetbridge.github.io/jetkit-cdk/</a>.</p>
+				<p>Guides and API reference can be found at <a href="https://jetkit.dev/docs/">https://jetkit.dev/docs/</a>.</p>
+				<a href="#super-quickstart" id="super-quickstart" style="color: inherit; text-decoration: none;">
+					<h3>Super Quickstart</h3>
+				</a>
+				<p>Use this monorepo project template: <a href="https://github.com/jetbridge/typescript-cdk-template">typescript-cdk-template</a>.</p>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
 				</a>
-				<p>@jetkit/cdk runs on Node.js and is available as a NPM package.</p>
 				<pre><code class="language-shell"><span style="color: #000000">npm install @jetkit/cdk</span>
 </code></pre>
-				<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
-					<h2>Examples</h2>
+				<a href="#synopsis" id="synopsis" style="color: inherit; text-decoration: none;">
+					<h2>Synopsis</h2>
 				</a>
 				<a href="#api-view" id="api-view" style="color: inherit; text-decoration: none;">
 					<h3>API View</h3>
 				</a>
 				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">HttpMethod</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@aws-cdk/aws-apigatewayv2&quot;</span>
 <span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">badRequest</span><span style="color: #000000">, </span><span style="color: #001080">methodNotAllowed</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@jdpnielsen/http-error&quot;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">ApiView</span><span style="color: #000000">, </span><span style="color: #001080">Route</span><span style="color: #000000">, </span><span style="color: #001080">SubRoute</span><span style="color: #000000">, </span><span style="color: #001080">ApiEvent</span><span style="color: #000000">, </span><span style="color: #001080">ApiResponse</span><span style="color: #000000">, </span><span style="color: #001080">ApiViewBase</span><span style="color: #000000">, </span><span style="color: #001080">apiViewHandler</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@jetkit/cdk&quot;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">ApiView</span><span style="color: #000000">, </span><span style="color: #001080">SubRoute</span><span style="color: #000000">, </span><span style="color: #001080">ApiEvent</span><span style="color: #000000">, </span><span style="color: #001080">ApiResponse</span><span style="color: #000000">, </span><span style="color: #001080">ApiViewBase</span><span style="color: #000000">, </span><span style="color: #001080">apiViewHandler</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@jetkit/cdk&quot;</span>
 
 <span style="color: #000000">@</span><span style="color: #795E26">ApiView</span><span style="color: #000000">({</span>
 <span style="color: #000000">  </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/album&quot;</span><span style="color: #000000">,</span>
@@ -133,26 +135,26 @@
 					<h3>Handler Function With Route</h3>
 				</a>
 				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">HttpMethod</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@aws-cdk/aws-apigatewayv2&quot;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Route</span><span style="color: #000000">, </span><span style="color: #001080">ApiEvent</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@jetkit/cdk&quot;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Lambda</span><span style="color: #000000">, </span><span style="color: #001080">ApiEvent</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@jetkit/cdk&quot;</span>
 
 <span style="color: #008000">// a simple standalone function with a route attached</span>
 <span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">topSongsHandler</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000">: </span><span style="color: #267F99">ApiEvent</span><span style="color: #000000">) {</span>
 <span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;top songs&quot;</span>
 <span style="color: #000000">}</span>
 <span style="color: #008000">// define route and lambda properties</span>
-<span style="color: #795E26">Route</span><span style="color: #000000">({</span>
+<span style="color: #795E26">Lambda</span><span style="color: #000000">({</span>
 <span style="color: #000000">  </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/top-songs&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">methods:</span><span style="color: #000000"> [</span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">PUT</span><span style="color: #000000">],</span>
-<span style="color: #000000">  </span><span style="color: #001080">memorySize:</span><span style="color: #000000"> </span><span style="color: #098658">384</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">environment:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">methods:</span><span style="color: #000000"> [</span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">GET</span><span style="color: #000000">],</span>
+<span style="color: #000000">  </span><span style="color: #001080">memorySize:</span><span style="color: #000000"> </span><span style="color: #098658">384</span>
+<span style="color: #000000">  </span><span style="color: #001080">environment</span><span style="color: #000000">: {</span>
 <span style="color: #000000">    </span><span style="color: #001080">LOG_LEVEL:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;WARN&quot;</span><span style="color: #000000">,</span>
 <span style="color: #000000">  },</span>
 <span style="color: #000000">})(</span><span style="color: #001080">topSongsHandler</span><span style="color: #000000">)</span>
 
 <span style="color: #008000">// alternate, uglier way of writing the same thing</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">topSongsFuncInner</span><span style="color: #000000"> = </span><span style="color: #795E26">Route</span><span style="color: #000000">({</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">topSongsFuncInner</span><span style="color: #000000"> = </span><span style="color: #795E26">Lambda</span><span style="color: #000000">({</span>
 <span style="color: #000000">  </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/top-songs-inner&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">methods:</span><span style="color: #000000"> [</span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">PUT</span><span style="color: #000000">],</span>
+<span style="color: #000000">  </span><span style="color: #001080">methods:</span><span style="color: #000000"> [</span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">GET</span><span style="color: #000000">],</span>
 <span style="color: #000000">  </span><span style="color: #001080">memorySize:</span><span style="color: #000000"> </span><span style="color: #098658">384</span><span style="color: #000000">,</span>
 <span style="color: #000000">  </span><span style="color: #001080">environment:</span><span style="color: #000000"> {</span>
 <span style="color: #000000">    </span><span style="color: #001080">LOG_LEVEL:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;WARN&quot;</span><span style="color: #000000">,</span>
@@ -204,10 +206,6 @@
 <span style="color: #000000">  }</span>
 <span style="color: #000000">}</span>
 </code></pre>
-				<a href="#super-quickstart" id="super-quickstart" style="color: inherit; text-decoration: none;">
-					<h3>Super Quickstart</h3>
-				</a>
-				<p>Use this monorepo project template: <a href="https://github.com/jetbridge/jkv2-ts-template">jkv2-ts-template</a></p>
 				<a href="#how-it-works" id="how-it-works" style="color: inherit; text-decoration: none;">
 					<h2>How It Works</h2>
 				</a>
@@ -298,7 +296,7 @@
 						<a href="modules.html#apiview" class="tsd-kind-icon">Api<wbr>View</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="modules.html#route" class="tsd-kind-icon">Route</a>
+						<a href="modules.html#lambda" class="tsd-kind-icon">Lambda</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#subroute" class="tsd-kind-icon">Sub<wbr>Route</a>
