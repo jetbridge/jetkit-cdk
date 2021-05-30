@@ -3,14 +3,14 @@ import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { Construct } from "@aws-cdk/core"
 import deepmerge from "deepmerge"
 import { RequestHandler } from "../api/base"
-import { getApiViewMetadata, getRouteMetadata, getSubRouteMetadata, MetadataTarget } from "../metadata"
+import { getApiViewMetadata, getFunctionMetadata, getSubRouteMetadata, MetadataTarget } from "../metadata"
 import { ApiProps, ApiView as ApiViewConstruct } from "./api/api"
 import { SubRouteApi } from "./api/subRoute"
 
 /**
  * CDK {@link Construct} that automatically generates cloud resources
  * based on metadata defined on your application code using
- * {@link Route}, {@link ApiView}, {@link SubRoute}.
+ * {@link Lambda}, {@link ApiView}, {@link SubRoute}.
  *
  * @module
  */
@@ -65,7 +65,7 @@ export class ResourceGenerator extends Construct {
    * Create function handler for a simple routed function.
    */
   generateConstructsForFunction(resource: RequestHandler) {
-    const funcMeta = getRouteMetadata(resource)
+    const funcMeta = getFunctionMetadata(resource)
     if (!funcMeta) return
 
     const { requestHandlerFunc, ...rest } = funcMeta

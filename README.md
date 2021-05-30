@@ -1,44 +1,46 @@
 # JetKit/CDK
 
-An anti-framework for building cloud-native serverless applications.
-
-This module provides convenient tools for writing RESTful API views
-and generating cloud infrastructure with [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/home.html).
-
 [![Tests](https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml/badge.svg)](https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml)
 [![npm version](https://badge.fury.io/js/%40jetkit%2Fcdk.svg)](https://badge.fury.io/js/%40jetkit%2Fcdk)
 
+An [anti-framework](https://spiegelmock.com/2021/05/29/frameworkless-web-applications-aws-cdk/) for building cloud-native serverless applications.
+
+This module provides convenient tools for writing Lambda functions, RESTful API views,
+and generating cloud infrastructure with [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/home.html).
+
 ## Motivation
+
+[Frameworkless web applications](https://spiegelmock.com/2021/05/29/frameworkless-web-applications-aws-cdk/).
 
 We want to build maintainable and scalable cloud-first applications, with cloud resources generated from application code.
 
 Using AWS CDK we can automate generating API Gateway routes and Lambda functions from class and function metadata.
+
 Each class or function view is a self-contained Lambda function that only pulls in the dependencies needed for its
 functioning, keeping startup times low and applications modular.
-Get the utility of a minimal web framework without cramming your entire app into a single Lambda.
-
-Optional support for TypeORM using the Aurora Serverless Data API and convenient helpers for CRUD, serialization, tracing, and error handling will be added soon.
 
 ## Documentation
 
-Guides and API reference can be found at [https://jetbridge.github.io/jetkit-cdk/](https://jetbridge.github.io/jetkit-cdk/).
+Guides and API reference can be found at [https://jetkit.dev/docs/](https://jetkit.dev/docs/).
+
+### Super Quickstart
+
+Use this monorepo project template: [typescript-cdk-template](https://github.com/jetbridge/typescript-cdk-template).
 
 ## Installation
-
-@jetkit/cdk runs on Node.js and is available as a NPM package.
 
 ```shell
 npm install @jetkit/cdk
 ```
 
-## Examples
+## Synopsis
 
 ### API View
 
 ```typescript
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
-import { ApiView, Route, SubRoute, ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "@jetkit/cdk"
+import { ApiView, SubRoute, ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "@jetkit/cdk"
 
 @ApiView({
   path: "/album",
@@ -79,26 +81,26 @@ export const handler = apiViewHandler(__filename, AlbumApi)
 
 ```typescript
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
-import { Route, ApiEvent } from "@jetkit/cdk"
+import { Lambda, ApiEvent } from "@jetkit/cdk"
 
 // a simple standalone function with a route attached
 export async function topSongsHandler(event: ApiEvent) {
   return "top songs"
 }
 // define route and lambda properties
-Route({
+Lambda({
   path: "/top-songs",
-  methods: [HttpMethod.PUT],
-  memorySize: 384,
+  methods: [HttpMethod.GET],
+  memorySize: 384
   environment: {
     LOG_LEVEL: "WARN",
   },
 })(topSongsHandler)
 
 // alternate, uglier way of writing the same thing
-const topSongsFuncInner = Route({
+const topSongsFuncInner = Lambda({
   path: "/top-songs-inner",
-  methods: [HttpMethod.PUT],
+  methods: [HttpMethod.GET],
   memorySize: 384,
   environment: {
     LOG_LEVEL: "WARN",
@@ -160,10 +162,6 @@ export class InfraStack extends Stack {
   }
 }
 ```
-
-### Super Quickstart
-
-Use this monorepo project template: [jkv2-ts-template](https://github.com/jetbridge/jkv2-ts-template)
 
 ## How It Works
 

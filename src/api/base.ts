@@ -84,6 +84,7 @@ export class ApiViewBase {
     const viewMeta = getApiViewMetadata(apiViewClass)
     const subRouteMetaMap = getSubRouteMetadata(apiViewClass)
     if (!viewMeta) throw new Error(`Metadata for dispatch not found on API view ${apiViewClass}`)
+    if (!viewMeta.path) return
 
     // is this request for the default view or a sub route?
     // does the route key match the base route?
@@ -121,6 +122,8 @@ export class ApiViewBase {
     // we should match any subRoute with that configuration
     for (const meta of subRouteMetaMap.values()) {
       const { methods, path, requestHandlerFunc } = meta
+      if (!viewMeta.path) return
+
       // full path is parent path + subRoute path
       const fullPath = viewMeta.path + path
       if (this.matchesRouteKey(routeKey, method, fullPath, methods)) return requestHandlerFunc

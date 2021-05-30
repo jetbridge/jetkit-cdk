@@ -1,5 +1,5 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
-import { getApiViewMetadata, getRouteMetadata, getSubRouteMetadata } from "../metadata"
+import { getApiViewMetadata, getFunctionMetadata, getSubRouteMetadata } from "../metadata"
 import { AlbumApi, topSongsFuncInner, topSongsHandler } from "./sampleApp"
 
 describe("Metadata decorators", () => {
@@ -32,9 +32,9 @@ describe("Metadata decorators", () => {
     })
   })
 
-  describe("Route()", () => {
-    it("stores metadata on functions with separate Route() call", () => {
-      const funcMeta = getRouteMetadata(topSongsHandler)
+  describe("Function()", () => {
+    it("stores metadata on functions with separate Lambda() call", () => {
+      const funcMeta = getFunctionMetadata(topSongsHandler)
       expect(funcMeta).toMatchObject({
         entry: /test\/sampleApp.ts$/,
         handler: "topSongsHandler",
@@ -46,8 +46,8 @@ describe("Metadata decorators", () => {
         },
       })
     })
-    it("stores metadata on functions wrapped with Route()", () => {
-      const funcMeta = getRouteMetadata(topSongsFuncInner)
+    it("stores metadata on functions wrapped with Lambda()", () => {
+      const funcMeta = getFunctionMetadata(topSongsFuncInner)
       expect(funcMeta).toMatchObject({
         entry: /test\/sampleApp.ts$/,
         handler: "topSongsFuncInner",

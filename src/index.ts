@@ -15,9 +15,9 @@ export { CrudApiViewBase } from "./api/crud/base"
 export { ApiViewBase, ApiEvent, ApiResponse, RequestHandler, apiViewHandler } from "./api/base"
 
 // metadata
-export { ApiView, Route, SubRoute, IRouteProps, ISubRouteProps } from "./registry"
+export { ApiView, Lambda, SubRoute, IRouteProps, ISubRouteProps } from "./registry"
 export {
-  IApiMetadata,
+  IFunctionMetadataBase as IApiMetadata,
   IApiViewClassMetadata,
   ICrudApiMetadata,
   IFunctionMetadata,

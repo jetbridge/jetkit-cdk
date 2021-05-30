@@ -22,41 +22,42 @@ export const JK_V2_METADATA_API_VIEW_KEY = Symbol.for("jk:v2:metadata:api:view")
 export const JK_V2_METADATA_CRUD_API_KEY = Symbol.for("jk:v2:metadata:api:crud")
 // sub-route method inside a class
 export const JK_V2_METADATA_SUBROUTES_KEY = Symbol.for("jk:v2:metadata:subroutes")
-// standalone function-level route
-export const JK_V2_METADATA_ROUTE_KEY = Symbol.for("jk:v2:metadata:route")
+// standalone function
+export const JK_V2_METADATA_FUNCTION_KEY = Symbol.for("jk:v2:metadata:function")
 
-export type ApiMetadataMap<V extends IApiMetadata> = Map<string, V>
+export type ApiMetadataMap<V extends IFunctionMetadataBase> = Map<string, V>
 
 // what types of objects can have metadata attached?
 export type MetadataTarget = RequestHandler | MetadataTargetConstructor
 
 /**
- * Metadata describing any API route and lambda function.
+ * Metadata describing any Lambda function.
  */
-export interface IApiMetadata extends NodejsFunctionProps {
-  path: string
+export interface IFunctionMetadataBase extends NodejsFunctionProps {
+  path?: string
   entry?: string
   methods?: HttpMethod[]
 }
 
 /**
- * Function route.
+ * A Lambda function.
+ * Can be invoked via API route or otherwise.
  */
-export interface IFunctionMetadata extends IApiMetadata {
+export interface IFunctionMetadata extends IFunctionMetadataBase {
   requestHandlerFunc: RequestHandler
 }
 
 /**
  * APIView class.
  */
-export interface IApiViewClassMetadata extends IApiMetadata {
+export interface IApiViewClassMetadata extends IFunctionMetadataBase {
   apiClass: MetadataTargetConstructor
 }
 
 /**
  * CRUD view.
  */
-export interface ICrudApiMetadata extends IApiMetadata {
+export interface ICrudApiMetadata extends IFunctionMetadataBase {
   model?: typeof BaseModel // TODO: make not optional
   apiClass: MetadataTargetConstructor
 }
@@ -64,7 +65,7 @@ export interface ICrudApiMetadata extends IApiMetadata {
 /**
  * Sub-route method in an APIView class.
  */
-export interface ISubRouteApiMetadata extends IApiMetadata {
+export interface ISubRouteApiMetadata extends IFunctionMetadataBase {
   propertyKey: string
   requestHandlerFunc?: RequestHandler
 }
@@ -104,8 +105,8 @@ export const getSubRouteMetadata = (target: MetadataTarget): ApiMetadataMap<ISub
 export const setSubRouteMetadata = (target: MetadataTarget, value: ApiMetadataMap<ISubRouteApiMetadata>) =>
   setMemberMetadata(target, JK_V2_METADATA_SUBROUTES_KEY, value)
 
-// plain function route
-export const getRouteMetadata = (target: RequestHandler): IFunctionMetadata | undefined =>
-  getMemberMetadata(target, JK_V2_METADATA_ROUTE_KEY)
-export const setRouteMetadata = (target: RequestHandler, value: IFunctionMetadata) =>
-  setMemberMetadata(target, JK_V2_METADATA_ROUTE_KEY, value)
+// plain function
+export const getFunctionMetadata = (target: RequestHandler): IFunctionMetadata | undefined =>
+  getMemberMetadata(target, JK_V2_METADATA_FUNCTION_KEY)
+export const setFunctionMetadata = (target: RequestHandler, value: IFunctionMetadata) =>
+  setMemberMetadata(target, JK_V2_METADATA_FUNCTION_KEY, value)
