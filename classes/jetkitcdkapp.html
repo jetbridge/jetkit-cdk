@@ -58,7 +58,7 @@
 					<a href="jetkitcdkapp.html">JetKitCdkApp</a>
 				</li>
 			</ul>
-			<h1>Class JetKitCdkApp</h1>
+			<h1>Class JetKitCdkApp&lt;ConfigT&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -68,11 +68,18 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Top-level application context/god object.</p>
+						<p>Your CDK application.</p>
 					</div>
-					<p>I&#39;m thinking this could contain really basic framework
-					utilities like configuration and logging.</p>
+					<p>You may provide a configuration to apply</p>
 				</div>
+			</section>
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>ConfigT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IConfig</span></h4>
+					</li>
+				</ul>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
@@ -94,7 +101,7 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="jetkitcdkapp.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite"><a href="jetkitcdkapp.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -139,27 +146,33 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Jet<wbr>Kit<wbr>Cdk<wbr>App<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IAppProps</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="jetkitcdkapp.html" class="tsd-signature-type" data-tsd-kind="Class">JetKitCdkApp</a></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Jet<wbr>Kit<wbr>Cdk<wbr>App&lt;ConfigT&gt;<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IAppProps</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ConfigT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="jetkitcdkapp.html" class="tsd-signature-type" data-tsd-kind="Class">JetKitCdkApp</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ConfigT</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides CdkApp.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/c16c760/src/app/cdk.ts#L23">src/app/cdk.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/01dd146/src/app/cdk.ts#L15">src/app/cdk.ts:15</a></li>
 								</ul>
 							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>ConfigT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IConfig</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>__namedParameters: <span class="tsd-signature-type">IAppProps</span></h5>
+									<h5>__namedParameters: <span class="tsd-signature-type">IAppProps</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ConfigT</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="jetkitcdkapp.html" class="tsd-signature-type" data-tsd-kind="Class">JetKitCdkApp</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="jetkitcdkapp.html" class="tsd-signature-type" data-tsd-kind="Class">JetKitCdkApp</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ConfigT</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -173,7 +186,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from CdkApp._assemblyBuilder</p>
 						<ul>
-							<li>Defined in node_modules/@aws-cdk/core/lib/stage.d.ts:102</li>
+							<li>Defined in node_modules/@aws-cdk/core/lib/stage.d.ts:101</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -181,8 +194,6 @@
 							<p>The cloud assembly builder that is being used for this App</p>
 						</div>
 						<dl class="tsd-comment-tags">
-							<dt>experimental</dt>
-							<dd></dd>
 							<dt>internal</dt>
 							<dd></dd>
 						</dl>
@@ -200,21 +211,22 @@
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>(experimental) The default account for all resources defined within this stage.</p>
+							<p>The default account for all resources defined within this stage.</p>
 						</div>
 						<dl class="tsd-comment-tags">
-							<dt>experimental</dt>
-							<dd></dd>
+							<dt>stability</dt>
+							<dd><p>stable</p>
+							</dd>
 						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="config" class="tsd-anchor"></a>
 					<h3>config</h3>
-					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">IAppConfig</span></div>
+					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ConfigT</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/c16c760/src/app/cdk.ts#L23">src/app/cdk.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/01dd146/src/app/cdk.ts#L15">src/app/cdk.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -225,7 +237,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from CdkApp.node</p>
 						<ul>
-							<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:70</li>
+							<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:77</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -246,17 +258,18 @@
 					<aside class="tsd-sources">
 						<p>Inherited from CdkApp.parentStage</p>
 						<ul>
-							<li>Defined in node_modules/@aws-cdk/core/lib/stage.d.ts:119</li>
+							<li>Defined in node_modules/@aws-cdk/core/lib/stage.d.ts:118</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>(experimental) The parent stage or <code>undefined</code> if this is the app.</p>
+							<p>The parent stage or <code>undefined</code> if this is the app.</p>
 						</div>
 						<p>*</p>
 						<dl class="tsd-comment-tags">
-							<dt>experimental</dt>
-							<dd></dd>
+							<dt>stability</dt>
+							<dd><p>stable</p>
+							</dd>
 						</dl>
 					</div>
 				</section>
@@ -272,11 +285,12 @@
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>(experimental) The default region for all resources defined within this stage.</p>
+							<p>The default region for all resources defined within this stage.</p>
 						</div>
 						<dl class="tsd-comment-tags">
-							<dt>experimental</dt>
-							<dd></dd>
+							<dt>stability</dt>
+							<dd><p>stable</p>
+							</dd>
 						</dl>
 					</div>
 				</section>
@@ -287,18 +301,19 @@
 					<aside class="tsd-sources">
 						<p>Inherited from CdkApp.stageName</p>
 						<ul>
-							<li>Defined in node_modules/@aws-cdk/core/lib/stage.d.ts:111</li>
+							<li>Defined in node_modules/@aws-cdk/core/lib/stage.d.ts:110</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>(experimental) The name of the stage.</p>
+							<p>The name of the stage.</p>
 						</div>
 						<p>Based on names of the parent stages separated by
 						hypens.</p>
 						<dl class="tsd-comment-tags">
-							<dt>experimental</dt>
-							<dd></dd>
+							<dt>stability</dt>
+							<dd><p>stable</p>
+							</dd>
 						</dl>
 					</div>
 				</section>
@@ -315,17 +330,18 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in node_modules/@aws-cdk/core/lib/stage.d.ts:147</li>
+									<li>Defined in node_modules/@aws-cdk/core/lib/stage.d.ts:146</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>(experimental) Artifact ID of the assembly if it is a nested stage. The root stage (app) will return an empty string.</p>
+									<p>Artifact ID of the assembly if it is a nested stage. The root stage (app) will return an empty string.</p>
 								</div>
 								<p>Derived from the construct path.</p>
 								<dl class="tsd-comment-tags">
-									<dt>experimental</dt>
-									<dd></dd>
+									<dt>stability</dt>
+									<dd><p>stable</p>
+									</dd>
 								</dl>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -342,7 +358,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in node_modules/@aws-cdk/core/lib/stage.d.ts:139</li>
+									<li>Defined in node_modules/@aws-cdk/core/lib/stage.d.ts:138</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -369,7 +385,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in node_modules/@aws-cdk/core/lib/stage.d.ts:133</li>
+									<li>Defined in node_modules/@aws-cdk/core/lib/stage.d.ts:132</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -400,7 +416,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from CdkApp.onPrepare</p>
 								<ul>
-									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:97</li>
+									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:104</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -433,7 +449,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from CdkApp.onSynthesize</p>
 								<ul>
-									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:107</li>
+									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:114</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -472,7 +488,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from CdkApp.onValidate</p>
 								<ul>
-									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:84</li>
+									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:91</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -503,7 +519,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from CdkApp.prepare</p>
 								<ul>
-									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:130</li>
+									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:137</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -536,7 +552,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from CdkApp.synth</p>
 								<ul>
-									<li>Defined in node_modules/@aws-cdk/core/lib/stage.d.ts:156</li>
+									<li>Defined in node_modules/@aws-cdk/core/lib/stage.d.ts:155</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -572,7 +588,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from CdkApp.synthesize</p>
 								<ul>
-									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:140</li>
+									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:147</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -639,7 +655,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from CdkApp.validate</p>
 								<ul>
-									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:117</li>
+									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:124</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -708,7 +724,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from CdkApp.isConstruct</p>
 								<ul>
-									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:64</li>
+									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:71</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -747,11 +763,12 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>(experimental) Test whether the given construct is a stage.</p>
+									<p>Test whether the given construct is a stage.</p>
 								</div>
 								<dl class="tsd-comment-tags">
-									<dt>experimental</dt>
-									<dd></dd>
+									<dt>stability</dt>
+									<dd><p>stable</p>
+									</dd>
 								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -780,13 +797,14 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>(experimental) Return the stage this construct is contained with, if available.</p>
+									<p>Return the stage this construct is contained with, if available.</p>
 								</div>
 								<p>If called
 								on a nested stage, returns its parent.</p>
 								<dl class="tsd-comment-tags">
-									<dt>experimental</dt>
-									<dd></dd>
+									<dt>stability</dt>
+									<dd><p>stable</p>
+									</dd>
 								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -837,10 +855,10 @@
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class">
+					<li class="current tsd-kind-class tsd-has-type-parameter">
 						<a href="jetkitcdkapp.html" class="tsd-kind-icon">Jet<wbr>Kit<wbr>Cdk<wbr>App</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite">
 								<a href="jetkitcdkapp.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
