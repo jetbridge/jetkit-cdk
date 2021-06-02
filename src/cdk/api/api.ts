@@ -42,10 +42,9 @@ export abstract class ApiViewMixin extends Construct {
     })
 
     // output the route for easily seeing at a glance what routes are generated
-    routes.forEach((route) => {
-      const routeId = `Route${this.#routeOutputId++}`
-      new CfnOutput(this, routeId, { exportName: routeId, value: `${methods?.join(",")} ${route.path}` || "*" })
-    })
+    const route = routes[0] // one for each method; don't care
+    const routeId = `Route${this.#routeOutputId++}`
+    new CfnOutput(this, routeId, { value: `${methods?.join(",")} ${route.path}` || "*" })
   }
 }
 

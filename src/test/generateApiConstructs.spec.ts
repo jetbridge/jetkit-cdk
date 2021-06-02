@@ -82,6 +82,33 @@ describe("@SubRoute construct generation", () => {
       outputName: "GenSubRoutelikeRoute176CE77B5",
       outputValue: "POST,DELETE /album/{albumId}/like",
     })
+    expect(stack).toHaveOutput({
+      outputName: "GenClassAlbumApiRoute1AA2A9EC9",
+      outputValue: "ANY /album",
+    })
+    expect(stack).toHaveOutput({
+      exportName: "ApiBase",
+      outputValue: {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              Ref: "API62EA1CFF",
+            },
+            ".execute-api.",
+            {
+              Ref: "AWS::Region",
+            },
+            ".",
+            {
+              Ref: "AWS::URLSuffix",
+            },
+            "/",
+          ],
+        ],
+      },
+    })
   })
 })
 
