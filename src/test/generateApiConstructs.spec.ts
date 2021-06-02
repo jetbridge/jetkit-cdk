@@ -77,6 +77,12 @@ describe("@SubRoute construct generation", () => {
       RouteKey: "POST /album/{albumId}/like",
     })
   })
+  it("has route outputs", () => {
+    expect(stack).toHaveOutput({
+      outputName: "GenSubRoutelikeRoute176CE77B5",
+      outputValue: "POST,DELETE /album/{albumId}/like",
+    })
+  })
 })
 
 describe("@Lambda construct generation", () => {

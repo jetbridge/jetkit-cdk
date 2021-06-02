@@ -25,9 +25,6 @@ export class Node14Func extends NodejsFunction {
     // node 14
     runtime ||= Runtime.NODEJS_14_X
 
-    // https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/node-reusing-connections.html
-    if (typeof awsSdkConnectionReuse === "undefined") awsSdkConnectionReuse = true
-
     // we should preserve function names for introspection
     // https://esbuild.github.io/api/#keep-names
     bundling ||= {}
