@@ -1,4 +1,4 @@
-import { App as CdkApp } from "@aws-cdk/core"
+import { App as CdkApp } from "aws-cdk-lib"
 import { IConfig } from "./config"
 
 export interface IAppProps<ConfigT extends IConfig> {
@@ -9,7 +9,7 @@ export interface IAppProps<ConfigT extends IConfig> {
 /**
  * Your CDK application.
  *
- * You may provide a configuration to apply
+ * Does nothing at present.
  */
 export class JetKitCdkApp<ConfigT extends IConfig> extends CdkApp {
   config: ConfigT

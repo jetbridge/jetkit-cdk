@@ -1,7 +1,9 @@
-import { HttpApi, HttpMethod, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
-import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
-import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
-import { CfnOutput, Construct } from "@aws-cdk/core"
+import { HttpApi, HttpMethod, PayloadFormatVersion } from "aws-cdk-lib/lib/aws-apigatewayv2"
+// import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
+// import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
+import { CfnOutput } from "aws-cdk-lib"
+import { NodejsFunctionProps } from "aws-cdk-lib/lib/aws-lambda-nodejs"
+import { Construct } from "constructs"
 import { Node14Func } from "../lambda/node14func"
 
 /**
