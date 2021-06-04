@@ -4,7 +4,11 @@ export { JetKitCdkApp } from "./app/cdk"
 // cdk
 export { CrudApi as CrudApiConstruct } from "./cdk/api/crud"
 export { ApiView as ApiViewConstruct, ApiProps as ApiViewConstructProps } from "./cdk/api/api"
-export { ResourceGenerator as ResourceGeneratorConstruct, ResourceGeneratorProps } from "./cdk/generator"
+export {
+  ResourceGenerator as ResourceGeneratorConstruct,
+  ResourceGeneratorProps,
+  FunctionOptions,
+} from "./cdk/generator"
 
 // convient CDK utilities to have
 export { CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2"

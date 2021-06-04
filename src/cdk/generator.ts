@@ -1,4 +1,5 @@
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
+import { LayerVersion } from "@aws-cdk/aws-lambda"
 import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { CfnOutput, Construct } from "@aws-cdk/core"
 import deepmerge from "deepmerge"
@@ -8,13 +9,19 @@ import { ApiProps, ApiView as ApiViewConstruct } from "./api/api"
 import { SubRouteApi } from "./api/subRoute"
 
 /**
+ * Defaults for all Lambda functions in the stack.
+ */
+export interface FunctionOptions extends NodejsFunctionProps {
+  layerArns?: string[]
+}
+
+/**
  * CDK {@link Construct} that automatically generates cloud resources
  * based on metadata defined on your application code using
  * {@link Lambda}, {@link ApiView}, {@link SubRoute}.
  *
  * @module
  */
-
 export interface ResourceGeneratorProps {
   /**
    * A list of resources to generate cloud resources for.
@@ -31,7 +38,7 @@ export interface ResourceGeneratorProps {
   /**
    * Default Lambda function options.
    */
-  functionOptions?: NodejsFunctionProps
+  functionOptions?: FunctionOptions
 }
 
 /**
@@ -45,12 +52,15 @@ export interface ResourceGeneratorProps {
  */
 export class ResourceGenerator extends Construct {
   httpApi: HttpApi
-  functionOptions?: NodejsFunctionProps
+  functionOptions?: FunctionOptions
 
   constructor(scope: Construct, id: string, { httpApi, resources, functionOptions }: ResourceGeneratorProps) {
     super(scope, id)
     this.httpApi = httpApi
-    this.functionOptions = functionOptions
+
+    if (functionOptions) {
+      this.functionOptions = functionOptions
+    }
 
     // emit CDK constructs for specified resources
     resources.forEach((resource) => this.generateConstructsForResource(resource))
@@ -64,6 +74,28 @@ export class ResourceGenerator extends Construct {
     this.generateConstructsForFunction(resource as RequestHandler)
   }
 
+  private resolveLayerReferences(apiProps: ApiProps): ApiProps {
+    const { layerArns, ...optsRest } = apiProps
+    if (!layerArns) return apiProps
+
+    // resolve layer ARNs
+    optsRest.layers ||= []
+    layerArns.forEach((arn, i) => {
+      optsRest.layers!.push(LayerVersion.fromLayerVersionArn(this, `Layer${i}`, arn))
+    })
+
+    return optsRest
+  }
+
+  private mergeFunctionDefaults(functionOptions: FunctionOptions): ApiProps {
+    const mergedOptions: ApiProps = {
+      ...deepmerge(this.functionOptions ?? {}, functionOptions),
+      httpApi: this.httpApi,
+      entry: functionOptions.entry,
+    }
+    return this.resolveLayerReferences(mergedOptions)
+  }
+
   /**
    * Create function handler for a simple routed function.
    */
@@ -71,13 +103,10 @@ export class ResourceGenerator extends Construct {
     const funcMeta = getFunctionMetadata(resource)
     if (!funcMeta) return
 
-    const { requestHandlerFunc, ...rest } = funcMeta
+    const { requestHandlerFunc, ...funcMetaRest } = funcMeta
     const name = requestHandlerFunc.name
-    new ApiViewConstruct(this, `Func-${name}`, {
-      httpApi: this.httpApi,
-      entry: funcMeta.entry,
-      ...rest,
-    })
+    const mergedOptions = this.mergeFunctionDefaults(funcMetaRest)
+    new ApiViewConstruct(this, `Func-${name}`, mergedOptions)
   }
 
   /**
@@ -92,12 +121,8 @@ export class ResourceGenerator extends Construct {
       const name = apiViewMeta.apiClass.name
 
       // merge function option defaults with options from attached metadata (from decorator)
-      const mergedOptions: Omit<ApiProps, "httpApi"> = deepmerge(this.functionOptions || {}, apiViewMeta)
-
-      apiViewConstruct = new ApiViewConstruct(this, `Class-${name}`, {
-        httpApi: this.httpApi,
-        ...mergedOptions,
-      })
+      const mergedOptions = this.mergeFunctionDefaults(apiViewMeta)
+      apiViewConstruct = new ApiViewConstruct(this, `Class-${name}`, mergedOptions)
     }
 
     // SubRoutes - methods with their own routes
