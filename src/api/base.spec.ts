@@ -1,6 +1,6 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { getApiViewMetadata, getFunctionMetadata, getSubRouteMetadata } from "../metadata"
-import { AlbumApi, topSongsFuncInner, topSongsHandler } from "./sampleApp"
+import { AlbumApi, topSongsFuncInner, topSongsHandler } from "../test/sampleApp"
 
 describe("Metadata decorators", () => {
   describe("@ApiView decorator", () => {

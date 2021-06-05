@@ -4,7 +4,7 @@ import "@aws-cdk/assert/jest"
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
 import { Stack } from "@aws-cdk/core"
 import { ApiViewConstruct, ResourceGeneratorConstruct } from ".."
-import { AlbumApi, topSongsFuncInner, topSongsHandler } from "./sampleApp"
+import { AlbumApi, topSongsFuncInner, topSongsHandler } from "../test/sampleApp"
 
 const bundleBannerMsg = "--- cool bundlings mon ---"
 
