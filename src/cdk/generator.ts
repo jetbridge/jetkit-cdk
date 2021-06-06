@@ -1,6 +1,6 @@
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
 import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
-import { Construct } from "@aws-cdk/core"
+import { CfnOutput, Construct } from "@aws-cdk/core"
 import deepmerge from "deepmerge"
 import { RequestHandler } from "../api/base"
 import { getApiViewMetadata, getFunctionMetadata, getSubRouteMetadata, MetadataTarget } from "../metadata"
@@ -54,6 +54,9 @@ export class ResourceGenerator extends Construct {
 
     // emit CDK constructs for specified resources
     resources.forEach((resource) => this.generateConstructsForResource(resource))
+
+    // it's handy to have the API base URL as a stack output
+    if (this.httpApi) new CfnOutput(this, "ApiBase", { exportName: "ApiBase", value: this.httpApi.url || "Unknown" })
   }
 
   generateConstructsForResource(resource: MetadataTarget) {

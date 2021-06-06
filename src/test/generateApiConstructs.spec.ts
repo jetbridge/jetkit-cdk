@@ -77,6 +77,39 @@ describe("@SubRoute construct generation", () => {
       RouteKey: "POST /album/{albumId}/like",
     })
   })
+  it("has route outputs", () => {
+    expect(stack).toHaveOutput({
+      outputName: "GenSubRoutelikeRoute176CE77B5",
+      outputValue: "POST,DELETE /album/{albumId}/like",
+    })
+    expect(stack).toHaveOutput({
+      outputName: "GenClassAlbumApiRoute1AA2A9EC9",
+      outputValue: "ANY /album",
+    })
+    expect(stack).toHaveOutput({
+      exportName: "ApiBase",
+      outputValue: {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              Ref: "API62EA1CFF",
+            },
+            ".execute-api.",
+            {
+              Ref: "AWS::Region",
+            },
+            ".",
+            {
+              Ref: "AWS::URLSuffix",
+            },
+            "/",
+          ],
+        ],
+      },
+    })
+  })
 })
 
 describe("@Lambda construct generation", () => {

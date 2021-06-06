@@ -1,7 +1,7 @@
 import { HttpApi, HttpMethod, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
 import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
-import { Construct } from "@aws-cdk/core"
+import { CfnOutput, Construct } from "@aws-cdk/core"
 import { Node14Func } from "../lambda/node14func"
 
 /**
@@ -30,13 +30,21 @@ export interface IAddRoutes extends IEndpoint {
   lambdaApiIntegration: LambdaProxyIntegration
 }
 export abstract class ApiViewMixin extends Construct {
+  #routeOutputId = 1
+
   addRoutes({ methods, path = "/", httpApi, lambdaApiIntegration }: IAddRoutes) {
+    methods = methods || [HttpMethod.ANY]
     // * /path -> lambda integration
-    httpApi.addRoutes({
+    const routes = httpApi.addRoutes({
       path,
-      methods: methods || [HttpMethod.ANY],
+      methods,
       integration: lambdaApiIntegration,
     })
+
+    // output the route for easily seeing at a glance what routes are generated
+    const route = routes[0] // one for each method; don't care
+    const routeId = `Route${this.#routeOutputId++}`
+    new CfnOutput(this, routeId, { value: `${methods?.join(",")} ${route.path}` || "*" })
   }
 }
 
