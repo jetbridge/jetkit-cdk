@@ -1,5 +1,5 @@
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
-import { LayerVersion } from "@aws-cdk/aws-lambda"
+import { Function as LambdaFunction, LayerVersion } from "@aws-cdk/aws-lambda"
 import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { CfnOutput, Construct } from "@aws-cdk/core"
 import deepmerge from "deepmerge"
@@ -7,12 +7,20 @@ import { RequestHandler } from "../api/base"
 import { getApiViewMetadata, getFunctionMetadata, getSubRouteMetadata, MetadataTarget } from "../metadata"
 import { ApiProps, ApiView as ApiViewConstruct } from "./api/api"
 import { SubRouteApi } from "./api/subRoute"
+import { SlsPgDb } from "./database/serverless-pg"
+
+// env vars
+export const DB_CLUSTER_ENV = "DB_CLUSTER_ARN"
+export const DB_SECRET_ENV = "DB_SECRET_ARN"
+export const DB_NAME_ENV = "DB_NAME"
 
 /**
  * Defaults for all Lambda functions in the stack.
  */
 export interface FunctionOptions extends NodejsFunctionProps {
   layerArns?: string[]
+
+  grantDatabaseAccess?: boolean
 }
 
 /**
@@ -39,6 +47,12 @@ export interface ResourceGeneratorProps {
    * Default Lambda function options.
    */
   functionOptions?: FunctionOptions
+
+  /**
+   * Database cluster.
+   * For easily granting access to functions.
+   */
+  databaseCluster?: SlsPgDb
 }
 
 /**
@@ -53,14 +67,18 @@ export interface ResourceGeneratorProps {
 export class ResourceGenerator extends Construct {
   httpApi: HttpApi
   functionOptions?: FunctionOptions
+  databaseCluster?: SlsPgDb
 
-  constructor(scope: Construct, id: string, { httpApi, resources, functionOptions }: ResourceGeneratorProps) {
+  constructor(
+    scope: Construct,
+    id: string,
+    { httpApi, resources, databaseCluster, functionOptions }: ResourceGeneratorProps
+  ) {
     super(scope, id)
     this.httpApi = httpApi
 
-    if (functionOptions) {
-      this.functionOptions = functionOptions
-    }
+    if (functionOptions) this.functionOptions = functionOptions
+    if (databaseCluster) this.databaseCluster = databaseCluster
 
     // emit CDK constructs for specified resources
     resources.forEach((resource) => this.generateConstructsForResource(resource))
@@ -91,7 +109,6 @@ export class ResourceGenerator extends Construct {
     const mergedOptions: ApiProps = {
       ...deepmerge(this.functionOptions ?? {}, functionOptions),
       httpApi: this.httpApi,
-      entry: functionOptions.entry,
     }
     return this.resolveLayerReferences(mergedOptions)
   }
@@ -106,7 +123,8 @@ export class ResourceGenerator extends Construct {
     const { requestHandlerFunc, ...funcMetaRest } = funcMeta
     const name = requestHandlerFunc.name
     const mergedOptions = this.mergeFunctionDefaults(funcMetaRest)
-    new ApiViewConstruct(this, `Func-${name}`, mergedOptions)
+    const view = new ApiViewConstruct(this, `Func-${name}`, mergedOptions)
+    this.grantFunctionAccess(mergedOptions, view.handlerFunction)
   }
 
   /**
@@ -123,6 +141,7 @@ export class ResourceGenerator extends Construct {
       // merge function option defaults with options from attached metadata (from decorator)
       const mergedOptions = this.mergeFunctionDefaults(apiViewMeta)
       apiViewConstruct = new ApiViewConstruct(this, `Class-${name}`, mergedOptions)
+      this.grantFunctionAccess(mergedOptions, apiViewConstruct.handlerFunction)
     }
 
     // SubRoutes - methods with their own routes
@@ -144,6 +163,22 @@ export class ResourceGenerator extends Construct {
           parentApi: apiViewConstruct,
         })
       })
+    }
+  }
+
+  /**
+   * Grant function access to what is configured.
+   */
+  protected grantFunctionAccess(options: FunctionOptions, func: LambdaFunction): void {
+    // aurora data API access
+    if (options.grantDatabaseAccess) {
+      if (!this.databaseCluster) throw new Error("grantDatabaseAccess is true but no databaseCluster is defined")
+      this.databaseCluster.grantDataApiAccess(func)
+
+      // provide cluster/secret ARN and DB name to function
+      func.addEnvironment(DB_CLUSTER_ENV, this.databaseCluster.getDataApiParams().clusterArn)
+      func.addEnvironment(DB_SECRET_ENV, this.databaseCluster.getDataApiParams().secretArn)
+      if (this.databaseCluster.dbName) func.addEnvironment(DB_NAME_ENV, this.databaseCluster.dbName)
     }
   }
 }

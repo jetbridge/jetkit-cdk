@@ -4,11 +4,11 @@
 /**
  * Wrappers for getting/setting metadata on classes and class properties
  */
+import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import "reflect-metadata"
 import { ApiViewBase, RequestHandler } from "./api/base"
+import { FunctionOptions } from "./cdk/generator"
 import { BaseModel } from "./database/baseModel"
-import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
-import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 
 /**
  * A class we can apply @ApiView to.
@@ -33,7 +33,7 @@ export type MetadataTarget = RequestHandler | MetadataTargetConstructor
 /**
  * Metadata describing any Lambda function.
  */
-export interface IFunctionMetadataBase extends NodejsFunctionProps {
+export interface IFunctionMetadataBase extends FunctionOptions {
   path?: string
   entry?: string
   methods?: HttpMethod[]

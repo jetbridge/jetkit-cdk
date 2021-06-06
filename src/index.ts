@@ -8,6 +8,9 @@ export {
   ResourceGenerator as ResourceGeneratorConstruct,
   ResourceGeneratorProps,
   FunctionOptions,
+  DB_CLUSTER_ENV,
+  DB_NAME_ENV,
+  DB_SECRET_ENV,
 } from "./cdk/generator"
 export { SlsPgDb, SlsPgDbProps } from "./cdk/database/serverless-pg"
 

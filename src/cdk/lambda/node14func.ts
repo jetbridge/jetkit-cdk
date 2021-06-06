@@ -15,7 +15,7 @@ export class Node14Func extends NodejsFunction {
   bundling?: BundlingOptions
 
   constructor(scope: Construct, id: string, props: Node14FuncProps) {
-    let { environment, runtime, awsSdkConnectionReuse, bundling, ...rest } = props
+    let { environment, runtime, bundling, ...rest } = props
 
     // default to source map support in node enabled
     // makes your stack traces look nicer if sourceMap is turned on
@@ -33,7 +33,6 @@ export class Node14Func extends NodejsFunction {
 
     const newProps: NodejsFunctionProps = {
       ...rest,
-      awsSdkConnectionReuse,
       environment,
       runtime,
       bundling: {
