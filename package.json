@@ -59,6 +59,7 @@
   },
   "dependencies": {
     "@jdpnielsen/http-error": "^1.2.0",
+    "aws-xray-sdk": "^3.3.3",
     "convict": "^6.1.0",
     "merge": "^2.1.1"
   },

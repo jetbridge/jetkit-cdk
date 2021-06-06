@@ -35,6 +35,7 @@ export {
 
 // database
 export { BaseModel } from "./database/baseModel"
+export { ConnectionOptionsOverrides, DatabaseManager } from "./database/manager"
 
 // sample app
 export { AlbumApi, topSongsHandler } from "./test/sampleApp"
