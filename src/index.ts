@@ -9,8 +9,7 @@ export {
   ResourceGeneratorProps,
   FunctionOptions,
 } from "./cdk/generator"
-export { DatabaseSecret } from "./cdk/database/secret"
-export { SlsPgDb } from "./cdk/database/serverless-pg"
+export { SlsPgDb, SlsPgDbProps } from "./cdk/database/serverless-pg"
 
 // convient CDK utilities to have
 export { CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2"
