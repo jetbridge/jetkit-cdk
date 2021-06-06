@@ -172,8 +172,9 @@ export class ResourceGenerator extends Construct {
    */
   protected grantFunctionAccess(options: FunctionOptions, func: LambdaFunction): void {
     // aurora data API access
-    if (options.grantDatabaseAccess) {
-      if (!this.databaseCluster) throw new Error("grantDatabaseAccess is true but no databaseCluster is defined")
+    if (options.grantDatabaseAccess && this.databaseCluster) {
+      // if (!this.databaseCluster) throw new Error("grantDatabaseAccess is true but no databaseCluster is defined")
+
       this.databaseCluster.grantDataApiAccess(func)
 
       // provide cluster/secret ARN and DB name to function
