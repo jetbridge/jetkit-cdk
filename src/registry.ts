@@ -1,7 +1,7 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
-import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import fs from "fs"
 import { ApiViewBase, RequestHandler } from "./api/base"
+import { FunctionOptions } from "./cdk/generator"
 import {
   getSubRouteMetadata,
   IApiViewClassMetadata,
@@ -60,7 +60,7 @@ export interface ISubRouteProps {
   methods?: HttpMethod[]
 }
 
-export interface IRouteProps extends NodejsFunctionProps {
+export interface IRouteProps extends FunctionOptions {
   path: string
   methods?: HttpMethod[]
 }

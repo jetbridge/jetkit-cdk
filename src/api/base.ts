@@ -196,6 +196,7 @@ export class ApiViewBase {
 
     // unhandled exception
     console.error(ex)
+    throw ex // maybe just let lambda handle it
     return {
       statusCode: 500,
     }

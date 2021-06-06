@@ -2,7 +2,7 @@ import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
 import { Function as LambdaFunction, LayerVersion } from "@aws-cdk/aws-lambda"
 import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { CfnOutput, Construct } from "@aws-cdk/core"
-import deepmerge from "deepmerge"
+import { recursive as mergeRecursive } from "merge"
 import { RequestHandler } from "../api/base"
 import { getApiViewMetadata, getFunctionMetadata, getSubRouteMetadata, MetadataTarget } from "../metadata"
 import { ApiProps, ApiView as ApiViewConstruct } from "./api/api"
@@ -68,6 +68,7 @@ export class ResourceGenerator extends Construct {
   httpApi: HttpApi
   functionOptions?: FunctionOptions
   databaseCluster?: SlsPgDb
+  layerCounter = 1
 
   constructor(
     scope: Construct,
@@ -98,8 +99,8 @@ export class ResourceGenerator extends Construct {
 
     // resolve layer ARNs
     optsRest.layers ||= []
-    layerArns.forEach((arn, i) => {
-      optsRest.layers!.push(LayerVersion.fromLayerVersionArn(this, `Layer${i}`, arn))
+    layerArns.forEach((arn) => {
+      optsRest.layers!.push(LayerVersion.fromLayerVersionArn(this, `Layer${this.layerCounter++}`, arn))
     })
 
     return optsRest
@@ -107,7 +108,7 @@ export class ResourceGenerator extends Construct {
 
   private mergeFunctionDefaults(functionOptions: FunctionOptions): ApiProps {
     const mergedOptions: ApiProps = {
-      ...deepmerge(this.functionOptions ?? {}, functionOptions),
+      ...mergeRecursive(this.functionOptions ?? {}, functionOptions),
       httpApi: this.httpApi,
     }
     return this.resolveLayerReferences(mergedOptions)
@@ -179,6 +180,11 @@ export class ResourceGenerator extends Construct {
       func.addEnvironment(DB_CLUSTER_ENV, this.databaseCluster.getDataApiParams().clusterArn)
       func.addEnvironment(DB_SECRET_ENV, this.databaseCluster.getDataApiParams().secretArn)
       if (this.databaseCluster.dbName) func.addEnvironment(DB_NAME_ENV, this.databaseCluster.dbName)
+      console.debug(
+        `🗝 Granting ${func} database access for ${
+          this.databaseCluster.dbName || "cluster " + this.databaseCluster.clusterIdentifier
+        }`
+      )
     }
   }
 }
