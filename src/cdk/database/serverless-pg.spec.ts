@@ -10,7 +10,7 @@ describe("SlsPgDb", () => {
   const db = new SlsPgDb(stack, "DB", {
     vpc: vpc as any,
     parameterGroup: ParameterGroup.fromParameterGroupName(stack, "ParameterGroup", "default.aurora-postgresql10"),
-    dbName: "foo",
+    defaultDatabaseName: "foo",
   })
 
   it("creates the cluster", () => {

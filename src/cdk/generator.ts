@@ -180,10 +180,11 @@ export class ResourceGenerator extends Construct {
       // provide cluster/secret ARN and DB name to function
       func.addEnvironment(DB_CLUSTER_ENV, this.databaseCluster.getDataApiParams().clusterArn)
       func.addEnvironment(DB_SECRET_ENV, this.databaseCluster.getDataApiParams().secretArn)
-      if (this.databaseCluster.dbName) func.addEnvironment(DB_NAME_ENV, this.databaseCluster.dbName)
+      if (this.databaseCluster.defaultDatabaseName)
+        func.addEnvironment(DB_NAME_ENV, this.databaseCluster.defaultDatabaseName)
       console.debug(
         `🗝 Granting ${func} database access for ${
-          this.databaseCluster.dbName || "cluster " + this.databaseCluster.clusterIdentifier
+          this.databaseCluster.defaultDatabaseName || "cluster " + this.databaseCluster.clusterIdentifier
         }`
       )
     }

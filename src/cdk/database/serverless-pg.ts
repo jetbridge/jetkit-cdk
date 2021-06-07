@@ -2,10 +2,11 @@ import { DatabaseClusterEngine, IClusterEngine, ServerlessCluster, ServerlessClu
 import * as core from "@aws-cdk/core"
 
 export interface SlsPgDbProps extends Omit<ServerlessClusterProps, "engine"> {
-  // defaults to AURORA_POSTGRESQL
-  engine?: IClusterEngine
+  // default database name
+  defaultDatabaseName?: string
 
-  dbName?: string | undefined
+  // forced to AURORA_POSTGRESQL
+  engine?: never
 }
 
 /**
@@ -16,18 +17,18 @@ export interface SlsPgDbProps extends Omit<ServerlessClusterProps, "engine"> {
  * and https://docs.aws.amazon.com/cdk/api/latest/docs/aws-rds-readme.html#data-api
  */
 export class SlsPgDb extends ServerlessCluster {
-  dbName?: string | undefined
+  defaultDatabaseName?: string | undefined
 
-  constructor(scope: core.Construct, id: string, { dbName, ...props }: SlsPgDbProps) {
-    const superProps = {
-      engine: props.engine || DatabaseClusterEngine.AURORA_POSTGRESQL,
-      // credentials: props.credentials ||
+  constructor(scope: core.Construct, id: string, { defaultDatabaseName, ...props }: SlsPgDbProps) {
+    const superProps: ServerlessClusterProps = {
+      // force engine
+      engine: DatabaseClusterEngine.AURORA_POSTGRESQL,
       ...props,
     }
-    if (dbName) superProps.defaultDatabaseName = dbName
+    if (defaultDatabaseName) (superProps as any).defaultDatabaseName = defaultDatabaseName
     super(scope, id, superProps)
 
-    this.dbName = dbName
+    this.defaultDatabaseName = defaultDatabaseName
   }
 
   /**
@@ -41,7 +42,7 @@ export class SlsPgDb extends ServerlessCluster {
       "postgresql://" +
       `${dbUsername}:${dbPassword}@${this.clusterEndpoint.hostname}/` +
       // TODO: how to get db name if not explicitly provided?
-      (this.dbName || "")
+      (this.defaultDatabaseName || "")
     )
   }
 
