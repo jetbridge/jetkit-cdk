@@ -1,7 +1,7 @@
 {
   "name": "@jetkit/cdk",
   "version": "0.3.2",
-  "description": "Cloud-native serverless development mini-framework",
+  "description": "Cloud-native serverless anti-framework",
   "types": "build/esm/index.d.ts",
   "main": "build/cjs/index.js",
   "module": "build/esm/index.js",
@@ -77,6 +77,10 @@
     "iac",
     "rest",
     "typescript",
-    "api"
+    "api",
+    "typeorm",
+    "postgres",
+    "postgresql",
+    "pg"
   ]
 }
