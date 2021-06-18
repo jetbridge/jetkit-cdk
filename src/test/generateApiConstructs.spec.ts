@@ -2,7 +2,7 @@
 
 import "@aws-cdk/assert/jest"
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
-import { Stack } from "@aws-cdk/core"
+import { App, Stack } from "@aws-cdk/core"
 import { ApiViewConstruct, ResourceGeneratorConstruct } from ".."
 import { AlbumApi, topSongsFuncInner, topSongsHandler } from "./sampleApp"
 
@@ -14,7 +14,8 @@ const defaultEnvVars = {
 }
 
 describe("@ApiView construct generation", () => {
-  const stack = new Stack()
+  const app = new App()
+  const stack = new Stack(app, "STACK")
   const httpApi = new HttpApi(stack, "API")
 
   // should create routes on httpApi
@@ -29,15 +30,17 @@ describe("@ApiView construct generation", () => {
     },
   })
 
+  const template = app.synth().getStackByName(stack.stackName).template
+
   it("generates APIGW routes", () => {
     // should have routes
-    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
+    expect(template).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "ANY /album",
     })
   })
 
   it("creates lambda handler", () => {
-    expect(stack).toHaveResource("AWS::Lambda::Function", {
+    expect(template).toHaveResource("AWS::Lambda::Function", {
       Handler: "index.handler",
       MemorySize: 512,
       Runtime: "nodejs14.x",
@@ -57,7 +60,8 @@ describe("@ApiView construct generation", () => {
 })
 
 describe("@SubRoute construct generation", () => {
-  const stack = new Stack()
+  const app = new App()
+  const stack = new Stack(app, "STACK")
   const httpApi = new HttpApi(stack, "API")
 
   // should create routes on httpApi
@@ -67,26 +71,30 @@ describe("@SubRoute construct generation", () => {
     httpApi,
   })
 
+  const template = app.synth().getStackByName(stack.stackName).template
+
   it("generates APIGW DELETE route", () => {
-    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
+    expect(template).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "DELETE /album/{albumId}/like",
     })
   })
+
   it("generates APIGW POST route", () => {
-    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
+    expect(template).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "POST /album/{albumId}/like",
     })
   })
+
   it("has route outputs", () => {
-    expect(stack).toHaveOutput({
+    expect(template).toHaveOutput({
       outputName: "GenSubRoutelikeRoute176CE77B5",
       outputValue: "POST,DELETE /album/{albumId}/like",
     })
-    expect(stack).toHaveOutput({
+    expect(template).toHaveOutput({
       outputName: "GenClassAlbumApiRoute1AA2A9EC9",
       outputValue: "ANY /album",
     })
-    expect(stack).toHaveOutput({
+    expect(template).toHaveOutput({
       exportName: "ApiBase",
       outputValue: {
         "Fn::Join": [
@@ -113,7 +121,8 @@ describe("@SubRoute construct generation", () => {
 })
 
 describe("@Lambda construct generation", () => {
-  const stack = new Stack()
+  const app = new App()
+  const stack = new Stack(app, "STACK")
   const httpApi = new HttpApi(stack, "API")
 
   // should create routes on httpApi
@@ -123,11 +132,13 @@ describe("@Lambda construct generation", () => {
     httpApi,
   })
 
+  const template = app.synth().getStackByName(stack.stackName).template
+
   it("generates endpoints for standalone functions", () => {
-    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
+    expect(template).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "PUT /top-songs",
     })
-    expect(stack).toHaveResource("AWS::Lambda::Function", {
+    expect(template).toHaveResource("AWS::Lambda::Function", {
       Environment: {
         Variables: {
           LOG_LEVEL: "WARN",
@@ -141,10 +152,10 @@ describe("@Lambda construct generation", () => {
   })
 
   it("generates endpoints for wrapped functions", () => {
-    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
+    expect(template).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "PUT /top-songs-inner",
     })
-    expect(stack).toHaveResource("AWS::Lambda::Function", {
+    expect(template).toHaveResource("AWS::Lambda::Function", {
       Environment: {
         Variables: {
           LOG_LEVEL: "WARN",
