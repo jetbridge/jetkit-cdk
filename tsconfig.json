@@ -11,7 +11,6 @@
     "resolveJsonModule": true, // allow importing JSON filees
     "experimentalDecorators": true, // enable decorators
     "emitDecoratorMetadata": true, // for runtime use of decorators (typeORM)
-    // "strictPropertyInitialization": false, // for TypeORM
 
     "noImplicitAny": true, // strictness
     "noImplicitThis": true, // strictness

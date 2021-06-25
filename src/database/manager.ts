@@ -18,11 +18,11 @@ export interface ConnectionOptionsOverrides extends Omit<ConnectionOptions, "typ
 }
 
 export interface DatabaseManagerProps extends ConnectionOptionsOverrides {
-  printQueries?: boolean | undefined
+  printQueries?: boolean
 
   // enable x-ray instrumentation
   // (may be broken)
-  tracing?: boolean | undefined
+  tracing?: boolean
 
   // list of all database entities
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -38,8 +38,8 @@ export class DatabaseManager {
   // eslint-disable-next-line @typescript-eslint/ban-types
   entities?: (string | Function | EntitySchema<any>)[]
   database?: string
-  printQueries?: boolean | undefined
-  tracing?: boolean | undefined
+  printQueries?: boolean
+  tracing?: boolean
   connectionOpts: ConnectionOptionsOverrides
 
   /**
@@ -89,8 +89,7 @@ export class DatabaseManager {
     let connectionOptions: ConnectionOptions
 
     // logging
-    const logging: LoggerOptions = ["error"]
-    if (process.env.SQL_ECHO || this.printQueries) logging.push("query") // log queries
+    const logging = this.getLoggerConfig()
 
     database ||= this.database || process.env[DB_NAME_ENV] || ""
 
@@ -140,6 +139,12 @@ export class DatabaseManager {
     if (this.tracing) this.configureTracing()
 
     return connectionOptions
+  }
+
+  protected getLoggerConfig(): LoggerOptions {
+    const logging: LoggerOptions = ["error"]
+    if (process.env.SQL_ECHO || this.printQueries) logging.push("query") // log queries
+    return logging
   }
 
   // instrument queries with xray

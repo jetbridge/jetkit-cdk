@@ -1,4 +1,4 @@
-import { DatabaseClusterEngine, IClusterEngine, ServerlessCluster, ServerlessClusterProps } from "@aws-cdk/aws-rds"
+import { DatabaseClusterEngine, ServerlessCluster, ServerlessClusterProps } from "@aws-cdk/aws-rds"
 import * as core from "@aws-cdk/core"
 
 export interface SlsPgDbProps extends Omit<ServerlessClusterProps, "engine"> {
@@ -17,7 +17,7 @@ export interface SlsPgDbProps extends Omit<ServerlessClusterProps, "engine"> {
  * and https://docs.aws.amazon.com/cdk/api/latest/docs/aws-rds-readme.html#data-api
  */
 export class SlsPgDb extends ServerlessCluster {
-  defaultDatabaseName?: string | undefined
+  defaultDatabaseName?: string
 
   constructor(scope: core.Construct, id: string, { defaultDatabaseName, ...props }: SlsPgDbProps) {
     const superProps: ServerlessClusterProps = {

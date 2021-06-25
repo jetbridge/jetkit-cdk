@@ -12,7 +12,7 @@ export interface IAppProps<ConfigT extends IConfig> {
  * You may provide a configuration to apply
  */
 export class JetKitCdkApp<ConfigT extends IConfig> extends CdkApp {
-  config?: ConfigT | undefined
+  config?: ConfigT
 
   constructor({ config }: IAppProps<ConfigT>) {
     super()
