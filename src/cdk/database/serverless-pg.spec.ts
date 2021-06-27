@@ -18,7 +18,7 @@ describe("SlsPgDb", () => {
     expect(stack).toHaveResource("AWS::RDS::DBCluster", {
       Engine: "aurora-postgresql",
       DatabaseName: "foo",
-      DBClusterParameterGroupName: "default.aurora-postgresql10",
+      DBClusterParameterGroupName: "default.aurora-postgresql11",
       DBSubnetGroupName: {
         Ref: "DBSubnets7B70DA43",
       },
