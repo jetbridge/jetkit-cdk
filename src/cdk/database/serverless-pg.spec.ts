@@ -9,7 +9,7 @@ describe("SlsPgDb", () => {
   const vpc = new Vpc(stack, "VPC", {})
   const db = new SlsPgDb(stack, "DB", {
     vpc: vpc as any,
-    parameterGroup: ParameterGroup.fromParameterGroupName(stack, "ParameterGroup", "default.aurora-postgresql10"),
+    parameterGroup: ParameterGroup.fromParameterGroupName(stack, "ParameterGroup", "default.aurora-postgresql11"),
     defaultDatabaseName: "foo",
   })
 

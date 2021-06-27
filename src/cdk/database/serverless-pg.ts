@@ -1,12 +1,8 @@
-import { DatabaseClusterEngine, ServerlessCluster, ServerlessClusterProps } from "@aws-cdk/aws-rds"
+import { DatabaseClusterEngine, IClusterEngine, ServerlessCluster, ServerlessClusterProps } from "@aws-cdk/aws-rds"
 import * as core from "@aws-cdk/core"
 
 export interface SlsPgDbProps extends Omit<ServerlessClusterProps, "engine"> {
-  // default database name
-  defaultDatabaseName?: string
-
-  // forced to AURORA_POSTGRESQL
-  engine?: never
+  engine?: IClusterEngine
 }
 
 /**
@@ -19,15 +15,19 @@ export interface SlsPgDbProps extends Omit<ServerlessClusterProps, "engine"> {
 export class SlsPgDb extends ServerlessCluster {
   defaultDatabaseName?: string
 
-  constructor(scope: core.Construct, id: string, { defaultDatabaseName, ...props }: SlsPgDbProps) {
+  constructor(
+    scope: core.Construct,
+    id: string,
+    { defaultDatabaseName, engine = DatabaseClusterEngine.AURORA_POSTGRESQL, ...props }: SlsPgDbProps
+  ) {
     const superProps: ServerlessClusterProps = {
-      // force engine
-      engine: DatabaseClusterEngine.AURORA_POSTGRESQL,
+      engine,
+      defaultDatabaseName,
       ...props,
     }
-    if (defaultDatabaseName) (superProps as any).defaultDatabaseName = defaultDatabaseName
     super(scope, id, superProps)
 
+    // save this
     this.defaultDatabaseName = defaultDatabaseName
   }
 

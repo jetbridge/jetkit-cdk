@@ -19,7 +19,8 @@
     "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
     "docs": "typedoc",
     "prepare": "husky install",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "rel:minor": "npm version minor && npm publish"
   },
   "author": "JetBridge Software Inc.",
   "license": "MIT",
