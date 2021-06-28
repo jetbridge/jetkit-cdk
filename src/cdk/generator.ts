@@ -1,6 +1,6 @@
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
 import { Function as LambdaFunction, LayerVersion } from "@aws-cdk/aws-lambda"
-import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
+import { NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { CfnOutput, Construct } from "@aws-cdk/core"
 import { recursive as mergeRecursive } from "merge"
 import { RequestHandler } from "../api/base"
@@ -65,10 +65,20 @@ export interface ResourceGeneratorProps {
  * @category Construct
  */
 export class ResourceGenerator extends Construct {
-  httpApi: HttpApi
+  /**
+   * Default options for Lambda functions.
+   * Can be overridden.
+   */
   functionOptions?: FunctionOptions
+
+  /**
+   * Lambda functions that were generated.
+   */
+  generatedFunctions: NodejsFunction[]
+
+  private layerCounter = 1
+  httpApi: HttpApi
   databaseCluster?: SlsPgDb
-  layerCounter = 1
 
   constructor(
     scope: Construct,
@@ -86,6 +96,8 @@ export class ResourceGenerator extends Construct {
 
     // it's handy to have the API base URL as a stack output
     if (this.httpApi) new CfnOutput(this, "ApiBase", { exportName: "ApiBase", value: this.httpApi.url || "Unknown" })
+
+    this.generatedFunctions = []
   }
 
   generateConstructsForResource(resource: MetadataTarget) {
@@ -126,6 +138,7 @@ export class ResourceGenerator extends Construct {
     const mergedOptions = this.mergeFunctionDefaults(funcMetaRest)
     const view = new ApiViewConstruct(this, `Func-${name}`, mergedOptions)
     this.grantFunctionAccess(mergedOptions, view.handlerFunction)
+    this.generatedFunctions.push(view.handlerFunction)
   }
 
   /**
@@ -143,6 +156,7 @@ export class ResourceGenerator extends Construct {
       const mergedOptions = this.mergeFunctionDefaults(apiViewMeta)
       apiViewConstruct = new ApiViewConstruct(this, `Class-${name}`, mergedOptions)
       this.grantFunctionAccess(mergedOptions, apiViewConstruct.handlerFunction)
+      this.generatedFunctions.push(apiViewConstruct.handlerFunction)
     }
 
     // SubRoutes - methods with their own routes
