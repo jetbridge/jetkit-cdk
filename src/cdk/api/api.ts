@@ -77,8 +77,11 @@ export class ApiView extends ApiViewMixin implements IEndpoint {
 
     this.httpApi = httpApi
     this.path = path
-    this.methods = methods
-
-    this.addRoutes({ httpApi, methods, path, lambdaApiIntegration: this.lambdaApiIntegration })
+    const routes: IAddRoutes = { httpApi, path, lambdaApiIntegration: this.lambdaApiIntegration }
+    if (methods) {
+      this.methods = methods
+      routes.methods = methods
+    }
+    this.addRoutes(routes)
   }
 }

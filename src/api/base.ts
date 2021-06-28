@@ -195,10 +195,8 @@ export class ApiViewBase {
     }
 
     // unhandled exception
-    console.error(ex)
-    return {
-      statusCode: 500,
-    }
+    // give up.
+    throw ex
   }
 }
 

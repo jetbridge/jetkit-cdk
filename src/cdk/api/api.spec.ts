@@ -1,7 +1,7 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { ApiEvent, ApiViewBase } from "../../api/base"
 import { ApiView, SubRoute } from "../../registry"
-import { AlbumApi } from "../sampleApp"
+import { AlbumApi } from "../../test/sampleApp"
 
 interface IMakeApiEvent {
   method: HttpMethod

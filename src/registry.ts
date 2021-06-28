@@ -1,12 +1,12 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
-import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import fs from "fs"
 import { ApiViewBase, RequestHandler } from "./api/base"
+import { FunctionOptions } from "./cdk/generator"
 import {
   getSubRouteMetadata,
-  IFunctionMetadataBase,
   IApiViewClassMetadata,
   IFunctionMetadata,
+  IFunctionMetadataBase,
   ISubRouteApiMetadata,
   MetadataTarget,
   MetadataTargetConstructor,
@@ -32,7 +32,11 @@ import { findDefiningFile } from "./util/function"
  */
 export function ApiView(opts: IFunctionMetadataBase) {
   // try to guess the filename where this decorator is being applied
-  if (!opts.entry) opts.entry = guessEntrypoint("ApiView")
+
+  if (!opts.entry) {
+    const guessedEndpoint = guessEntrypoint("ApiView")
+    if (guessedEndpoint) opts.entry = guessedEndpoint
+  }
 
   // return decorator
   return function <T extends MetadataTargetConstructor>(constructor: T) {
@@ -56,7 +60,7 @@ export interface ISubRouteProps {
   methods?: HttpMethod[]
 }
 
-export interface IRouteProps extends NodejsFunctionProps {
+export interface IRouteProps extends FunctionOptions {
   path: string
   methods?: HttpMethod[]
 }
@@ -83,9 +87,9 @@ export function SubRoute({ path, methods }: ISubRouteProps) {
     const meta: ISubRouteApiMetadata = {
       requestHandlerFunc: method,
       propertyKey,
-      methods,
       path,
     }
+    if (methods) meta.methods = methods
 
     // update target class subroutes metadata map with our metadata
 
@@ -137,10 +141,10 @@ export function Lambda(props: IRouteProps) {
 
     const meta: IFunctionMetadata = {
       ...props,
-      entry,
       handler,
       requestHandlerFunc: wrapped,
     }
+    if (entry) meta.entry = entry
 
     setFunctionMetadata(wrapped, meta)
     return wrapped

@@ -8,7 +8,11 @@ export {
   ResourceGenerator as ResourceGeneratorConstruct,
   ResourceGeneratorProps,
   FunctionOptions,
+  DB_CLUSTER_ENV,
+  DB_NAME_ENV,
+  DB_SECRET_ENV,
 } from "./cdk/generator"
+export { SlsPgDb, SlsPgDbProps } from "./cdk/database/serverless-pg"
 
 // convient CDK utilities to have
 export { CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2"
@@ -31,6 +35,7 @@ export {
 
 // database
 export { BaseModel } from "./database/baseModel"
+export { ConnectionOptionsOverrides, DatabaseManager } from "./database/manager"
 
 // sample app
 export { AlbumApi, topSongsHandler } from "./test/sampleApp"

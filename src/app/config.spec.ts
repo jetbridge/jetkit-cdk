@@ -1,5 +1,5 @@
-import { JetKitCdkApp } from "../.."
-import { IConfig } from "../../app/config"
+import { JetKitCdkApp } from ".."
+import { IConfig } from "./config"
 
 // custom configuration
 interface ICustomConfig extends IConfig {

@@ -1,7 +1,7 @@
 {
   "name": "@jetkit/cdk",
-  "version": "0.2.0",
-  "description": "Cloud-native serverless development mini-framework",
+  "version": "0.4.1",
+  "description": "Cloud-native serverless anti-framework",
   "types": "build/esm/index.d.ts",
   "main": "build/cjs/index.js",
   "module": "build/esm/index.js",
@@ -14,17 +14,20 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "start": "tsc -w",
+    "start": "tsc -w -p tsconfig-cjs.json",
     "build": "npm run tsc",
     "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
     "docs": "typedoc",
     "prepare": "husky install",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "rel:patch": "npm version patch && npm publish",
+    "rel:minor": "npm version minor && npm publish"
   },
   "author": "JetBridge Software Inc.",
   "license": "MIT",
   "devDependencies": {
-    "@aws-cdk/assert": "1.105.0",
+    "@aws-cdk/assert": "1.110.0",
+    "@aws-cdk/core": "1.110.0",
     "@babel/plugin-proposal-decorators": "^7.13.15",
     "@ts-morph/bootstrap": "^0.9.1",
     "@tsconfig/node14": "^1.0.0",
@@ -33,7 +36,7 @@
     "@types/jest": "26.0.23",
     "@types/node": "10.17.27",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "aws-cdk": "1.105.0",
+    "aws-cdk": "1.110.0",
     "aws-lambda": "^1.0.6",
     "callsites": "^3.1.0",
     "husky": "^6.0.0",
@@ -50,15 +53,17 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
-    "@aws-cdk/aws-apigatewayv2": "1.105.0",
-    "@aws-cdk/aws-apigatewayv2-integrations": "1.105.0",
-    "@aws-cdk/aws-lambda": "1.105.0",
-    "@aws-cdk/aws-lambda-nodejs": "1.105.0",
-    "@aws-cdk/aws-rds": "^1.107.0",
-    "@aws-cdk/core": "1.105.0",
+    "@aws-cdk/aws-apigatewayv2": "1.110.0",
+    "@aws-cdk/aws-apigatewayv2-integrations": "1.110.0",
+    "@aws-cdk/aws-ec2": "1.110.0",
+    "@aws-cdk/aws-lambda": "1.110.0",
+    "@aws-cdk/aws-lambda-nodejs": "1.110.0",
+    "@aws-cdk/aws-rds": "1.110.0",
+    "@aws-cdk/aws-secretsmanager": "1.110.0",
     "@jdpnielsen/http-error": "^1.2.0",
+    "aws-xray-sdk": "^3.3.3",
     "convict": "^6.1.0",
-    "deepmerge": "^4.2.2"
+    "merge": "^2.1.1"
   },
   "peerDependencies": {
     "typeorm": "*"
@@ -74,6 +79,10 @@
     "iac",
     "rest",
     "typescript",
-    "api"
+    "api",
+    "typeorm",
+    "postgres",
+    "postgresql",
+    "pg"
   ]
 }
