@@ -2,6 +2,7 @@
 
 import "@aws-cdk/assert/jest"
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
+import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs"
 import { Stack } from "@aws-cdk/core"
 import { ApiViewConstruct, ResourceGeneratorConstruct } from ".."
 import { AlbumApi, topSongsFuncInner, topSongsHandler } from "../test/sampleApp"
@@ -27,6 +28,11 @@ describe("@ApiView construct generation", () => {
         banner: bundleBannerMsg,
       },
     },
+  })
+
+  it("saves generated functions", () => {
+    expect(generator.generatedFunctions).toHaveLength(1)
+    expect(generator.generatedFunctions[0]).toBeInstanceOf(NodejsFunction)
   })
 
   it("generates APIGW routes", () => {
@@ -118,9 +124,15 @@ describe("@Lambda construct generation", () => {
 
   // should create routes on httpApi
   // and lambda handler function
-  new ResourceGeneratorConstruct(stack, "Gen", {
+  const generator = new ResourceGeneratorConstruct(stack, "Gen", {
     resources: [topSongsHandler, topSongsFuncInner],
     httpApi,
+  })
+
+  it("saves generated functions", () => {
+    expect(generator.generatedFunctions).toHaveLength(2)
+    expect(generator.generatedFunctions[0]).toBeInstanceOf(NodejsFunction)
+    expect(generator.generatedFunctions[1]).toBeInstanceOf(NodejsFunction)
   })
 
   it("generates endpoints for standalone functions", () => {

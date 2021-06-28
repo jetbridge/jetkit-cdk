@@ -86,7 +86,9 @@ export class ResourceGenerator extends Construct {
     { httpApi, resources, databaseCluster, functionOptions }: ResourceGeneratorProps
   ) {
     super(scope, id)
+
     this.httpApi = httpApi
+    this.generatedFunctions = []
 
     if (functionOptions) this.functionOptions = functionOptions
     if (databaseCluster) this.databaseCluster = databaseCluster
@@ -95,9 +97,7 @@ export class ResourceGenerator extends Construct {
     resources.forEach((resource) => this.generateConstructsForResource(resource))
 
     // it's handy to have the API base URL as a stack output
-    if (this.httpApi) new CfnOutput(this, "ApiBase", { exportName: "ApiBase", value: this.httpApi.url || "Unknown" })
-
-    this.generatedFunctions = []
+    if (this.httpApi.url) new CfnOutput(this, "ApiBase", { exportName: "ApiBase", value: this.httpApi.url })
   }
 
   generateConstructsForResource(resource: MetadataTarget) {
@@ -105,7 +105,7 @@ export class ResourceGenerator extends Construct {
     this.generateConstructsForFunction(resource as RequestHandler)
   }
 
-  private resolveLayerReferences(apiProps: ApiProps): ApiProps {
+  protected resolveLayerReferences(apiProps: ApiProps): ApiProps {
     const { layerArns, ...optsRest } = apiProps
     if (!layerArns) return apiProps
 
@@ -118,7 +118,7 @@ export class ResourceGenerator extends Construct {
     return optsRest
   }
 
-  private mergeFunctionDefaults(functionOptions: FunctionOptions): ApiProps {
+  protected mergeFunctionDefaults(functionOptions: FunctionOptions): ApiProps {
     const mergedOptions: ApiProps = {
       ...mergeRecursive(this.functionOptions ?? {}, functionOptions),
       httpApi: this.httpApi,
