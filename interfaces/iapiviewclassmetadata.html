@@ -109,8 +109,10 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapiviewclassmetadata.html#events" class="tsd-kind-icon">events</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapiviewclassmetadata.html#filesystem" class="tsd-kind-icon">filesystem</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapiviewclassmetadata.html#functionname" class="tsd-kind-icon">function<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="iapiviewclassmetadata.html#grantdatabaseaccess" class="tsd-kind-icon">grant<wbr>Database<wbr>Access</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapiviewclassmetadata.html#handler" class="tsd-kind-icon">handler</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapiviewclassmetadata.html#initialpolicy" class="tsd-kind-icon">initial<wbr>Policy</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="iapiviewclassmetadata.html#layerarns" class="tsd-kind-icon">layer<wbr>Arns</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapiviewclassmetadata.html#layers" class="tsd-kind-icon">layers</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapiviewclassmetadata.html#logretention" class="tsd-kind-icon">log<wbr>Retention</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapiviewclassmetadata.html#logretentionretryoptions" class="tsd-kind-icon">log<wbr>Retention<wbr>Retry<wbr>Options</a></li>
@@ -200,7 +202,7 @@
 					<div class="tsd-signature tsd-kind-icon">api<wbr>Class<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">typeof </span><a href="../classes/apiviewbase.html" class="tsd-signature-type" data-tsd-kind="Class">ApiViewBase</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/ed0cbda/src/metadata.ts#L54">src/metadata.ts:54</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/metadata.ts#L54">src/metadata.ts:54</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -430,9 +432,14 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#entry">entry</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/ed0cbda/src/metadata.ts#L38">src/metadata.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/metadata.ts#L38">src/metadata.ts:38</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Path to the entry file (JavaScript or TypeScript).</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 					<a name="environment" class="tsd-anchor"></a>
@@ -577,6 +584,17 @@
 						</dl>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="grantdatabaseaccess" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> grant<wbr>Database<wbr>Access</h3>
+					<div class="tsd-signature tsd-kind-icon">grant<wbr>Database<wbr>Access<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#grantdatabaseaccess">grantDatabaseAccess</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/cdk/generator.ts#L23">src/cdk/generator.ts:23</a></li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 					<a name="handler" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> handler</h3>
@@ -627,6 +645,17 @@
 							</dd>
 						</dl>
 					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="layerarns" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> layer<wbr>Arns</h3>
+					<div class="tsd-signature tsd-kind-icon">layer<wbr>Arns<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#layerarns">layerArns</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/cdk/generator.ts#L21">src/cdk/generator.ts:21</a></li>
+						</ul>
+					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 					<a name="layers" class="tsd-anchor"></a>
@@ -797,7 +826,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#methods">methods</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/ed0cbda/src/metadata.ts#L39">src/metadata.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/metadata.ts#L39">src/metadata.ts:39</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -860,7 +889,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#path">path</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/ed0cbda/src/metadata.ts#L37">src/metadata.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/metadata.ts#L37">src/metadata.ts:37</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1237,6 +1266,9 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/crudapiviewbase.html" class="tsd-kind-icon">Crud<wbr>Api<wbr>View<wbr>Base</a>
 					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/databasemanager.html" class="tsd-kind-icon">Database<wbr>Manager</a>
+					</li>
 					<li class=" tsd-kind-class tsd-is-external">
 						<a href="../classes/duration.html" class="tsd-kind-icon">Duration</a>
 					</li>
@@ -1246,11 +1278,17 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/resourcegeneratorconstruct.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Construct</a>
 					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/slspgdb.html" class="tsd-kind-icon">Sls<wbr>PgDb</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
 						<a href="apievent.html" class="tsd-kind-icon">Api<wbr>Event</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="apiviewconstructprops.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="connectionoptionsoverrides.html" class="tsd-kind-icon">Connection<wbr>Options<wbr>Overrides</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="functionoptions.html" class="tsd-kind-icon">Function<wbr>Options</a>
@@ -1314,11 +1352,17 @@
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 								<a href="iapiviewclassmetadata.html#functionname" class="tsd-kind-icon">function<wbr>Name</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="iapiviewclassmetadata.html#grantdatabaseaccess" class="tsd-kind-icon">grant<wbr>Database<wbr>Access</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 								<a href="iapiviewclassmetadata.html#handler" class="tsd-kind-icon">handler</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 								<a href="iapiviewclassmetadata.html#initialpolicy" class="tsd-kind-icon">initial<wbr>Policy</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="iapiviewclassmetadata.html#layerarns" class="tsd-kind-icon">layer<wbr>Arns</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 								<a href="iapiviewclassmetadata.html#layers" class="tsd-kind-icon">layers</a>
@@ -1408,6 +1452,9 @@
 					<li class=" tsd-kind-interface">
 						<a href="resourcegeneratorprops.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Props</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="slspgdbprops.html" class="tsd-kind-icon">Sls<wbr>PgDb<wbr>Props</a>
+					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../modules.html#apiresponse" class="tsd-kind-icon">Api<wbr>Response</a>
 					</li>
@@ -1416,6 +1463,15 @@
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../modules.html#requesthandler" class="tsd-kind-icon">Request<wbr>Handler</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../modules.html#db_cluster_env" class="tsd-kind-icon">DB_<wbr>CLUSTER_<wbr>ENV</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../modules.html#db_name_env" class="tsd-kind-icon">DB_<wbr>NAME_<wbr>ENV</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../modules.html#db_secret_env" class="tsd-kind-icon">DB_<wbr>SECRET_<wbr>ENV</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../modules.html#apiview" class="tsd-kind-icon">Api<wbr>View</a>
@@ -1452,13 +1508,14 @@
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
 			</ul>
 		</div>
 	</div>

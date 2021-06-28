@@ -101,8 +101,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="resourcegeneratorconstruct.html#databasecluster" class="tsd-kind-icon">database<wbr>Cluster</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="resourcegeneratorconstruct.html#functionoptions" class="tsd-kind-icon">function<wbr>Options</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="resourcegeneratorconstruct.html#httpapi" class="tsd-kind-icon">http<wbr>Api</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="resourcegeneratorconstruct.html#layercounter" class="tsd-kind-icon">layer<wbr>Counter</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="resourcegeneratorconstruct.html#node" class="tsd-kind-icon">node</a></li>
 							</ul>
 						</section>
@@ -112,6 +114,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="resourcegeneratorconstruct.html#generateconstructsforclass" class="tsd-kind-icon">generate<wbr>Constructs<wbr>For<wbr>Class</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="resourcegeneratorconstruct.html#generateconstructsforfunction" class="tsd-kind-icon">generate<wbr>Constructs<wbr>For<wbr>Function</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="resourcegeneratorconstruct.html#generateconstructsforresource" class="tsd-kind-icon">generate<wbr>Constructs<wbr>For<wbr>Resource</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="resourcegeneratorconstruct.html#grantfunctionaccess" class="tsd-kind-icon">grant<wbr>Function<wbr>Access</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="resourcegeneratorconstruct.html#mergefunctiondefaults" class="tsd-kind-icon">merge<wbr>Function<wbr>Defaults</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="resourcegeneratorconstruct.html#onprepare" class="tsd-kind-icon">on<wbr>Prepare</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="resourcegeneratorconstruct.html#onsynthesize" class="tsd-kind-icon">on<wbr>Synthesize</a></li>
@@ -140,7 +143,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides Construct.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/ed0cbda/src/cdk/generator.ts#L55">src/cdk/generator.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/cdk/generator.ts#L71">src/cdk/generator.ts:71</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -163,12 +166,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="databasecluster" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> database<wbr>Cluster</h3>
+					<div class="tsd-signature tsd-kind-icon">database<wbr>Cluster<span class="tsd-signature-symbol">:</span> <a href="slspgdb.html" class="tsd-signature-type" data-tsd-kind="Class">SlsPgDb</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/cdk/generator.ts#L70">src/cdk/generator.ts:70</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="functionoptions" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> function<wbr>Options</h3>
 					<div class="tsd-signature tsd-kind-icon">function<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/functionoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">FunctionOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/ed0cbda/src/cdk/generator.ts#L55">src/cdk/generator.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/cdk/generator.ts#L69">src/cdk/generator.ts:69</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -178,7 +191,17 @@
 					<div class="tsd-signature tsd-kind-icon">http<wbr>Api<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HttpApi</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/ed0cbda/src/cdk/generator.ts#L54">src/cdk/generator.ts:54</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/cdk/generator.ts#L68">src/cdk/generator.ts:68</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="layercounter" class="tsd-anchor"></a>
+					<h3>layer<wbr>Counter</h3>
+					<div class="tsd-signature tsd-kind-icon">layer<wbr>Counter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/cdk/generator.ts#L71">src/cdk/generator.ts:71</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -216,7 +239,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/ed0cbda/src/cdk/generator.ts#L116">src/cdk/generator.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/cdk/generator.ts#L135">src/cdk/generator.ts:135</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -245,7 +268,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/ed0cbda/src/cdk/generator.ts#L102">src/cdk/generator.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/cdk/generator.ts#L120">src/cdk/generator.ts:120</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -273,13 +296,44 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/ed0cbda/src/cdk/generator.ts#L72">src/cdk/generator.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/cdk/generator.ts#L91">src/cdk/generator.ts:91</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>resource: <a href="../modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+					<a name="grantfunctionaccess" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> grant<wbr>Function<wbr>Access</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">grant<wbr>Function<wbr>Access<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/functionoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">FunctionOptions</a>, func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/cdk/generator.ts#L173">src/cdk/generator.ts:173</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Grant function access to what is configured.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>options: <a href="../interfaces/functionoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">FunctionOptions</a></h5>
+								</li>
+								<li>
+									<h5>func: <span class="tsd-signature-type">Function</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -296,7 +350,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/ed0cbda/src/cdk/generator.ts#L90">src/cdk/generator.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/cdk/generator.ts#L109">src/cdk/generator.ts:109</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -455,7 +509,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/ed0cbda/src/cdk/generator.ts#L77">src/cdk/generator.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/50967d7/src/cdk/generator.ts#L96">src/cdk/generator.ts:96</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -633,6 +687,9 @@
 					<li class=" tsd-kind-class">
 						<a href="crudapiviewbase.html" class="tsd-kind-icon">Crud<wbr>Api<wbr>View<wbr>Base</a>
 					</li>
+					<li class=" tsd-kind-class">
+						<a href="databasemanager.html" class="tsd-kind-icon">Database<wbr>Manager</a>
+					</li>
 					<li class=" tsd-kind-class tsd-is-external">
 						<a href="duration.html" class="tsd-kind-icon">Duration</a>
 					</li>
@@ -648,10 +705,16 @@
 								<a href="resourcegeneratorconstruct.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="resourcegeneratorconstruct.html#databasecluster" class="tsd-kind-icon">database<wbr>Cluster</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="resourcegeneratorconstruct.html#functionoptions" class="tsd-kind-icon">function<wbr>Options</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="resourcegeneratorconstruct.html#httpapi" class="tsd-kind-icon">http<wbr>Api</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="resourcegeneratorconstruct.html#layercounter" class="tsd-kind-icon">layer<wbr>Counter</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="resourcegeneratorconstruct.html#node" class="tsd-kind-icon">node</a>
@@ -664,6 +727,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="resourcegeneratorconstruct.html#generateconstructsforresource" class="tsd-kind-icon">generate<wbr>Constructs<wbr>For<wbr>Resource</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+								<a href="resourcegeneratorconstruct.html#grantfunctionaccess" class="tsd-kind-icon">grant<wbr>Function<wbr>Access</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="resourcegeneratorconstruct.html#mergefunctiondefaults" class="tsd-kind-icon">merge<wbr>Function<wbr>Defaults</a>
@@ -699,11 +765,17 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class">
+						<a href="slspgdb.html" class="tsd-kind-icon">Sls<wbr>PgDb</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
 						<a href="../interfaces/apievent.html" class="tsd-kind-icon">Api<wbr>Event</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/apiviewconstructprops.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/connectionoptionsoverrides.html" class="tsd-kind-icon">Connection<wbr>Options<wbr>Overrides</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/functionoptions.html" class="tsd-kind-icon">Function<wbr>Options</a>
@@ -732,6 +804,9 @@
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/resourcegeneratorprops.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Props</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/slspgdbprops.html" class="tsd-kind-icon">Sls<wbr>PgDb<wbr>Props</a>
+					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../modules.html#apiresponse" class="tsd-kind-icon">Api<wbr>Response</a>
 					</li>
@@ -740,6 +815,15 @@
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../modules.html#requesthandler" class="tsd-kind-icon">Request<wbr>Handler</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../modules.html#db_cluster_env" class="tsd-kind-icon">DB_<wbr>CLUSTER_<wbr>ENV</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../modules.html#db_name_env" class="tsd-kind-icon">DB_<wbr>NAME_<wbr>ENV</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../modules.html#db_secret_env" class="tsd-kind-icon">DB_<wbr>SECRET_<wbr>ENV</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../modules.html#apiview" class="tsd-kind-icon">Api<wbr>View</a>
@@ -776,13 +860,14 @@
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
 			</ul>
 		</div>
 	</div>
