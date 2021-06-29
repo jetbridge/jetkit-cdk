@@ -69,7 +69,7 @@ describe("@ApiView construct generation", () => {
   })
 
   it("creates a route with any method", () => {
-    const entry = path.join(__dirname, "..", "..", "test", "sampleApp.ts")
+    const entry = path.join(__dirname, "..", "test", "sampleApp.ts")
     const addRoutesSpy = jest.spyOn(httpApi, "addRoutes")
 
     new ApiView(stack, "V1", {
@@ -117,11 +117,11 @@ describe("@SubRoute construct generation", () => {
   })
   it("has route outputs", () => {
     expect(stack).toHaveOutput({
-      outputName: "GenSubRoutelikeRoute176CE77B5",
+      outputName: "GenSubRoutelikeRoute489489ADA",
       outputValue: "POST,DELETE /album/{albumId}/like",
     })
     expect(stack).toHaveOutput({
-      outputName: "GenClassAlbumApiRoute1AA2A9EC9",
+      outputName: "GenClassAlbumApiRoute3CF9AED96",
       outputValue: "ANY /album",
     })
     expect(stack).toHaveOutput({
