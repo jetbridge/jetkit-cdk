@@ -120,7 +120,7 @@ export class ResourceGenerator extends Construct {
 
   protected mergeFunctionDefaults(functionOptions: FunctionOptions): ApiProps {
     const mergedOptions: ApiProps = {
-      ...mergeRecursive(this.functionOptions ?? {}, functionOptions),
+      ...mergeRecursive(true, this.functionOptions ?? {}, functionOptions),
       httpApi: this.httpApi,
     }
 
@@ -155,6 +155,7 @@ export class ResourceGenerator extends Construct {
 
       // merge function option defaults with options from attached metadata (from decorator)
       const mergedOptions = this.mergeFunctionDefaults(apiViewMeta)
+
       apiViewConstruct = new ApiViewConstruct(this, `Class-${name}`, mergedOptions)
       this.grantFunctionAccess(mergedOptions, apiViewConstruct.handlerFunction)
       this.generatedFunctions.push(apiViewConstruct.handlerFunction)

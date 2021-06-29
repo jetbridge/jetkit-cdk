@@ -1,11 +1,13 @@
 // Test that the correct AWS resources are generated from metadata
 
 import "@aws-cdk/assert/jest"
-import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
+import { HttpApi, HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs"
 import { Stack } from "@aws-cdk/core"
 import { ApiViewConstruct, ResourceGeneratorConstruct } from ".."
 import { AlbumApi, topSongsFuncInner, topSongsHandler } from "../test/sampleApp"
+import { ApiView } from "./api/api"
+import * as path from "path"
 
 const bundleBannerMsg = "--- cool bundlings mon ---"
 
@@ -59,6 +61,36 @@ describe("@ApiView construct generation", () => {
     const classView = generator.node.findChild("Class-AlbumApi") as ApiViewConstruct
     const handlerFunction = classView.handlerFunction
     expect(handlerFunction.bundling).toMatchObject({ banner: bundleBannerMsg })
+
+    // ensure we don't override the defaults with function-specific settings
+    expect((generator.functionOptions as any).path).toBeFalsy()
+    expect(generator.functionOptions?.environment?.LOG_LEVEL).toBeFalsy()
+    expect(generator.functionOptions?.entry).toBeFalsy()
+  })
+
+  it("creates a route with any method", () => {
+    const entry = path.join(__dirname, "..", "..", "test", "sampleApp.ts")
+    const addRoutesSpy = jest.spyOn(httpApi, "addRoutes")
+
+    new ApiView(stack, "V1", {
+      path: "/x",
+      httpApi,
+      entry,
+      methods: [],
+    })
+
+    const view = new ApiView(stack, "V2", {
+      path: "/a",
+      httpApi,
+      entry,
+      // methods defaults to [ANY]
+    })
+
+    expect(addRoutesSpy).toHaveBeenCalledWith({
+      path: "/a",
+      methods: [HttpMethod.ANY],
+      integration: view.lambdaApiIntegration,
+    })
   })
 })
 

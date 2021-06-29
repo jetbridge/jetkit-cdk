@@ -24,10 +24,41 @@ describe("ApiView", () => {
     expect(addRoutesSpy).not.toHaveBeenCalled()
   })
 
+  it("creates a route with any method", () => {
+    const addRoutesSpy = jest.spyOn(httpApi, "addRoutes")
+
+    const viewNoMethods = new ApiView(stack, "V1", {
+      path: "/x",
+      httpApi,
+      entry,
+      methods: [],
+    })
+
+    const view = new ApiView(stack, "V2", {
+      path: "/a",
+      httpApi,
+      entry,
+      // methods defaults to [ANY]
+    })
+
+    expect(addRoutesSpy).toHaveBeenCalledWith({
+      path: "/a",
+      methods: [HttpMethod.ANY],
+      integration: view.lambdaApiIntegration,
+    })
+  })
+
   it("creates a route with methods", () => {
     const addRoutesSpy = jest.spyOn(httpApi, "addRoutes")
 
-    const view = new ApiView(stack, "V", {
+    const viewNoMethods = new ApiView(stack, "V1", {
+      path: "/x",
+      httpApi,
+      entry,
+      methods: [],
+    })
+
+    const view = new ApiView(stack, "V2", {
       path: "/a",
       httpApi,
       entry,
