@@ -1,4 +1,5 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
+import { Duration } from "@aws-cdk/core"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
 import { ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "../api/base"
 import { ApiView, Lambda, SubRoute } from "../registry"
@@ -9,6 +10,7 @@ import { ApiView, Lambda, SubRoute } from "../registry"
   environment: {
     LOG_LEVEL: "DEBUG",
   },
+  timeout: Duration.seconds(10),
   bundling: { minify: true, metafile: true, sourceMap: true },
 })
 export class AlbumApi extends ApiViewBase {

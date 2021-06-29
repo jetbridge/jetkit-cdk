@@ -2,7 +2,8 @@ import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
 import { Function as LambdaFunction, LayerVersion } from "@aws-cdk/aws-lambda"
 import { NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { CfnOutput, Construct } from "@aws-cdk/core"
-import { recursive as mergeRecursive } from "merge"
+import deepmerge from "deepmerge"
+import isPlainObject from "is-plain-object"
 import { RequestHandler } from "../api/base"
 import { getApiViewMetadata, getFunctionMetadata, getSubRouteMetadata, MetadataTarget } from "../metadata"
 import { ApiProps, ApiView as ApiViewConstruct } from "./api/api"
@@ -118,9 +119,19 @@ export class ResourceGenerator extends Construct {
     return optsRest
   }
 
-  protected mergeFunctionDefaults(functionOptions: FunctionOptions): ApiProps {
+  mergeFunctionDefaults(functionOptions: FunctionOptions): ApiProps {
     const mergedOptions: ApiProps = {
-      ...mergeRecursive(true, this.functionOptions ?? {}, functionOptions),
+      ...deepmerge(
+        // defaults
+        this.functionOptions ?? {},
+        // function overrides
+        functionOptions,
+        {
+          // preserve instances like Duration
+          // https://github.com/TehShrike/deepmerge#ismergeableobject
+          isMergeableObject: isPlainObject,
+        }
+      ),
       httpApi: this.httpApi,
     }
 

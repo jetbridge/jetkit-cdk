@@ -2,12 +2,13 @@
 
 import "@aws-cdk/assert/jest"
 import { HttpApi, HttpMethod } from "@aws-cdk/aws-apigatewayv2"
+import { FunctionOptions } from "@aws-cdk/aws-lambda"
 import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs"
-import { Stack } from "@aws-cdk/core"
+import { Duration, Stack } from "@aws-cdk/core"
+import * as path from "path"
 import { ApiViewConstruct, ResourceGeneratorConstruct } from ".."
 import { AlbumApi, topSongsFuncInner, topSongsHandler } from "../test/sampleApp"
 import { ApiView } from "./api/api"
-import * as path from "path"
 
 const bundleBannerMsg = "--- cool bundlings mon ---"
 
@@ -15,6 +16,39 @@ const defaultEnvVars = {
   NODE_OPTIONS: "--enable-source-maps",
   AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
 }
+
+describe("mergeFunctionDefaults", () => {
+  const stack = new Stack()
+  const httpApi = new HttpApi(stack, "API")
+
+  // should create routes on httpApi
+  // and lambda handler function
+  const generator = new ResourceGeneratorConstruct(stack, "Gen", {
+    resources: [AlbumApi],
+    httpApi,
+    functionOptions: {
+      environment: { a: "1" },
+      timeout: Duration.seconds(5),
+      bundling: {
+        banner: bundleBannerMsg,
+      },
+    },
+  })
+
+  it("merges defaults without mutating original", () => {
+    const funcOpts: FunctionOptions = {
+      environment: {
+        override: "true",
+      },
+    }
+
+    const merged = generator.mergeFunctionDefaults(funcOpts)
+    expect(merged.environment).toStrictEqual({ a: "1", override: "true" })
+
+    expect(generator.functionOptions?.environment).toStrictEqual({ a: "1" })
+    expect(funcOpts?.environment).toStrictEqual({ override: "true" })
+  })
+})
 
 describe("@ApiView construct generation", () => {
   const stack = new Stack()
