@@ -123,6 +123,7 @@ export class ResourceGenerator extends Construct {
       ...mergeRecursive(this.functionOptions ?? {}, functionOptions),
       httpApi: this.httpApi,
     }
+
     return this.resolveLayerReferences(mergedOptions)
   }
 

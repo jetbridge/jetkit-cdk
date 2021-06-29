@@ -34,6 +34,9 @@ export abstract class ApiViewMixin extends Construct {
 
   addRoutes({ methods, path = "/", httpApi, lambdaApiIntegration }: IAddRoutes) {
     methods = methods || [HttpMethod.ANY]
+
+    if (!methods.length) return
+
     // * /path -> lambda integration
     const routes = httpApi.addRoutes({
       path,
