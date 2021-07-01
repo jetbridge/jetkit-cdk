@@ -1,8 +1,9 @@
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
 import { Function as LambdaFunction, LayerVersion } from "@aws-cdk/aws-lambda"
-import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
+import { NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { CfnOutput, Construct } from "@aws-cdk/core"
-import { recursive as mergeRecursive } from "merge"
+import deepmerge from "deepmerge"
+import isPlainObject from "is-plain-object"
 import { RequestHandler } from "../api/base"
 import { getApiViewMetadata, getFunctionMetadata, getSubRouteMetadata, MetadataTarget } from "../metadata"
 import { ApiProps, ApiView as ApiViewConstruct } from "./api/api"
@@ -65,10 +66,20 @@ export interface ResourceGeneratorProps {
  * @category Construct
  */
 export class ResourceGenerator extends Construct {
-  httpApi: HttpApi
+  /**
+   * Default options for Lambda functions.
+   * Can be overridden.
+   */
   functionOptions?: FunctionOptions
+
+  /**
+   * Lambda functions that were generated.
+   */
+  generatedFunctions: NodejsFunction[]
+
+  private layerCounter = 1
+  httpApi: HttpApi
   databaseCluster?: SlsPgDb
-  layerCounter = 1
 
   constructor(
     scope: Construct,
@@ -76,7 +87,9 @@ export class ResourceGenerator extends Construct {
     { httpApi, resources, databaseCluster, functionOptions }: ResourceGeneratorProps
   ) {
     super(scope, id)
+
     this.httpApi = httpApi
+    this.generatedFunctions = []
 
     if (functionOptions) this.functionOptions = functionOptions
     if (databaseCluster) this.databaseCluster = databaseCluster
@@ -85,7 +98,7 @@ export class ResourceGenerator extends Construct {
     resources.forEach((resource) => this.generateConstructsForResource(resource))
 
     // it's handy to have the API base URL as a stack output
-    if (this.httpApi) new CfnOutput(this, "ApiBase", { exportName: "ApiBase", value: this.httpApi.url || "Unknown" })
+    if (this.httpApi.url) new CfnOutput(this, "ApiBase", { exportName: "ApiBase", value: this.httpApi.url })
   }
 
   generateConstructsForResource(resource: MetadataTarget) {
@@ -93,7 +106,7 @@ export class ResourceGenerator extends Construct {
     this.generateConstructsForFunction(resource as RequestHandler)
   }
 
-  private resolveLayerReferences(apiProps: ApiProps): ApiProps {
+  protected resolveLayerReferences(apiProps: ApiProps): ApiProps {
     const { layerArns, ...optsRest } = apiProps
     if (!layerArns) return apiProps
 
@@ -106,11 +119,22 @@ export class ResourceGenerator extends Construct {
     return optsRest
   }
 
-  private mergeFunctionDefaults(functionOptions: FunctionOptions): ApiProps {
+  mergeFunctionDefaults(functionOptions: FunctionOptions): ApiProps {
     const mergedOptions: ApiProps = {
-      ...mergeRecursive(this.functionOptions ?? {}, functionOptions),
+      ...deepmerge(
+        // defaults
+        this.functionOptions ?? {},
+        // function overrides
+        functionOptions,
+        {
+          // preserve instances like Duration
+          // https://github.com/TehShrike/deepmerge#ismergeableobject
+          isMergeableObject: isPlainObject,
+        }
+      ),
       httpApi: this.httpApi,
     }
+
     return this.resolveLayerReferences(mergedOptions)
   }
 
@@ -126,6 +150,7 @@ export class ResourceGenerator extends Construct {
     const mergedOptions = this.mergeFunctionDefaults(funcMetaRest)
     const view = new ApiViewConstruct(this, `Func-${name}`, mergedOptions)
     this.grantFunctionAccess(mergedOptions, view.handlerFunction)
+    this.generatedFunctions.push(view.handlerFunction)
   }
 
   /**
@@ -141,8 +166,10 @@ export class ResourceGenerator extends Construct {
 
       // merge function option defaults with options from attached metadata (from decorator)
       const mergedOptions = this.mergeFunctionDefaults(apiViewMeta)
+
       apiViewConstruct = new ApiViewConstruct(this, `Class-${name}`, mergedOptions)
       this.grantFunctionAccess(mergedOptions, apiViewConstruct.handlerFunction)
+      this.generatedFunctions.push(apiViewConstruct.handlerFunction)
     }
 
     // SubRoutes - methods with their own routes
