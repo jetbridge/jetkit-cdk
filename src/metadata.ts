@@ -34,9 +34,26 @@ export type MetadataTarget = RequestHandler | MetadataTargetConstructor
  * Metadata describing any Lambda function.
  */
 export interface IFunctionMetadataBase extends FunctionOptions {
+  /**
+   * An optional API Gateway path to trigger this function.
+   */
   path?: string
-  entry?: string
+
+  /**
+   * If `path` is defined, this determines which methods the path responds to.
+   */
   methods?: HttpMethod[]
+
+  /**
+   * Path to the file containing the handler.
+   * Normally shouldn't need to be specified and can be guessed.
+   */
+  entry?: string
+
+  /**
+   * Cron-like schedule on which to invoke this function.
+   */
+  schedule?: string
 }
 
 /**
