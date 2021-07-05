@@ -98,7 +98,7 @@ export class ResourceGenerator extends Construct {
     resources.forEach((resource) => this.generateConstructsForResource(resource))
 
     // it's handy to have the API base URL as a stack output
-    if (this.httpApi.url) new CfnOutput(this, "ApiBase", { exportName: "ApiBase", value: this.httpApi.url })
+    if (this.httpApi.url) new CfnOutput(this, "ApiBase", { value: this.httpApi.url })
   }
 
   generateConstructsForResource(resource: MetadataTarget) {
