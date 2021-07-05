@@ -159,7 +159,17 @@ describe("@SubRoute construct generation", () => {
       outputValue: "ANY /album",
     })
     expect(stack).toHaveOutput({
-      outputName: "ApiBase",
+      exportName: {
+        "Fn::Join": [
+          "-",
+          [
+            {
+              Ref: "AWS::StackName",
+            },
+            "ApiBase",
+          ],
+        ],
+      },
       outputValue: {
         "Fn::Join": [
           "",

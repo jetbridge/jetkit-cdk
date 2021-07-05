@@ -1,7 +1,7 @@
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
 import { Function as LambdaFunction, LayerVersion } from "@aws-cdk/aws-lambda"
 import { NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
-import { CfnOutput, Construct } from "@aws-cdk/core"
+import { Aws, CfnOutput, Construct, Fn } from "@aws-cdk/core"
 import deepmerge from "deepmerge"
 import isPlainObject from "is-plain-object"
 import { RequestHandler } from "../api/base"
@@ -98,7 +98,8 @@ export class ResourceGenerator extends Construct {
     resources.forEach((resource) => this.generateConstructsForResource(resource))
 
     // it's handy to have the API base URL as a stack output
-    if (this.httpApi.url) new CfnOutput(this, "ApiBase", { value: this.httpApi.url })
+    if (this.httpApi.url)
+      new CfnOutput(this, "ApiBase", { value: this.httpApi.url, exportName: Fn.join("-", [Aws.STACK_NAME, "ApiBase"]) })
   }
 
   generateConstructsForResource(resource: MetadataTarget) {
