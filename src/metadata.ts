@@ -5,10 +5,12 @@
  * Wrappers for getting/setting metadata on classes and class properties
  */
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
+import { Schedule } from "@aws-cdk/aws-events"
 import "reflect-metadata"
-import { ApiViewBase, RequestHandler } from "./api/base"
+import { ApiHandler, ApiViewBase } from "./api/base"
 import { FunctionOptions } from "./cdk/generator"
 import { BaseModel } from "./database/baseModel"
+import { PossibleLambdaHandlers } from "./registry"
 
 /**
  * A class we can apply @ApiView to.
@@ -28,7 +30,7 @@ export const JK_V2_METADATA_FUNCTION_KEY = Symbol.for("jk:v2:metadata:function")
 export type ApiMetadataMap<V extends IFunctionMetadataBase> = Map<string, V>
 
 // what types of objects can have metadata attached?
-export type MetadataTarget = RequestHandler | MetadataTargetConstructor
+export type MetadataTarget = PossibleLambdaHandlers | MetadataTargetConstructor
 
 /**
  * Metadata describing any Lambda function.
@@ -51,9 +53,10 @@ export interface IFunctionMetadataBase extends FunctionOptions {
   entry?: string
 
   /**
-   * Cron-like schedule on which to invoke this function.
+   * Schedule on which to invoke this function.
+   * Triggers a CloudWatch Event.
    */
-  schedule?: string
+  schedule?: Schedule
 }
 
 /**
@@ -61,7 +64,7 @@ export interface IFunctionMetadataBase extends FunctionOptions {
  * Can be invoked via API route or otherwise.
  */
 export interface IFunctionMetadata extends IFunctionMetadataBase {
-  requestHandlerFunc: RequestHandler
+  HandlerFunc: PossibleLambdaHandlers
 }
 
 /**
@@ -84,7 +87,7 @@ export interface ICrudApiMetadata extends IFunctionMetadataBase {
  */
 export interface ISubRouteApiMetadata extends IFunctionMetadataBase {
   propertyKey: string
-  requestHandlerFunc?: RequestHandler
+  HandlerFunc?: ApiHandler
 }
 
 /// getters/setters
@@ -123,7 +126,7 @@ export const setSubRouteMetadata = (target: MetadataTarget, value: ApiMetadataMa
   setMemberMetadata(target, JK_V2_METADATA_SUBROUTES_KEY, value)
 
 // plain function
-export const getFunctionMetadata = (target: RequestHandler): IFunctionMetadata | undefined =>
+export const getFunctionMetadata = (target: PossibleLambdaHandlers): IFunctionMetadata | undefined =>
   getMemberMetadata(target, JK_V2_METADATA_FUNCTION_KEY)
-export const setFunctionMetadata = (target: RequestHandler, value: IFunctionMetadata) =>
+export const setFunctionMetadata = (target: PossibleLambdaHandlers, value: IFunctionMetadata) =>
   setMemberMetadata(target, JK_V2_METADATA_FUNCTION_KEY, value)

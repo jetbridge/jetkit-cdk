@@ -23,7 +23,7 @@ describe("Metadata decorators", () => {
       const methodMeta = getSubRouteMetadata(AlbumApi)
       const expectedMeta = {
         propertyKey: "like",
-        requestHandlerFunc: AlbumApi.prototype.like,
+        HandlerFunc: AlbumApi.prototype.like,
         path: "/{albumId}/like",
         methods: [HttpMethod.POST, HttpMethod.DELETE],
       }
@@ -38,7 +38,7 @@ describe("Metadata decorators", () => {
       expect(funcMeta).toMatchObject({
         entry: /test\/sampleApp.ts$/,
         handler: "topSongsHandler",
-        requestHandlerFunc: topSongsHandler,
+        HandlerFunc: topSongsHandler,
         path: "/top-songs",
         methods: [HttpMethod.PUT],
         environment: {
@@ -51,7 +51,7 @@ describe("Metadata decorators", () => {
       expect(funcMeta).toMatchObject({
         entry: /test\/sampleApp.ts$/,
         handler: "topSongsFuncInner",
-        requestHandlerFunc: topSongsFuncInner,
+        HandlerFunc: topSongsFuncInner,
         path: "/top-songs-inner",
         methods: [HttpMethod.PUT],
         environment: {

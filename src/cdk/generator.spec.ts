@@ -2,13 +2,16 @@
 
 import "@aws-cdk/assert/jest"
 import { HttpApi, HttpMethod } from "@aws-cdk/aws-apigatewayv2"
+import { Schedule } from "@aws-cdk/aws-events"
 import { FunctionOptions } from "@aws-cdk/aws-lambda"
 import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs"
 import { Duration, Stack } from "@aws-cdk/core"
+import { ScheduledHandler } from "aws-lambda"
 import * as path from "path"
 import { ApiViewConstruct, ResourceGeneratorConstruct } from ".."
+import { Lambda } from "../registry"
 import { AlbumApi, topSongsFuncInner, topSongsHandler } from "../test/sampleApp"
-import { ApiView } from "./api/api"
+import { ApiView, JetKitLambdaFunction } from "./api/api"
 
 const bundleBannerMsg = "--- cool bundlings mon ---"
 
@@ -92,11 +95,12 @@ describe("@ApiView construct generation", () => {
     })
 
     // are defaults passed through?
-    const classView = generator.node.findChild("Class-AlbumApi") as ApiViewConstruct
+    const classView = generator.node.findChild("Class-AlbumApi-1") as ApiViewConstruct
     const handlerFunction = classView.handlerFunction
     expect(handlerFunction.bundling).toMatchObject({ banner: bundleBannerMsg })
 
     // ensure we don't override the defaults with function-specific settings
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect((generator.functionOptions as any).path).toBeFalsy()
     expect(generator.functionOptions?.environment?.LOG_LEVEL).toBeFalsy()
     expect(generator.functionOptions?.entry).toBeFalsy()
@@ -105,18 +109,19 @@ describe("@ApiView construct generation", () => {
   it("creates a route with any method", () => {
     const entry = path.join(__dirname, "..", "test", "sampleApp.ts")
     const addRoutesSpy = jest.spyOn(httpApi, "addRoutes")
+    const handlerFunction = new JetKitLambdaFunction(stack, "Func", { entry })
 
     new ApiView(stack, "V1", {
       path: "/x",
       httpApi,
-      entry,
+      handlerFunction,
       methods: [],
     })
 
     const view = new ApiView(stack, "V2", {
       path: "/a",
       httpApi,
-      entry,
+      handlerFunction,
       // methods defaults to [ANY]
     })
 
@@ -155,7 +160,7 @@ describe("@SubRoute construct generation", () => {
       outputValue: "POST,DELETE /album/{albumId}/like",
     })
     expect(stack).toHaveOutput({
-      outputName: "GenClassAlbumApiRoute505E3E934",
+      outputName: "GenClassAlbumApi1Route59A25E34B",
       outputValue: "ANY /album",
     })
     expect(stack).toHaveOutput({
@@ -194,15 +199,21 @@ describe("@SubRoute construct generation", () => {
   })
 })
 
-describe("@Lambda construct generation", () => {
-  const stack = new Stack()
-  const httpApi = new HttpApi(stack, "API")
+describe("Lambda() construct generation of APIs", () => {
+  let stack: Stack
+  let httpApi: HttpApi
+  let generator: ResourceGeneratorConstruct
 
-  // should create routes on httpApi
-  // and lambda handler function
-  const generator = new ResourceGeneratorConstruct(stack, "Gen", {
-    resources: [topSongsHandler, topSongsFuncInner],
-    httpApi,
+  beforeEach(() => {
+    stack = new Stack()
+    httpApi = new HttpApi(stack, "API")
+
+    // should create routes on httpApi
+    // and lambda handler function
+    generator = new ResourceGeneratorConstruct(stack, "Gen", {
+      resources: [topSongsHandler, topSongsFuncInner],
+      httpApi,
+    })
   })
 
   it("saves generated functions", () => {
@@ -231,6 +242,43 @@ describe("@Lambda construct generation", () => {
   it("generates endpoints for wrapped functions", () => {
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "PUT /top-songs-inner",
+    })
+    expect(stack).toHaveResource("AWS::Lambda::Function", {
+      Environment: {
+        Variables: {
+          LOG_LEVEL: "WARN",
+          ...defaultEnvVars,
+        },
+      },
+      Handler: "index.topSongsHandler",
+      MemorySize: 384,
+      Runtime: "nodejs14.x",
+    })
+  })
+})
+
+describe("Lambda() construct scheduling", () => {
+  let stack: Stack
+  let scheduledFunc: ScheduledHandler
+
+  beforeEach(() => {
+    stack = new Stack()
+
+    scheduledFunc = () => console.log("scheduled function run")
+
+    // run every 10m
+    Lambda({
+      schedule: Schedule.rate(Duration.minutes(10)),
+    })(scheduledFunc)
+  })
+
+  it("schedules functions", () => {
+    new ResourceGeneratorConstruct(stack, "Gen", {
+      resources: [scheduledFunc],
+    })
+
+    expect(stack).toHaveResource("AWS::Events::Rule", {
+      RouteKey: "PUT /top-songs",
     })
     expect(stack).toHaveResource("AWS::Lambda::Function", {
       Environment: {

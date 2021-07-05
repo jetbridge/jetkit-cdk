@@ -35,7 +35,7 @@ import { safeHas } from "../util/type"
  */
 export { APIGatewayProxyEventV2 as ApiEvent }
 /**
- * Valid reponse types from a {@link RequestHandler}.
+ * Valid reponse types from a {@link ApiHandler}.
  */
 export type ApiResponse = Promise<APIGatewayProxyResultV2>
 
@@ -44,7 +44,7 @@ export type ApiResponse = Promise<APIGatewayProxyResultV2>
  *
  * @category Helper
  */
-export type RequestHandler = (event: ApiEvent, context: Context) => ApiResponse
+export type ApiHandler = (event: ApiEvent, context: Context) => ApiResponse
 
 async function raiseNotAllowed(event: ApiEvent) {
   throw methodNotAllowed(`${event.requestContext.http.method.toUpperCase()} not allowed`)
@@ -61,13 +61,13 @@ async function raiseNotAllowed(event: ApiEvent) {
  *
  */
 export class ApiViewBase {
-  get: RequestHandler = async (event) => raiseNotAllowed(event)
-  post: RequestHandler = async (event) => raiseNotAllowed(event)
-  put: RequestHandler = async (event) => raiseNotAllowed(event)
-  patch: RequestHandler = async (event) => raiseNotAllowed(event)
-  delete: RequestHandler = async (event) => raiseNotAllowed(event)
-  head: RequestHandler = async (event) => raiseNotAllowed(event)
-  options: RequestHandler = async (event) => raiseNotAllowed(event)
+  get: ApiHandler = async (event) => raiseNotAllowed(event)
+  post: ApiHandler = async (event) => raiseNotAllowed(event)
+  put: ApiHandler = async (event) => raiseNotAllowed(event)
+  patch: ApiHandler = async (event) => raiseNotAllowed(event)
+  delete: ApiHandler = async (event) => raiseNotAllowed(event)
+  head: ApiHandler = async (event) => raiseNotAllowed(event)
+  options: ApiHandler = async (event) => raiseNotAllowed(event)
 
   /**
    * Look up appropriate method to handle an incoming request for this view.
@@ -75,7 +75,7 @@ export class ApiViewBase {
    * @param event API Gateway Proxy v2 Lambda event
    * @returns handler method to process request
    */
-  findHandler(event: ApiEvent): RequestHandler | undefined {
+  findHandler(event: ApiEvent): ApiHandler | undefined {
     // figure out where to route `event`
     const method = event.requestContext.http.method as HttpMethod
     const routeKey = event.routeKey
@@ -103,7 +103,7 @@ export class ApiViewBase {
     return undefined
   }
 
-  protected matchHttpVerbMethod(method: HttpMethod): RequestHandler | undefined {
+  protected matchHttpVerbMethod(method: HttpMethod): ApiHandler | undefined {
     // look up handler based on HTTP verb e.g. this.post()
     method = method.toLowerCase() as HttpMethod
     if (safeHas(method, this)) {
@@ -117,16 +117,16 @@ export class ApiViewBase {
     subRouteMetaMap: ApiMetadataMap<ISubRouteApiMetadata>,
     routeKey: string,
     method: HttpMethod
-  ): RequestHandler | undefined {
+  ): ApiHandler | undefined {
     // given route key "POST /album/{albumId}/like"
     // we should match any subRoute with that configuration
     for (const meta of subRouteMetaMap.values()) {
-      const { methods, path, requestHandlerFunc } = meta
+      const { methods, path, HandlerFunc } = meta
       if (!viewMeta.path) return
 
       // full path is parent path + subRoute path
       const fullPath = viewMeta.path + path
-      if (this.matchesRouteKey(routeKey, method, fullPath, methods)) return requestHandlerFunc
+      if (this.matchesRouteKey(routeKey, method, fullPath, methods)) return HandlerFunc
     }
 
     return undefined
@@ -184,7 +184,7 @@ export class ApiViewBase {
   /**
    * Transform error caught during dispatch to an HTTP response.
    */
-  protected handleDispatchError(ex: Error): APIGatewayProxyResultV2 {
+  protected handleDispatchError(ex: unknown): APIGatewayProxyResultV2 {
     if (ex instanceof HttpError) {
       // HTTP error handler
       console.warn(ex)
@@ -217,7 +217,7 @@ export class ApiViewBase {
  * export const handler = apiViewHandler(__filename, MyApiView)
  * ```
  */
-export const apiViewHandler = (filename: string, apiView: typeof ApiViewBase): RequestHandler => {
+export const apiViewHandler = (filename: string, apiView: typeof ApiViewBase): ApiHandler => {
   // add entry=filename to metadata
   const viewMeta = getApiViewMetadata(apiView)
   if (!viewMeta) throw new Error(`apiViewHandler() called on ${apiView} but it is not decorated with @ApiView`)

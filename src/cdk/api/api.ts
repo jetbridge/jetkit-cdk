@@ -1,13 +1,20 @@
 import { HttpApi, HttpMethod, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
+import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs"
 import { CfnOutput, Construct } from "@aws-cdk/core"
 import { FunctionOptions } from "../generator"
-import { Node14Func } from "../lambda/node14func"
+import { Node14Func as JetKitLambdaFunction, Node14FuncProps as JetKitLambdaFunctionProps } from "../lambda/node14func"
+
+export { JetKitLambdaFunction, JetKitLambdaFunctionProps }
 
 /**
  * @category Construct
  */
-export interface ApiProps extends FunctionOptions, IEndpoint {}
+export interface ApiConfig extends FunctionOptions, IEndpoint {}
+
+export interface ApiProps extends ApiConfig {
+  handlerFunction: NodejsFunction
+}
 
 export interface IEndpoint {
   /**
@@ -63,14 +70,14 @@ export class ApiView extends ApiViewMixin implements IEndpoint {
   path?: string
   methods?: HttpMethod[]
 
-  handlerFunction: Node14Func
+  handlerFunction: JetKitLambdaFunction
   lambdaApiIntegration: LambdaProxyIntegration
 
-  constructor(scope: Construct, id: string, { httpApi, methods, path = "/", ...rest }: ApiProps) {
+  constructor(scope: Construct, id: string, { httpApi, methods, path = "/", handlerFunction }: ApiProps) {
     super(scope, id)
 
     // lambda handler
-    this.handlerFunction = new Node14Func(this, `View${id}`, rest)
+    this.handlerFunction = handlerFunction
 
     // lambda API integration
     this.lambdaApiIntegration = new LambdaProxyIntegration({
