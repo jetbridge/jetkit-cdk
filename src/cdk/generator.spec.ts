@@ -2,15 +2,12 @@
 
 import "@aws-cdk/assert/jest"
 import { HttpApi, HttpMethod } from "@aws-cdk/aws-apigatewayv2"
-import { Schedule } from "@aws-cdk/aws-events"
 import { FunctionOptions } from "@aws-cdk/aws-lambda"
 import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs"
 import { Duration, Stack } from "@aws-cdk/core"
-import { ScheduledHandler } from "aws-lambda"
 import * as path from "path"
 import { ApiViewConstruct, ResourceGeneratorConstruct } from ".."
-import { Lambda } from "../registry"
-import { AlbumApi, topSongsFuncInner, topSongsHandler } from "../test/sampleApp"
+import { AlbumApi, scheduledFunc, topSongsFuncInner, topSongsHandler } from "../test/sampleApp"
 import { ApiView, JetKitLambdaFunction } from "./api/api"
 
 const bundleBannerMsg = "--- cool bundlings mon ---"
@@ -259,17 +256,9 @@ describe("Lambda() construct generation of APIs", () => {
 
 describe("Lambda() construct scheduling", () => {
   let stack: Stack
-  let scheduledFunc: ScheduledHandler
 
   beforeEach(() => {
     stack = new Stack()
-
-    scheduledFunc = () => console.log("scheduled function run")
-
-    // run every 10m
-    Lambda({
-      schedule: Schedule.rate(Duration.minutes(10)),
-    })(scheduledFunc)
   })
 
   it("schedules functions", () => {
@@ -278,16 +267,15 @@ describe("Lambda() construct scheduling", () => {
     })
 
     expect(stack).toHaveResource("AWS::Events::Rule", {
-      RouteKey: "PUT /top-songs",
+      Description: "Lambda for scheduledFunc",
+      ScheduleExpression: "rate(10 minutes)",
+      State: "ENABLED",
     })
     expect(stack).toHaveResource("AWS::Lambda::Function", {
       Environment: {
-        Variables: {
-          LOG_LEVEL: "WARN",
-          ...defaultEnvVars,
-        },
+        Variables: defaultEnvVars,
       },
-      Handler: "index.topSongsHandler",
+      Handler: "index.scheduledFunc",
       MemorySize: 384,
       Runtime: "nodejs14.x",
     })

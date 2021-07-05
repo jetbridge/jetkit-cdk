@@ -1,6 +1,6 @@
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
 import { Rule } from "@aws-cdk/aws-events"
-import { Function, ILayerVersion, LayerVersion } from "@aws-cdk/aws-lambda"
+import { Function, LayerVersion } from "@aws-cdk/aws-lambda"
 import { NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { Aws, CfnOutput, Construct, Fn } from "@aws-cdk/core"
 import deepmerge from "deepmerge"
@@ -184,7 +184,7 @@ export class ResourceGenerator extends Construct {
 
     if (funcMeta.schedule) {
       // generate CloudWatch schedule
-      new Rule(this, `Rule-${name}-${this.ruleCounter++}`, { schedule, description: "Lambda for ${name}" })
+      new Rule(this, `Rule-${name}-${this.ruleCounter++}`, { schedule, description: `Lambda for ${name}` })
     }
   }
 

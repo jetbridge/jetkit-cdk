@@ -1,4 +1,5 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
+import { Schedule } from "@aws-cdk/aws-events"
 import { Duration } from "@aws-cdk/core"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
 import { ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "../api/base"
@@ -69,3 +70,10 @@ const topSongsFuncInner = Lambda({
   return `cookies: ${event.cookies}`
 })
 export { topSongsFuncInner }
+
+// run every 10m
+export const scheduledFunc = () => console.log("scheduled function run")
+Lambda({
+  memorySize: 384,
+  schedule: Schedule.rate(Duration.minutes(10)),
+})(scheduledFunc)
