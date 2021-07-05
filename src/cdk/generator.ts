@@ -149,6 +149,19 @@ export class ResourceGenerator extends Construct {
     return this.resolveLayerReferences(mergedOptions)
   }
 
+  protected createLambdaFunction(name: string, funcOptions: FunctionOptions): JetKitLambdaFunction {
+    // build Node Lambda function
+    const handlerFunction = new JetKitLambdaFunction(this, `Func-${name}-${this.funcCounter++}`, funcOptions)
+
+    // grant access
+    this.grantFunctionAccess(funcOptions, handlerFunction)
+
+    // track
+    this.generatedFunctions.push(handlerFunction)
+
+    return handlerFunction
+  }
+
   /**
    * Create function handler for a simple routed function.
    */
@@ -161,14 +174,7 @@ export class ResourceGenerator extends Construct {
     const name = HandlerFunc.name
     const mergedOptions = this.mergeFunctionDefaults(funcMetaRest)
 
-    // build Node Lambda function
-    const handlerFunction = new JetKitLambdaFunction(this, `Func-${name}-${this.funcCounter++}`, funcMetaRest)
-
-    // grant access
-    this.grantFunctionAccess(mergedOptions, handlerFunction)
-
-    // track
-    this.generatedFunctions.push(handlerFunction)
+    const handlerFunction = this.createLambdaFunction(name, mergedOptions)
 
     // enable lambda integrations
     if (funcMeta.path) {
@@ -205,14 +211,7 @@ export class ResourceGenerator extends Construct {
       if (apiViewMeta.schedule)
         throw new Error("schedule is not supported on ApiView for now (it could be easily added if desired)")
 
-      // build Node Lambda function
-      const handlerFunction = new JetKitLambdaFunction(this, `Func-${name}-${this.funcCounter++}`, mergedOptions)
-
-      // grant access
-      this.grantFunctionAccess(mergedOptions, handlerFunction)
-
-      // track
-      this.generatedFunctions.push(handlerFunction)
+      const handlerFunction = this.createLambdaFunction(name, mergedOptions)
 
       if (!this.httpApi) throw new Error(`API paths defined but httpApi was not provided to ${this}`)
 
