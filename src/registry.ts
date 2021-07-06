@@ -1,6 +1,8 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
+import { Schedule } from "@aws-cdk/aws-events"
+import { ScheduledHandler } from "aws-lambda"
 import fs from "fs"
-import { ApiViewBase, RequestHandler } from "./api/base"
+import { ApiViewBase, ApiHandler } from "./api/base"
 import { FunctionOptions } from "./cdk/generator"
 import {
   getSubRouteMetadata,
@@ -52,7 +54,7 @@ export function ApiView(opts: IFunctionMetadataBase) {
 }
 
 interface RoutePropertyDescriptor extends PropertyDescriptor {
-  value?: RequestHandler
+  value?: ApiHandler
 }
 
 export interface ISubRouteProps {
@@ -63,6 +65,10 @@ export interface ISubRouteProps {
 export interface IRouteProps extends FunctionOptions {
   path: string
   methods?: HttpMethod[]
+}
+
+export interface IScheduledProps extends FunctionOptions {
+  schedule: Schedule
 }
 
 /**
@@ -85,7 +91,7 @@ export function SubRoute({ path, methods }: ISubRouteProps) {
 
     // method handler metadata
     const meta: ISubRouteApiMetadata = {
-      requestHandlerFunc: method,
+      HandlerFunc: method,
       propertyKey,
       path,
     }
@@ -94,7 +100,7 @@ export function SubRoute({ path, methods }: ISubRouteProps) {
     // update target class subroutes metadata map with our metadata
 
     // assuming the function signature is correct - no way to check at runtime
-    const metadataTarget: MetadataTarget = target.constructor as RequestHandler
+    const metadataTarget: MetadataTarget = target.constructor as ApiHandler
 
     // get map
     const subroutesMap = getSubRouteMetadata(metadataTarget)
@@ -106,6 +112,9 @@ export function SubRoute({ path, methods }: ISubRouteProps) {
     setSubRouteMetadata(metadataTarget, subroutesMap)
   }
 }
+
+// supported function signatures for Lambda() handlers
+export type PossibleLambdaHandlers = ApiHandler | ScheduledHandler
 
 /**
  * Defines a Lambda function.
@@ -119,8 +128,10 @@ export function SubRoute({ path, methods }: ISubRouteProps) {
  *
  * @category Metadata Decorator
  */
-export function Lambda(props: IRouteProps) {
-  return (wrapped: RequestHandler) => {
+export function Lambda<HandlerT extends PossibleLambdaHandlers = PossibleLambdaHandlers>(
+  props: IRouteProps | IScheduledProps
+) {
+  return (wrapped: HandlerT) => {
     // here we figure out the entrypoint path and function handler name:
 
     // super terrible hack to guess where decorator was applied
@@ -142,7 +153,7 @@ export function Lambda(props: IRouteProps) {
     const meta: IFunctionMetadata = {
       ...props,
       handler,
-      requestHandlerFunc: wrapped,
+      HandlerFunc: wrapped,
     }
     if (entry) meta.entry = entry
 

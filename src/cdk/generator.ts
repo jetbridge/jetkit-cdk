@@ -1,12 +1,14 @@
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
-import { Function as LambdaFunction, LayerVersion } from "@aws-cdk/aws-lambda"
+import { Rule } from "@aws-cdk/aws-events"
+import { Function, LayerVersion } from "@aws-cdk/aws-lambda"
 import { NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { Aws, CfnOutput, Construct, Fn } from "@aws-cdk/core"
 import deepmerge from "deepmerge"
 import isPlainObject from "is-plain-object"
-import { RequestHandler } from "../api/base"
+import { ApiHandler } from "../api/base"
 import { getApiViewMetadata, getFunctionMetadata, getSubRouteMetadata, MetadataTarget } from "../metadata"
-import { ApiProps, ApiView as ApiViewConstruct } from "./api/api"
+import { PossibleLambdaHandlers } from "../registry"
+import { ApiView as ApiViewConstruct, JetKitLambdaFunction } from "./api/api"
 import { SubRouteApi } from "./api/subRoute"
 import { SlsPgDb } from "./database/serverless-pg"
 
@@ -41,8 +43,9 @@ export interface ResourceGeneratorProps {
 
   /**
    * The {@link HttpApi} to attach routes to.
+   * Required for generating API endpoints.
    */
-  httpApi: HttpApi
+  httpApi?: HttpApi
 
   /**
    * Default Lambda function options.
@@ -78,7 +81,10 @@ export class ResourceGenerator extends Construct {
   generatedFunctions: NodejsFunction[]
 
   private layerCounter = 1
-  httpApi: HttpApi
+  private funcCounter = 1
+  private viewCounter = 1
+  private ruleCounter = 1
+  httpApi?: HttpApi
   databaseCluster?: SlsPgDb
 
   constructor(
@@ -98,30 +104,35 @@ export class ResourceGenerator extends Construct {
     resources.forEach((resource) => this.generateConstructsForResource(resource))
 
     // it's handy to have the API base URL as a stack output
-    if (this.httpApi.url)
+    if (this.httpApi?.url)
       new CfnOutput(this, "ApiBase", { value: this.httpApi.url, exportName: Fn.join("-", [Aws.STACK_NAME, "ApiBase"]) })
   }
 
   generateConstructsForResource(resource: MetadataTarget) {
     this.generateConstructsForClass(resource)
-    this.generateConstructsForFunction(resource as RequestHandler)
+    this.generateConstructsForFunction(resource as ApiHandler)
   }
 
-  protected resolveLayerReferences(apiProps: ApiProps): ApiProps {
-    const { layerArns, ...optsRest } = apiProps
-    if (!layerArns) return apiProps
+  /**
+   * Converts Layer ARNs to LayerVersions
+   * Just for convenience
+   */
+  protected resolveLayerReferences(funcOpts: FunctionOptions): FunctionOptions {
+    const { layerArns, ...optsRest } = funcOpts
+    if (!layerArns) return funcOpts
 
     // resolve layer ARNs
     optsRest.layers ||= []
     layerArns.forEach((arn) => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       optsRest.layers!.push(LayerVersion.fromLayerVersionArn(this, `Layer${this.layerCounter++}`, arn))
     })
 
     return optsRest
   }
 
-  mergeFunctionDefaults(functionOptions: FunctionOptions): ApiProps {
-    const mergedOptions: ApiProps = {
+  mergeFunctionDefaults(functionOptions: FunctionOptions): FunctionOptions {
+    const mergedOptions: FunctionOptions = {
       ...deepmerge(
         // defaults
         this.functionOptions ?? {},
@@ -133,25 +144,54 @@ export class ResourceGenerator extends Construct {
           isMergeableObject: isPlainObject,
         }
       ),
-      httpApi: this.httpApi,
     }
 
     return this.resolveLayerReferences(mergedOptions)
   }
 
+  protected createLambdaFunction(name: string, funcOptions: FunctionOptions): JetKitLambdaFunction {
+    // build Node Lambda function
+    const handlerFunction = new JetKitLambdaFunction(this, `Func-${name}-${this.funcCounter++}`, funcOptions)
+
+    // grant access
+    this.grantFunctionAccess(funcOptions, handlerFunction)
+
+    // track
+    this.generatedFunctions.push(handlerFunction)
+
+    return handlerFunction
+  }
+
   /**
    * Create function handler for a simple routed function.
    */
-  generateConstructsForFunction(resource: RequestHandler) {
+  generateConstructsForFunction(resource: PossibleLambdaHandlers) {
     const funcMeta = getFunctionMetadata(resource)
     if (!funcMeta) return
 
-    const { requestHandlerFunc, ...funcMetaRest } = funcMeta
-    const name = requestHandlerFunc.name
+    // get function config
+    const { HandlerFunc, schedule, ...funcMetaRest } = funcMeta
+    const name = HandlerFunc.name
     const mergedOptions = this.mergeFunctionDefaults(funcMetaRest)
-    const view = new ApiViewConstruct(this, `Func-${name}`, mergedOptions)
-    this.grantFunctionAccess(mergedOptions, view.handlerFunction)
-    this.generatedFunctions.push(view.handlerFunction)
+
+    const handlerFunction = this.createLambdaFunction(name, mergedOptions)
+
+    // enable lambda integrations
+    if (funcMeta.path) {
+      if (!this.httpApi) throw new Error(`API paths defined but httpApi was not provided to ${this}`)
+
+      // generate APIGW integration
+      new ApiViewConstruct(this, `View-${name}-${this.viewCounter++}`, {
+        ...mergedOptions,
+        handlerFunction,
+        httpApi: this.httpApi,
+      })
+    }
+
+    if (funcMeta.schedule) {
+      // generate CloudWatch schedule
+      new Rule(this, `Rule-${name}-${this.ruleCounter++}`, { schedule, description: `Lambda for ${name}` })
+    }
   }
 
   /**
@@ -168,9 +208,18 @@ export class ResourceGenerator extends Construct {
       // merge function option defaults with options from attached metadata (from decorator)
       const mergedOptions = this.mergeFunctionDefaults(apiViewMeta)
 
-      apiViewConstruct = new ApiViewConstruct(this, `Class-${name}`, mergedOptions)
-      this.grantFunctionAccess(mergedOptions, apiViewConstruct.handlerFunction)
-      this.generatedFunctions.push(apiViewConstruct.handlerFunction)
+      if (apiViewMeta.schedule)
+        throw new Error("schedule is not supported on ApiView for now (it could be easily added if desired)")
+
+      const handlerFunction = this.createLambdaFunction(name, mergedOptions)
+
+      if (!this.httpApi) throw new Error(`API paths defined but httpApi was not provided to ${this}`)
+
+      apiViewConstruct = new ApiViewConstruct(this, `Class-${name}-${this.viewCounter++}`, {
+        ...mergedOptions,
+        handlerFunction,
+        httpApi: this.httpApi,
+      })
     }
 
     // SubRoutes - methods with their own routes
@@ -184,7 +233,7 @@ export class ResourceGenerator extends Construct {
         if (!apiViewConstruct) throw new Error(`${resource} defines SubRoute but no enclosing @ApiView class found`)
 
         // TODO: include parent api class name in id
-        // TODO: do something with propertyKey and requestHandlerFunc
+        // TODO: do something with propertyKey and HandlerFunc
         const path = metaPath || subroutePath
         new SubRouteApi(this, `SubRoute-${meta.propertyKey}`, {
           path,
@@ -198,7 +247,8 @@ export class ResourceGenerator extends Construct {
   /**
    * Grant function access to what is configured.
    */
-  protected grantFunctionAccess(options: FunctionOptions, func: LambdaFunction): void {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  protected grantFunctionAccess(options: FunctionOptions, func: Function): void {
     // aurora data API access
     if (options.grantDatabaseAccess && this.databaseCluster) {
       // if (!this.databaseCluster) throw new Error("grantDatabaseAccess is true but no databaseCluster is defined")
