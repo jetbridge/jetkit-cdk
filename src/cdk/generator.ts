@@ -10,6 +10,8 @@ import { getApiViewMetadata, getFunctionMetadata, getSubRouteMetadata, MetadataT
 import { PossibleLambdaHandlers } from "../registry"
 import { ApiView as ApiViewConstruct, JetKitLambdaFunction } from "./api/api"
 import { SubRouteApi } from "./api/subRoute"
+import * as targets from "@aws-cdk/aws-events-targets"
+
 import { SlsPgDb } from "./database/serverless-pg"
 
 // env vars
@@ -190,7 +192,11 @@ export class ResourceGenerator extends Construct {
 
     if (funcMeta.schedule) {
       // generate CloudWatch schedule
-      new Rule(this, `Rule-${name}-${this.ruleCounter++}`, { schedule, description: `Lambda for ${name}` })
+      new Rule(this, `Rule-${name}-${this.ruleCounter++}`, {
+        schedule,
+        description: `Lambda for ${name}`,
+        targets: [new targets.LambdaFunction(handlerFunction)],
+      })
     }
   }
 

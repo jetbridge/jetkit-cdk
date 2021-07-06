@@ -1,5 +1,6 @@
 // Test that the correct AWS resources are generated from metadata
 
+import { stringLike } from "@aws-cdk/assert"
 import "@aws-cdk/assert/jest"
 import { HttpApi, HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { FunctionOptions } from "@aws-cdk/aws-lambda"
@@ -178,7 +179,7 @@ describe("@SubRoute construct generation", () => {
           [
             "https://",
             {
-              Ref: "API62EA1CFF",
+              Ref: stringLike("API*"),
             },
             ".execute-api.",
             {
@@ -270,6 +271,14 @@ describe("Lambda() construct scheduling", () => {
       Description: "Lambda for scheduledFunc",
       ScheduleExpression: "rate(10 minutes)",
       State: "ENABLED",
+      Targets: [
+        {
+          Arn: {
+            "Fn::GetAtt": [stringLike("GenFuncscheduledFunc*"), "Arn"],
+          },
+          Id: "Target0",
+        },
+      ],
     })
     expect(stack).toHaveResource("AWS::Lambda::Function", {
       Environment: {
