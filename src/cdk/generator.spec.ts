@@ -179,7 +179,7 @@ describe("@SubRoute construct generation", () => {
           [
             "https://",
             {
-              Ref: stringLike("API*"),
+              Ref: "API62EA1CFF",
             },
             ".execute-api.",
             {
