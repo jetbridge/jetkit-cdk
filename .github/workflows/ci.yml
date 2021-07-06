@@ -17,5 +17,7 @@ jobs:
             ${{ runner.os }}-node-
       - name: Install dependencies
         run: npm ci
+      - name: Install esbuild
+        run: npm i --no-save esbuild
       - name: Unit Tests
         run: npm test
