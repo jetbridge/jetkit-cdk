@@ -2,6 +2,7 @@
 
 [![Tests](https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml/badge.svg)](https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml)
 [![npm version](https://badge.fury.io/js/%40jetkit%2Fcdk.svg)](https://badge.fury.io/js/%40jetkit%2Fcdk)
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/jetbridge/jetkit-cdk)
 
 An [anti-framework](https://spiegelmock.com/2021/05/29/frameworkless-web-applications-aws-cdk/) for building cloud-native serverless applications.
 
