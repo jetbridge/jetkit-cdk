@@ -309,9 +309,10 @@ describe("Lambda() construct generation hook", () => {
     })
 
     const constructMock = getFunctionMetadata(funcWithConstructHook)?.construct
+    expect(constructMock).toHaveBeenCalledTimes(1)
     expect(constructMock).toHaveBeenCalledWith({
       stack,
-      function: generator.generatedFunctions[0],
+      functionConstruct: generator.generatedFunctions[0],
     })
   })
 })

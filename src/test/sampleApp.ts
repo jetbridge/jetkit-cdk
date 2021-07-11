@@ -4,8 +4,6 @@ import { Duration } from "@aws-cdk/core"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
 import { ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "../api/base"
 import { ApiView, Lambda, SubRoute } from "../registry"
-import { jest } from "@jest/globals"
-import { ConstructHookArgs } from "../cdk/generator"
 @ApiView({
   path: "/album",
   memorySize: 512,
@@ -84,5 +82,7 @@ export const funcWithConstructHook = () => console.log("run me whenever boss!")
 Lambda({
   memorySize: 1024,
   schedule: Schedule.rate(Duration.minutes(10)),
-  construct: jest.fn<void, ConstructHookArgs[]>(),
+  construct: () => {
+    console.log("called")
+  },
 })(funcWithConstructHook)
