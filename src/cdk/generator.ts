@@ -19,7 +19,7 @@ export const DB_CLUSTER_ENV = "DB_CLUSTER_ARN"
 export const DB_SECRET_ENV = "DB_SECRET_ARN"
 export const DB_NAME_ENV = "DB_NAME"
 
-interface ConstructHookArgs<StackT extends Stack = Stack> {
+export interface ConstructHookArgs<StackT extends Stack = Stack> {
   stack: StackT
   functionConstruct: FunctionConstruct
 }
