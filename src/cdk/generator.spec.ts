@@ -300,6 +300,12 @@ describe("Lambda() construct generation hook", () => {
   })
 
   it("calls hook", () => {
+    // mock hook
+    const meta = getFunctionMetadata(funcWithConstructHook)
+    const constructMock = jest.fn()
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    meta!.construct = constructMock
+
     const generator = new ResourceGeneratorConstruct(stack, "Gen", {
       resources: [funcWithConstructHook],
     })
@@ -307,13 +313,6 @@ describe("Lambda() construct generation hook", () => {
     expect(stack).toHaveResource("AWS::Lambda::Function", {
       MemorySize: 1024,
     })
-
-    const meta = getFunctionMetadata(funcWithConstructHook)
-
-    const constructMock = jest.fn()
-
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    meta!.construct = constructMock
 
     expect(constructMock).toHaveBeenCalledTimes(1)
     expect(constructMock).toHaveBeenCalledWith({
