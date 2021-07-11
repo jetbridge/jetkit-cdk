@@ -308,7 +308,13 @@ describe("Lambda() construct generation hook", () => {
       MemorySize: 1024,
     })
 
-    const constructMock = getFunctionMetadata(funcWithConstructHook)?.construct
+    const meta = getFunctionMetadata(funcWithConstructHook)
+
+    const constructMock = jest.fn()
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    meta!.construct = constructMock
+
     expect(constructMock).toHaveBeenCalledTimes(1)
     expect(constructMock).toHaveBeenCalledWith({
       stack,
