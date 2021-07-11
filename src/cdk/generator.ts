@@ -1,8 +1,8 @@
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
 import { Rule } from "@aws-cdk/aws-events"
-import { Function, LayerVersion } from "@aws-cdk/aws-lambda"
+import { Function as FunctionConstruct, LayerVersion } from "@aws-cdk/aws-lambda"
 import { NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
-import { Aws, CfnOutput, Construct, Fn } from "@aws-cdk/core"
+import { Aws, CfnOutput, Construct, Fn, Stack } from "@aws-cdk/core"
 import deepmerge from "deepmerge"
 import isPlainObject from "is-plain-object"
 import { ApiHandler } from "../api/base"
@@ -19,13 +19,24 @@ export const DB_CLUSTER_ENV = "DB_CLUSTER_ARN"
 export const DB_SECRET_ENV = "DB_SECRET_ARN"
 export const DB_NAME_ENV = "DB_NAME"
 
+interface ConstructHookArgs<StackT extends Stack = Stack> {
+  stack: StackT
+  functionConstruct: FunctionConstruct
+}
+
 /**
  * Defaults for all Lambda functions in the stack.
  */
-export interface FunctionOptions extends NodejsFunctionProps {
+export interface FunctionOptions<StackT extends Stack = Stack> extends NodejsFunctionProps {
   layerArns?: string[]
 
   grantDatabaseAccess?: boolean
+
+  /**
+   * Hook to run when generating CDK constructs.
+   * You can add any custom post-processing you want to your function here.
+   */
+  construct?: (args: ConstructHookArgs<StackT>) => void
 }
 
 /**
@@ -161,6 +172,14 @@ export class ResourceGenerator extends Construct {
     // track
     this.generatedFunctions.push(handlerFunction)
 
+    // run post-construct hook
+    if (funcOptions.construct) {
+      funcOptions.construct({
+        stack: this.node.scopes[1] as Stack,
+        functionConstruct: handlerFunction,
+      })
+    }
+
     return handlerFunction
   }
 
@@ -254,7 +273,7 @@ export class ResourceGenerator extends Construct {
    * Grant function access to what is configured.
    */
   // eslint-disable-next-line @typescript-eslint/ban-types
-  protected grantFunctionAccess(options: FunctionOptions, func: Function): void {
+  protected grantFunctionAccess(options: FunctionOptions, func: FunctionConstruct): void {
     // aurora data API access
     if (options.grantDatabaseAccess && this.databaseCluster) {
       // if (!this.databaseCluster) throw new Error("grantDatabaseAccess is true but no databaseCluster is defined")

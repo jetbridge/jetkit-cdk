@@ -77,3 +77,11 @@ Lambda({
   memorySize: 384,
   schedule: Schedule.rate(Duration.minutes(10)),
 })(scheduledFunc)
+
+// has custom post-construct hook
+export const funcWithConstructHook = () => console.log("run me whenever boss!")
+Lambda({
+  memorySize: 1024,
+  schedule: Schedule.rate(Duration.minutes(10)),
+  construct: jest.fn(),
+})(funcWithConstructHook)

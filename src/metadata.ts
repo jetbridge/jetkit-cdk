@@ -6,6 +6,7 @@
  */
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { Schedule } from "@aws-cdk/aws-events"
+import { Stack } from "@aws-cdk/core"
 import "reflect-metadata"
 import { ApiHandler, ApiViewBase } from "./api/base"
 import { FunctionOptions } from "./cdk/generator"
@@ -35,7 +36,7 @@ export type MetadataTarget = PossibleLambdaHandlers | MetadataTargetConstructor
 /**
  * Metadata describing any Lambda function.
  */
-export interface IFunctionMetadataBase extends FunctionOptions {
+export interface IFunctionMetadataBase<StackT extends Stack = Stack> extends FunctionOptions<StackT> {
   /**
    * An optional API Gateway path to trigger this function.
    */
@@ -63,7 +64,7 @@ export interface IFunctionMetadataBase extends FunctionOptions {
  * A Lambda function.
  * Can be invoked via API route or otherwise.
  */
-export interface IFunctionMetadata extends IFunctionMetadataBase {
+export interface IFunctionMetadata<StackT extends Stack = Stack> extends IFunctionMetadataBase<StackT> {
   HandlerFunc: PossibleLambdaHandlers
 }
 
@@ -128,5 +129,7 @@ export const setSubRouteMetadata = (target: MetadataTarget, value: ApiMetadataMa
 // plain function
 export const getFunctionMetadata = (target: PossibleLambdaHandlers): IFunctionMetadata | undefined =>
   getMemberMetadata(target, JK_V2_METADATA_FUNCTION_KEY)
-export const setFunctionMetadata = (target: PossibleLambdaHandlers, value: IFunctionMetadata) =>
-  setMemberMetadata(target, JK_V2_METADATA_FUNCTION_KEY, value)
+export const setFunctionMetadata = <StackT extends Stack = Stack>(
+  target: PossibleLambdaHandlers,
+  value: IFunctionMetadata<StackT>
+) => setMemberMetadata(target, JK_V2_METADATA_FUNCTION_KEY, value)

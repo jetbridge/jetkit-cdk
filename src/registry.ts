@@ -1,5 +1,6 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { Schedule } from "@aws-cdk/aws-events"
+import { Stack } from "@aws-cdk/core"
 import { ScheduledHandler } from "aws-lambda"
 import fs from "fs"
 import { ApiViewBase, ApiHandler } from "./api/base"
@@ -62,12 +63,12 @@ export interface ISubRouteProps {
   methods?: HttpMethod[]
 }
 
-export interface IRouteProps extends FunctionOptions {
+export interface IRouteProps<StackT extends Stack = Stack> extends FunctionOptions<StackT> {
   path: string
   methods?: HttpMethod[]
 }
 
-export interface IScheduledProps extends FunctionOptions {
+export interface IScheduledProps<StackT extends Stack = Stack> extends FunctionOptions<StackT> {
   schedule: Schedule
 }
 
@@ -128,8 +129,8 @@ export type PossibleLambdaHandlers = ApiHandler | ScheduledHandler
  *
  * @category Metadata Decorator
  */
-export function Lambda<HandlerT extends PossibleLambdaHandlers = PossibleLambdaHandlers>(
-  props: IRouteProps | IScheduledProps
+export function Lambda<HandlerT extends PossibleLambdaHandlers = PossibleLambdaHandlers, StackT extends Stack = Stack>(
+  props: IRouteProps<StackT> | IScheduledProps<StackT>
 ) {
   return (wrapped: HandlerT) => {
     // here we figure out the entrypoint path and function handler name:
@@ -150,7 +151,7 @@ export function Lambda<HandlerT extends PossibleLambdaHandlers = PossibleLambdaH
       )
     }
 
-    const meta: IFunctionMetadata = {
+    const meta: IFunctionMetadata<StackT> = {
       ...props,
       handler,
       HandlerFunc: wrapped,

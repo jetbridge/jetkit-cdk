@@ -8,7 +8,8 @@ import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs"
 import { Duration, Stack } from "@aws-cdk/core"
 import * as path from "path"
 import { ApiViewConstruct, ResourceGeneratorConstruct } from ".."
-import { AlbumApi, scheduledFunc, topSongsFuncInner, topSongsHandler } from "../test/sampleApp"
+import { getFunctionMetadata } from "../metadata"
+import { AlbumApi, funcWithConstructHook, scheduledFunc, topSongsFuncInner, topSongsHandler } from "../test/sampleApp"
 import { ApiView, JetKitLambdaFunction } from "./api/api"
 
 const bundleBannerMsg = "--- cool bundlings mon ---"
@@ -287,6 +288,30 @@ describe("Lambda() construct scheduling", () => {
       Handler: "index.scheduledFunc",
       MemorySize: 384,
       Runtime: "nodejs14.x",
+    })
+  })
+})
+
+describe("Lambda() construct generation hook", () => {
+  let stack: Stack
+
+  beforeEach(() => {
+    stack = new Stack()
+  })
+
+  it("calls hook", () => {
+    const generator = new ResourceGeneratorConstruct(stack, "Gen", {
+      resources: [funcWithConstructHook],
+    })
+
+    expect(stack).toHaveResource("AWS::Lambda::Function", {
+      MemorySize: 1024,
+    })
+
+    const constructMock = getFunctionMetadata(funcWithConstructHook)?.construct
+    expect(constructMock).toHaveBeenCalledWith({
+      stack,
+      function: generator.generatedFunctions[0],
     })
   })
 })
