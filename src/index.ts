@@ -14,9 +14,10 @@ export {
 } from "./cdk/generator"
 export { SlsPgDb, SlsPgDbProps } from "./cdk/database/serverless-pg"
 
-// convient CDK utilities to have
+// convient CDK utilities to have on hand
 export { CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2"
 export { Duration } from "@aws-cdk/core"
+export { PolicyStatement } from "@aws-cdk/aws-iam"
 
 // api
 export { CrudApiViewBase } from "./api/crud/base"

@@ -35,6 +35,8 @@ export interface FunctionOptions<StackT extends Stack = Stack> extends NodejsFun
   /**
    * Hook to run when generating CDK constructs.
    * You can add any custom post-processing you want to your function here.
+   *
+   * @alpha
    */
   construct?: (args: ConstructHookArgs<StackT>) => void
 }
