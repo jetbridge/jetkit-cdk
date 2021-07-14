@@ -4,6 +4,7 @@ export { JetKitCdkApp } from "./app/cdk"
 // cdk constructs
 export { ApiView as ApiViewConstruct, ApiProps as ApiViewConstructProps } from "./cdk/api/api"
 export * from "./cdk/lambda/node14func"
+export * from "./cdk/lambda/prismaNodeFunction"
 export * from "./cdk/lambda/script"
 export { SlsPgDb, SlsPgDbProps } from "./cdk/database/serverless-pg"
 export {
