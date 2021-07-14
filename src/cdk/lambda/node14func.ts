@@ -57,6 +57,7 @@ export interface DatabaseFuncProps extends Node14FuncProps {
 /**
  * Lambda function with Prisma layer and generated client.
  * Grants access to DB and secret.
+ * @alpha
  */
 export class PrismaNode14Func extends Node14Func {
   constructor(scope: Construct, id: string, { db, bundling, layers, ...props }: DatabaseFuncProps) {
@@ -64,7 +65,7 @@ export class PrismaNode14Func extends Node14Func {
     layers ||= []
     bundling ||= {}
     ;(bundling as any).externalModules ||= []
-    bundling.externalModules.push(...db.getPrismaExternalModules())
+    bundling.externalModules!.push(...db.getPrismaExternalModules())
     layers.push(db.getPrismaLayerVersion())
 
     super(scope, id, {
@@ -74,6 +75,7 @@ export class PrismaNode14Func extends Node14Func {
     })
 
     // allow DB access
+    db.grantDataApiAccess(this)
     db.connections.allowDefaultPortFrom(this)
     if (db.secret) {
       this.addEnvironment(DB_SECRET_ENV, db.secret.secretArn)

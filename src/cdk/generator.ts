@@ -256,21 +256,32 @@ export class ResourceGenerator extends Construct {
   // eslint-disable-next-line @typescript-eslint/ban-types
   protected grantFunctionAccess(options: FunctionOptions, func: Function): void {
     // aurora data API access
-    if (options.grantDatabaseAccess && this.databaseCluster) {
-      // if (!this.databaseCluster) throw new Error("grantDatabaseAccess is true but no databaseCluster is defined")
+    if (!options.grantDatabaseAccess || !this.databaseCluster) return
 
-      this.databaseCluster.grantDataApiAccess(func)
+    const db = this.databaseCluster
 
-      // provide cluster/secret ARN and DB name to function
-      func.addEnvironment(DB_CLUSTER_ENV, this.databaseCluster.getDataApiParams().clusterArn)
-      func.addEnvironment(DB_SECRET_ENV, this.databaseCluster.getDataApiParams().secretArn)
-      if (this.databaseCluster.defaultDatabaseName)
-        func.addEnvironment(DB_NAME_ENV, this.databaseCluster.defaultDatabaseName)
-      console.debug(
-        `🗝 Granting ${func} database access for ${
-          this.databaseCluster.defaultDatabaseName || "cluster " + this.databaseCluster.clusterIdentifier
-        }`
-      )
+    // if (!this.databaseCluster) throw new Error("grantDatabaseAccess is true but no databaseCluster is defined")
+
+    // data API
+    db.grantDataApiAccess(func)
+
+    // network access
+    db.connections.allowDefaultPortFrom(func)
+
+    // secret access
+    if (db.secret) {
+      func.addEnvironment(DB_SECRET_ENV, db.secret.secretArn)
+      db.secret.grantRead(func)
     }
+
+    // provide cluster/secret ARN and DB name to function
+    func.addEnvironment(DB_CLUSTER_ENV, db.getDataApiParams().clusterArn)
+    func.addEnvironment(DB_SECRET_ENV, db.getDataApiParams().secretArn)
+    if (db.defaultDatabaseName) func.addEnvironment(DB_NAME_ENV, db.defaultDatabaseName)
+    console.debug(
+      `🗝 Granting ${func} database access for ${
+        this.databaseCluster.defaultDatabaseName || "cluster " + this.databaseCluster.clusterIdentifier
+      }`
+    )
   }
 }

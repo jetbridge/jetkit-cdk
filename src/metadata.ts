@@ -9,7 +9,6 @@ import { Schedule } from "@aws-cdk/aws-events"
 import "reflect-metadata"
 import { ApiHandler, ApiViewBase } from "./api/base"
 import { FunctionOptions } from "./cdk/generator"
-import { BaseModel } from "./database/baseModel"
 import { PossibleLambdaHandlers } from "./registry"
 
 /**
@@ -76,9 +75,9 @@ export interface IApiViewClassMetadata extends IFunctionMetadataBase {
 
 /**
  * CRUD view.
+ * Unused.
  */
 export interface ICrudApiMetadata extends IFunctionMetadataBase {
-  model?: typeof BaseModel // TODO: make not optional
   apiClass: MetadataTargetConstructor
 }
 
