@@ -3,6 +3,8 @@ import "source-map-support/register"
 import { BundlingOptions, NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { Construct } from "@aws-cdk/core"
 import { Runtime } from "@aws-cdk/aws-lambda"
+import { Vpc } from "@aws-cdk/aws-ec2"
+import { SlsPgDb } from "../.."
 
 export type Node14FuncProps = NodejsFunctionProps
 
@@ -44,5 +46,30 @@ export class Node14Func extends NodejsFunction {
     super(scope, id, newProps)
 
     this.bundling = bundling
+  }
+}
+
+export interface DatabaseFuncProps extends Node14FuncProps {
+  vpc: Vpc
+  db: SlsPgDb
+}
+
+/**
+ * Lambda function with Prisma layer and generated client.
+ */
+export class PrismaNode14Func extends Node14Func {
+  constructor(scope: Construct, id: string, { db, bundling, layers, ...props }: DatabaseFuncProps) {
+    // add prisma layer
+    bundling ||= {}
+    ;(bundling as any).externalModules ||= []
+    bundling.externalModules.push(...db.getPrismaExternalModules())
+
+    layers ||= []
+    layers.push(db.getPrismaLayerVersion())
+
+    super(scope, id, {
+      ...props,
+      layers,
+    })
   }
 }
