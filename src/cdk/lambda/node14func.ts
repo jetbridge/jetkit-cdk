@@ -4,7 +4,7 @@ import { BundlingOptions, NodejsFunction, NodejsFunctionProps } from "@aws-cdk/a
 import { Construct } from "@aws-cdk/core"
 import { Runtime } from "@aws-cdk/aws-lambda"
 import { Vpc } from "@aws-cdk/aws-ec2"
-import { SlsPgDb } from "../.."
+import { DB_SECRET_ENV, SlsPgDb } from "../.."
 
 export type Node14FuncProps = NodejsFunctionProps
 
@@ -56,20 +56,28 @@ export interface DatabaseFuncProps extends Node14FuncProps {
 
 /**
  * Lambda function with Prisma layer and generated client.
+ * Grants access to DB and secret.
  */
 export class PrismaNode14Func extends Node14Func {
   constructor(scope: Construct, id: string, { db, bundling, layers, ...props }: DatabaseFuncProps) {
     // add prisma layer
+    layers ||= []
     bundling ||= {}
     ;(bundling as any).externalModules ||= []
     bundling.externalModules.push(...db.getPrismaExternalModules())
-
-    layers ||= []
     layers.push(db.getPrismaLayerVersion())
 
     super(scope, id, {
       ...props,
       layers,
+      bundling,
     })
+
+    // allow DB access
+    db.connections.allowDefaultPortFrom(this)
+    if (db.secret) {
+      this.addEnvironment(DB_SECRET_ENV, db.secret.secretArn)
+      db.secret.grantRead(this)
+    }
   }
 }
