@@ -20,8 +20,7 @@ describe("DatabaseMigrationScript", () => {
       db,
       vpc,
       prismaPath: "./",
-      // defaults to .js for packaged module
-      entry: `${__dirname}/migration.script.ts`,
+      entry: `${__dirname}/../../../../test/emptyHandler.js`,
     })
   })
 
