@@ -7,6 +7,7 @@ import { BundlingOptions, NodejsFunction, NodejsFunctionProps } from "@aws-cdk/a
 
 // default version of https://github.com/jetbridge/lambda-layer-prisma-pg
 const PRISMA_PG_LAYER_VERSION = 8
+
 let layerVersionCount = 1
 
 export interface SlsPgDbProps extends Omit<ServerlessClusterProps, "engine"> {
