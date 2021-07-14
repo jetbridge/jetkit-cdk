@@ -17,14 +17,12 @@ export class DatabaseMigrationScript extends PrismaNode14Func {
   constructor(
     scope: Construct,
     id: string,
-    { handler, depsLockFilePath, prismaPath, bundling, memorySize = 512, ...props }: ScriptProps
+    { handler, depsLockFilePath, prismaPath, bundling, entry, memorySize = 512, ...props }: ScriptProps
   ) {
     bundling ||= {}
 
     // by default this uses migration.script.ts
-    handler ||= "script"
-
-    depsLockFilePath ||= `${__dirname}/package-lock.json`
+    entry ||= `${__dirname}/migration.script.js` // already compiled
 
     if (bundling.commandHooks)
       throw new Error("Sorry you cannot define commandHooks on the migration script")
@@ -41,7 +39,7 @@ export class DatabaseMigrationScript extends PrismaNode14Func {
       },
     }
 
-    super(scope, id, { ...props, bundling, memorySize, depsLockFilePath, handler })
+    super(scope, id, { ...props, bundling, entry, memorySize, depsLockFilePath, handler })
 
     // TODO
     // new CfnOutput(this, "Invoke migrations", {
