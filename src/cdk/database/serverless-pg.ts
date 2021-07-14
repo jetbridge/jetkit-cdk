@@ -17,7 +17,6 @@ export interface SlsPgDbProps extends Omit<ServerlessClusterProps, "engine"> {
  * Quickest and easiest way to get a Postgres database.
  * Uses Aurora Serverless.
  * Generates secret.
- * Recommend to use with https://www.npmjs.com/package/typeorm-aurora-data-api-driver
  * and https://docs.aws.amazon.com/cdk/api/latest/docs/aws-rds-readme.html#data-api
  */
 export class SlsPgDb extends ServerlessCluster {
