@@ -10,10 +10,21 @@ export interface ScriptProps extends DatabaseFuncProps {
 
 /**
  * Lambda function to run database migrations.
+ *
+ * @category Construct
  */
 export class DatabaseMigrationFunction extends PrismaNode14Func {
-  constructor(scope: Construct, id: string, { prismaPath, bundling, memorySize = 512, ...props }: ScriptProps) {
+  constructor(
+    scope: Construct,
+    id: string,
+    { handler, depsLockFilePath, prismaPath, bundling, memorySize = 512, ...props }: ScriptProps
+  ) {
     bundling ||= {}
+
+    // by default this uses migration.script.ts
+    handler ||= "script"
+
+    depsLockFilePath ||= `${__dirname}/package-lock.json`
 
     if (bundling.commandHooks)
       throw new Error("Sorry you cannot define commandHooks on the migration script")
@@ -30,7 +41,7 @@ export class DatabaseMigrationFunction extends PrismaNode14Func {
       },
     }
 
-    super(scope, id, { ...props, bundling, memorySize })
+    super(scope, id, { ...props, bundling, memorySize, depsLockFilePath, handler })
 
     // TODO
     // new CfnOutput(this, "Invoke migrations", {

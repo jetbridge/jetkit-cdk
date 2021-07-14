@@ -2,7 +2,6 @@
 export { JetKitCdkApp } from "./app/cdk"
 
 // cdk constructs
-export { CrudApi as CrudApiConstruct } from "./cdk/api/crud"
 export { ApiView as ApiViewConstruct, ApiProps as ApiViewConstructProps } from "./cdk/api/api"
 export * from "./cdk/lambda/node14func"
 export * from "./cdk/lambda/script"
