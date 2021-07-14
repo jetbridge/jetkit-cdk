@@ -1,5 +1,5 @@
 import { Construct } from "@aws-cdk/core"
-import { DatabaseFuncProps, PrismaNode14Func } from "../../node14func"
+import { DatabaseFuncProps, PrismaNode14Func } from "../../prismaNodeFunction"
 
 export interface ScriptProps extends DatabaseFuncProps {
   /**
@@ -13,7 +13,7 @@ export interface ScriptProps extends DatabaseFuncProps {
  *
  * @category Construct
  */
-export class DatabaseMigrationFunction extends PrismaNode14Func {
+export class DatabaseMigrationScript extends PrismaNode14Func {
   constructor(
     scope: Construct,
     id: string,
