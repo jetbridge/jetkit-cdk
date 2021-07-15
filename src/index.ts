@@ -35,8 +35,5 @@ export {
   MetadataTarget,
 } from "./metadata"
 
-// database
-export * from "./database/prismaClient"
-
 // sample app
 export { AlbumApi, topSongsHandler } from "./test/sampleApp"

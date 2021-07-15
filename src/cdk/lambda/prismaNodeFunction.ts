@@ -29,6 +29,7 @@ export class PrismaNode14Func extends Node14Func {
 
     // allow DB access
     db.grantDataApiAccess(this)
+    this.addEnvironment("DATABASE_URL", db.makeDatabaseUrl())
     db.connections.allowDefaultPortFrom(this)
     if (db.secret) {
       this.addEnvironment(DB_SECRET_ENV, db.secret.secretArn)

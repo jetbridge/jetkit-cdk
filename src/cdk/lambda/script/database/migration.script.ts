@@ -2,15 +2,9 @@ import { Migrate } from "@prisma/migrate"
 import { ensureDatabaseExists } from "@prisma/migrate/dist/utils/ensureDatabaseExists"
 import { printFilesFromMigrationIds } from "@prisma/migrate/dist/utils/printFiles"
 import chalk from "chalk"
-import { getDatabaseUrl } from "../../../../database/prismaClient"
+import "@prisma/client" // needed for bundling
 
 export const handler = async (): Promise<string> => {
-  // load DB URL from secrets
-  if (!process.env.DATABASE_URL) {
-    const dbUrl = await getDatabaseUrl()
-    process.env.DATABASE_URL = dbUrl
-  }
-
   const schemaPath = "./prisma/schema.prisma"
 
   const migrate = new Migrate()
