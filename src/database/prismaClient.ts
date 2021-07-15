@@ -14,16 +14,20 @@ export let _prisma: PrismaClient
  * Get database client.
  * Lazily creates client.
  */
-export const getPrisma = async (): Promise<PrismaClient> => {
+type PrismaClientImpl = { new (...args: any[]): PrismaClient }
+export const getPrismaClient = async <T extends PrismaClientImpl>(clientClass: T) => {
+  console.log("getPrrisma")
   if (_prisma) return _prisma
 
   // load connection URL from secrets if available
+  console.log("SAM LOCAL", IS_SAM_LOCAL)
   if (process.env.DB_SECRET_ENV && !IS_SAM_LOCAL) {
     const url = await getDatabaseUrl()
-    _prisma = new PrismaClient({ datasources: { db: { url } } })
+    process.env.DATABASE_URL = url
+    _prisma = new clientClass({ datasources: { db: { url } } })
   } else {
     // load from schema.prisma - DATABASE_URL env var
-    _prisma = new PrismaClient()
+    _prisma = new clientClass()
   }
 
   return _prisma

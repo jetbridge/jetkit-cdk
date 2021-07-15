@@ -13,6 +13,7 @@ import { SubRouteApi } from "./api/subRoute"
 import * as targets from "@aws-cdk/aws-events-targets"
 
 import { SlsPgDb } from "./database/serverless-pg"
+import { IVpc } from "@aws-cdk/aws-ec2"
 
 // env vars
 export const DB_CLUSTER_ENV = "DB_CLUSTER_ARN"
@@ -26,6 +27,12 @@ export interface FunctionOptions extends NodejsFunctionProps {
   layerArns?: string[]
 
   grantDatabaseAccess?: boolean
+
+  /**
+   * VPC for functions.
+   * Defaults to database VPC if grantDatabaseAccess is true.
+   */
+  vpc?: IVpc
 }
 
 /**
@@ -134,7 +141,7 @@ export class ResourceGenerator extends Construct {
   }
 
   mergeFunctionDefaults(functionOptions: FunctionOptions): FunctionOptions {
-    const mergedOptions: FunctionOptions = {
+    let mergedOptions: FunctionOptions = {
       ...deepmerge(
         // defaults
         this.functionOptions ?? {},
@@ -147,6 +154,8 @@ export class ResourceGenerator extends Construct {
         }
       ),
     }
+
+    mergedOptions = this.configureVpc(mergedOptions)
 
     return this.resolveLayerReferences(mergedOptions)
   }
@@ -162,6 +171,18 @@ export class ResourceGenerator extends Construct {
     this.generatedFunctions.push(handlerFunction)
 
     return handlerFunction
+  }
+
+  protected configureVpc(funcOptions: FunctionOptions): FunctionOptions {
+    // already specified?
+    const vpc = funcOptions.vpc
+    if (vpc) return funcOptions
+
+    // default to database VPC if function has DB access
+    const database = this.databaseCluster
+    if (database && funcOptions.grantDatabaseAccess) return { ...funcOptions, vpc: database.vpc_ }
+
+    return funcOptions
   }
 
   /**
@@ -259,6 +280,7 @@ export class ResourceGenerator extends Construct {
     if (!options.grantDatabaseAccess || !this.databaseCluster) return
 
     const db = this.databaseCluster
+    const vpc = db.vpc_
 
     // if (!this.databaseCluster) throw new Error("grantDatabaseAccess is true but no databaseCluster is defined")
 

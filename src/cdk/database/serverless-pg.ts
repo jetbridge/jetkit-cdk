@@ -4,9 +4,10 @@ import * as core from "@aws-cdk/core"
 import { Fn, Token } from "@aws-cdk/core"
 import { ResourceGeneratorProps } from "../generator"
 import { BundlingOptions, NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
+import { IVpc, Vpc } from "@aws-cdk/aws-ec2"
 
 // default version of https://github.com/jetbridge/lambda-layer-prisma-pg
-const PRISMA_PG_LAYER_VERSION = 8
+const PRISMA_PG_LAYER_VERSION = 9
 
 let layerVersionCount = 1
 
@@ -23,6 +24,9 @@ export interface SlsPgDbProps extends Omit<ServerlessClusterProps, "engine"> {
 export class SlsPgDb extends ServerlessCluster {
   defaultDatabaseName?: string
 
+  // it's private in ServerlessCluster for some reason?
+  vpc_: IVpc
+
   constructor(
     scope: core.Construct,
     id: string,
@@ -35,8 +39,9 @@ export class SlsPgDb extends ServerlessCluster {
     }
     super(scope, id, superProps)
 
-    // save this
+    // save
     this.defaultDatabaseName = defaultDatabaseName
+    this.vpc_ = props.vpc
   }
 
   /**
