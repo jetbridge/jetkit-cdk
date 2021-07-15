@@ -33,6 +33,26 @@ describe("DatabaseMigrationScript", () => {
           DB_SECRET_ARN: {
             Ref: "dbSecretAttachment5D338442",
           },
+          DATABASE_URL: {
+            "Fn::Join": [
+              "",
+              [
+                "postgresql://{{resolve:secretsmanager:",
+                {
+                  Ref: "dbSecretAttachment5D338442",
+                },
+                ":SecretString:username::}}:{{resolve:secretsmanager:",
+                {
+                  Ref: "dbSecretAttachment5D338442",
+                },
+                ":SecretString:password::}}@",
+                {
+                  "Fn::GetAtt": ["dbECC37780", "Endpoint.Address"],
+                },
+                "/",
+              ],
+            ],
+          },
         },
       },
       Handler: "index.handler",
@@ -45,7 +65,7 @@ describe("DatabaseMigrationScript", () => {
               {
                 Ref: "AWS::Region",
               },
-              "898466741470:layer:PrismaPg:8",
+              "898466741470:layer:PrismaPg:9",
             ],
           ],
         },

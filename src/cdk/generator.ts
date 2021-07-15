@@ -302,7 +302,7 @@ export class ResourceGenerator extends Construct {
     func.addEnvironment(DB_SECRET_ENV, db.getDataApiParams().secretArn)
     if (db.defaultDatabaseName) func.addEnvironment(DB_NAME_ENV, db.defaultDatabaseName)
     console.debug(
-      `🗝 Granting ${func} database access for ${
+      `🗝  Granting ${func} database access for ${
         this.databaseCluster.defaultDatabaseName || "cluster " + this.databaseCluster.clusterIdentifier
       }`
     )
