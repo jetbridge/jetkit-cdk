@@ -2,7 +2,7 @@ import "@aws-cdk/assert/jest"
 import { Vpc } from "@aws-cdk/aws-ec2"
 import { ParameterGroup } from "@aws-cdk/aws-rds"
 import { Stack } from "@aws-cdk/core"
-import { SlsPgDb } from "../../../database/serverless-pg"
+import { PRISMA_PG_LAYER_VERSION, SlsPgDb } from "../../../database/serverless-pg"
 import { DatabaseMigrationScript } from "./migration"
 
 describe("DatabaseMigrationScript", () => {
@@ -65,7 +65,7 @@ describe("DatabaseMigrationScript", () => {
               {
                 Ref: "AWS::Region",
               },
-              "898466741470:layer:PrismaPg:9",
+              `898466741470:layer:PrismaPg:${PRISMA_PG_LAYER_VERSION}`,
             ],
           ],
         },

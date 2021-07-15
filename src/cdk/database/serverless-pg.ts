@@ -6,7 +6,7 @@ import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { IVpc } from "@aws-cdk/aws-ec2"
 
 // default version of https://github.com/jetbridge/lambda-layer-prisma-pg
-const PRISMA_PG_LAYER_VERSION = 10
+export const PRISMA_PG_LAYER_VERSION = 10
 
 let layerVersionCount = 1
 
