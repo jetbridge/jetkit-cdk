@@ -297,6 +297,7 @@ export class ResourceGenerator extends Construct {
     }
 
     // provide cluster/secret ARN and DB name to function
+    func.addEnvironment("DATABASE_URL", db.makeDatabaseUrl())
     func.addEnvironment(DB_CLUSTER_ENV, db.getDataApiParams().clusterArn)
     func.addEnvironment(DB_SECRET_ENV, db.getDataApiParams().secretArn)
     if (db.defaultDatabaseName) func.addEnvironment(DB_NAME_ENV, db.defaultDatabaseName)
