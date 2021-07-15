@@ -2,12 +2,11 @@ import { ILayerVersion, LayerVersion } from "@aws-cdk/aws-lambda"
 import { DatabaseClusterEngine, IClusterEngine, ServerlessCluster, ServerlessClusterProps } from "@aws-cdk/aws-rds"
 import * as core from "@aws-cdk/core"
 import { Fn, Token } from "@aws-cdk/core"
-import { ResourceGeneratorProps } from "../generator"
-import { BundlingOptions, NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
-import { IVpc, Vpc } from "@aws-cdk/aws-ec2"
+import { NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
+import { IVpc } from "@aws-cdk/aws-ec2"
 
 // default version of https://github.com/jetbridge/lambda-layer-prisma-pg
-const PRISMA_PG_LAYER_VERSION = 9
+const PRISMA_PG_LAYER_VERSION = 10
 
 let layerVersionCount = 1
 
@@ -76,13 +75,13 @@ export class SlsPgDb extends ServerlessCluster {
    * Adds a layer containing prisma, pg
    */
   addPrismaLayer(functionOptions: Partial<NodejsFunctionProps>, layerVersion?: number) {
-    // vivify func bundling options
+    // amend func bundling options
     functionOptions ||= {}
     ;(functionOptions.layers as any) ||= []
     ;(functionOptions as any).bundling ||= {}
     ;(functionOptions.bundling as any).externalModules ||= []
 
-    // add prisma layer to functionOptions
+    // add prisma layer
     functionOptions!.layers!.push(this.getPrismaLayerVersion(layerVersion))
 
     // add external modules (skip from bundle because they're in the layer)

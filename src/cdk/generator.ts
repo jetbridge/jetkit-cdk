@@ -173,6 +173,12 @@ export class ResourceGenerator extends Construct {
     return handlerFunction
   }
 
+  /**
+   * Put function in VPC.
+   * Defaults to database VPC if database access is specified.
+   *
+   * N.B. NAT Gateways must exist in the VPC if a function needs internet access.
+   */
   protected configureVpc(funcOptions: FunctionOptions): FunctionOptions {
     // already specified?
     const vpc = funcOptions.vpc
