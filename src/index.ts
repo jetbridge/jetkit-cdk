@@ -14,6 +14,7 @@ export {
   DB_CLUSTER_ENV,
   DB_NAME_ENV,
   DB_SECRET_ENV,
+  DB_URL_ENV,
 } from "./cdk/generator"
 
 // convient AWS CDK utilities to have
@@ -21,7 +22,6 @@ export { CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2"
 export { Duration } from "@aws-cdk/core"
 
 // api
-export { CrudApiViewBase } from "./api/crud/base"
 export { ApiViewBase, ApiEvent, ApiResponse, ApiHandler, apiViewHandler } from "./api/base"
 
 // metadata

@@ -19,6 +19,7 @@ import { IVpc } from "@aws-cdk/aws-ec2"
 export const DB_CLUSTER_ENV = "DB_CLUSTER_ARN"
 export const DB_SECRET_ENV = "DB_SECRET_ARN"
 export const DB_NAME_ENV = "DB_NAME"
+export const DB_URL_ENV = "DATABASE_URL"
 
 /**
  * Defaults for all Lambda functions in the stack.
@@ -286,7 +287,6 @@ export class ResourceGenerator extends Construct {
     if (!options.grantDatabaseAccess || !this.databaseCluster) return
 
     const db = this.databaseCluster
-    const vpc = db.vpc_
 
     // if (!this.databaseCluster) throw new Error("grantDatabaseAccess is true but no databaseCluster is defined")
 
@@ -303,7 +303,7 @@ export class ResourceGenerator extends Construct {
     }
 
     // provide cluster/secret ARN and DB name to function
-    func.addEnvironment("DATABASE_URL", db.makeDatabaseUrl())
+    func.addEnvironment(DB_URL_ENV, db.makeDatabaseUrl())
     func.addEnvironment(DB_CLUSTER_ENV, db.getDataApiParams().clusterArn)
     func.addEnvironment(DB_SECRET_ENV, db.getDataApiParams().secretArn)
     if (db.defaultDatabaseName) func.addEnvironment(DB_NAME_ENV, db.defaultDatabaseName)
