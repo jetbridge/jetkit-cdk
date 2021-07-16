@@ -74,18 +74,20 @@ export class SlsPgDb extends ServerlessCluster {
   /**
    * Adds a layer containing prisma, pg
    */
-  addPrismaLayer(functionOptions: Partial<NodejsFunctionProps>, layerVersion?: number) {
-    // amend func bundling options
-    functionOptions ||= {}
-    ;(functionOptions.layers as any) ||= []
-    ;(functionOptions as any).bundling ||= {}
-    ;(functionOptions.bundling as any).externalModules ||= []
+  addPrismaLayer(functionOptions: Partial<NodejsFunctionProps>, layerVersion?: number): NodejsFunctionProps {
+    let { layers, bundling, ...rest } = functionOptions
+    layers ||= []
+    bundling ||= {}
+    let { externalModules, ...bundlingRest } = bundling
+    externalModules ||= []
 
     // add prisma layer
-    functionOptions!.layers!.push(this.getPrismaLayerVersion(layerVersion))
+    layers.push(this.getPrismaLayerVersion(layerVersion))
 
     // add external modules (skip from bundle because they're in the layer)
-    functionOptions!.bundling!.externalModules!.push(...this.getPrismaExternalModules())
+    externalModules!.push(...this.getPrismaExternalModules())
+
+    return { bundling: { ...bundlingRest, externalModules }, layers, ...rest }
   }
 
   /**
