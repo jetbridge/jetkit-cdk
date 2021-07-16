@@ -54,7 +54,7 @@ export class SlsPgDb extends ServerlessCluster {
     // save
     this.defaultDatabaseName = defaultDatabaseName
     this.vpc_ = props.vpc
-    this.prismaConnectionLimit = qprismaConnectionLimit
+    this.prismaConnectionLimit = prismaConnectionLimit
   }
 
   /**
