@@ -14,6 +14,7 @@ import * as targets from "@aws-cdk/aws-events-targets"
 
 import { SlsPgDb } from "./database/serverless-pg"
 import { IVpc } from "@aws-cdk/aws-ec2"
+import { debug } from "../util/log"
 
 // env vars
 export const DB_CLUSTER_ENV = "DB_CLUSTER_ARN"
@@ -307,7 +308,7 @@ export class ResourceGenerator extends Construct {
     func.addEnvironment(DB_CLUSTER_ENV, db.getDataApiParams().clusterArn)
     func.addEnvironment(DB_SECRET_ENV, db.getDataApiParams().secretArn)
     if (db.defaultDatabaseName) func.addEnvironment(DB_NAME_ENV, db.defaultDatabaseName)
-    console.debug(
+    debug(
       `🗝  Granting ${func} database access for ${
         this.databaseCluster.defaultDatabaseName || "cluster " + this.databaseCluster.clusterIdentifier
       }`
