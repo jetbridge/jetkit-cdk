@@ -12,6 +12,13 @@ let layerVersionCount = 1
 
 export interface SlsPgDbProps extends Omit<ServerlessClusterProps, "engine"> {
   engine?: IClusterEngine
+
+  /**
+   * Number of connections each prisma client can maintain.
+   * Tradeoff of lambdas using up connections vs. query parallelization.
+   * https://www.prisma.io/docs/guides/performance-and-optimization/connection-management#serverless-environments-faas
+   */
+  prismaConnectionLimit?: number
 }
 
 /**
@@ -22,6 +29,7 @@ export interface SlsPgDbProps extends Omit<ServerlessClusterProps, "engine"> {
  */
 export class SlsPgDb extends ServerlessCluster {
   defaultDatabaseName?: string
+  prismaConnectionLimit?: number
 
   // it's private in ServerlessCluster for some reason?
   vpc_: IVpc
@@ -29,7 +37,12 @@ export class SlsPgDb extends ServerlessCluster {
   constructor(
     scope: core.Construct,
     id: string,
-    { defaultDatabaseName, engine = DatabaseClusterEngine.AURORA_POSTGRESQL, ...props }: SlsPgDbProps
+    {
+      defaultDatabaseName,
+      engine = DatabaseClusterEngine.AURORA_POSTGRESQL,
+      prismaConnectionLimit,
+      ...props
+    }: SlsPgDbProps
   ) {
     const superProps: ServerlessClusterProps = {
       engine,
@@ -41,6 +54,7 @@ export class SlsPgDb extends ServerlessCluster {
     // save
     this.defaultDatabaseName = defaultDatabaseName
     this.vpc_ = props.vpc
+    this.prismaConnectionLimit = qprismaConnectionLimit
   }
 
   /**
@@ -50,12 +64,15 @@ export class SlsPgDb extends ServerlessCluster {
     const dbUsername = this.secret?.secretValueFromJson("username")
     const dbPassword = this.secret?.secretValueFromJson("password")
 
-    return (
+    let url =
       "postgresql://" +
       `${dbUsername}:${dbPassword}@${this.clusterEndpoint.hostname}/` +
       // TODO: how to get db name if not explicitly provided?
       (this.defaultDatabaseName || "")
-    )
+
+    if (this.prismaConnectionLimit) url += `?connection_limit=${this.prismaConnectionLimit}`
+
+    return url
   }
 
   /**
