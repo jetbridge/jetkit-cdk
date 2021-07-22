@@ -10,7 +10,7 @@
     "moduleResolution": "node", // modern
     "resolveJsonModule": true, // allow importing JSON filees
     "experimentalDecorators": true, // enable decorators
-    "emitDecoratorMetadata": true, // for runtime use of decorators (typeORM)
+    "emitDecoratorMetadata": true, // for runtime use of decorators
 
     "noImplicitAny": true, // strictness
     "noImplicitThis": true, // strictness

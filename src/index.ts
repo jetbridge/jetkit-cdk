@@ -1,9 +1,12 @@
 // app
 export { JetKitCdkApp } from "./app/cdk"
 
-// cdk
-export { CrudApi as CrudApiConstruct } from "./cdk/api/crud"
+// cdk constructs
 export { ApiView as ApiViewConstruct, ApiProps as ApiViewConstructProps } from "./cdk/api/api"
+export * from "./cdk/lambda/node14func"
+export * from "./cdk/lambda/prismaNodeFunction"
+export { DatabaseMigrationScript } from "./cdk/lambda/script/database/migration"
+export { SlsPgDb, SlsPgDbProps } from "./cdk/database/serverless-pg"
 export {
   ResourceGenerator as ResourceGeneratorConstruct,
   ResourceGeneratorProps,
@@ -11,15 +14,14 @@ export {
   DB_CLUSTER_ENV,
   DB_NAME_ENV,
   DB_SECRET_ENV,
+  DB_URL_ENV,
 } from "./cdk/generator"
-export { SlsPgDb, SlsPgDbProps } from "./cdk/database/serverless-pg"
 
-// convient CDK utilities to have
+// convient AWS CDK utilities to have
 export { CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2"
 export { Duration } from "@aws-cdk/core"
 
 // api
-export { CrudApiViewBase } from "./api/crud/base"
 export { ApiViewBase, ApiEvent, ApiResponse, ApiHandler, apiViewHandler } from "./api/base"
 
 // metadata
@@ -32,10 +34,6 @@ export {
   ISubRouteApiMetadata,
   MetadataTarget,
 } from "./metadata"
-
-// database
-export { BaseModel } from "./database/baseModel"
-export { ConnectionOptionsOverrides, DatabaseManager } from "./database/manager"
 
 // sample app
 export { AlbumApi, topSongsHandler } from "./test/sampleApp"

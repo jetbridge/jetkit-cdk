@@ -1,0 +1,18 @@
+{
+    "name": "database-scripts",
+    "version": "1.0.0",
+    "description": "Database management scripts",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "@prisma/client": "^2.27.0",
+        "@prisma/migrate": "^2.26.0",
+        "@prisma/sdk": "^2.26.0",
+        "chalk": "^4.1.1",
+        "prisma": "^2.26.0"
+    }
+}

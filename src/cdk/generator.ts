@@ -13,11 +13,14 @@ import { SubRouteApi } from "./api/subRoute"
 import * as targets from "@aws-cdk/aws-events-targets"
 
 import { SlsPgDb } from "./database/serverless-pg"
+import { IVpc } from "@aws-cdk/aws-ec2"
+import { debug } from "../util/log"
 
 // env vars
 export const DB_CLUSTER_ENV = "DB_CLUSTER_ARN"
 export const DB_SECRET_ENV = "DB_SECRET_ARN"
 export const DB_NAME_ENV = "DB_NAME"
+export const DB_URL_ENV = "DATABASE_URL"
 
 /**
  * Defaults for all Lambda functions in the stack.
@@ -26,6 +29,12 @@ export interface FunctionOptions extends NodejsFunctionProps {
   layerArns?: string[]
 
   grantDatabaseAccess?: boolean
+
+  /**
+   * VPC for functions.
+   * Defaults to database VPC if grantDatabaseAccess is true.
+   */
+  vpc?: IVpc
 }
 
 /**
@@ -134,7 +143,7 @@ export class ResourceGenerator extends Construct {
   }
 
   mergeFunctionDefaults(functionOptions: FunctionOptions): FunctionOptions {
-    const mergedOptions: FunctionOptions = {
+    let mergedOptions: FunctionOptions = {
       ...deepmerge(
         // defaults
         this.functionOptions ?? {},
@@ -147,6 +156,8 @@ export class ResourceGenerator extends Construct {
         }
       ),
     }
+
+    mergedOptions = this.configureVpc(mergedOptions)
 
     return this.resolveLayerReferences(mergedOptions)
   }
@@ -162,6 +173,24 @@ export class ResourceGenerator extends Construct {
     this.generatedFunctions.push(handlerFunction)
 
     return handlerFunction
+  }
+
+  /**
+   * Put function in VPC.
+   * Defaults to database VPC if database access is specified.
+   *
+   * N.B. NAT Gateways must exist in the VPC if a function needs internet access.
+   */
+  protected configureVpc(funcOptions: FunctionOptions): FunctionOptions {
+    // already specified?
+    const vpc = funcOptions.vpc
+    if (vpc) return funcOptions
+
+    // default to database VPC if function has DB access
+    const database = this.databaseCluster
+    if (database && funcOptions.grantDatabaseAccess) return { ...funcOptions, vpc: database.vpc_ }
+
+    return funcOptions
   }
 
   /**
@@ -256,21 +285,33 @@ export class ResourceGenerator extends Construct {
   // eslint-disable-next-line @typescript-eslint/ban-types
   protected grantFunctionAccess(options: FunctionOptions, func: Function): void {
     // aurora data API access
-    if (options.grantDatabaseAccess && this.databaseCluster) {
-      // if (!this.databaseCluster) throw new Error("grantDatabaseAccess is true but no databaseCluster is defined")
+    if (!options.grantDatabaseAccess || !this.databaseCluster) return
 
-      this.databaseCluster.grantDataApiAccess(func)
+    const db = this.databaseCluster
 
-      // provide cluster/secret ARN and DB name to function
-      func.addEnvironment(DB_CLUSTER_ENV, this.databaseCluster.getDataApiParams().clusterArn)
-      func.addEnvironment(DB_SECRET_ENV, this.databaseCluster.getDataApiParams().secretArn)
-      if (this.databaseCluster.defaultDatabaseName)
-        func.addEnvironment(DB_NAME_ENV, this.databaseCluster.defaultDatabaseName)
-      console.debug(
-        `🗝 Granting ${func} database access for ${
-          this.databaseCluster.defaultDatabaseName || "cluster " + this.databaseCluster.clusterIdentifier
-        }`
-      )
+    // if (!this.databaseCluster) throw new Error("grantDatabaseAccess is true but no databaseCluster is defined")
+
+    // data API
+    db.grantDataApiAccess(func)
+
+    // network access
+    db.connections.allowDefaultPortFrom(func)
+
+    // secret access
+    if (db.secret) {
+      func.addEnvironment(DB_SECRET_ENV, db.secret.secretArn)
+      db.secret.grantRead(func)
     }
+
+    // provide cluster/secret ARN and DB name to function
+    func.addEnvironment(DB_URL_ENV, db.makeDatabaseUrl())
+    func.addEnvironment(DB_CLUSTER_ENV, db.getDataApiParams().clusterArn)
+    func.addEnvironment(DB_SECRET_ENV, db.getDataApiParams().secretArn)
+    if (db.defaultDatabaseName) func.addEnvironment(DB_NAME_ENV, db.defaultDatabaseName)
+    debug(
+      `🗝  Granting ${func} database access for ${
+        this.databaseCluster.defaultDatabaseName || "cluster " + this.databaseCluster.clusterIdentifier
+      }`
+    )
   }
 }

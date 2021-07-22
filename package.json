@@ -29,6 +29,8 @@
     "@aws-cdk/assert": "1.115.0",
     "@aws-cdk/core": "1.115.0",
     "@babel/plugin-proposal-decorators": "^7.13.15",
+    "@prisma/client": "^2.27.0",
+    "@prisma/migrate": "^2.27.0",
     "@ts-morph/bootstrap": "^0.9.1",
     "@tsconfig/node14": "^1.0.0",
     "@types/aws-lambda": "^8.10.75",
@@ -43,16 +45,17 @@
     "jest": "^26.4.2",
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
-    "reflect-metadata": "^0.1.13",
+    "prisma": "^2.27.0",
     "simple-markdown": "^0.7.3",
     "source-map-support": "^0.5.16",
     "ts-jest": "^26.2.0",
     "ts-node": "^9.0.0",
     "typedoc": "^0.20.36",
-    "typeorm": "^0.2.32",
     "typescript": "^4.2.4"
   },
   "dependencies": {
+    "reflect-metadata": "^0.1.13",
+    "@aws-sdk/client-secrets-manager": "^3.21.0",
     "@aws-cdk/aws-apigatewayv2": "1.115.0",
     "@aws-cdk/aws-apigatewayv2-integrations": "1.115.0",
     "@aws-cdk/aws-ec2": "1.115.0",
@@ -69,8 +72,21 @@
     "deepmerge": "^4.2.2",
     "is-plain-object": "^2.0.4"
   },
+  "peerDependenciesMeta": {
+    "prisma": {
+      "optional": true
+    },
+    "@prisma/migrate": {
+      "optional": true
+    },
+    "@prisma/client": {
+      "optional": true
+    }
+  },
   "peerDependencies": {
-    "typeorm": "*"
+    "@prisma/client": "^2.27.0",
+    "@prisma/migrate": "^2.27.0",
+    "prisma": "^2.27.0"
   },
   "lint-staged": {
     "*.{js,css,md}": "prettier --write"
@@ -84,7 +100,7 @@
     "rest",
     "typescript",
     "api",
-    "typeorm",
+    "prisma",
     "postgres",
     "postgresql",
     "pg"
