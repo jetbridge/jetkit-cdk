@@ -274,7 +274,7 @@ describe("Lambda() construct scheduling", () => {
       Targets: [
         {
           Arn: {
-            "Fn::GetAtt": [stringLike("GenFuncscheduledFunc*"), "Arn"],
+            "Fn::GetAtt": [stringLike("GenF*scheduledFunc*"), "Arn"],
           },
           Id: "Target0",
         },
