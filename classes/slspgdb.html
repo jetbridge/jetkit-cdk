@@ -71,7 +71,6 @@
 						<p>Quickest and easiest way to get a Postgres database.
 							Uses Aurora Serverless.
 							Generates secret.
-							Recommend to use with <a href="https://www.npmjs.com/package/typeorm-aurora-data-api-driver">https://www.npmjs.com/package/typeorm-aurora-data-api-driver</a>
 						and <a href="https://docs.aws.amazon.com/cdk/api/latest/docs/aws-rds-readme.html#data-api">https://docs.aws.amazon.com/cdk/api/latest/docs/aws-rds-readme.html#data-api</a></p>
 					</div>
 				</div>
@@ -111,8 +110,10 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#env" class="tsd-kind-icon">env</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#node" class="tsd-kind-icon">node</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="slspgdb.html#physicalname" class="tsd-kind-icon">physical<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="slspgdb.html#prismaconnectionlimit" class="tsd-kind-icon">prisma<wbr>Connection<wbr>Limit</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#secret" class="tsd-kind-icon">secret</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#stack" class="tsd-kind-icon">stack</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="slspgdb.html#vpc_" class="tsd-kind-icon">vpc_</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-external">
@@ -125,12 +126,15 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#_enablecrossenvironment" class="tsd-kind-icon">_enable<wbr>Cross<wbr>Environment</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="slspgdb.html#addprismalayer" class="tsd-kind-icon">add<wbr>Prisma<wbr>Layer</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#addrotationmultiuser" class="tsd-kind-icon">add<wbr>Rotation<wbr>Multi<wbr>User</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#addrotationsingleuser" class="tsd-kind-icon">add<wbr>Rotation<wbr>Single<wbr>User</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#applyremovalpolicy" class="tsd-kind-icon">apply<wbr>Removal<wbr>Policy</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#assecretattachmenttarget" class="tsd-kind-icon">as<wbr>Secret<wbr>Attachment<wbr>Target</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="slspgdb.html#generatephysicalname" class="tsd-kind-icon">generate<wbr>Physical<wbr>Name</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="slspgdb.html#getdataapiparams" class="tsd-kind-icon">get<wbr>Data<wbr>Api<wbr>Params</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="slspgdb.html#getprismaexternalmodules" class="tsd-kind-icon">get<wbr>Prisma<wbr>External<wbr>Modules</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="slspgdb.html#getprismalayerversion" class="tsd-kind-icon">get<wbr>Prisma<wbr>Layer<wbr>Version</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="slspgdb.html#getresourcearnattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Arn<wbr>Attribute</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="slspgdb.html#getresourcenameattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Name<wbr>Attribute</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#grantdataapiaccess" class="tsd-kind-icon">grant<wbr>Data<wbr>Api<wbr>Access</a></li>
@@ -163,7 +167,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides ServerlessCluster.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/518403c/src/cdk/database/serverless-pg.ts#L16">src/cdk/database/serverless-pg.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/bd84bd3/src/cdk/database/serverless-pg.ts#L35">src/cdk/database/serverless-pg.ts:35</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -275,7 +279,7 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Database<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/518403c/src/cdk/database/serverless-pg.ts#L16">src/cdk/database/serverless-pg.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/bd84bd3/src/cdk/database/serverless-pg.ts#L31">src/cdk/database/serverless-pg.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -373,6 +377,16 @@
 						</dl>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="prismaconnectionlimit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> prisma<wbr>Connection<wbr>Limit</h3>
+					<div class="tsd-signature tsd-kind-icon">prisma<wbr>Connection<wbr>Limit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/bd84bd3/src/cdk/database/serverless-pg.ts#L32">src/cdk/database/serverless-pg.ts:32</a></li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="secret" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> secret</h3>
@@ -414,6 +428,16 @@
 							</dd>
 						</dl>
 					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="vpc_" class="tsd-anchor"></a>
+					<h3>vpc_</h3>
+					<div class="tsd-signature tsd-kind-icon">vpc_<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">IVpc</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/bd84bd3/src/cdk/database/serverless-pg.ts#L35">src/cdk/database/serverless-pg.ts:35</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
@@ -475,6 +499,37 @@
 								</dl>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addprismalayer" class="tsd-anchor"></a>
+					<h3>add<wbr>Prisma<wbr>Layer</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Prisma<wbr>Layer<span class="tsd-signature-symbol">(</span>functionOptions<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodejsFunctionProps</span><span class="tsd-signature-symbol">&gt;</span>, layerVersion<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NodejsFunctionProps</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/bd84bd3/src/cdk/database/serverless-pg.ts#L94">src/cdk/database/serverless-pg.ts:94</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds a layer containing prisma, pg</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>functionOptions: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodejsFunctionProps</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> layerVersion: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">NodejsFunctionProps</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -652,7 +707,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/518403c/src/cdk/database/serverless-pg.ts#L54">src/cdk/database/serverless-pg.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/bd84bd3/src/cdk/database/serverless-pg.ts#L83">src/cdk/database/serverless-pg.ts:83</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -671,6 +726,58 @@
 									<h5>secret<wbr>Arn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getprismaexternalmodules" class="tsd-anchor"></a>
+					<h3>get<wbr>Prisma<wbr>External<wbr>Modules</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Prisma<wbr>External<wbr>Modules<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/bd84bd3/src/cdk/database/serverless-pg.ts#L114">src/cdk/database/serverless-pg.ts:114</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Modules provided by Prisma layer.
+									Can be specified as bundling.externalModules to lambda functions to reduce bundle size.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getprismalayerversion" class="tsd-anchor"></a>
+					<h3>get<wbr>Prisma<wbr>Layer<wbr>Version</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Prisma<wbr>Layer<wbr>Version<span class="tsd-signature-symbol">(</span>defaultLayerVersion<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ILayerVersion</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/bd84bd3/src/cdk/database/serverless-pg.ts#L132">src/cdk/database/serverless-pg.ts:132</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get prisma lambda layer.
+									See: <a href="https://github.com/jetbridge/lambda-layer-prisma-pg">https://github.com/jetbridge/lambda-layer-prisma-pg</a> for details.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> defaultLayerVersion: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ILayerVersion</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -808,7 +915,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/518403c/src/cdk/database/serverless-pg.ts#L37">src/cdk/database/serverless-pg.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/bd84bd3/src/cdk/database/serverless-pg.ts#L63">src/cdk/database/serverless-pg.ts:63</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1187,22 +1294,19 @@
 						<a href="apiviewconstruct.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="basemodel.html" class="tsd-kind-icon">Base<wbr>Model</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="crudapiconstruct.html" class="tsd-kind-icon">Crud<wbr>Api<wbr>Construct</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="crudapiviewbase.html" class="tsd-kind-icon">Crud<wbr>Api<wbr>View<wbr>Base</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="databasemanager.html" class="tsd-kind-icon">Database<wbr>Manager</a>
+						<a href="databasemigrationscript.html" class="tsd-kind-icon">Database<wbr>Migration<wbr>Script</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
 						<a href="duration.html" class="tsd-kind-icon">Duration</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="jetkitcdkapp.html" class="tsd-kind-icon">Jet<wbr>Kit<wbr>Cdk<wbr>App</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="node14func.html" class="tsd-kind-icon">Node14<wbr>Func</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="prismanode14func.html" class="tsd-kind-icon">Prisma<wbr>Node14<wbr>Func</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="resourcegeneratorconstruct.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Construct</a>
@@ -1242,17 +1346,26 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
 								<a href="slspgdb.html#physicalname" class="tsd-kind-icon">physical<wbr>Name</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="slspgdb.html#prismaconnectionlimit" class="tsd-kind-icon">prisma<wbr>Connection<wbr>Limit</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="slspgdb.html#secret" class="tsd-kind-icon">secret</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="slspgdb.html#stack" class="tsd-kind-icon">stack</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="slspgdb.html#vpc_" class="tsd-kind-icon">vpc_</a>
+							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-external">
 								<a href="slspgdb.html#clusterarn" class="tsd-kind-icon">cluster<wbr>Arn</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="slspgdb.html#_enablecrossenvironment" class="tsd-kind-icon">_enable<wbr>Cross<wbr>Environment</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="slspgdb.html#addprismalayer" class="tsd-kind-icon">add<wbr>Prisma<wbr>Layer</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="slspgdb.html#addrotationmultiuser" class="tsd-kind-icon">add<wbr>Rotation<wbr>Multi<wbr>User</a>
@@ -1271,6 +1384,12 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="slspgdb.html#getdataapiparams" class="tsd-kind-icon">get<wbr>Data<wbr>Api<wbr>Params</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="slspgdb.html#getprismaexternalmodules" class="tsd-kind-icon">get<wbr>Prisma<wbr>External<wbr>Modules</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="slspgdb.html#getprismalayerversion" class="tsd-kind-icon">get<wbr>Prisma<wbr>Layer<wbr>Version</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
 								<a href="slspgdb.html#getresourcearnattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Arn<wbr>Attribute</a>
@@ -1325,7 +1444,7 @@
 						<a href="../interfaces/apiviewconstructprops.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/connectionoptionsoverrides.html" class="tsd-kind-icon">Connection<wbr>Options<wbr>Overrides</a>
+						<a href="../interfaces/databasefuncprops.html" class="tsd-kind-icon">Database<wbr>Func<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/functionoptions.html" class="tsd-kind-icon">Function<wbr>Options</a>
@@ -1366,6 +1485,9 @@
 					<li class=" tsd-kind-type-alias">
 						<a href="../modules.html#metadatatarget" class="tsd-kind-icon">Metadata<wbr>Target</a>
 					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../modules.html#node14funcprops" class="tsd-kind-icon">Node14<wbr>Func<wbr>Props</a>
+					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../modules.html#db_cluster_env" class="tsd-kind-icon">DB_<wbr>CLUSTER_<wbr>ENV</a>
 					</li>
@@ -1374,6 +1496,9 @@
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../modules.html#db_secret_env" class="tsd-kind-icon">DB_<wbr>SECRET_<wbr>ENV</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../modules.html#db_url_env" class="tsd-kind-icon">DB_<wbr>URL_<wbr>ENV</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../modules.html#apiview" class="tsd-kind-icon">Api<wbr>View</a>

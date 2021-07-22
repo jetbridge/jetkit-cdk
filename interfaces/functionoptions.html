@@ -139,7 +139,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="functionoptions.html#securitygroups" class="tsd-kind-icon">security<wbr>Groups</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="functionoptions.html#timeout" class="tsd-kind-icon">timeout</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="functionoptions.html#tracing" class="tsd-kind-icon">tracing</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="functionoptions.html#vpc" class="tsd-kind-icon">vpc</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="functionoptions.html#vpc" class="tsd-kind-icon">vpc</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="functionoptions.html#vpcsubnets" class="tsd-kind-icon">vpc<wbr>Subnets</a></li>
 							</ul>
 						</section>
@@ -599,7 +599,7 @@
 					<div class="tsd-signature tsd-kind-icon">grant<wbr>Database<wbr>Access<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/518403c/src/cdk/generator.ts#L28">src/cdk/generator.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/bd84bd3/src/cdk/generator.ts#L31">src/cdk/generator.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -660,7 +660,7 @@
 					<div class="tsd-signature tsd-kind-icon">layer<wbr>Arns<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/518403c/src/cdk/generator.ts#L26">src/cdk/generator.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/bd84bd3/src/cdk/generator.ts#L29">src/cdk/generator.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1189,31 +1189,21 @@
 						</dl>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="vpc" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> vpc</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> vpc</h3>
 					<div class="tsd-signature tsd-kind-icon">vpc<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">IVpc</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from NodejsFunctionProps.vpc</p>
+						<p>Overrides NodejsFunctionProps.vpc</p>
 						<ul>
-							<li>Defined in node_modules/@aws-cdk/aws-lambda/lib/function.d.ts:137</li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/bd84bd3/src/cdk/generator.ts#L37">src/cdk/generator.ts:37</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>VPC network to place Lambda network interfaces.</p>
+							<p>VPC for functions.
+							Defaults to database VPC if grantDatabaseAccess is true.</p>
 						</div>
-						<p>Specify this if the Lambda function needs to access resources in a VPC.</p>
-						<dl class="tsd-comment-tags">
-							<dt>default</dt>
-							<dd><ul>
-									<li>Function is not placed within a VPC.</li>
-								</ul>
-							</dd>
-							<dt>stability</dt>
-							<dd><p>stable</p>
-							</dd>
-						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
@@ -1269,22 +1259,19 @@
 						<a href="../classes/apiviewconstruct.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/basemodel.html" class="tsd-kind-icon">Base<wbr>Model</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/crudapiconstruct.html" class="tsd-kind-icon">Crud<wbr>Api<wbr>Construct</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/crudapiviewbase.html" class="tsd-kind-icon">Crud<wbr>Api<wbr>View<wbr>Base</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/databasemanager.html" class="tsd-kind-icon">Database<wbr>Manager</a>
+						<a href="../classes/databasemigrationscript.html" class="tsd-kind-icon">Database<wbr>Migration<wbr>Script</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
 						<a href="../classes/duration.html" class="tsd-kind-icon">Duration</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="../classes/jetkitcdkapp.html" class="tsd-kind-icon">Jet<wbr>Kit<wbr>Cdk<wbr>App</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/node14func.html" class="tsd-kind-icon">Node14<wbr>Func</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/prismanode14func.html" class="tsd-kind-icon">Prisma<wbr>Node14<wbr>Func</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/resourcegeneratorconstruct.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Construct</a>
@@ -1299,7 +1286,7 @@
 						<a href="apiviewconstructprops.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="connectionoptionsoverrides.html" class="tsd-kind-icon">Connection<wbr>Options<wbr>Overrides</a>
+						<a href="databasefuncprops.html" class="tsd-kind-icon">Database<wbr>Func<wbr>Props</a>
 					</li>
 				</ul>
 				<ul class="current">
@@ -1423,7 +1410,7 @@
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 								<a href="functionoptions.html#tracing" class="tsd-kind-icon">tracing</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 								<a href="functionoptions.html#vpc" class="tsd-kind-icon">vpc</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
@@ -1469,6 +1456,9 @@
 					<li class=" tsd-kind-type-alias">
 						<a href="../modules.html#metadatatarget" class="tsd-kind-icon">Metadata<wbr>Target</a>
 					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../modules.html#node14funcprops" class="tsd-kind-icon">Node14<wbr>Func<wbr>Props</a>
+					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../modules.html#db_cluster_env" class="tsd-kind-icon">DB_<wbr>CLUSTER_<wbr>ENV</a>
 					</li>
@@ -1477,6 +1467,9 @@
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../modules.html#db_secret_env" class="tsd-kind-icon">DB_<wbr>SECRET_<wbr>ENV</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../modules.html#db_url_env" class="tsd-kind-icon">DB_<wbr>URL_<wbr>ENV</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../modules.html#apiview" class="tsd-kind-icon">Api<wbr>View</a>
