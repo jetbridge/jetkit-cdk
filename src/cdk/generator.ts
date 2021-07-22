@@ -153,7 +153,7 @@ export class ResourceGenerator extends Construct {
 
   protected createLambdaFunction(name: string, funcOptions: FunctionOptions): JetKitLambdaFunction {
     // build Node Lambda function
-    const handlerFunction = new JetKitLambdaFunction(this, `Func-${name}-${this.funcCounter++}`, funcOptions)
+    const handlerFunction = new JetKitLambdaFunction(this, `F${this.funcCounter++}-${name}`, funcOptions)
 
     // grant access
     this.grantFunctionAccess(funcOptions, handlerFunction)
