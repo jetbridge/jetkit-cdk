@@ -1,9 +1,8 @@
 import { HttpApi, HttpMethod, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
-import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs"
 import { CfnOutput, Construct } from "@aws-cdk/core"
 import { FunctionOptions } from "../generator"
-import { Node14Func as JetKitLambdaFunction, Node14FuncProps as JetKitLambdaFunctionProps } from "../lambda/node14func"
+import { Node14FuncProps as JetKitLambdaFunctionProps, Node14Func as JetKitLambdaFunction } from "../lambda/node14func"
 
 export { JetKitLambdaFunction, JetKitLambdaFunctionProps }
 
@@ -13,7 +12,7 @@ export { JetKitLambdaFunction, JetKitLambdaFunctionProps }
 export interface ApiConfig extends FunctionOptions, IEndpoint {}
 
 export interface ApiProps extends ApiConfig {
-  handlerFunction: NodejsFunction
+  handlerFunction: JetKitLambdaFunction
 }
 
 export interface IEndpoint {
