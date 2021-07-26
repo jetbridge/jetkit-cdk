@@ -7,7 +7,6 @@ import { DatabaseMigrationScript } from "./migration"
 
 describe("DatabaseMigrationScript", () => {
   let stack: Stack
-  let script: DatabaseMigrationScript
 
   beforeEach(() => {
     stack = new Stack()
@@ -16,10 +15,10 @@ describe("DatabaseMigrationScript", () => {
       vpc,
       parameterGroup: ParameterGroup.fromParameterGroupName(stack, "ParameterGroup", "default.aurora-postgresql11"),
     })
-    script = new DatabaseMigrationScript(stack, "func", {
+    new DatabaseMigrationScript(stack, "func", {
       db,
       vpc,
-      prismaPath: "./",
+      prismaPath: `${__dirname}/../../../../test/`,
       entry: `${__dirname}/../../../../test/emptyHandler.js`,
     })
   })
