@@ -1,3 +1,4 @@
+import { stringLike } from "@aws-cdk/assert"
 import "@aws-cdk/assert/jest"
 import { Vpc } from "@aws-cdk/aws-ec2"
 import { ParameterGroup } from "@aws-cdk/aws-rds"
@@ -30,7 +31,7 @@ describe("DatabaseMigrationScript", () => {
           NODE_OPTIONS: "--enable-source-maps",
           AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
           DB_SECRET_ARN: {
-            Ref: "dbSecretAttachment5D338442",
+            Ref: stringLike("dbSecretAttachment*"),
           },
           DATABASE_URL: {
             "Fn::Join": [
@@ -38,15 +39,15 @@ describe("DatabaseMigrationScript", () => {
               [
                 "postgresql://{{resolve:secretsmanager:",
                 {
-                  Ref: "dbSecretAttachment5D338442",
+                  Ref: stringLike("dbSecretAttachment*"),
                 },
                 ":SecretString:username::}}:{{resolve:secretsmanager:",
                 {
-                  Ref: "dbSecretAttachment5D338442",
+                  Ref: stringLike("dbSecretAttachment*"),
                 },
                 ":SecretString:password::}}@",
                 {
-                  "Fn::GetAtt": ["dbECC37780", "Endpoint.Address"],
+                  "Fn::GetAtt": [stringLike("db*"), "Endpoint.Address"],
                 },
                 "/",
               ],
@@ -74,15 +75,15 @@ describe("DatabaseMigrationScript", () => {
       VpcConfig: {
         SecurityGroupIds: [
           {
-            "Fn::GetAtt": ["funcSecurityGroup1E2AAB7C", "GroupId"],
+            "Fn::GetAtt": [stringLike("funcSecurityGroup*"), "GroupId"],
           },
         ],
         SubnetIds: [
           {
-            Ref: "vpcPrivateSubnet1Subnet934893E8",
+            Ref: stringLike("vpcPrivateSubnet*"),
           },
           {
-            Ref: "vpcPrivateSubnet2Subnet7031C2BA",
+            Ref: stringLike("vpcPrivateSubnet*"),
           },
         ],
       },
