@@ -7,6 +7,8 @@
     // I hope this works someday!
     "module": "es2020" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
 
+    "lib": ["ESNext"],
+
     "moduleResolution": "node", // modern
     "resolveJsonModule": true, // allow importing JSON filees
     "experimentalDecorators": true, // enable decorators

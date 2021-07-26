@@ -1,7 +1,6 @@
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
 import { Rule } from "@aws-cdk/aws-events"
 import { Function, LayerVersion } from "@aws-cdk/aws-lambda"
-import { NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { Aws, CfnOutput, Construct, Fn } from "@aws-cdk/core"
 import deepmerge from "deepmerge"
 import isPlainObject from "is-plain-object"
@@ -15,6 +14,7 @@ import * as targets from "@aws-cdk/aws-events-targets"
 import { SlsPgDb } from "./database/serverless-pg"
 import { IVpc } from "@aws-cdk/aws-ec2"
 import { debug } from "../util/log"
+import { Node14Func, Node14FuncProps } from "./lambda/node14func"
 
 // env vars
 export const DB_CLUSTER_ENV = "DB_CLUSTER_ARN"
@@ -22,10 +22,12 @@ export const DB_SECRET_ENV = "DB_SECRET_ARN"
 export const DB_NAME_ENV = "DB_NAME"
 export const DB_URL_ENV = "DATABASE_URL"
 
+export type GeneratedFunction = Node14Func
+
 /**
  * Defaults for all Lambda functions in the stack.
  */
-export interface FunctionOptions extends NodejsFunctionProps {
+export interface FunctionOptions extends Node14FuncProps {
   layerArns?: string[]
 
   grantDatabaseAccess?: boolean
@@ -89,7 +91,7 @@ export class ResourceGenerator extends Construct {
   /**
    * Lambda functions that were generated.
    */
-  generatedFunctions: NodejsFunction[]
+  generatedFunctions: GeneratedFunction[]
 
   private layerCounter = 1
   private funcCounter = 1
@@ -162,9 +164,17 @@ export class ResourceGenerator extends Construct {
     return this.resolveLayerReferences(mergedOptions)
   }
 
-  protected createLambdaFunction(name: string, funcOptions: FunctionOptions): JetKitLambdaFunction {
+  protected createLambdaFunction(
+    name: string,
+    metadataTarget: MetadataTarget,
+    funcOptions: FunctionOptions
+  ): JetKitLambdaFunction {
     // build Node Lambda function
-    const handlerFunction = new JetKitLambdaFunction(this, `F${this.funcCounter++}-${name}`, funcOptions)
+    const handlerFunction = new JetKitLambdaFunction(this, `F${this.funcCounter++}-${name}`, {
+      ...funcOptions,
+      name,
+      metadataTarget,
+    })
 
     // grant access
     this.grantFunctionAccess(funcOptions, handlerFunction)
@@ -205,7 +215,7 @@ export class ResourceGenerator extends Construct {
     const name = HandlerFunc.name
     const mergedOptions = this.mergeFunctionDefaults(funcMetaRest)
 
-    const handlerFunction = this.createLambdaFunction(name, mergedOptions)
+    const handlerFunction = this.createLambdaFunction(name, resource, mergedOptions)
 
     // enable lambda integrations
     if (funcMeta.path) {
@@ -246,7 +256,7 @@ export class ResourceGenerator extends Construct {
       if (apiViewMeta.schedule)
         throw new Error("schedule is not supported on ApiView for now (it could be easily added if desired)")
 
-      const handlerFunction = this.createLambdaFunction(name, mergedOptions)
+      const handlerFunction = this.createLambdaFunction(name, resource, mergedOptions)
 
       if (!this.httpApi) throw new Error(`API paths defined but httpApi was not provided to ${this}`)
 
@@ -313,5 +323,24 @@ export class ResourceGenerator extends Construct {
         this.databaseCluster.defaultDatabaseName || "cluster " + this.databaseCluster.clusterIdentifier
       }`
     )
+  }
+
+  /**
+   * Look up a generated function.
+   */
+  getFunction(filter: { ctor?: MetadataTarget; name?: string }): Node14Func | undefined {
+    let fns = this.generatedFunctions
+    if (!fns) return undefined
+
+    // filter
+    if (filter.ctor) fns = fns.filter((fn) => fn.getMetadataTarget() === filter.ctor)
+    if (filter.name) fns = fns.filter((fn) => fn.name === filter.name)
+
+    if (!fns.length) return undefined
+
+    // assume we should only find one match
+    if (fns.length > 1) console.warn(`Warning: getFunction(${filter}) found multiple matching functions`)
+
+    return fns[0]
   }
 }
