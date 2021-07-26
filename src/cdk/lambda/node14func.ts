@@ -71,6 +71,7 @@ export class Node14Func extends NodejsFunction {
   }
 
   getMetadataTarget(): MetadataTarget | undefined {
+    console.log("META TARGET", this.metadataTarget?.deref())
     return this.metadataTarget?.deref()
   }
 }
