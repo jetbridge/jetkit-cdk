@@ -32,10 +32,10 @@ export class DatabaseMigrationScript extends PrismaNode14Func {
     ;(bundling as any).commandHooks = {
       beforeInstall: (): string[] => [],
       afterBundling: (): string[] => [],
-      beforeBundling: (_inputDir: string, outputDir: string): string[] => {
+      beforeBundling: (inputDir: string, outputDir: string): string[] => {
         return [
           // need to copy over migration files
-          `cp -r "${prismaPath}" "${outputDir}"`,
+          `cp -r "${inputDir}/${prismaPath}" "${outputDir}"`,
         ]
       },
     }

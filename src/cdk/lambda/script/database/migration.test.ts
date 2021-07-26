@@ -19,7 +19,7 @@ describe("DatabaseMigrationScript", () => {
     new DatabaseMigrationScript(stack, "func", {
       db,
       vpc,
-      prismaPath: `${__dirname}/../../../../test/`,
+      prismaPath: `src/test`,
       entry: `${__dirname}/../../../../test/emptyHandler.js`,
     })
   })
