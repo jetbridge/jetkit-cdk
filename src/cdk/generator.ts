@@ -183,9 +183,7 @@ export class ResourceGenerator extends Construct {
     functionOptions: FunctionOptions
   ): JetKitLambdaFunction {
     let { functionName, ...rest } = functionOptions
-
-    // disable CDK name mangling for the function name
-    if (this.functionPrefix) functionName ||= `${this.functionPrefix}-${name}`
+    functionName ||= this.generateFunctionName(name, functionOptions)
 
     // build Node Lambda function
     const handlerFunction = new JetKitLambdaFunction(this, `F${this.funcCounter++}-${name}`, {
