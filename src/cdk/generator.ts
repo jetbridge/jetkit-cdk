@@ -106,6 +106,7 @@ export class ResourceGenerator extends Construct {
   private funcCounter = 1
   private viewCounter = 1
   private ruleCounter = 1
+  private seenFunctionNames: Record<string, number>
   httpApi?: HttpApi
   databaseCluster?: SlsPgDb
 
@@ -120,6 +121,7 @@ export class ResourceGenerator extends Construct {
     this.functionPrefix = functionPrefix || Stack.of(this).stackName
 
     this.generatedFunctions = []
+    this.seenFunctionNames = {}
 
     if (functionOptions) this.functionOptions = functionOptions
     if (databaseCluster) this.databaseCluster = databaseCluster
@@ -181,9 +183,7 @@ export class ResourceGenerator extends Construct {
     functionOptions: FunctionOptions
   ): JetKitLambdaFunction {
     let { functionName, ...rest } = functionOptions
-
-    // disable CDK name mangling for the function name
-    if (this.functionPrefix) functionName ||= `${this.functionPrefix}-${name}`
+    functionName ||= this.generateFunctionName(name, functionOptions)
 
     // build Node Lambda function
     const handlerFunction = new JetKitLambdaFunction(this, `F${this.funcCounter++}-${name}`, {
@@ -201,6 +201,26 @@ export class ResourceGenerator extends Construct {
     this.generatedFunctions.push(handlerFunction)
 
     return handlerFunction
+  }
+
+  protected generateFunctionName(name: string, functionOptions: FunctionOptions): string | undefined {
+    let { functionName } = functionOptions
+
+    // disable CDK name mangling for the function name
+    if (this.functionPrefix) functionName ||= `${this.functionPrefix}-${name}`
+    if (!functionName) return undefined
+
+    // have we used this name before?
+    if (this.seenFunctionNames[functionName]) {
+      // increment suffix
+      return `${functionName}-${++this.seenFunctionNames[functionName]}`
+    }
+
+    // mark as seen
+    this.seenFunctionNames[functionName] ||= 1
+    this.seenFunctionNames[functionName]++ // start at 2
+
+    return functionName
   }
 
   /**
