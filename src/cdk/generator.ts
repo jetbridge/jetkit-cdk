@@ -2,7 +2,7 @@
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
 import { Rule } from "@aws-cdk/aws-events"
 import { Function, LayerVersion } from "@aws-cdk/aws-lambda"
-import { Aws, CfnOutput, Construct, Fn } from "@aws-cdk/core"
+import { Aws, CfnOutput, Construct, Fn, Stack } from "@aws-cdk/core"
 import deepmerge from "deepmerge"
 import isPlainObject from "is-plain-object"
 import { ApiHandler } from "../api/base"
@@ -100,6 +100,8 @@ export class ResourceGenerator extends Construct {
    */
   generatedFunctions: GeneratedFunction[]
 
+  functionPrefix?: string
+
   private layerCounter = 1
   private funcCounter = 1
   private viewCounter = 1
@@ -178,11 +180,18 @@ export class ResourceGenerator extends Construct {
   protected createLambdaFunction(
     name: string,
     metadataTarget: MetadataTarget,
-    funcOptions: FunctionOptions
+    functionOptions: FunctionOptions
   ): JetKitLambdaFunction {
+    let { functionName, ...rest } = functionOptions
+
+    // disable CDK name mangling for the function name
+    if (this.functionPrefix) functionName ||= `${this.functionPrefix}-${name}`
+
     // build Node Lambda function
     const handlerFunction = new JetKitLambdaFunction(this, `F${this.funcCounter++}-${name}`, {
-      ...funcOptions,
+      ...rest,
+      functionName,
+
       name,
       metadataTarget,
     })
