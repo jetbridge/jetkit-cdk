@@ -81,12 +81,13 @@ Lambda({
 // unauthenticated route
 export const unauthFunc = () => console.log("does not require authentication")
 Lambda({
-  unauthenticated: true,
+  unauthorized: true,
   path: "/unauthenticated",
 })(unauthFunc)
 
 // unauthenticated ApiView
 @ApiView({
+  unauthorized: true,
   path: "/unauthView",
 })
 export class UnAuthView extends ApiViewBase {}

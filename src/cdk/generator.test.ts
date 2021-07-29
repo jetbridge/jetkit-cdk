@@ -3,7 +3,8 @@
 import { stringLike } from "@aws-cdk/assert"
 import "@aws-cdk/assert/jest"
 import { HttpApi, HttpMethod } from "@aws-cdk/aws-apigatewayv2"
-import { FunctionOptions } from "@aws-cdk/aws-lambda"
+import { HttpLambdaAuthorizer, HttpLambdaResponseType } from "@aws-cdk/aws-apigatewayv2-authorizers"
+import { Code, Function, FunctionOptions, Runtime } from "@aws-cdk/aws-lambda"
 import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs"
 import { Duration, Stack } from "@aws-cdk/core"
 import * as path from "path"
@@ -290,7 +291,19 @@ describe("Authorization", () => {
 
   beforeEach(() => {
     stack = new Stack()
-    httpApi = new HttpApi(stack, "API")
+
+    // dummy authorizer
+    const authHandler = new Function(stack, "auth-function", {
+      code: Code.fromInline("1"),
+      runtime: Runtime.NODEJS,
+      handler: "main",
+    })
+    const authorizer = new HttpLambdaAuthorizer({
+      handler: authHandler,
+      authorizerName: "dummy",
+    })
+
+    httpApi = new HttpApi(stack, "API", { defaultAuthorizer: authorizer })
   })
 
   it("disables authentication functions", () => {
