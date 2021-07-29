@@ -10,6 +10,7 @@ import * as path from "path"
 import { ApiViewConstruct, ResourceGeneratorConstruct } from ".."
 import { AlbumApi, scheduledFunc, topSongsFuncInner, topSongsHandler } from "../test/sampleApp"
 import { ApiView, JetKitLambdaFunction } from "./api/api"
+import { Node14Func } from "./lambda/node14func"
 
 const bundleBannerMsg = "--- cool bundlings mon ---"
 
@@ -70,6 +71,20 @@ describe("@ApiView construct generation", () => {
   it("saves generated functions", () => {
     expect(generator.generatedFunctions).toHaveLength(1)
     expect(generator.generatedFunctions[0]).toBeInstanceOf(NodejsFunction)
+  })
+
+  it("can find APIView function by name", () => {
+    const found = generator.getFunction({ name: "AlbumApi" })
+    expect(found).toBeTruthy()
+    expect(found).toBeInstanceOf(Node14Func)
+    expect(found?.name).toEqual("AlbumApi")
+  })
+
+  it("can find APIView function by cctor", () => {
+    const found = generator.getFunction({ ctor: AlbumApi })
+    expect(found).toBeTruthy()
+    expect(found).toBeInstanceOf(Node14Func)
+    expect(found?.name).toEqual("AlbumApi")
   })
 
   it("generates APIGW routes", () => {
@@ -218,6 +233,20 @@ describe("Lambda() construct generation of APIs", () => {
     expect(generator.generatedFunctions).toHaveLength(2)
     expect(generator.generatedFunctions[0]).toBeInstanceOf(NodejsFunction)
     expect(generator.generatedFunctions[1]).toBeInstanceOf(NodejsFunction)
+  })
+
+  it("can find Lambda function by ctor", () => {
+    const found = generator.getFunction({ ctor: topSongsHandler })
+    expect(found).toBeTruthy()
+    expect(found).toBeInstanceOf(Node14Func)
+    expect(found?.name).toEqual("topSongsHandler")
+  })
+
+  it("can find Lambda function by name", () => {
+    const found = generator.getFunction({ name: "topSongsHandler" })
+    expect(found).toBeTruthy()
+    expect(found).toBeInstanceOf(Node14Func)
+    expect(found?.name).toEqual("topSongsHandler")
   })
 
   it("generates endpoints for standalone functions", () => {

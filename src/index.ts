@@ -15,6 +15,7 @@ export {
   DB_NAME_ENV,
   DB_SECRET_ENV,
   DB_URL_ENV,
+  GeneratedFunction,
 } from "./cdk/generator"
 
 // convient AWS CDK utilities to have
