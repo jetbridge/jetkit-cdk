@@ -8,7 +8,7 @@ import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs"
 import { Duration, Stack } from "@aws-cdk/core"
 import * as path from "path"
 import { ApiViewConstruct, ResourceGeneratorConstruct } from ".."
-import { AlbumApi, scheduledFunc, topSongsFuncInner, topSongsHandler } from "../test/sampleApp"
+import { AlbumApi, scheduledFunc, topSongsFuncInner, topSongsHandler, unauthFunc, UnAuthView } from "../test/sampleApp"
 import { ApiView, JetKitLambdaFunction } from "./api/api"
 import { Node14Func } from "./lambda/node14func"
 
@@ -280,6 +280,52 @@ describe("Lambda() construct generation of APIs", () => {
       Handler: "index.topSongsHandler",
       MemorySize: 384,
       Runtime: "nodejs14.x",
+    })
+  })
+})
+
+describe("Authorization", () => {
+  let stack: Stack
+  let httpApi: HttpApi
+
+  beforeEach(() => {
+    stack = new Stack()
+    httpApi = new HttpApi(stack, "API")
+  })
+
+  it("disables authentication functions", () => {
+    new ResourceGeneratorConstruct(stack, "Gen", {
+      httpApi,
+      resources: [unauthFunc],
+    })
+
+    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
+      RouteKey: "ANY /unauthenticated",
+      AuthorizationType: "NONE",
+    })
+    expect(stack).toHaveResource("AWS::Lambda::Function", {
+      Environment: {
+        Variables: defaultEnvVars,
+      },
+      Handler: "index.unauthFunc",
+    })
+  })
+
+  it("disables authentication for ApiView", () => {
+    new ResourceGeneratorConstruct(stack, "Gen", {
+      httpApi,
+      resources: [UnAuthView],
+    })
+
+    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
+      RouteKey: "ANY /unauthView",
+      AuthorizationType: "NONE",
+    })
+    expect(stack).toHaveResource("AWS::Lambda::Function", {
+      Environment: {
+        Variables: defaultEnvVars,
+      },
+      Handler: "index.handler",
     })
   })
 })

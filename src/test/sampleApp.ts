@@ -77,3 +77,16 @@ Lambda({
   memorySize: 384,
   schedule: Schedule.rate(Duration.minutes(10)),
 })(scheduledFunc)
+
+// unauthenticated route
+export const unauthFunc = () => console.log("does not require authentication")
+Lambda({
+  unauthenticated: true,
+  path: "/unauthenticated",
+})(unauthFunc)
+
+// unauthenticated ApiView
+@ApiView({
+  path: "/unauthView",
+})
+export class UnAuthView extends ApiViewBase {}

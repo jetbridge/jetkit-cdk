@@ -57,15 +57,26 @@ interface RoutePropertyDescriptor extends PropertyDescriptor {
   value?: ApiHandler
 }
 
-export interface ISubRouteProps {
+export interface IRoutePropsBase {
+  /**
+   * Route.
+   *
+   * e.g. "/v1/foo/bar"
+   */
   path: string
+
+  /**
+   * Enabled {@link HttpMethod}s for route
+   */
   methods?: HttpMethod[]
+
+  // disable authorization?
+  unauthenticated?: boolean
 }
 
-export interface IRouteProps extends FunctionOptions {
-  path: string
-  methods?: HttpMethod[]
-}
+export type ISubRouteProps = IRoutePropsBase
+
+export interface IRouteProps extends FunctionOptions, IRoutePropsBase {}
 
 export interface IScheduledProps extends FunctionOptions {
   schedule: Schedule
@@ -129,7 +140,7 @@ export type PossibleLambdaHandlers = ApiHandler | ScheduledHandler
  * @category Metadata Decorator
  */
 export function Lambda<HandlerT extends PossibleLambdaHandlers = PossibleLambdaHandlers>(
-  props: IRouteProps | IScheduledProps
+  props: Partial<IRouteProps> | IScheduledProps
 ) {
   return (wrapped: HandlerT) => {
     // here we figure out the entrypoint path and function handler name:
