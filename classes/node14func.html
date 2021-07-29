@@ -112,6 +112,8 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="node14func.html#functionarn" class="tsd-kind-icon">function<wbr>Arn</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="node14func.html#functionname" class="tsd-kind-icon">function<wbr>Name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="node14func.html#grantprincipal" class="tsd-kind-icon">grant<wbr>Principal</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="node14func.html#metadatatarget" class="tsd-kind-icon">metadata<wbr>Target</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="node14func.html#name" class="tsd-kind-icon">name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="node14func.html#node" class="tsd-kind-icon">node</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="node14func.html#permissionsnode" class="tsd-kind-icon">permissions<wbr>Node</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="node14func.html#physicalname" class="tsd-kind-icon">physical<wbr>Name</a></li>
@@ -131,7 +133,7 @@
 								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-external"><a href="node14func.html#loggroup" class="tsd-kind-icon">log<wbr>Group</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-inherited tsd-is-external">
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="node14func.html#_checkedgecompatibility" class="tsd-kind-icon">_check<wbr>Edge<wbr>Compatibility</a></li>
@@ -148,6 +150,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="node14func.html#applyremovalpolicy" class="tsd-kind-icon">apply<wbr>Removal<wbr>Policy</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="node14func.html#configureasyncinvoke" class="tsd-kind-icon">configure<wbr>Async<wbr>Invoke</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="node14func.html#generatephysicalname" class="tsd-kind-icon">generate<wbr>Physical<wbr>Name</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="node14func.html#getmetadatatarget" class="tsd-kind-icon">get<wbr>Metadata<wbr>Target</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="node14func.html#getresourcearnattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Arn<wbr>Attribute</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="node14func.html#getresourcenameattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Name<wbr>Attribute</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="node14func.html#grantinvoke" class="tsd-kind-icon">grant<wbr>Invoke</a></li>
@@ -186,14 +189,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Node14<wbr>Func<span class="tsd-signature-symbol">(</span>scope<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Construct</span>, id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, props<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NodejsFunctionProps</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="node14func.html" class="tsd-signature-type" data-tsd-kind="Class">Node14Func</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Node14<wbr>Func<span class="tsd-signature-symbol">(</span>scope<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Construct</span>, id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, props<span class="tsd-signature-symbol">: </span><a href="../interfaces/node14funcprops.html" class="tsd-signature-type" data-tsd-kind="Interface">Node14FuncProps</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="node14func.html" class="tsd-signature-type" data-tsd-kind="Class">Node14Func</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides NodejsFunction.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/1c3dfdc/src/cdk/lambda/node14func.ts#L14">src/cdk/lambda/node14func.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/7746dfe/src/cdk/lambda/node14func.ts#L58">src/cdk/lambda/node14func.ts:58</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -205,7 +208,7 @@
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>props: <span class="tsd-signature-type">NodejsFunctionProps</span></h5>
+									<h5>props: <a href="../interfaces/node14funcprops.html" class="tsd-signature-type" data-tsd-kind="Interface">Node14FuncProps</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="node14func.html" class="tsd-signature-type" data-tsd-kind="Class">Node14Func</a></h4>
@@ -262,7 +265,7 @@
 					<div class="tsd-signature tsd-kind-icon">bundling<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">BundlingOptions</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/1c3dfdc/src/cdk/lambda/node14func.ts#L14">src/cdk/lambda/node14func.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/7746dfe/src/cdk/lambda/node14func.ts#L56">src/cdk/lambda/node14func.ts:56</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -399,6 +402,26 @@
 							</dd>
 						</dl>
 					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="metadatatarget" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagOptional">Optional</span> metadata<wbr>Target</h3>
+					<div class="tsd-signature tsd-kind-icon">metadata<wbr>Target<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">WeakRef</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/7746dfe/src/cdk/lambda/node14func.ts#L57">src/cdk/lambda/node14func.ts:57</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="name" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/7746dfe/src/cdk/lambda/node14func.ts#L58">src/cdk/lambda/node14func.ts:58</a></li>
+						</ul>
+					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="node" class="tsd-anchor"></a>
@@ -711,7 +734,7 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited tsd-is-external">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="_checkedgecompatibility" class="tsd-anchor"></a>
@@ -1240,6 +1263,23 @@
 								</dl>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getmetadatatarget" class="tsd-anchor"></a>
+					<h3>get<wbr>Metadata<wbr>Target</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Metadata<wbr>Target<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/7746dfe/src/cdk/lambda/node14func.ts#L72">src/cdk/lambda/node14func.ts:72</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -2303,6 +2343,12 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="node14func.html#grantprincipal" class="tsd-kind-icon">grant<wbr>Principal</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="node14func.html#metadatatarget" class="tsd-kind-icon">metadata<wbr>Target</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="node14func.html#name" class="tsd-kind-icon">name</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="node14func.html#node" class="tsd-kind-icon">node</a>
 							</li>
@@ -2380,6 +2426,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
 								<a href="node14func.html#generatephysicalname" class="tsd-kind-icon">generate<wbr>Physical<wbr>Name</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="node14func.html#getmetadatatarget" class="tsd-kind-icon">get<wbr>Metadata<wbr>Target</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
 								<a href="node14func.html#getresourcearnattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Arn<wbr>Attribute</a>
@@ -2509,6 +2558,9 @@
 						<a href="../interfaces/isubrouteprops.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="../interfaces/node14funcprops.html" class="tsd-kind-icon">Node14<wbr>Func<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="../interfaces/resourcegeneratorprops.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface">
@@ -2521,10 +2573,10 @@
 						<a href="../modules.html#apiresponse" class="tsd-kind-icon">Api<wbr>Response</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="../modules.html#metadatatarget" class="tsd-kind-icon">Metadata<wbr>Target</a>
+						<a href="../modules.html#generatedfunction" class="tsd-kind-icon">Generated<wbr>Function</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="../modules.html#node14funcprops" class="tsd-kind-icon">Node14<wbr>Func<wbr>Props</a>
+						<a href="../modules.html#metadatatarget" class="tsd-kind-icon">Metadata<wbr>Target</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../modules.html#db_cluster_env" class="tsd-kind-icon">DB_<wbr>CLUSTER_<wbr>ENV</a>
@@ -2573,10 +2625,11 @@
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
