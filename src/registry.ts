@@ -71,7 +71,7 @@ export interface IRoutePropsBase {
   methods?: HttpMethod[]
 
   // disable authorization?
-  unauthenticated?: boolean
+  unauthorized?: boolean
 }
 
 export type ISubRouteProps = IRoutePropsBase

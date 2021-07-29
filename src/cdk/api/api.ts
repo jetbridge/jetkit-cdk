@@ -74,11 +74,7 @@ export class ApiView extends ApiViewMixin implements IEndpoint {
   handlerFunction: JetKitLambdaFunction
   lambdaApiIntegration: LambdaProxyIntegration
 
-  constructor(
-    scope: Construct,
-    id: string,
-    { httpApi, methods, path = "/", handlerFunction, unauthenticated }: ApiProps
-  ) {
+  constructor(scope: Construct, id: string, { httpApi, methods, path = "/", handlerFunction, unauthorized }: ApiProps) {
     super(scope, id)
 
     // lambda handler
@@ -96,7 +92,7 @@ export class ApiView extends ApiViewMixin implements IEndpoint {
     this.httpApi = httpApi
     this.methods = methods
     this.path = path
-    const routes: IAddRoutes = { httpApi, path, lambdaApiIntegration: this.lambdaApiIntegration, unauthenticated }
+    const routes: IAddRoutes = { httpApi, path, lambdaApiIntegration: this.lambdaApiIntegration, unauthorized }
     if (methods) {
       this.methods = methods
       routes.methods = methods

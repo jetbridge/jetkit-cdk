@@ -292,7 +292,19 @@ describe("Authorization", () => {
 
   beforeEach(() => {
     stack = new Stack()
-    httpApi = new HttpApi(stack, "API")
+
+    // dummy authorizer
+    const authHandler = new Function(stack, "auth-function", {
+      code: Code.fromInline("1"),
+      runtime: Runtime.NODEJS,
+      handler: "main",
+    })
+    const authorizer = new HttpLambdaAuthorizer({
+      handler: authHandler,
+      authorizerName: "dummy",
+    })
+
+    httpApi = new HttpApi(stack, "API", { defaultAuthorizer: authorizer })
   })
 
   it("disables authentication functions", () => {
