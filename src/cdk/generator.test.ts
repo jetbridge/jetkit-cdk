@@ -317,12 +317,6 @@ describe("Authorization", () => {
       RouteKey: "ANY /unauthenticated",
       AuthorizationType: "NONE",
     })
-    expect(stack).toHaveResource("AWS::Lambda::Function", {
-      Environment: {
-        Variables: defaultEnvVars,
-      },
-      Handler: "index.unauthFunc",
-    })
   })
 
   it("disables authentication for ApiView", () => {
@@ -334,12 +328,6 @@ describe("Authorization", () => {
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "ANY /unauthView",
       AuthorizationType: "NONE",
-    })
-    expect(stack).toHaveResource("AWS::Lambda::Function", {
-      Environment: {
-        Variables: defaultEnvVars,
-      },
-      Handler: "index.handler",
     })
   })
 })
