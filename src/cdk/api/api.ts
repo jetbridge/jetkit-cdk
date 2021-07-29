@@ -3,7 +3,6 @@ import {
   HttpApi,
   HttpMethod,
   HttpNoneAuthorizer,
-  HttpRouteProps,
   PayloadFormatVersion,
 } from "@aws-cdk/aws-apigatewayv2"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
@@ -39,7 +38,7 @@ export interface IAddRoutes extends IEndpoint {
 }
 
 export abstract class ApiViewMixin extends Construct {
-  addRoutes({ methods, path = "/", httpApi, lambdaApiIntegration, unauthorized, ...rest }: IAddRoutes) {
+  addRoutes({ methods, path = "/", httpApi, lambdaApiIntegration, unauthorized }: IAddRoutes) {
     methods = methods || [HttpMethod.ANY]
 
     if (!methods.length) return
@@ -50,7 +49,6 @@ export abstract class ApiViewMixin extends Construct {
       integration: lambdaApiIntegration,
       // disable authorization?
       ...(unauthorized ? { authorizer: new HttpNoneAuthorizer() } : {}),
-      ...rest,
     }
     const routes = httpApi.addRoutes(routeOptions)
 
@@ -79,7 +77,7 @@ export class ApiView extends ApiViewMixin implements IEndpoint {
   constructor(
     scope: Construct,
     id: string,
-    { httpApi, methods, path = "/", handlerFunction, unauthorized, ...rest }: ApiProps
+    { httpApi, methods, path = "/", handlerFunction, unauthenticated }: ApiProps
   ) {
     super(scope, id)
 
@@ -98,8 +96,11 @@ export class ApiView extends ApiViewMixin implements IEndpoint {
     this.httpApi = httpApi
     this.methods = methods
     this.path = path
-
-    // create routes
+    const routes: IAddRoutes = { httpApi, path, lambdaApiIntegration: this.lambdaApiIntegration, unauthenticated }
+    if (methods) {
+      this.methods = methods
+      routes.methods = methods
+    }
     this.addRoutes(routes)
   }
 }

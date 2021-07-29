@@ -292,19 +292,7 @@ describe("Authorization", () => {
 
   beforeEach(() => {
     stack = new Stack()
-
-    // dummy authorizer
-    const authHandler = new Function(stack, "auth-function", {
-      code: Code.fromInline("1"),
-      runtime: Runtime.NODEJS,
-      handler: "main",
-    })
-    const authorizer = new HttpLambdaAuthorizer({
-      handler: authHandler,
-      authorizerName: "dummy",
-    })
-
-    httpApi = new HttpApi(stack, "API", { defaultAuthorizer: authorizer })
+    httpApi = new HttpApi(stack, "API")
   })
 
   it("disables authentication functions", () => {
@@ -317,6 +305,12 @@ describe("Authorization", () => {
       RouteKey: "ANY /unauthenticated",
       AuthorizationType: "NONE",
     })
+    expect(stack).toHaveResource("AWS::Lambda::Function", {
+      Environment: {
+        Variables: defaultEnvVars,
+      },
+      Handler: "index.unauthFunc",
+    })
   })
 
   it("disables authentication for ApiView", () => {
@@ -328,6 +322,12 @@ describe("Authorization", () => {
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "ANY /unauthView",
       AuthorizationType: "NONE",
+    })
+    expect(stack).toHaveResource("AWS::Lambda::Function", {
+      Environment: {
+        Variables: defaultEnvVars,
+      },
+      Handler: "index.handler",
     })
   })
 })

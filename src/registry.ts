@@ -57,7 +57,7 @@ interface RoutePropertyDescriptor extends PropertyDescriptor {
   value?: ApiHandler
 }
 
-export interface IRoutePropsBase extends Partial<HttpRouteProps> {
+export interface IRoutePropsBase {
   /**
    * Route.
    *
@@ -71,7 +71,7 @@ export interface IRoutePropsBase extends Partial<HttpRouteProps> {
   methods?: HttpMethod[]
 
   // disable authorization?
-  unauthorized?: boolean
+  unauthenticated?: boolean
 }
 
 export type ISubRouteProps = IRoutePropsBase
