@@ -19,7 +19,7 @@ export {
 } from "./cdk/generator"
 
 // convient AWS CDK utilities to have
-export { CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2"
+export { CorsHttpMethod, HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 export { Duration } from "@aws-cdk/core"
 
 // api
