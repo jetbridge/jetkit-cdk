@@ -253,6 +253,7 @@ describe("Lambda() construct generation of APIs", () => {
   it("generates endpoints for standalone functions", () => {
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "PUT /top-songs",
+      AuthorizationScopes: ["charts:read"],
     })
     expect(stack).toHaveResource("AWS::Lambda::Function", {
       Environment: {

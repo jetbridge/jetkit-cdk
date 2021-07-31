@@ -50,6 +50,7 @@ export async function topSongsHandler(event: ApiEvent) {
 Lambda({
   path: "/top-songs",
   methods: [HttpMethod.PUT],
+  authorizationScopes: ["charts:read"],
   memorySize: 384,
   environment: {
     LOG_LEVEL: "WARN",

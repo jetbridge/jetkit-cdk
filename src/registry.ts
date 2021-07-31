@@ -1,4 +1,4 @@
-import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
+import { HttpMethod, HttpRouteProps } from "@aws-cdk/aws-apigatewayv2"
 import { Schedule } from "@aws-cdk/aws-events"
 import { ScheduledHandler } from "aws-lambda"
 import fs from "fs"
@@ -57,7 +57,7 @@ interface RoutePropertyDescriptor extends PropertyDescriptor {
   value?: ApiHandler
 }
 
-export interface IRoutePropsBase {
+export interface IRoutePropsBase extends Partial<HttpRouteProps> {
   /**
    * Route.
    *
