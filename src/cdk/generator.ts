@@ -99,7 +99,6 @@ export class ResourceGenerator extends Construct {
    * Lambda functions that were generated.
    */
   generatedFunctions: GeneratedFunction[]
-
   functionPrefix?: string
 
   private layerCounter = 1
@@ -189,7 +188,6 @@ export class ResourceGenerator extends Construct {
     const handlerFunction = new JetKitLambdaFunction(this, `F${this.funcCounter++}-${name}`, {
       ...rest,
       functionName,
-
       name,
       metadataTarget,
     })
