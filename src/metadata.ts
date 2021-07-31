@@ -34,7 +34,9 @@ export type MetadataTarget = PossibleLambdaHandlers | MetadataTargetConstructor
 /**
  * Metadata describing any Lambda function.
  */
-export interface IFunctionMetadataBase extends FunctionOptions, Pick<HttpRouteProps, "authorizationScopes"> {
+export interface IFunctionMetadataBase
+  extends FunctionOptions,
+    Pick<HttpRouteProps, "authorizationScopes" | "authorizer"> {
   /**
    * An optional API Gateway path to trigger this function.
    */

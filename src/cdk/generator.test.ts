@@ -11,6 +11,7 @@ import * as path from "path"
 import { ApiViewConstruct, ResourceGeneratorConstruct } from ".."
 import {
   AlbumApi,
+  authFunc,
   AuthScopeView,
   scheduledFunc,
   topSongsFuncInner,
@@ -335,6 +336,22 @@ describe("Authorization", () => {
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "ANY /unauthView",
       AuthorizationType: "NONE",
+    })
+  })
+
+  it("requires authentication scopes for function route", () => {
+    new ResourceGeneratorConstruct(stack, "Gen", {
+      httpApi,
+      resources: [authFunc],
+    })
+
+    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
+      AuthorizationScopes: ["charts:write"],
+      RouteKey: "ANY /authenticated",
+      AuthorizationType: "CUSTOM",
+      AuthorizerId: {
+        Ref: stringLike("APIdummy*"),
+      },
     })
   })
 

@@ -98,3 +98,10 @@ export class UnAuthView extends ApiViewBase {}
   authorizationScopes: ["charts:read"],
 })
 export class AuthScopeView extends ApiViewBase {}
+
+// authenticated func
+export const authFunc = () => console.log("requires authentication")
+Lambda({
+  authorizationScopes: ["charts:write"],
+  path: "/authenticated",
+})(authFunc)
