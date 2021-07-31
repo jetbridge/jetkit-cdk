@@ -21,7 +21,7 @@
     "prepare": "husky install",
     "prepack": "npm run build",
     "rel:patch": "npm version patch && npm publish",
-    "rel:minor": "npm version minor && npm publish"
+    "rel:minor": "npm version minor && npm publish",
     "rel:next": "npm version minor && npm publish --tag next"
   },
   "author": "JetBridge Software Inc.",
