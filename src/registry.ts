@@ -57,7 +57,7 @@ interface RoutePropertyDescriptor extends PropertyDescriptor {
   value?: ApiHandler
 }
 
-export interface IRoutePropsBase {
+export interface IRoutePropsBase extends Partial<HttpRouteProps> {
   /**
    * Route.
    *
