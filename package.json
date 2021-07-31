@@ -1,6 +1,6 @@
 {
   "name": "@jetkit/cdk",
-  "version": "1.115.11",
+  "version": "1.115.12",
   "description": "Cloud-native serverless anti-framework",
   "types": "build/esm/index.d.ts",
   "main": "build/cjs/index.js",
