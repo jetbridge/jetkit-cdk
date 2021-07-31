@@ -50,7 +50,6 @@ export async function topSongsHandler(event: ApiEvent) {
 Lambda({
   path: "/top-songs",
   methods: [HttpMethod.PUT],
-  authorizationScopes: ["charts:read"],
   memorySize: 384,
   environment: {
     LOG_LEVEL: "WARN",
@@ -92,3 +91,10 @@ Lambda({
   path: "/unauthView",
 })
 export class UnAuthView extends ApiViewBase {}
+
+// authenticated ApiView
+@ApiView({
+  path: "/authView",
+  authorizationScopes: ["charts:read"],
+})
+export class AuthScopeView extends ApiViewBase {}
