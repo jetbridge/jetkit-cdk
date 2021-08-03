@@ -1,6 +1,6 @@
 {
   "name": "@jetkit/cdk",
-  "version": "1.115.8",
+  "version": "1.115.12",
   "description": "Cloud-native serverless anti-framework",
   "types": "build/esm/index.d.ts",
   "main": "build/cjs/index.js",
@@ -21,7 +21,8 @@
     "prepare": "husky install",
     "prepack": "npm run build",
     "rel:patch": "npm version patch && npm publish",
-    "rel:minor": "npm version minor && npm publish"
+    "rel:minor": "npm version minor && npm publish",
+    "rel:next": "npm version patch && npm publish --tag next"
   },
   "author": "JetBridge Software Inc.",
   "license": "MIT",
