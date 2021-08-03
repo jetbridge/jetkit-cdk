@@ -96,6 +96,8 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="icrudapimetadata.html#allowalloutbound" class="tsd-kind-icon">allow<wbr>All<wbr>Outbound</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="icrudapimetadata.html#allowpublicsubnet" class="tsd-kind-icon">allow<wbr>Public<wbr>Subnet</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="icrudapimetadata.html#apiclass" class="tsd-kind-icon">api<wbr>Class</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="icrudapimetadata.html#authorizationscopes" class="tsd-kind-icon">authorization<wbr>Scopes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="icrudapimetadata.html#authorizer" class="tsd-kind-icon">authorizer</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="icrudapimetadata.html#awssdkconnectionreuse" class="tsd-kind-icon">aws<wbr>Sdk<wbr>Connection<wbr>Reuse</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="icrudapimetadata.html#bundling" class="tsd-kind-icon">bundling</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="icrudapimetadata.html#codesigningconfig" class="tsd-kind-icon">code<wbr>Signing<wbr>Config</a></li>
@@ -208,9 +210,60 @@
 					<div class="tsd-signature tsd-kind-icon">api<wbr>Class<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">typeof </span><a href="../classes/apiviewbase.html" class="tsd-signature-type" data-tsd-kind="Class">ApiViewBase</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/79b00f3/src/metadata.ts#L89">src/metadata.ts:89</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/metadata.ts#L91">src/metadata.ts:91</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
+					<a name="authorizationscopes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> authorization<wbr>Scopes</h3>
+					<div class="tsd-signature tsd-kind-icon">authorization<wbr>Scopes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#authorizationscopes">authorizationScopes</a></p>
+						<ul>
+							<li>Defined in node_modules/@aws-cdk/aws-apigatewayv2/lib/http/route.d.ts:168</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>(experimental) The list of OIDC scopes to include in the authorization.</p>
+						</div>
+						<p>These scopes will be merged with the scopes from the attached authorizer</p>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><ul>
+									<li>no additional authorization scopes</li>
+								</ul>
+							</dd>
+							<dt>experimental</dt>
+							<dd></dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
+					<a name="authorizer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> authorizer</h3>
+					<div class="tsd-signature tsd-kind-icon">authorizer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">IHttpRouteAuthorizer</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#authorizer">authorizer</a></p>
+						<ul>
+							<li>Defined in node_modules/@aws-cdk/aws-apigatewayv2/lib/http/route.d.ts:159</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>(experimental) Authorizer for a WebSocket API or an HTTP API.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><ul>
+									<li>No authorizer</li>
+								</ul>
+							</dd>
+							<dt>experimental</dt>
+							<dd></dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 					<a name="awssdkconnectionreuse" class="tsd-anchor"></a>
@@ -438,7 +491,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#entry">entry</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/79b00f3/src/metadata.ts#L52">src/metadata.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/metadata.ts#L54">src/metadata.ts:54</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -598,7 +651,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#grantdatabaseaccess">grantDatabaseAccess</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/79b00f3/src/cdk/generator.ts#L34">src/cdk/generator.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/cdk/generator.ts#L34">src/cdk/generator.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -660,7 +713,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#layerarns">layerArns</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/79b00f3/src/cdk/generator.ts#L32">src/cdk/generator.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/cdk/generator.ts#L32">src/cdk/generator.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -833,18 +886,18 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#metadatatarget">metadataTarget</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/79b00f3/src/cdk/lambda/node14func.ts#L10">src/cdk/lambda/node14func.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/cdk/lambda/node14func.ts#L10">src/cdk/lambda/node14func.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="methods" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> methods</h3>
-					<div class="tsd-signature tsd-kind-icon">methods<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HttpMethod</span><span class="tsd-signature-symbol">[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">methods<span class="tsd-signature-symbol">:</span> <a href="../enums/httpmethod.html" class="tsd-signature-type" data-tsd-kind="Enumeration">HttpMethod</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#methods">methods</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/79b00f3/src/metadata.ts#L46">src/metadata.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/metadata.ts#L48">src/metadata.ts:48</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -860,7 +913,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#name">name</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/79b00f3/src/cdk/lambda/node14func.ts#L13">src/cdk/lambda/node14func.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/cdk/lambda/node14func.ts#L13">src/cdk/lambda/node14func.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -923,7 +976,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#path">path</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/79b00f3/src/metadata.ts#L41">src/metadata.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/metadata.ts#L43">src/metadata.ts:43</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1138,7 +1191,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#schedule">schedule</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/79b00f3/src/metadata.ts#L58">src/metadata.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/metadata.ts#L60">src/metadata.ts:60</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1267,7 +1320,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#unauthorized">unauthorized</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/79b00f3/src/metadata.ts#L66">src/metadata.ts:66</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/metadata.ts#L68">src/metadata.ts:68</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1285,7 +1338,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="iapimetadata.html">IApiMetadata</a>.<a href="iapimetadata.html#vpc">vpc</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/79b00f3/src/cdk/generator.ts#L40">src/cdk/generator.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/cdk/generator.ts#L40">src/cdk/generator.ts:40</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1337,6 +1390,9 @@
 				<ul class="before-current">
 					<li class=" tsd-kind-enum tsd-is-external">
 						<a href="../enums/corshttpmethod.html" class="tsd-kind-icon">Cors<wbr>Http<wbr>Method</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-is-external">
+						<a href="../enums/httpmethod.html" class="tsd-kind-icon">Http<wbr>Method</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/albumapi.html" class="tsd-kind-icon">Album<wbr>Api</a>
@@ -1399,6 +1455,12 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="icrudapimetadata.html#apiclass" class="tsd-kind-icon">api<wbr>Class</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
+								<a href="icrudapimetadata.html#authorizationscopes" class="tsd-kind-icon">authorization<wbr>Scopes</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
+								<a href="icrudapimetadata.html#authorizer" class="tsd-kind-icon">authorizer</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 								<a href="icrudapimetadata.html#awssdkconnectionreuse" class="tsd-kind-icon">aws<wbr>Sdk<wbr>Connection<wbr>Reuse</a>
