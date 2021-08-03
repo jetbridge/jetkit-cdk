@@ -72,7 +72,8 @@
     "convict": "^6.1.0",
     "deepmerge": "^4.2.2",
     "is-plain-object": "^2.0.4",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "slugify": "^1.6.0"
   },
   "peerDependenciesMeta": {
     "prisma": {

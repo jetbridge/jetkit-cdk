@@ -17,6 +17,7 @@ import { IVpc } from "@aws-cdk/aws-ec2"
 import { debug } from "../util/log"
 import { Node14Func, Node14FuncProps } from "./lambda/node14func"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
+import slugify from "slugify"
 
 // env vars
 export const DB_CLUSTER_ENV = "DB_CLUSTER_ARN"
@@ -279,16 +280,18 @@ export class ResourceGenerator extends Construct {
   }
 
   /**
-   * Create a handler function for the class and any additional
+   * Create a single handler function for the class and any additional
    * routed methods inside it.
    */
   generateConstructsForClass(resource: MetadataTarget) {
     // API view
     const apiViewMeta = getApiViewMetadata(resource)
+    let className: string
     let lambdaApiIntegration: undefined | LambdaProxyIntegration
-    if (apiViewMeta) {
-      const name = apiViewMeta.apiClass.name
 
+    // parse @ApiView meta and create lambda
+    if (apiViewMeta) {
+      className = apiViewMeta.apiClass.name
       // merge function option defaults with options from attached metadata (from decorator)
       const mergedOptions = this.mergeFunctionDefaults(apiViewMeta)
 
@@ -296,7 +299,7 @@ export class ResourceGenerator extends Construct {
         throw new Error("schedule is not supported on ApiView for now (it could be easily added if desired)")
 
       // create lambda function
-      const handlerFunction = this.createLambdaFunction(name, resource, mergedOptions)
+      const handlerFunction = this.createLambdaFunction(className, resource, mergedOptions)
       // create lambda proxy integration for APIGW
       lambdaApiIntegration = new LambdaProxyIntegration({
         handler: handlerFunction,
@@ -305,11 +308,10 @@ export class ResourceGenerator extends Construct {
     }
 
     // SubRoutes - methods with their own routes
-    // handled by the classes's handler
+    // handled by the class's handler
     const subRoutes = getSubRouteMetadata(resource)
     if (subRoutes) {
       subRoutes.forEach((meta) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { path: metaPath, propertyKey, ...metaRest } = meta
 
         if (!lambdaApiIntegration || !apiViewMeta)
@@ -318,13 +320,13 @@ export class ResourceGenerator extends Construct {
         const httpApi = this.httpApi
         if (!httpApi) throw new Error(`API paths defined but httpApi was not provided to ${meta}`)
 
-        // TODO: include parent api class name in id
-        // TODO: do something with propertyKey and HandlerFunc
         const path = metaPath
-        new SubRouteApi(this, `SubRoute-${meta.propertyKey}`, {
+        const parentPath = apiViewMeta.path || "/"
+        const subRouteApiId = slugify(`SR-${className || parentPath}-${propertyKey}`)
+        new SubRouteApi(this, subRouteApiId, {
           path,
           httpApi,
-          parentPath: apiViewMeta.path || "/",
+          parentPath,
           ...metaRest,
           lambdaApiIntegration,
           parentApiMeta: apiViewMeta,

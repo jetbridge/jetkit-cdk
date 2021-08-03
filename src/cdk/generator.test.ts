@@ -160,11 +160,11 @@ describe("@SubRoute construct generation", () => {
   })
   it("has route outputs", () => {
     expect(stack).toHaveOutput({
-      outputName: "GenSubRoutelikeRoute6CEDD760E",
+      outputName: "GenSRAlbumApilikeRoute6C6175CC5",
       outputValue: "POST,DELETE /album/{albumId}/like",
     })
     expect(stack).toHaveOutput({
-      outputName: "GenSubRoutepostRoute57A42D89F",
+      outputName: "GenSRAlbumApipostRoute5F0E8C334",
       outputValue: "POST /album",
     })
 
