@@ -9,7 +9,7 @@ import { Schedule } from "@aws-cdk/aws-events"
 import "reflect-metadata"
 import { ApiHandler, ApiViewBase } from "./api/base"
 import { FunctionOptions } from "./cdk/generator"
-import { ApiViewOpts, PossibleLambdaHandlers } from "./registry"
+import { ApiViewOpts, IRoutePropsBase, PossibleLambdaHandlers } from "./registry"
 
 /**
  * A class we can apply @ApiView to.
@@ -33,19 +33,7 @@ export type MetadataTarget = PossibleLambdaHandlers | MetadataTargetConstructor
 /**
  * Metadata describing any Lambda function.
  */
-export interface IFunctionMetadataBase
-  extends FunctionOptions,
-    Pick<HttpRouteProps, "authorizationScopes" | "authorizer"> {
-  /**
-   * An optional API Gateway path to trigger this function.
-   */
-  path?: string
-
-  /**
-   * If `path` is defined, this determines which methods the path responds to.
-   */
-  methods?: HttpMethod[]
-
+export interface IFunctionMetadataBase extends FunctionOptions, Partial<IRoutePropsBase> {
   /**
    * Path to the file containing the handler.
    * Normally shouldn't need to be specified and can be guessed.
@@ -57,14 +45,6 @@ export interface IFunctionMetadataBase
    * Triggers a CloudWatch Event.
    */
   schedule?: Schedule
-
-  /**
-   * Disable default authorizer.
-   *
-   * Set to true for routes that do not require authentication
-   * if your routes normally require it.
-   */
-  unauthorized?: boolean
 }
 
 /**

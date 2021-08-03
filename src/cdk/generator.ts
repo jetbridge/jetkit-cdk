@@ -309,7 +309,7 @@ export class ResourceGenerator extends Construct {
     // handled by the classes's handler
     const subRoutes = getSubRouteMetadata(resource)
     if (subRoutes) {
-      subRoutes.forEach((meta, subroutePath) => {
+      subRoutes.forEach((meta) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { path: metaPath, propertyKey, ...metaRest } = meta
 
@@ -317,7 +317,7 @@ export class ResourceGenerator extends Construct {
 
         // TODO: include parent api class name in id
         // TODO: do something with propertyKey and HandlerFunc
-        const path = metaPath || subroutePath
+        const path = metaPath
         new SubRouteApi(this, `SubRoute-${meta.propertyKey}`, {
           path,
           ...metaRest,

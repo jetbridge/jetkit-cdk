@@ -90,18 +90,11 @@ describe("@ApiView construct generation", () => {
     expect(found?.name).toEqual("AlbumApi")
   })
 
-  it("can find APIView function by cctor", () => {
+  it("can find APIView function by ctor", () => {
     const found = generator.getFunction({ ctor: AlbumApi })
     expect(found).toBeTruthy()
     expect(found).toBeInstanceOf(Node14Func)
     expect(found?.name).toEqual("AlbumApi")
-  })
-
-  it("generates APIGW routes", () => {
-    // should have routes
-    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
-      RouteKey: "ANY /album",
-    })
   })
 
   it("creates lambda handler", () => {
@@ -129,7 +122,7 @@ describe("@ApiView construct generation", () => {
     expect(generator.functionOptions?.entry).toBeFalsy()
   })
 
-  it("creates a route with any method", () => {
+  it("doesn't create routes for empty api view", () => {
     const entry = path.join(__dirname, "..", "test", "sampleApp.ts")
     const addRoutesSpy = jest.spyOn(httpApi, "addRoutes")
     const handlerFunction = new JetKitLambdaFunction(stack, "Func", { entry })
@@ -141,18 +134,14 @@ describe("@ApiView construct generation", () => {
       methods: [],
     })
 
-    const view = new ApiView(stack, "V2", {
+    new ApiView(stack, "V2", {
       path: "/a",
       httpApi,
       handlerFunction,
       // methods defaults to [ANY]
     })
 
-    expect(addRoutesSpy).toHaveBeenCalledWith({
-      path: "/a",
-      methods: [HttpMethod.ANY],
-      integration: view.lambdaApiIntegration,
-    })
+    expect(addRoutesSpy).not.toHaveBeenCalled()
   })
 })
 
@@ -183,9 +172,10 @@ describe("@SubRoute construct generation", () => {
       outputValue: "POST,DELETE /album/{albumId}/like",
     })
     expect(stack).toHaveOutput({
-      outputName: "GenClassAlbumApi1Route59A25E34B",
-      outputValue: "ANY /album",
+      outputName: "GenSubRoutepostRoute57A42D89F",
+      outputValue: "POST /album",
     })
+
     expect(stack).toHaveOutput({
       exportName: {
         "Fn::Join": [
@@ -334,7 +324,7 @@ describe("Authorization", () => {
     })
 
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
-      RouteKey: "ANY /unauthView",
+      RouteKey: "GET /unauthView",
       AuthorizationType: "NONE",
     })
   })

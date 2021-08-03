@@ -93,7 +93,12 @@ Lambda({
   unauthorized: true,
   path: "/unauthView",
 })
-export class UnAuthView extends ApiViewBase {}
+export class UnAuthView extends ApiViewBase {
+  @SubRoute({ methods: [HttpMethod.GET] })
+  async get() {
+    return "blorp"
+  }
+}
 
 // authenticated ApiView
 @ApiView({

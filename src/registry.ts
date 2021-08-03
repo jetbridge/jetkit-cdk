@@ -60,18 +60,24 @@ interface RoutePropertyDescriptor extends PropertyDescriptor {
 
 export interface IRoutePropsBase extends Partial<HttpRouteProps> {
   /**
-   * Route.
+   * An optional API Gateway path to trigger this function.
    *
    * e.g. "/v1/foo/bar"
    */
   path: string
 
   /**
-   * Enabled {@link HttpMethod}s for route
+   * Enabled {@link HttpMethod}s for route.
+   * If `path` is defined, this determines which methods the path responds to.
    */
   methods?: HttpMethod[]
 
-  // disable authorization?
+  /**
+   * Disable default authorizer.
+   *
+   * Set to true for routes that do not require authentication
+   * if your routes normally require it.
+   */
   unauthorized?: boolean
 }
 
