@@ -133,13 +133,6 @@ describe("@ApiView construct generation", () => {
       methods: [],
     })
 
-    new ApiFunction(stack, "V2", {
-      path: "/a",
-      httpApi,
-      handlerFunction,
-      // methods defaults to [ANY]
-    })
-
     expect(addRoutesSpy).not.toHaveBeenCalled()
   })
 })
