@@ -58,7 +58,7 @@ interface RoutePropertyDescriptor extends PropertyDescriptor {
   value?: ApiHandler
 }
 
-export interface IRoutePropsBase extends Partial<HttpRouteProps> {
+export interface IRoutePropsBase extends Pick<HttpRouteProps, "authorizer" | "authorizationScopes"> {
   /**
    * An optional API Gateway path to trigger this function.
    *
@@ -75,7 +75,7 @@ export interface IRoutePropsBase extends Partial<HttpRouteProps> {
   /**
    * Disable default authorizer.
    *
-   * Set to true for routes that do not require authentication
+   * Set to true for routes that do not require authorization
    * if your routes normally require it.
    */
   unauthorized?: boolean

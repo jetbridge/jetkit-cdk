@@ -4,7 +4,6 @@
 /**
  * Wrappers for getting/setting metadata on classes and class properties
  */
-import { HttpMethod, HttpRouteProps } from "@aws-cdk/aws-apigatewayv2"
 import { Schedule } from "@aws-cdk/aws-events"
 import "reflect-metadata"
 import { ApiHandler, ApiViewBase } from "./api/base"
@@ -21,7 +20,7 @@ const JK_V2_METADATA_KEY = Symbol.for("jk:v2:metadata")
 // metadata map keys
 export const JK_V2_METADATA_API_VIEW_KEY = Symbol.for("jk:v2:metadata:api:view")
 // sub-route method inside a class
-export const JK_V2_METADATA_SUBROUTES_KEY = Symbol.for("jk:v2:metadata:subroutes")
+export const JK_V2_METADATA_SUBROUTES_KEY = Symbol.for("jk:v2:metadata:subroutesuth")
 // standalone function
 export const JK_V2_METADATA_FUNCTION_KEY = Symbol.for("jk:v2:metadata:function")
 

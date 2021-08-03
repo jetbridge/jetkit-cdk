@@ -58,14 +58,15 @@ export abstract class ApiViewMixin extends Construct {
  *
  * @category Construct
  */
-export class ApiView extends ApiViewMixin implements IEndpoint {
+export class ApiFunction extends ApiViewMixin implements IEndpoint {
   httpApi: HttpApi
   path?: string
+  methods?: HttpMethod[]
 
   handlerFunction: JetKitLambdaFunction
   lambdaApiIntegration: LambdaProxyIntegration
 
-  constructor(scope: Construct, id: string, { httpApi, path = "/", handlerFunction }: ApiProps) {
+  constructor(scope: Construct, id: string, { httpApi, path = "/", methods, handlerFunction, ...rest }: ApiProps) {
     super(scope, id)
 
     // lambda handler
@@ -77,7 +78,15 @@ export class ApiView extends ApiViewMixin implements IEndpoint {
       payloadFormatVersion: PayloadFormatVersion.VERSION_2_0,
     })
 
+    // construct route params
+    const routes: IAddRoutes = { httpApi, path, lambdaApiIntegration: this.lambdaApiIntegration, ...rest }
+    if (methods) routes.methods = methods
+    this.methods = methods
+
     this.httpApi = httpApi
     this.path = path
+
+    // create routes
+    this.addRoutes(routes)
   }
 }

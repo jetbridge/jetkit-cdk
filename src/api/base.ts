@@ -10,7 +10,6 @@ import {
   ISubRouteApiMetadata,
   MetadataTarget,
 } from "../metadata"
-import { safeHas } from "../util/type"
 
 /**
  * JetKit supports using API View classes to organize your RESTful endpoints.
@@ -60,6 +59,10 @@ async function raiseNotAllowed(event: ApiEvent) {
  *
  */
 export class ApiViewBase {
+  getMetadata(): IApiViewClassMetadata | undefined {
+    return getApiViewMetadata(this.constructor as MetadataTarget)
+  }
+
   /**
    * Look up appropriate method to handle an incoming request for this view.
    *
@@ -72,7 +75,7 @@ export class ApiViewBase {
     const routeKey = event.routeKey
     // get metadata
     const apiViewClass = this.constructor as MetadataTarget
-    const viewMeta = getApiViewMetadata(apiViewClass)
+    const viewMeta = this.getMetadata()
     const subRouteMetaMap = getSubRouteMetadata(apiViewClass)
     if (!viewMeta) throw new Error(`Metadata for dispatch not found on API view ${apiViewClass}`)
     if (!viewMeta.path) return undefined

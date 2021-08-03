@@ -19,7 +19,7 @@ import {
   unauthFunc,
   UnAuthView,
 } from "../test/sampleApp"
-import { ApiView, JetKitLambdaFunction } from "./api/api"
+import { ApiFunction, JetKitLambdaFunction } from "./api/api"
 import { Node14Func } from "./lambda/node14func"
 
 const bundleBannerMsg = "--- cool bundlings mon ---"
@@ -111,8 +111,7 @@ describe("@ApiView construct generation", () => {
     })
 
     // are defaults passed through?
-    const classView = generator.node.findChild("Class-AlbumApi-1") as ApiViewConstruct
-    const handlerFunction = classView.handlerFunction
+    const handlerFunction = generator.node.findChild("F1-AlbumApi") as JetKitLambdaFunction
     expect(handlerFunction.bundling).toMatchObject({ banner: bundleBannerMsg })
 
     // ensure we don't override the defaults with function-specific settings
@@ -127,14 +126,14 @@ describe("@ApiView construct generation", () => {
     const addRoutesSpy = jest.spyOn(httpApi, "addRoutes")
     const handlerFunction = new JetKitLambdaFunction(stack, "Func", { entry })
 
-    new ApiView(stack, "V1", {
+    new ApiFunction(stack, "V1", {
       path: "/x",
       httpApi,
       handlerFunction,
       methods: [],
     })
 
-    new ApiView(stack, "V2", {
+    new ApiFunction(stack, "V2", {
       path: "/a",
       httpApi,
       handlerFunction,
@@ -305,19 +304,19 @@ describe("Authorization", () => {
     httpApi = new HttpApi(stack, "API", { defaultAuthorizer: authorizer })
   })
 
-  it("disables authentication functions", () => {
+  it("disables authorization functions", () => {
     new ResourceGeneratorConstruct(stack, "Gen", {
       httpApi,
       resources: [unauthFunc],
     })
 
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
-      RouteKey: "ANY /unauthenticated",
+      RouteKey: "ANY /unauthorized",
       AuthorizationType: "NONE",
     })
   })
 
-  it("disables authentication for ApiView", () => {
+  it("inherits disabled authorization for ApiView", () => {
     new ResourceGeneratorConstruct(stack, "Gen", {
       httpApi,
       resources: [UnAuthView],
@@ -329,7 +328,7 @@ describe("Authorization", () => {
     })
   })
 
-  it("requires authentication scopes for function route", () => {
+  it("requires authorization scopes for function route", () => {
     new ResourceGeneratorConstruct(stack, "Gen", {
       httpApi,
       resources: [authFunc],
@@ -337,7 +336,7 @@ describe("Authorization", () => {
 
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
       AuthorizationScopes: ["charts:write"],
-      RouteKey: "ANY /authenticated",
+      RouteKey: "ANY /authorized",
       AuthorizationType: "CUSTOM",
       AuthorizerId: {
         Ref: stringLike("APIdummy*"),
@@ -345,7 +344,7 @@ describe("Authorization", () => {
     })
   })
 
-  it("requires authentication scopes for ApiView", () => {
+  it("inherits authorization scopes for ApiView", () => {
     new ResourceGeneratorConstruct(stack, "Gen", {
       httpApi,
       resources: [AuthScopeView],
@@ -353,7 +352,7 @@ describe("Authorization", () => {
 
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
       AuthorizationScopes: ["charts:read"],
-      RouteKey: "ANY /authView",
+      RouteKey: "GET /authView",
       AuthorizationType: "CUSTOM",
       AuthorizerId: {
         Ref: stringLike("APIdummy*"),
