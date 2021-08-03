@@ -32,7 +32,7 @@ import { findDefiningFile } from "./util/function"
  *
  * @category Metadata Decorator
  */
-export function ApiView(opts: IFunctionMetadataBase) {
+export function ApiView(opts: ApiViewOpts) {
   // try to guess the filename where this decorator is being applied
 
   if (!opts.entry) {
