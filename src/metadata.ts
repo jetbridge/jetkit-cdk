@@ -56,6 +56,14 @@ export interface IFunctionMetadataBase extends FunctionOptions {
    * Triggers a CloudWatch Event.
    */
   schedule?: Schedule
+
+  /**
+   * Disable default authorizer.
+   *
+   * Set to true for routes that do not require authentication
+   * if your routes normally require it.
+   */
+  unauthorized?: boolean
 }
 
 /**

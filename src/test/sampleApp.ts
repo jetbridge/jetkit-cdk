@@ -50,6 +50,7 @@ export async function topSongsHandler(event: ApiEvent) {
 Lambda({
   path: "/top-songs",
   methods: [HttpMethod.PUT],
+  authorizationScopes: ["charts:read"],
   memorySize: 384,
   environment: {
     LOG_LEVEL: "WARN",
@@ -77,3 +78,17 @@ Lambda({
   memorySize: 384,
   schedule: Schedule.rate(Duration.minutes(10)),
 })(scheduledFunc)
+
+// unauthenticated route
+export const unauthFunc = () => console.log("does not require authentication")
+Lambda({
+  unauthorized: true,
+  path: "/unauthenticated",
+})(unauthFunc)
+
+// unauthenticated ApiView
+@ApiView({
+  unauthorized: true,
+  path: "/unauthView",
+})
+export class UnAuthView extends ApiViewBase {}

@@ -3,12 +3,13 @@
 import { stringLike } from "@aws-cdk/assert"
 import "@aws-cdk/assert/jest"
 import { HttpApi, HttpMethod } from "@aws-cdk/aws-apigatewayv2"
-import { FunctionOptions } from "@aws-cdk/aws-lambda"
+import { HttpLambdaAuthorizer, HttpLambdaResponseType } from "@aws-cdk/aws-apigatewayv2-authorizers"
+import { Code, Function, FunctionOptions, Runtime } from "@aws-cdk/aws-lambda"
 import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs"
 import { Duration, Stack } from "@aws-cdk/core"
 import * as path from "path"
 import { ApiViewConstruct, ResourceGeneratorConstruct } from ".."
-import { AlbumApi, scheduledFunc, topSongsFuncInner, topSongsHandler } from "../test/sampleApp"
+import { AlbumApi, scheduledFunc, topSongsFuncInner, topSongsHandler, unauthFunc, UnAuthView } from "../test/sampleApp"
 import { ApiView, JetKitLambdaFunction } from "./api/api"
 import { Node14Func } from "./lambda/node14func"
 
@@ -252,6 +253,7 @@ describe("Lambda() construct generation of APIs", () => {
   it("generates endpoints for standalone functions", () => {
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "PUT /top-songs",
+      AuthorizationScopes: ["charts:read"],
     })
     expect(stack).toHaveResource("AWS::Lambda::Function", {
       Environment: {
@@ -280,6 +282,52 @@ describe("Lambda() construct generation of APIs", () => {
       Handler: "index.topSongsHandler",
       MemorySize: 384,
       Runtime: "nodejs14.x",
+    })
+  })
+})
+
+describe("Authorization", () => {
+  let stack: Stack
+  let httpApi: HttpApi
+
+  beforeEach(() => {
+    stack = new Stack()
+
+    // dummy authorizer
+    const authHandler = new Function(stack, "auth-function", {
+      code: Code.fromInline("1"),
+      runtime: Runtime.NODEJS,
+      handler: "main",
+    })
+    const authorizer = new HttpLambdaAuthorizer({
+      handler: authHandler,
+      authorizerName: "dummy",
+    })
+
+    httpApi = new HttpApi(stack, "API", { defaultAuthorizer: authorizer })
+  })
+
+  it("disables authentication functions", () => {
+    new ResourceGeneratorConstruct(stack, "Gen", {
+      httpApi,
+      resources: [unauthFunc],
+    })
+
+    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
+      RouteKey: "ANY /unauthenticated",
+      AuthorizationType: "NONE",
+    })
+  })
+
+  it("disables authentication for ApiView", () => {
+    new ResourceGeneratorConstruct(stack, "Gen", {
+      httpApi,
+      resources: [UnAuthView],
+    })
+
+    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
+      RouteKey: "ANY /unauthView",
+      AuthorizationType: "NONE",
     })
   })
 })

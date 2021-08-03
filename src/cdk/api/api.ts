@@ -1,12 +1,21 @@
-import { HttpApi, HttpMethod, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
+import {
+  AddRoutesOptions,
+  HttpApi,
+  HttpMethod,
+  HttpNoneAuthorizer,
+  HttpRouteProps,
+  PayloadFormatVersion,
+} from "@aws-cdk/aws-apigatewayv2"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
 import { CfnOutput, Construct } from "@aws-cdk/core"
+import { IRoutePropsBase } from "../../registry"
 import { FunctionOptions } from "../generator"
 import { Node14FuncProps as JetKitLambdaFunctionProps, Node14Func as JetKitLambdaFunction } from "../lambda/node14func"
 
 export { JetKitLambdaFunction, JetKitLambdaFunctionProps }
 
 /**
+ * Definition of a lambda API integration.
  * @category Construct
  */
 export interface ApiConfig extends FunctionOptions, IEndpoint {}
@@ -15,40 +24,35 @@ export interface ApiProps extends ApiConfig {
   handlerFunction: JetKitLambdaFunction
 }
 
-export interface IEndpoint {
+export interface IEndpoint extends Partial<IRoutePropsBase> {
   /**
    * API Gateway HTTP API
    */
   httpApi: HttpApi
-
-  /**
-   * Route
-   */
-  path?: string
-
-  /**
-   * Enabled {@link HttpMethod}s for route
-   */
-  methods?: HttpMethod[]
 }
 
 let routeOutputId = 1
 
 export interface IAddRoutes extends IEndpoint {
   lambdaApiIntegration: LambdaProxyIntegration
+  unauthorized?: boolean
 }
+
 export abstract class ApiViewMixin extends Construct {
-  addRoutes({ methods, path = "/", httpApi, lambdaApiIntegration }: IAddRoutes) {
+  addRoutes({ methods, path = "/", httpApi, lambdaApiIntegration, unauthorized, ...rest }: IAddRoutes) {
     methods = methods || [HttpMethod.ANY]
 
     if (!methods.length) return
 
-    // * /path -> lambda integration
-    const routes = httpApi.addRoutes({
+    const routeOptions: AddRoutesOptions = {
       path,
       methods,
       integration: lambdaApiIntegration,
-    })
+      // disable authorization?
+      ...(unauthorized ? { authorizer: new HttpNoneAuthorizer() } : {}),
+      ...rest,
+    }
+    const routes = httpApi.addRoutes(routeOptions)
 
     // output the route for easily seeing at a glance what routes are generated
     const route = routes[0] // one for each method; don't care
@@ -72,7 +76,11 @@ export class ApiView extends ApiViewMixin implements IEndpoint {
   handlerFunction: JetKitLambdaFunction
   lambdaApiIntegration: LambdaProxyIntegration
 
-  constructor(scope: Construct, id: string, { httpApi, methods, path = "/", handlerFunction }: ApiProps) {
+  constructor(
+    scope: Construct,
+    id: string,
+    { httpApi, methods, path = "/", handlerFunction, unauthorized, ...rest }: ApiProps
+  ) {
     super(scope, id)
 
     // lambda handler
@@ -84,13 +92,14 @@ export class ApiView extends ApiViewMixin implements IEndpoint {
       payloadFormatVersion: PayloadFormatVersion.VERSION_2_0,
     })
 
+    // construct route params
+    const routes: IAddRoutes = { httpApi, path, lambdaApiIntegration: this.lambdaApiIntegration, unauthorized, ...rest }
+    if (methods) routes.methods = methods
     this.httpApi = httpApi
+    this.methods = methods
     this.path = path
-    const routes: IAddRoutes = { httpApi, path, lambdaApiIntegration: this.lambdaApiIntegration }
-    if (methods) {
-      this.methods = methods
-      routes.methods = methods
-    }
+
+    // create routes
     this.addRoutes(routes)
   }
 }
