@@ -30,7 +30,6 @@ export { ApiView, Lambda, SubRoute, IRouteProps, ISubRouteProps } from "./regist
 export {
   IFunctionMetadataBase as IApiMetadata,
   IApiViewClassMetadata,
-  ICrudApiMetadata,
   IFunctionMetadata,
   ISubRouteApiMetadata,
   MetadataTarget,

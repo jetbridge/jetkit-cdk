@@ -9,7 +9,7 @@ import { Schedule } from "@aws-cdk/aws-events"
 import "reflect-metadata"
 import { ApiHandler, ApiViewBase } from "./api/base"
 import { FunctionOptions } from "./cdk/generator"
-import { PossibleLambdaHandlers } from "./registry"
+import { ApiViewOpts, PossibleLambdaHandlers } from "./registry"
 
 /**
  * A class we can apply @ApiView to.
@@ -20,7 +20,6 @@ const JK_V2_METADATA_KEY = Symbol.for("jk:v2:metadata")
 
 // metadata map keys
 export const JK_V2_METADATA_API_VIEW_KEY = Symbol.for("jk:v2:metadata:api:view")
-export const JK_V2_METADATA_CRUD_API_KEY = Symbol.for("jk:v2:metadata:api:crud")
 // sub-route method inside a class
 export const JK_V2_METADATA_SUBROUTES_KEY = Symbol.for("jk:v2:metadata:subroutes")
 // standalone function
@@ -79,15 +78,7 @@ export interface IFunctionMetadata extends IFunctionMetadataBase {
 /**
  * APIView class.
  */
-export interface IApiViewClassMetadata extends IFunctionMetadataBase {
-  apiClass: MetadataTargetConstructor
-}
-
-/**
- * CRUD view.
- * Unused.
- */
-export interface ICrudApiMetadata extends IFunctionMetadataBase {
+export interface IApiViewClassMetadata extends ApiViewOpts {
   apiClass: MetadataTargetConstructor
 }
 
@@ -121,12 +112,6 @@ export const getApiViewMetadata = (cls: MetadataTarget): IApiViewClassMetadata |
   getMemberMetadata(cls, JK_V2_METADATA_API_VIEW_KEY)
 export const setApiViewMetadata = (cls: MetadataTarget, value: IApiViewClassMetadata) =>
   setMemberMetadata(cls, JK_V2_METADATA_API_VIEW_KEY, value)
-
-// CRUD API
-export const getCrudApiMetadata = (cls: MetadataTarget): ICrudApiMetadata | undefined =>
-  getMemberMetadata(cls, JK_V2_METADATA_CRUD_API_KEY)
-export const setCrudApiMetadata = (cls: MetadataTarget, value: ICrudApiMetadata) =>
-  setMemberMetadata(cls, JK_V2_METADATA_CRUD_API_KEY, value)
 
 // sub-routes
 export const getSubRouteMetadata = (target: MetadataTarget): ApiMetadataMap<ISubRouteApiMetadata> =>

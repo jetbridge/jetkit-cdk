@@ -56,19 +56,10 @@ async function raiseNotAllowed(event: ApiEvent) {
  *
  * Subclass {@link ApiViewBase} to define your own class-based API endpoints.
  *
- * Methods with HTTP verb names (get, post, patch, etc) are called automatically.
- * Define custom sub-paths with {@link SubRoute}.
+ * Define sub-paths with {@link SubRoute}.
  *
  */
 export class ApiViewBase {
-  get: ApiHandler = async (event) => raiseNotAllowed(event)
-  post: ApiHandler = async (event) => raiseNotAllowed(event)
-  put: ApiHandler = async (event) => raiseNotAllowed(event)
-  patch: ApiHandler = async (event) => raiseNotAllowed(event)
-  delete: ApiHandler = async (event) => raiseNotAllowed(event)
-  head: ApiHandler = async (event) => raiseNotAllowed(event)
-  options: ApiHandler = async (event) => raiseNotAllowed(event)
-
   /**
    * Look up appropriate method to handle an incoming request for this view.
    *
@@ -84,31 +75,13 @@ export class ApiViewBase {
     const viewMeta = getApiViewMetadata(apiViewClass)
     const subRouteMetaMap = getSubRouteMetadata(apiViewClass)
     if (!viewMeta) throw new Error(`Metadata for dispatch not found on API view ${apiViewClass}`)
-    if (!viewMeta.path) return
+    if (!viewMeta.path) return undefined
+    if (!subRouteMetaMap) throw new Error(`No @SubRoutes found on API view ${apiViewClass}`)
 
-    // is this request for the default view or a sub route?
-    // does the route key match the base route?
-    if (this.matchesRouteKey(routeKey, method, viewMeta.path, viewMeta.methods)) {
-      // get(), post(), etc
-      const verbHandler = this.matchHttpVerbMethod(method)
-      if (verbHandler) return verbHandler
-    } else {
-      // try to match a @SubRoute
-      if (subRouteMetaMap) {
-        const subRouteHandlerMethod = this.matchSubRoute(viewMeta, subRouteMetaMap, routeKey, method)
-        if (subRouteHandlerMethod) return subRouteHandlerMethod
-      }
-    }
+    // check if we match a @SubRoute path/methods
+    const subRouteHandlerMethod = this.matchSubRoute(viewMeta, subRouteMetaMap, routeKey, method)
+    if (subRouteHandlerMethod) return subRouteHandlerMethod
 
-    return undefined
-  }
-
-  protected matchHttpVerbMethod(method: HttpMethod): ApiHandler | undefined {
-    // look up handler based on HTTP verb e.g. this.post()
-    method = method.toLowerCase() as HttpMethod
-    if (safeHas(method, this)) {
-      return this[method]
-    }
     return undefined
   }
 
@@ -125,7 +98,7 @@ export class ApiViewBase {
       if (!viewMeta.path) return
 
       // full path is parent path + subRoute path
-      const fullPath = viewMeta.path + path
+      const fullPath = viewMeta.path + (path || "")
       if (this.matchesRouteKey(routeKey, method, fullPath, methods)) return HandlerFunc
     }
 

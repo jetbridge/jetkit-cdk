@@ -52,6 +52,7 @@ export function ApiView(opts: IFunctionMetadataBase) {
     return constructor
   }
 }
+export type ApiViewOpts = Omit<IFunctionMetadataBase, "methods">
 
 interface RoutePropertyDescriptor extends PropertyDescriptor {
   value?: ApiHandler
@@ -74,7 +75,10 @@ export interface IRoutePropsBase extends Partial<HttpRouteProps> {
   unauthorized?: boolean
 }
 
-export type ISubRouteProps = IRoutePropsBase
+export interface ISubRouteProps extends Omit<IRoutePropsBase, "path"> {
+  // make path optional in @SubRoute
+  path?: string
+}
 
 export interface IRouteProps extends FunctionOptions, IRoutePropsBase {}
 

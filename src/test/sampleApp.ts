@@ -16,7 +16,10 @@ import { ApiView, Lambda, SubRoute } from "../registry"
 })
 export class AlbumApi extends ApiViewBase {
   // define POST handler
-  post = async () => "Created new album"
+  @SubRoute({ methods: [HttpMethod.POST] })
+  async post() {
+    return "Created new album"
+  }
 
   // custom endpoint in the view
   // routes to the ApiView function
