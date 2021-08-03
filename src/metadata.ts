@@ -4,7 +4,7 @@
 /**
  * Wrappers for getting/setting metadata on classes and class properties
  */
-import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
+import { HttpMethod, HttpRouteProps } from "@aws-cdk/aws-apigatewayv2"
 import { Schedule } from "@aws-cdk/aws-events"
 import "reflect-metadata"
 import { ApiHandler, ApiViewBase } from "./api/base"
@@ -34,7 +34,9 @@ export type MetadataTarget = PossibleLambdaHandlers | MetadataTargetConstructor
 /**
  * Metadata describing any Lambda function.
  */
-export interface IFunctionMetadataBase extends FunctionOptions {
+export interface IFunctionMetadataBase
+  extends FunctionOptions,
+    Pick<HttpRouteProps, "authorizationScopes" | "authorizer"> {
   /**
    * An optional API Gateway path to trigger this function.
    */

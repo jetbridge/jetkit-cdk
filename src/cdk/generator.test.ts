@@ -9,7 +9,16 @@ import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs"
 import { Duration, Stack } from "@aws-cdk/core"
 import * as path from "path"
 import { ApiViewConstruct, ResourceGeneratorConstruct } from ".."
-import { AlbumApi, scheduledFunc, topSongsFuncInner, topSongsHandler, unauthFunc, UnAuthView } from "../test/sampleApp"
+import {
+  AlbumApi,
+  authFunc,
+  AuthScopeView,
+  scheduledFunc,
+  topSongsFuncInner,
+  topSongsHandler,
+  unauthFunc,
+  UnAuthView,
+} from "../test/sampleApp"
 import { ApiView, JetKitLambdaFunction } from "./api/api"
 import { Node14Func } from "./lambda/node14func"
 
@@ -253,7 +262,6 @@ describe("Lambda() construct generation of APIs", () => {
   it("generates endpoints for standalone functions", () => {
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "PUT /top-songs",
-      AuthorizationScopes: ["charts:read"],
     })
     expect(stack).toHaveResource("AWS::Lambda::Function", {
       Environment: {
@@ -328,6 +336,38 @@ describe("Authorization", () => {
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
       RouteKey: "ANY /unauthView",
       AuthorizationType: "NONE",
+    })
+  })
+
+  it("requires authentication scopes for function route", () => {
+    new ResourceGeneratorConstruct(stack, "Gen", {
+      httpApi,
+      resources: [authFunc],
+    })
+
+    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
+      AuthorizationScopes: ["charts:write"],
+      RouteKey: "ANY /authenticated",
+      AuthorizationType: "CUSTOM",
+      AuthorizerId: {
+        Ref: stringLike("APIdummy*"),
+      },
+    })
+  })
+
+  it("requires authentication scopes for ApiView", () => {
+    new ResourceGeneratorConstruct(stack, "Gen", {
+      httpApi,
+      resources: [AuthScopeView],
+    })
+
+    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
+      AuthorizationScopes: ["charts:read"],
+      RouteKey: "ANY /authView",
+      AuthorizationType: "CUSTOM",
+      AuthorizerId: {
+        Ref: stringLike("APIdummy*"),
+      },
     })
   })
 })
