@@ -30,8 +30,8 @@ export class SubRouteApi extends ApiViewMixin {
     path = parentPath + (path || "")
 
     // inherit parent `unauthorized` and `authorizationScopes`
-    if (typeof unauthorized === "undefined") unauthorized ||= parentApiMeta?.unauthorized
-    if (typeof authorizationScopes === "undefined") authorizationScopes ||= parentApiMeta?.authorizationScopes
+    if (unauthorized === undefined) unauthorized ||= parentApiMeta?.unauthorized
+    if (authorizationScopes === undefined) authorizationScopes ||= parentApiMeta?.authorizationScopes
 
     // add our route to the existing parent API's handler function
     // it will know how to find our method and call it
