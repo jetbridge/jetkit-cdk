@@ -79,17 +79,11 @@
 						<a href="functionoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">FunctionOptions</a>
 					</li>
 					<li>
-						<span class="tsd-signature-type">Pick</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HttpRouteProps</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">&quot;authorizationScopes&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;authorizer&quot;</span><span class="tsd-signature-symbol">&gt;</span>
+						<span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IRoutePropsBase</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">IApiMetadata</span>
 								<ul class="tsd-hierarchy">
-									<li>
-										<a href="iapiviewclassmetadata.html" class="tsd-signature-type" data-tsd-kind="Interface">IApiViewClassMetadata</a>
-									</li>
-									<li>
-										<a href="icrudapimetadata.html" class="tsd-signature-type" data-tsd-kind="Interface">ICrudApiMetadata</a>
-									</li>
 									<li>
 										<a href="ifunctionmetadata.html" class="tsd-signature-type" data-tsd-kind="Interface">IFunctionMetadata</a>
 									</li>
@@ -138,11 +132,11 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapimetadata.html#maxeventage" class="tsd-kind-icon">max<wbr>Event<wbr>Age</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapimetadata.html#memorysize" class="tsd-kind-icon">memory<wbr>Size</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="iapimetadata.html#metadatatarget" class="tsd-kind-icon">metadata<wbr>Target</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iapimetadata.html#methods" class="tsd-kind-icon">methods</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="iapimetadata.html#methods" class="tsd-kind-icon">methods</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="iapimetadata.html#name" class="tsd-kind-icon">name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapimetadata.html#onfailure" class="tsd-kind-icon">on<wbr>Failure</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapimetadata.html#onsuccess" class="tsd-kind-icon">on<wbr>Success</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iapimetadata.html#path" class="tsd-kind-icon">path</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="iapimetadata.html#path" class="tsd-kind-icon">path</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapimetadata.html#profiling" class="tsd-kind-icon">profiling</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapimetadata.html#profilinggroup" class="tsd-kind-icon">profiling<wbr>Group</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapimetadata.html#projectroot" class="tsd-kind-icon">project<wbr>Root</a></li>
@@ -155,7 +149,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapimetadata.html#securitygroups" class="tsd-kind-icon">security<wbr>Groups</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapimetadata.html#timeout" class="tsd-kind-icon">timeout</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapimetadata.html#tracing" class="tsd-kind-icon">tracing</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iapimetadata.html#unauthorized" class="tsd-kind-icon">unauthorized</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="iapimetadata.html#unauthorized" class="tsd-kind-icon">unauthorized</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="iapimetadata.html#vpc" class="tsd-kind-icon">vpc</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="iapimetadata.html#vpcsubnets" class="tsd-kind-icon">vpc<wbr>Subnets</a></li>
 							</ul>
@@ -224,7 +218,7 @@
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> authorization<wbr>Scopes</h3>
 					<div class="tsd-signature tsd-kind-icon">authorization<wbr>Scopes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from Pick.authorizationScopes</p>
+						<p>Inherited from Partial.authorizationScopes</p>
 						<ul>
 							<li>Defined in node_modules/@aws-cdk/aws-apigatewayv2/lib/http/route.d.ts:168</li>
 						</ul>
@@ -250,7 +244,7 @@
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> authorizer</h3>
 					<div class="tsd-signature tsd-kind-icon">authorizer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">IHttpRouteAuthorizer</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from Pick.authorizer</p>
+						<p>Inherited from Partial.authorizer</p>
 						<ul>
 							<li>Defined in node_modules/@aws-cdk/aws-apigatewayv2/lib/http/route.d.ts:159</li>
 						</ul>
@@ -496,7 +490,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="functionoptions.html">FunctionOptions</a>.<a href="functionoptions.html#entry">entry</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/metadata.ts#L54">src/metadata.ts:54</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/5aa4960/src/metadata.ts#L40">src/metadata.ts:40</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -656,7 +650,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="functionoptions.html">FunctionOptions</a>.<a href="functionoptions.html#grantdatabaseaccess">grantDatabaseAccess</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/cdk/generator.ts#L34">src/cdk/generator.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/5aa4960/src/cdk/generator.ts#L36">src/cdk/generator.ts:36</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -718,7 +712,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="functionoptions.html">FunctionOptions</a>.<a href="functionoptions.html#layerarns">layerArns</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/cdk/generator.ts#L32">src/cdk/generator.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/5aa4960/src/cdk/generator.ts#L34">src/cdk/generator.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -891,22 +885,24 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="functionoptions.html">FunctionOptions</a>.<a href="functionoptions.html#metadatatarget">metadataTarget</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/cdk/lambda/node14func.ts#L10">src/cdk/lambda/node14func.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/5aa4960/src/cdk/lambda/node14func.ts#L10">src/cdk/lambda/node14func.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="methods" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> methods</h3>
 					<div class="tsd-signature tsd-kind-icon">methods<span class="tsd-signature-symbol">:</span> <a href="../enums/httpmethod.html" class="tsd-signature-type" data-tsd-kind="Enumeration">HttpMethod</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from Partial.methods</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/metadata.ts#L48">src/metadata.ts:48</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/5aa4960/src/registry.ts#L73">src/registry.ts:73</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>If <code>path</code> is defined, this determines which methods the path responds to.</p>
+							<p>Enabled <a href="../enums/httpmethod.html">HttpMethod</a>s for route.
+							If <code>path</code> is defined, this determines which methods the path responds to.</p>
 						</div>
 					</div>
 				</section>
@@ -917,7 +913,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="functionoptions.html">FunctionOptions</a>.<a href="functionoptions.html#name">name</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/cdk/lambda/node14func.ts#L13">src/cdk/lambda/node14func.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/5aa4960/src/cdk/lambda/node14func.ts#L13">src/cdk/lambda/node14func.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -973,19 +969,21 @@
 						</dl>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="path" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> path</h3>
 					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from Partial.path</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/metadata.ts#L43">src/metadata.ts:43</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/5aa4960/src/registry.ts#L67">src/registry.ts:67</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>An optional API Gateway path to trigger this function.</p>
 						</div>
+						<p>e.g. &quot;/v1/foo/bar&quot;</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
@@ -1193,7 +1191,7 @@
 					<div class="tsd-signature tsd-kind-icon">schedule<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Schedule</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/metadata.ts#L60">src/metadata.ts:60</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/5aa4960/src/metadata.ts#L46">src/metadata.ts:46</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1315,20 +1313,21 @@
 						</dl>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="unauthorized" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> unauthorized</h3>
 					<div class="tsd-signature tsd-kind-icon">unauthorized<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from Partial.unauthorized</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/metadata.ts#L68">src/metadata.ts:68</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/5aa4960/src/registry.ts#L81">src/registry.ts:81</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Disable default authorizer.</p>
 						</div>
-						<p>Set to true for routes that do not require authentication
+						<p>Set to true for routes that do not require authorization
 						if your routes normally require it.</p>
 					</div>
 				</section>
@@ -1339,7 +1338,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="functionoptions.html">FunctionOptions</a>.<a href="functionoptions.html#vpc">vpc</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/0e65008/src/cdk/generator.ts#L40">src/cdk/generator.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/5aa4960/src/cdk/generator.ts#L42">src/cdk/generator.ts:42</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1529,7 +1528,7 @@
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="iapimetadata.html#metadatatarget" class="tsd-kind-icon">metadata<wbr>Target</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="iapimetadata.html#methods" class="tsd-kind-icon">methods</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
@@ -1541,7 +1540,7 @@
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 								<a href="iapimetadata.html#onsuccess" class="tsd-kind-icon">on<wbr>Success</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="iapimetadata.html#path" class="tsd-kind-icon">path</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
@@ -1580,7 +1579,7 @@
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 								<a href="iapimetadata.html#tracing" class="tsd-kind-icon">tracing</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="iapimetadata.html#unauthorized" class="tsd-kind-icon">unauthorized</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
@@ -1597,9 +1596,6 @@
 						<a href="iapiviewclassmetadata.html" class="tsd-kind-icon">IApi<wbr>View<wbr>Class<wbr>Metadata</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="icrudapimetadata.html" class="tsd-kind-icon">ICrud<wbr>Api<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-interface">
 						<a href="ifunctionmetadata.html" class="tsd-kind-icon">IFunction<wbr>Metadata</a>
 					</li>
 					<li class=" tsd-kind-interface">
@@ -1607,6 +1603,9 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="isubrouteapimetadata.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Api<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="isubrouteprops.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="node14funcprops.html" class="tsd-kind-icon">Node14<wbr>Func<wbr>Props</a>
@@ -1625,9 +1624,6 @@
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../modules.html#generatedfunction" class="tsd-kind-icon">Generated<wbr>Function</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../modules.html#isubrouteprops" class="tsd-kind-icon">ISub<wbr>Route<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../modules.html#metadatatarget" class="tsd-kind-icon">Metadata<wbr>Target</a>

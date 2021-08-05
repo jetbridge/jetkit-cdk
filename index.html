@@ -107,8 +107,11 @@
 <span style="color: #000000">  </span><span style="color: #001080">bundling:</span><span style="color: #000000"> { </span><span style="color: #001080">minify:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">, </span><span style="color: #001080">metafile:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">, </span><span style="color: #001080">sourceMap:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> },</span>
 <span style="color: #000000">})</span>
 <span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">AlbumApi</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">ApiViewBase</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #008000">// define POST handler</span>
-<span style="color: #000000">  </span><span style="color: #795E26">post</span><span style="color: #000000"> = </span><span style="color: #0000FF">async</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;Created new album&quot;</span>
+<span style="color: #000000">  </span><span style="color: #008000">// define POST /album handler</span>
+<span style="color: #000000">  @</span><span style="color: #795E26">SubRoute</span><span style="color: #000000">({ </span><span style="color: #001080">methods:</span><span style="color: #000000"> [</span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">POST</span><span style="color: #000000">] })</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #795E26">post</span><span style="color: #000000">() {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;Created new album&quot;</span>
+<span style="color: #000000">  }</span>
 
 <span style="color: #000000">  </span><span style="color: #008000">// custom endpoint in the view</span>
 <span style="color: #000000">  </span><span style="color: #008000">// routes to the ApiView function</span>
@@ -283,9 +286,6 @@
 						<a href="interfaces/iapiviewclassmetadata.html" class="tsd-kind-icon">IApi<wbr>View<wbr>Class<wbr>Metadata</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/icrudapimetadata.html" class="tsd-kind-icon">ICrud<wbr>Api<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-interface">
 						<a href="interfaces/ifunctionmetadata.html" class="tsd-kind-icon">IFunction<wbr>Metadata</a>
 					</li>
 					<li class=" tsd-kind-interface">
@@ -293,6 +293,9 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/isubrouteapimetadata.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Api<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/isubrouteprops.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/node14funcprops.html" class="tsd-kind-icon">Node14<wbr>Func<wbr>Props</a>
@@ -311,9 +314,6 @@
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="modules.html#generatedfunction" class="tsd-kind-icon">Generated<wbr>Function</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#isubrouteprops" class="tsd-kind-icon">ISub<wbr>Route<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="modules.html#metadatatarget" class="tsd-kind-icon">Metadata<wbr>Target</a>

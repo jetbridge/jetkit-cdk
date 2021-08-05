@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>HttpMethod | @jetkit/cdk</title>
+	<title>ISubRouteProps | @jetkit/cdk</title>
 	<meta name="description" content="Documentation for @jetkit/cdk">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,199 +55,142 @@
 					<a href="../modules.html">@jetkit/cdk</a>
 				</li>
 				<li>
-					<a href="httpmethod.html">HttpMethod</a>
+					<a href="isubrouteprops.html">ISubRouteProps</a>
 				</li>
 			</ul>
-			<h1>Enumeration HttpMethod</h1>
+			<h1>Interface ISubRouteProps</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>(experimental) Supported HTTP methods.</p>
-					</div>
-					<dl class="tsd-comment-tags">
-						<dt>experimental</dt>
-						<dd></dd>
-					</dl>
-				</div>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="tsd-signature-type">Omit</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IRoutePropsBase</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">&quot;path&quot;</span><span class="tsd-signature-symbol">&gt;</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">ISubRouteProps</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-external">
-							<h3>Enumeration members</h3>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external"><a href="httpmethod.html#any" class="tsd-kind-icon">ANY</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external"><a href="httpmethod.html#delete" class="tsd-kind-icon">DELETE</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external"><a href="httpmethod.html#get" class="tsd-kind-icon">GET</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external"><a href="httpmethod.html#head" class="tsd-kind-icon">HEAD</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external"><a href="httpmethod.html#options" class="tsd-kind-icon">OPTIONS</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external"><a href="httpmethod.html#patch" class="tsd-kind-icon">PATCH</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external"><a href="httpmethod.html#post" class="tsd-kind-icon">POST</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external"><a href="httpmethod.html#put" class="tsd-kind-icon">PUT</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="isubrouteprops.html#authorizationscopes" class="tsd-kind-icon">authorization<wbr>Scopes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="isubrouteprops.html#authorizer" class="tsd-kind-icon">authorizer</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="isubrouteprops.html#methods" class="tsd-kind-icon">methods</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="isubrouteprops.html#path" class="tsd-kind-icon">path</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="isubrouteprops.html#unauthorized" class="tsd-kind-icon">unauthorized</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-external">
-				<h2>Enumeration members</h2>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external">
-					<a name="any" class="tsd-anchor"></a>
-					<h3>ANY</h3>
-					<div class="tsd-signature tsd-kind-icon">ANY<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;ANY&quot;</span></div>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
+					<a name="authorizationscopes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> authorization<wbr>Scopes</h3>
+					<div class="tsd-signature tsd-kind-icon">authorization<wbr>Scopes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from Omit.authorizationScopes</p>
 						<ul>
-							<li>Defined in node_modules/@aws-cdk/aws-apigatewayv2/lib/http/route.d.ts:37</li>
+							<li>Defined in node_modules/@aws-cdk/aws-apigatewayv2/lib/http/route.d.ts:168</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>(experimental) HTTP ANY.</p>
+							<p>(experimental) The list of OIDC scopes to include in the authorization.</p>
 						</div>
+						<p>These scopes will be merged with the scopes from the attached authorizer</p>
 						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><ul>
+									<li>no additional authorization scopes</li>
+								</ul>
+							</dd>
 							<dt>experimental</dt>
 							<dd></dd>
 						</dl>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external">
-					<a name="delete" class="tsd-anchor"></a>
-					<h3>DELETE</h3>
-					<div class="tsd-signature tsd-kind-icon">DELETE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;DELETE&quot;</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
+					<a name="authorizer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> authorizer</h3>
+					<div class="tsd-signature tsd-kind-icon">authorizer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">IHttpRouteAuthorizer</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from Omit.authorizer</p>
 						<ul>
-							<li>Defined in node_modules/@aws-cdk/aws-apigatewayv2/lib/http/route.d.ts:43</li>
+							<li>Defined in node_modules/@aws-cdk/aws-apigatewayv2/lib/http/route.d.ts:159</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>(experimental) HTTP DELETE.</p>
+							<p>(experimental) Authorizer for a WebSocket API or an HTTP API.</p>
 						</div>
 						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><ul>
+									<li>No authorizer</li>
+								</ul>
+							</dd>
 							<dt>experimental</dt>
 							<dd></dd>
 						</dl>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external">
-					<a name="get" class="tsd-anchor"></a>
-					<h3>GET</h3>
-					<div class="tsd-signature tsd-kind-icon">GET<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;GET&quot;</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="methods" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> methods</h3>
+					<div class="tsd-signature tsd-kind-icon">methods<span class="tsd-signature-symbol">:</span> <a href="../enums/httpmethod.html" class="tsd-signature-type" data-tsd-kind="Enumeration">HttpMethod</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from Omit.methods</p>
 						<ul>
-							<li>Defined in node_modules/@aws-cdk/aws-apigatewayv2/lib/http/route.d.ts:49</li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/5aa4960/src/registry.ts#L73">src/registry.ts:73</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>(experimental) HTTP GET.</p>
+							<p>Enabled <a href="../enums/httpmethod.html">HttpMethod</a>s for route.
+							If <code>path</code> is defined, this determines which methods the path responds to.</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>experimental</dt>
-							<dd></dd>
-						</dl>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external">
-					<a name="head" class="tsd-anchor"></a>
-					<h3>HEAD</h3>
-					<div class="tsd-signature tsd-kind-icon">HEAD<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;HEAD&quot;</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="path" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> path</h3>
+					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/@aws-cdk/aws-apigatewayv2/lib/http/route.d.ts:55</li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/5aa4960/src/registry.ts#L86">src/registry.ts:86</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>(experimental) HTTP HEAD.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>experimental</dt>
-							<dd></dd>
-						</dl>
-					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external">
-					<a name="options" class="tsd-anchor"></a>
-					<h3>OPTIONS</h3>
-					<div class="tsd-signature tsd-kind-icon">OPTIONS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;OPTIONS&quot;</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="unauthorized" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> unauthorized</h3>
+					<div class="tsd-signature tsd-kind-icon">unauthorized<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from Omit.unauthorized</p>
 						<ul>
-							<li>Defined in node_modules/@aws-cdk/aws-apigatewayv2/lib/http/route.d.ts:61</li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/5aa4960/src/registry.ts#L81">src/registry.ts:81</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>(experimental) HTTP OPTIONS.</p>
+							<p>Disable default authorizer.</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>experimental</dt>
-							<dd></dd>
-						</dl>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external">
-					<a name="patch" class="tsd-anchor"></a>
-					<h3>PATCH</h3>
-					<div class="tsd-signature tsd-kind-icon">PATCH<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;PATCH&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in node_modules/@aws-cdk/aws-apigatewayv2/lib/http/route.d.ts:67</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>(experimental) HTTP PATCH.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>experimental</dt>
-							<dd></dd>
-						</dl>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external">
-					<a name="post" class="tsd-anchor"></a>
-					<h3>POST</h3>
-					<div class="tsd-signature tsd-kind-icon">POST<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;POST&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in node_modules/@aws-cdk/aws-apigatewayv2/lib/http/route.d.ts:73</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>(experimental) HTTP POST.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>experimental</dt>
-							<dd></dd>
-						</dl>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external">
-					<a name="put" class="tsd-anchor"></a>
-					<h3>PUT</h3>
-					<div class="tsd-signature tsd-kind-icon">PUT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;PUT&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in node_modules/@aws-cdk/aws-apigatewayv2/lib/http/route.d.ts:79</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>(experimental) HTTP PUT.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>experimental</dt>
-							<dd></dd>
-						</dl>
+						<p>Set to true for routes that do not require authorization
+						if your routes normally require it.</p>
 					</div>
 				</section>
 			</section>
@@ -263,41 +206,11 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-enum tsd-is-external">
-						<a href="corshttpmethod.html" class="tsd-kind-icon">Cors<wbr>Http<wbr>Method</a>
+						<a href="../enums/corshttpmethod.html" class="tsd-kind-icon">Cors<wbr>Http<wbr>Method</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-enum tsd-is-external">
-						<a href="httpmethod.html" class="tsd-kind-icon">Http<wbr>Method</a>
-						<ul>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external">
-								<a href="httpmethod.html#any" class="tsd-kind-icon">ANY</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external">
-								<a href="httpmethod.html#delete" class="tsd-kind-icon">DELETE</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external">
-								<a href="httpmethod.html#get" class="tsd-kind-icon">GET</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external">
-								<a href="httpmethod.html#head" class="tsd-kind-icon">HEAD</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external">
-								<a href="httpmethod.html#options" class="tsd-kind-icon">OPTIONS</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external">
-								<a href="httpmethod.html#patch" class="tsd-kind-icon">PATCH</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external">
-								<a href="httpmethod.html#post" class="tsd-kind-icon">POST</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum tsd-is-external">
-								<a href="httpmethod.html#put" class="tsd-kind-icon">PUT</a>
-							</li>
-						</ul>
+					<li class=" tsd-kind-enum tsd-is-external">
+						<a href="../enums/httpmethod.html" class="tsd-kind-icon">Http<wbr>Method</a>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="../classes/albumapi.html" class="tsd-kind-icon">Album<wbr>Api</a>
 					</li>
@@ -329,43 +242,64 @@
 						<a href="../classes/slspgdb.html" class="tsd-kind-icon">Sls<wbr>PgDb</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
-						<a href="../interfaces/apievent.html" class="tsd-kind-icon">Api<wbr>Event</a>
+						<a href="apievent.html" class="tsd-kind-icon">Api<wbr>Event</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/apiviewconstructprops.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct<wbr>Props</a>
+						<a href="apiviewconstructprops.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/databasefuncprops.html" class="tsd-kind-icon">Database<wbr>Func<wbr>Props</a>
+						<a href="databasefuncprops.html" class="tsd-kind-icon">Database<wbr>Func<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/functionoptions.html" class="tsd-kind-icon">Function<wbr>Options</a>
+						<a href="functionoptions.html" class="tsd-kind-icon">Function<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iapimetadata.html" class="tsd-kind-icon">IApi<wbr>Metadata</a>
+						<a href="iapimetadata.html" class="tsd-kind-icon">IApi<wbr>Metadata</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iapiviewclassmetadata.html" class="tsd-kind-icon">IApi<wbr>View<wbr>Class<wbr>Metadata</a>
+						<a href="iapiviewclassmetadata.html" class="tsd-kind-icon">IApi<wbr>View<wbr>Class<wbr>Metadata</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/ifunctionmetadata.html" class="tsd-kind-icon">IFunction<wbr>Metadata</a>
+						<a href="ifunctionmetadata.html" class="tsd-kind-icon">IFunction<wbr>Metadata</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/irouteprops.html" class="tsd-kind-icon">IRoute<wbr>Props</a>
+						<a href="irouteprops.html" class="tsd-kind-icon">IRoute<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/isubrouteapimetadata.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Api<wbr>Metadata</a>
+						<a href="isubrouteapimetadata.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Api<wbr>Metadata</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface">
+						<a href="isubrouteprops.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Props</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
+								<a href="isubrouteprops.html#authorizationscopes" class="tsd-kind-icon">authorization<wbr>Scopes</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
+								<a href="isubrouteprops.html#authorizer" class="tsd-kind-icon">authorizer</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="isubrouteprops.html#methods" class="tsd-kind-icon">methods</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="isubrouteprops.html#path" class="tsd-kind-icon">path</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="isubrouteprops.html#unauthorized" class="tsd-kind-icon">unauthorized</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="node14funcprops.html" class="tsd-kind-icon">Node14<wbr>Func<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/isubrouteprops.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Props</a>
+						<a href="resourcegeneratorprops.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/node14funcprops.html" class="tsd-kind-icon">Node14<wbr>Func<wbr>Props</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/resourcegeneratorprops.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Props</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/slspgdbprops.html" class="tsd-kind-icon">Sls<wbr>PgDb<wbr>Props</a>
+						<a href="slspgdbprops.html" class="tsd-kind-icon">Sls<wbr>PgDb<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../modules.html#apihandler" class="tsd-kind-icon">Api<wbr>Handler</a>
