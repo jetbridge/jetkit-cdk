@@ -76,7 +76,7 @@ export interface ResourceGeneratorProps {
 
   /**
    * Prefix for function names.
-   * Typically will be your stack name.
+   * If set, your functions will have clean names without a random suffix.
    */
   functionPrefix?: string
 }
@@ -120,7 +120,7 @@ export class ResourceGenerator extends Construct {
     super(scope, id)
 
     this.httpApi = httpApi
-    this.functionPrefix = functionPrefix || Stack.of(this).stackName
+    this.functionPrefix = functionPrefix
 
     this.generatedFunctions = []
     this.seenFunctionNames = {}
