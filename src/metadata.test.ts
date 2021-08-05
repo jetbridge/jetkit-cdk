@@ -21,14 +21,19 @@ describe("Metadata decorators", () => {
     it("stores metadata for subroutes", () => {
       // get meta
       const methodMeta = getSubRouteMetadata(AlbumApi)
-      const expectedMeta = {
+      expect(methodMeta.size).toBe(2)
+      expect(methodMeta.get("like")).toMatchObject({
         propertyKey: "like",
         HandlerFunc: AlbumApi.prototype.like,
         path: "/{albumId}/like",
         methods: [HttpMethod.POST, HttpMethod.DELETE],
-      }
-      expect(methodMeta.size).toBe(1)
-      expect(methodMeta.get("like")).toMatchObject(expectedMeta)
+      })
+      expect(methodMeta.get("post")).toMatchObject({
+        propertyKey: "post",
+        HandlerFunc: AlbumApi.prototype.post,
+        path: undefined,
+        methods: [HttpMethod.POST],
+      })
     })
   })
 

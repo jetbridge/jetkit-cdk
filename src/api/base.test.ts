@@ -36,7 +36,7 @@ describe("ApiViewBase", () => {
   const view = new AlbumApi()
 
   describe("findHandler", () => {
-    it("locates handler method based on request verb", () => {
+    it("locates handler method based on method", () => {
       const request = makeApiEvent({
         method: HttpMethod.POST,
         path: "/album",
@@ -77,7 +77,7 @@ describe("ApiViewBase", () => {
       expect(anyView.findHandler(request as ApiEvent)).toEqual(anyView.handler)
     })
 
-    it("locates appropriate class route with any method", () => {
+    it("fails to locate class route with any method", () => {
       @ApiView({
         path: "/proxy",
       })
@@ -90,7 +90,7 @@ describe("ApiViewBase", () => {
       })
 
       const anyView = new AnyApi()
-      expect(anyView.findHandler(request as ApiEvent)).toEqual(anyView.post)
+      expect(anyView.findHandler(request as ApiEvent)).toEqual(undefined)
     })
 
     it("locates no method based on request if no match on routeKey", () => {

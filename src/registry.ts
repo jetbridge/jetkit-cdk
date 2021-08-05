@@ -32,7 +32,7 @@ import { findDefiningFile } from "./util/function"
  *
  * @category Metadata Decorator
  */
-export function ApiView(opts: IFunctionMetadataBase) {
+export function ApiView(opts: ApiViewOpts) {
   // try to guess the filename where this decorator is being applied
 
   if (!opts.entry) {
@@ -52,29 +52,39 @@ export function ApiView(opts: IFunctionMetadataBase) {
     return constructor
   }
 }
+export type ApiViewOpts = Omit<IFunctionMetadataBase, "methods">
 
 interface RoutePropertyDescriptor extends PropertyDescriptor {
   value?: ApiHandler
 }
 
-export interface IRoutePropsBase extends Partial<HttpRouteProps> {
+export interface IRoutePropsBase extends Pick<HttpRouteProps, "authorizer" | "authorizationScopes"> {
   /**
-   * Route.
+   * An optional API Gateway path to trigger this function.
    *
    * e.g. "/v1/foo/bar"
    */
   path: string
 
   /**
-   * Enabled {@link HttpMethod}s for route
+   * Enabled {@link HttpMethod}s for route.
+   * If `path` is defined, this determines which methods the path responds to.
    */
   methods?: HttpMethod[]
 
-  // disable authorization?
+  /**
+   * Disable default authorizer.
+   *
+   * Set to true for routes that do not require authorization
+   * if your routes normally require it.
+   */
   unauthorized?: boolean
 }
 
-export type ISubRouteProps = IRoutePropsBase
+export interface ISubRouteProps extends Omit<IRoutePropsBase, "path"> {
+  // make path optional in @SubRoute
+  path?: string
+}
 
 export interface IRouteProps extends FunctionOptions, IRoutePropsBase {}
 

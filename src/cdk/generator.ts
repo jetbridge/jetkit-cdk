@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
+import { HttpApi, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
 import { Rule } from "@aws-cdk/aws-events"
 import { Function, LayerVersion } from "@aws-cdk/aws-lambda"
 import { Aws, CfnOutput, Construct, Fn, Stack } from "@aws-cdk/core"
@@ -8,7 +8,7 @@ import isPlainObject from "is-plain-object"
 import { ApiHandler } from "../api/base"
 import { getApiViewMetadata, getFunctionMetadata, getSubRouteMetadata, MetadataTarget } from "../metadata"
 import { PossibleLambdaHandlers } from "../registry"
-import { ApiView as ApiViewConstruct, JetKitLambdaFunction } from "./api/api"
+import { ApiFunction, JetKitLambdaFunction } from "./api/api"
 import { SubRouteApi } from "./api/subRoute"
 import * as targets from "@aws-cdk/aws-events-targets"
 
@@ -16,6 +16,8 @@ import { SlsPgDb } from "./database/serverless-pg"
 import { IVpc } from "@aws-cdk/aws-ec2"
 import { debug } from "../util/log"
 import { Node14Func, Node14FuncProps } from "./lambda/node14func"
+import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
+import slugify from "slugify"
 
 // env vars
 export const DB_CLUSTER_ENV = "DB_CLUSTER_ARN"
@@ -260,7 +262,7 @@ export class ResourceGenerator extends Construct {
       if (!this.httpApi) throw new Error(`API paths defined but httpApi was not provided to ${this}`)
 
       // generate APIGW integration
-      new ApiViewConstruct(this, `View-${name}-${this.viewCounter++}`, {
+      new ApiFunction(this, `View-${name}-${this.viewCounter++}`, {
         ...mergedOptions,
         handlerFunction,
         httpApi: this.httpApi,
@@ -278,50 +280,56 @@ export class ResourceGenerator extends Construct {
   }
 
   /**
-   * Create a handler function for the class and any additional
+   * Create a single handler function for the class and any additional
    * routed methods inside it.
    */
   generateConstructsForClass(resource: MetadataTarget) {
     // API view
     const apiViewMeta = getApiViewMetadata(resource)
-    let apiViewConstruct: undefined | ApiViewConstruct
-    if (apiViewMeta) {
-      const name = apiViewMeta.apiClass.name
+    let className: string
+    let lambdaApiIntegration: undefined | LambdaProxyIntegration
 
+    // parse @ApiView meta and create lambda
+    if (apiViewMeta) {
+      className = apiViewMeta.apiClass.name
       // merge function option defaults with options from attached metadata (from decorator)
       const mergedOptions = this.mergeFunctionDefaults(apiViewMeta)
 
       if (apiViewMeta.schedule)
         throw new Error("schedule is not supported on ApiView for now (it could be easily added if desired)")
 
-      const handlerFunction = this.createLambdaFunction(name, resource, mergedOptions)
-
-      if (!this.httpApi) throw new Error(`API paths defined but httpApi was not provided to ${this}`)
-
-      apiViewConstruct = new ApiViewConstruct(this, `Class-${name}-${this.viewCounter++}`, {
-        ...mergedOptions,
-        handlerFunction,
-        httpApi: this.httpApi,
+      // create lambda function
+      const handlerFunction = this.createLambdaFunction(className, resource, mergedOptions)
+      // create lambda proxy integration for APIGW
+      lambdaApiIntegration = new LambdaProxyIntegration({
+        handler: handlerFunction,
+        payloadFormatVersion: PayloadFormatVersion.VERSION_2_0,
       })
     }
 
     // SubRoutes - methods with their own routes
-    // handled by the classes's handler
+    // handled by the class's handler
     const subRoutes = getSubRouteMetadata(resource)
     if (subRoutes) {
-      subRoutes.forEach((meta, subroutePath) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      subRoutes.forEach((meta) => {
         const { path: metaPath, propertyKey, ...metaRest } = meta
 
-        if (!apiViewConstruct) throw new Error(`${resource} defines SubRoute but no enclosing @ApiView class found`)
+        if (!lambdaApiIntegration || !apiViewMeta)
+          throw new Error(`${resource} defines SubRoute but no enclosing @ApiView class found`)
 
-        // TODO: include parent api class name in id
-        // TODO: do something with propertyKey and HandlerFunc
-        const path = metaPath || subroutePath
-        new SubRouteApi(this, `SubRoute-${meta.propertyKey}`, {
+        const httpApi = this.httpApi
+        if (!httpApi) throw new Error(`API paths defined but httpApi was not provided to ${meta}`)
+
+        const path = metaPath
+        const parentPath = apiViewMeta.path || "/"
+        const subRouteApiId = slugify(`SR-${className || parentPath}-${propertyKey}`)
+        new SubRouteApi(this, subRouteApiId, {
           path,
+          httpApi,
+          parentPath,
           ...metaRest,
-          parentApi: apiViewConstruct,
+          lambdaApiIntegration,
+          parentApiMeta: apiViewMeta,
         })
       })
     }

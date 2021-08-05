@@ -1,21 +1,13 @@
-import {
-  AddRoutesOptions,
-  HttpApi,
-  HttpMethod,
-  HttpNoneAuthorizer,
-  HttpRouteProps,
-  PayloadFormatVersion,
-} from "@aws-cdk/aws-apigatewayv2"
+import { HttpApi, HttpMethod, HttpNoneAuthorizer, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
 import { CfnOutput, Construct } from "@aws-cdk/core"
-import { IRoutePropsBase } from "../../registry"
+import { IFunctionMetadataBase } from "../../metadata"
 import { FunctionOptions } from "../generator"
-import { Node14FuncProps as JetKitLambdaFunctionProps, Node14Func as JetKitLambdaFunction } from "../lambda/node14func"
+import { Node14Func as JetKitLambdaFunction, Node14FuncProps as JetKitLambdaFunctionProps } from "../lambda/node14func"
 
 export { JetKitLambdaFunction, JetKitLambdaFunctionProps }
 
 /**
- * Definition of a lambda API integration.
  * @category Construct
  */
 export interface ApiConfig extends FunctionOptions, IEndpoint {}
@@ -24,7 +16,8 @@ export interface ApiProps extends ApiConfig {
   handlerFunction: JetKitLambdaFunction
 }
 
-export interface IEndpoint extends Partial<IRoutePropsBase> {
+export interface IEndpoint
+  extends Pick<IFunctionMetadataBase, "path" | "methods" | "unauthorized" | "authorizationScopes"> {
   /**
    * API Gateway HTTP API
    */
@@ -35,24 +28,21 @@ let routeOutputId = 1
 
 export interface IAddRoutes extends IEndpoint {
   lambdaApiIntegration: LambdaProxyIntegration
-  unauthorized?: boolean
 }
-
 export abstract class ApiViewMixin extends Construct {
   addRoutes({ methods, path = "/", httpApi, lambdaApiIntegration, unauthorized, ...rest }: IAddRoutes) {
     methods = methods || [HttpMethod.ANY]
 
     if (!methods.length) return
 
-    const routeOptions: AddRoutesOptions = {
+    // * /path -> lambda integration
+    const routes = httpApi.addRoutes({
       path,
       methods,
       integration: lambdaApiIntegration,
-      // disable authorization?
-      ...(unauthorized ? { authorizer: new HttpNoneAuthorizer() } : {}),
       ...rest,
-    }
-    const routes = httpApi.addRoutes(routeOptions)
+      ...(unauthorized ? { authorizer: new HttpNoneAuthorizer() } : {}),
+    })
 
     // output the route for easily seeing at a glance what routes are generated
     const route = routes[0] // one for each method; don't care
@@ -68,7 +58,7 @@ export abstract class ApiViewMixin extends Construct {
  *
  * @category Construct
  */
-export class ApiView extends ApiViewMixin implements IEndpoint {
+export class ApiFunction extends ApiViewMixin implements IEndpoint {
   httpApi: HttpApi
   path?: string
   methods?: HttpMethod[]
@@ -76,11 +66,7 @@ export class ApiView extends ApiViewMixin implements IEndpoint {
   handlerFunction: JetKitLambdaFunction
   lambdaApiIntegration: LambdaProxyIntegration
 
-  constructor(
-    scope: Construct,
-    id: string,
-    { httpApi, methods, path = "/", handlerFunction, unauthorized, ...rest }: ApiProps
-  ) {
+  constructor(scope: Construct, id: string, { httpApi, path = "/", methods, handlerFunction, ...rest }: ApiProps) {
     super(scope, id)
 
     // lambda handler
@@ -93,10 +79,11 @@ export class ApiView extends ApiViewMixin implements IEndpoint {
     })
 
     // construct route params
-    const routes: IAddRoutes = { httpApi, path, lambdaApiIntegration: this.lambdaApiIntegration, unauthorized, ...rest }
+    const routes: IAddRoutes = { httpApi, path, lambdaApiIntegration: this.lambdaApiIntegration, ...rest }
     if (methods) routes.methods = methods
-    this.httpApi = httpApi
     this.methods = methods
+
+    this.httpApi = httpApi
     this.path = path
 
     // create routes

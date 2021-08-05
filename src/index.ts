@@ -2,7 +2,7 @@
 export { JetKitCdkApp } from "./app/cdk"
 
 // cdk constructs
-export { ApiView as ApiViewConstruct, ApiProps as ApiViewConstructProps } from "./cdk/api/api"
+export { ApiFunction as ApiViewConstruct, ApiProps as ApiViewConstructProps } from "./cdk/api/api"
 export * from "./cdk/lambda/node14func"
 export * from "./cdk/lambda/prismaNodeFunction"
 export { DatabaseMigrationScript } from "./cdk/lambda/script/database/migration"
@@ -30,7 +30,6 @@ export { ApiView, Lambda, SubRoute, IRouteProps, ISubRouteProps } from "./regist
 export {
   IFunctionMetadataBase as IApiMetadata,
   IApiViewClassMetadata,
-  ICrudApiMetadata,
   IFunctionMetadata,
   ISubRouteApiMetadata,
   MetadataTarget,

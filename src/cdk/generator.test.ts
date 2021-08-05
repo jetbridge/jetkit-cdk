@@ -19,7 +19,7 @@ import {
   unauthFunc,
   UnAuthView,
 } from "../test/sampleApp"
-import { ApiView, JetKitLambdaFunction } from "./api/api"
+import { ApiFunction, JetKitLambdaFunction } from "./api/api"
 import { Node14Func } from "./lambda/node14func"
 
 const bundleBannerMsg = "--- cool bundlings mon ---"
@@ -90,18 +90,11 @@ describe("@ApiView construct generation", () => {
     expect(found?.name).toEqual("AlbumApi")
   })
 
-  it("can find APIView function by cctor", () => {
+  it("can find APIView function by ctor", () => {
     const found = generator.getFunction({ ctor: AlbumApi })
     expect(found).toBeTruthy()
     expect(found).toBeInstanceOf(Node14Func)
     expect(found?.name).toEqual("AlbumApi")
-  })
-
-  it("generates APIGW routes", () => {
-    // should have routes
-    expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
-      RouteKey: "ANY /album",
-    })
   })
 
   it("creates lambda handler", () => {
@@ -118,8 +111,7 @@ describe("@ApiView construct generation", () => {
     })
 
     // are defaults passed through?
-    const classView = generator.node.findChild("Class-AlbumApi-1") as ApiViewConstruct
-    const handlerFunction = classView.handlerFunction
+    const handlerFunction = generator.node.findChild("F1-AlbumApi") as JetKitLambdaFunction
     expect(handlerFunction.bundling).toMatchObject({ banner: bundleBannerMsg })
 
     // ensure we don't override the defaults with function-specific settings
@@ -129,30 +121,19 @@ describe("@ApiView construct generation", () => {
     expect(generator.functionOptions?.entry).toBeFalsy()
   })
 
-  it("creates a route with any method", () => {
+  it("doesn't create routes for empty api view", () => {
     const entry = path.join(__dirname, "..", "test", "sampleApp.ts")
     const addRoutesSpy = jest.spyOn(httpApi, "addRoutes")
     const handlerFunction = new JetKitLambdaFunction(stack, "Func", { entry })
 
-    new ApiView(stack, "V1", {
+    new ApiFunction(stack, "V1", {
       path: "/x",
       httpApi,
       handlerFunction,
       methods: [],
     })
 
-    const view = new ApiView(stack, "V2", {
-      path: "/a",
-      httpApi,
-      handlerFunction,
-      // methods defaults to [ANY]
-    })
-
-    expect(addRoutesSpy).toHaveBeenCalledWith({
-      path: "/a",
-      methods: [HttpMethod.ANY],
-      integration: view.lambdaApiIntegration,
-    })
+    expect(addRoutesSpy).not.toHaveBeenCalled()
   })
 })
 
@@ -179,13 +160,14 @@ describe("@SubRoute construct generation", () => {
   })
   it("has route outputs", () => {
     expect(stack).toHaveOutput({
-      outputName: "GenSubRoutelikeRoute6CEDD760E",
+      outputName: "GenSRAlbumApilikeRoute6C6175CC5",
       outputValue: "POST,DELETE /album/{albumId}/like",
     })
     expect(stack).toHaveOutput({
-      outputName: "GenClassAlbumApi1Route59A25E34B",
-      outputValue: "ANY /album",
+      outputName: "GenSRAlbumApipostRoute5F0E8C334",
+      outputValue: "POST /album",
     })
+
     expect(stack).toHaveOutput({
       exportName: {
         "Fn::Join": [
@@ -315,31 +297,31 @@ describe("Authorization", () => {
     httpApi = new HttpApi(stack, "API", { defaultAuthorizer: authorizer })
   })
 
-  it("disables authentication functions", () => {
+  it("disables authorization functions", () => {
     new ResourceGeneratorConstruct(stack, "Gen", {
       httpApi,
       resources: [unauthFunc],
     })
 
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
-      RouteKey: "ANY /unauthenticated",
+      RouteKey: "ANY /unauthorized",
       AuthorizationType: "NONE",
     })
   })
 
-  it("disables authentication for ApiView", () => {
+  it("inherits disabled authorization for ApiView", () => {
     new ResourceGeneratorConstruct(stack, "Gen", {
       httpApi,
       resources: [UnAuthView],
     })
 
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
-      RouteKey: "ANY /unauthView",
+      RouteKey: "GET /unauthView",
       AuthorizationType: "NONE",
     })
   })
 
-  it("requires authentication scopes for function route", () => {
+  it("requires authorization scopes for function route", () => {
     new ResourceGeneratorConstruct(stack, "Gen", {
       httpApi,
       resources: [authFunc],
@@ -347,7 +329,7 @@ describe("Authorization", () => {
 
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
       AuthorizationScopes: ["charts:write"],
-      RouteKey: "ANY /authenticated",
+      RouteKey: "ANY /authorized",
       AuthorizationType: "CUSTOM",
       AuthorizerId: {
         Ref: stringLike("APIdummy*"),
@@ -355,7 +337,7 @@ describe("Authorization", () => {
     })
   })
 
-  it("requires authentication scopes for ApiView", () => {
+  it("inherits authorization scopes for ApiView", () => {
     new ResourceGeneratorConstruct(stack, "Gen", {
       httpApi,
       resources: [AuthScopeView],
@@ -363,7 +345,7 @@ describe("Authorization", () => {
 
     expect(stack).toHaveResource("AWS::ApiGatewayV2::Route", {
       AuthorizationScopes: ["charts:read"],
-      RouteKey: "ANY /authView",
+      RouteKey: "GET /authView",
       AuthorizationType: "CUSTOM",
       AuthorizerId: {
         Ref: stringLike("APIdummy*"),
