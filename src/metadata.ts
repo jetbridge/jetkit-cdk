@@ -4,12 +4,11 @@
 /**
  * Wrappers for getting/setting metadata on classes and class properties
  */
-import { HttpMethod, HttpRouteProps } from "@aws-cdk/aws-apigatewayv2"
 import { Schedule } from "@aws-cdk/aws-events"
 import "reflect-metadata"
 import { ApiHandler, ApiViewBase } from "./api/base"
 import { FunctionOptions } from "./cdk/generator"
-import { PossibleLambdaHandlers } from "./registry"
+import { ApiViewOpts, IRoutePropsBase, PossibleLambdaHandlers } from "./registry"
 
 /**
  * A class we can apply @ApiView to.
@@ -20,9 +19,8 @@ const JK_V2_METADATA_KEY = Symbol.for("jk:v2:metadata")
 
 // metadata map keys
 export const JK_V2_METADATA_API_VIEW_KEY = Symbol.for("jk:v2:metadata:api:view")
-export const JK_V2_METADATA_CRUD_API_KEY = Symbol.for("jk:v2:metadata:api:crud")
 // sub-route method inside a class
-export const JK_V2_METADATA_SUBROUTES_KEY = Symbol.for("jk:v2:metadata:subroutes")
+export const JK_V2_METADATA_SUBROUTES_KEY = Symbol.for("jk:v2:metadata:subroutesuth")
 // standalone function
 export const JK_V2_METADATA_FUNCTION_KEY = Symbol.for("jk:v2:metadata:function")
 
@@ -34,19 +32,7 @@ export type MetadataTarget = PossibleLambdaHandlers | MetadataTargetConstructor
 /**
  * Metadata describing any Lambda function.
  */
-export interface IFunctionMetadataBase
-  extends FunctionOptions,
-    Pick<HttpRouteProps, "authorizationScopes" | "authorizer"> {
-  /**
-   * An optional API Gateway path to trigger this function.
-   */
-  path?: string
-
-  /**
-   * If `path` is defined, this determines which methods the path responds to.
-   */
-  methods?: HttpMethod[]
-
+export interface IFunctionMetadataBase extends FunctionOptions, Partial<IRoutePropsBase> {
   /**
    * Path to the file containing the handler.
    * Normally shouldn't need to be specified and can be guessed.
@@ -58,14 +44,6 @@ export interface IFunctionMetadataBase
    * Triggers a CloudWatch Event.
    */
   schedule?: Schedule
-
-  /**
-   * Disable default authorizer.
-   *
-   * Set to true for routes that do not require authentication
-   * if your routes normally require it.
-   */
-  unauthorized?: boolean
 }
 
 /**
@@ -79,15 +57,7 @@ export interface IFunctionMetadata extends IFunctionMetadataBase {
 /**
  * APIView class.
  */
-export interface IApiViewClassMetadata extends IFunctionMetadataBase {
-  apiClass: MetadataTargetConstructor
-}
-
-/**
- * CRUD view.
- * Unused.
- */
-export interface ICrudApiMetadata extends IFunctionMetadataBase {
+export interface IApiViewClassMetadata extends ApiViewOpts {
   apiClass: MetadataTargetConstructor
 }
 
@@ -121,12 +91,6 @@ export const getApiViewMetadata = (cls: MetadataTarget): IApiViewClassMetadata |
   getMemberMetadata(cls, JK_V2_METADATA_API_VIEW_KEY)
 export const setApiViewMetadata = (cls: MetadataTarget, value: IApiViewClassMetadata) =>
   setMemberMetadata(cls, JK_V2_METADATA_API_VIEW_KEY, value)
-
-// CRUD API
-export const getCrudApiMetadata = (cls: MetadataTarget): ICrudApiMetadata | undefined =>
-  getMemberMetadata(cls, JK_V2_METADATA_CRUD_API_KEY)
-export const setCrudApiMetadata = (cls: MetadataTarget, value: ICrudApiMetadata) =>
-  setMemberMetadata(cls, JK_V2_METADATA_CRUD_API_KEY, value)
 
 // sub-routes
 export const getSubRouteMetadata = (target: MetadataTarget): ApiMetadataMap<ISubRouteApiMetadata> =>

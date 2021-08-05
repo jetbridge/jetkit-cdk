@@ -1,7 +1,7 @@
-import { HttpApi, HttpMethod, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
+import { HttpApi, HttpMethod, HttpNoneAuthorizer, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
-import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs"
 import { CfnOutput, Construct } from "@aws-cdk/core"
+import { IFunctionMetadataBase } from "../../metadata"
 import { FunctionOptions } from "../generator"
 import { Node14Func as JetKitLambdaFunction, Node14FuncProps as JetKitLambdaFunctionProps } from "../lambda/node14func"
 
@@ -13,24 +13,15 @@ export { JetKitLambdaFunction, JetKitLambdaFunctionProps }
 export interface ApiConfig extends FunctionOptions, IEndpoint {}
 
 export interface ApiProps extends ApiConfig {
-  handlerFunction: NodejsFunction
+  handlerFunction: JetKitLambdaFunction
 }
 
-export interface IEndpoint {
+export interface IEndpoint
+  extends Pick<IFunctionMetadataBase, "path" | "methods" | "unauthorized" | "authorizationScopes"> {
   /**
    * API Gateway HTTP API
    */
   httpApi: HttpApi
-
-  /**
-   * Route
-   */
-  path?: string
-
-  /**
-   * Enabled {@link HttpMethod}s for route
-   */
-  methods?: HttpMethod[]
 }
 
 let routeOutputId = 1
@@ -39,7 +30,7 @@ export interface IAddRoutes extends IEndpoint {
   lambdaApiIntegration: LambdaProxyIntegration
 }
 export abstract class ApiViewMixin extends Construct {
-  addRoutes({ methods, path = "/", httpApi, lambdaApiIntegration }: IAddRoutes) {
+  addRoutes({ methods, path = "/", httpApi, lambdaApiIntegration, unauthorized, ...rest }: IAddRoutes) {
     methods = methods || [HttpMethod.ANY]
 
     if (!methods.length) return
@@ -49,6 +40,8 @@ export abstract class ApiViewMixin extends Construct {
       path,
       methods,
       integration: lambdaApiIntegration,
+      ...rest,
+      ...(unauthorized ? { authorizer: new HttpNoneAuthorizer() } : {}),
     })
 
     // output the route for easily seeing at a glance what routes are generated
@@ -65,7 +58,7 @@ export abstract class ApiViewMixin extends Construct {
  *
  * @category Construct
  */
-export class ApiView extends ApiViewMixin implements IEndpoint {
+export class ApiFunction extends ApiViewMixin implements IEndpoint {
   httpApi: HttpApi
   path?: string
   methods?: HttpMethod[]
@@ -73,7 +66,7 @@ export class ApiView extends ApiViewMixin implements IEndpoint {
   handlerFunction: JetKitLambdaFunction
   lambdaApiIntegration: LambdaProxyIntegration
 
-  constructor(scope: Construct, id: string, { httpApi, methods, path = "/", handlerFunction }: ApiProps) {
+  constructor(scope: Construct, id: string, { httpApi, path = "/", methods, handlerFunction, ...rest }: ApiProps) {
     super(scope, id)
 
     // lambda handler
@@ -85,13 +78,15 @@ export class ApiView extends ApiViewMixin implements IEndpoint {
       payloadFormatVersion: PayloadFormatVersion.VERSION_2_0,
     })
 
+    // construct route params
+    const routes: IAddRoutes = { httpApi, path, lambdaApiIntegration: this.lambdaApiIntegration, ...rest }
+    if (methods) routes.methods = methods
+    this.methods = methods
+
     this.httpApi = httpApi
     this.path = path
-    const routes: IAddRoutes = { httpApi, path, lambdaApiIntegration: this.lambdaApiIntegration }
-    if (methods) {
-      this.methods = methods
-      routes.methods = methods
-    }
+
+    // create routes
     this.addRoutes(routes)
   }
 }

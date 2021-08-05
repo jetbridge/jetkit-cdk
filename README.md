@@ -52,8 +52,11 @@ import { ApiView, SubRoute, ApiEvent, ApiResponse, ApiViewBase, apiViewHandler }
   bundling: { minify: true, metafile: true, sourceMap: true },
 })
 export class AlbumApi extends ApiViewBase {
-  // define POST handler
-  post = async () => "Created new album"
+  // define POST /album handler
+  @SubRoute({ methods: [HttpMethod.POST] })
+  async post() {
+    return "Created new album"
+  }
 
   // custom endpoint in the view
   // routes to the ApiView function

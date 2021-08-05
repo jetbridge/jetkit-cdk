@@ -16,7 +16,10 @@ import { ApiView, Lambda, SubRoute } from "../registry"
 })
 export class AlbumApi extends ApiViewBase {
   // define POST handler
-  post = async () => "Created new album"
+  @SubRoute({ methods: [HttpMethod.POST] })
+  async post() {
+    return "Created new album"
+  }
 
   // custom endpoint in the view
   // routes to the ApiView function
@@ -78,30 +81,40 @@ Lambda({
   schedule: Schedule.rate(Duration.minutes(10)),
 })(scheduledFunc)
 
-// unauthenticated route
-export const unauthFunc = () => console.log("does not require authentication")
+// unauthorized route
+export const unauthFunc = () => console.log("does not require authorization")
 Lambda({
   unauthorized: true,
-  path: "/unauthenticated",
+  path: "/unauthorized",
 })(unauthFunc)
 
-// unauthenticated ApiView
+// unauthorized ApiView
 @ApiView({
   unauthorized: true,
   path: "/unauthView",
 })
-export class UnAuthView extends ApiViewBase {}
+export class UnAuthView extends ApiViewBase {
+  @SubRoute({ methods: [HttpMethod.GET] })
+  async get() {
+    return "blorp"
+  }
+}
 
-// authenticated ApiView
+// authorized ApiView
 @ApiView({
   path: "/authView",
   authorizationScopes: ["charts:read"],
 })
-export class AuthScopeView extends ApiViewBase {}
+export class AuthScopeView extends ApiViewBase {
+  @SubRoute({ methods: [HttpMethod.GET] })
+  async get() {
+    return "blorp"
+  }
+}
 
-// authenticated func
-export const authFunc = () => console.log("requires authentication")
+// authorized func
+export const authFunc = () => console.log("requires authorization")
 Lambda({
   authorizationScopes: ["charts:write"],
-  path: "/authenticated",
+  path: "/authorized",
 })(authFunc)
