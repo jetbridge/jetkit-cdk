@@ -3,6 +3,7 @@ import { ensureDatabaseExists } from "@prisma/migrate/dist/utils/ensureDatabaseE
 import { printFilesFromMigrationIds } from "@prisma/migrate/dist/utils/printFiles"
 import chalk from "chalk"
 import "@prisma/client" // needed for bundling
+import "@prisma/sdk" // needed for bundling
 
 export const handler = async (): Promise<string> => {
   const schemaPath = "./prisma/schema.prisma"
