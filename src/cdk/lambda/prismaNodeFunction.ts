@@ -19,33 +19,10 @@ export interface DatabaseFuncProps extends Node14FuncProps {
  * @alpha
  */
 export class PrismaNode14Func extends Node14Func {
-  constructor(scope: Construct, id: string, { db, prismaPath, bundling, layers, ...props }: DatabaseFuncProps) {
-    // add prisma layer
-    layers ||= []
-    bundling ||= {}
-    ;(bundling as any).externalModules ||= []
-    bundling.externalModules!.push(...db.getPrismaExternalModules())
-    layers.push(db.getPrismaLayerVersion())
-
-    if (bundling.commandHooks)
-      throw new Error("Sorry you cannot define commandHooks on the migration script")
-
-      // add prisma dir with migrations
-    ;(bundling as any).commandHooks = {
-      beforeInstall: (): string[] => [],
-      afterBundling: (): string[] => [],
-      beforeBundling: (inputDir: string, outputDir: string): string[] => {
-        return [
-          // need to copy over migration files
-          `cp -r "${inputDir}/${prismaPath}" "${outputDir}"`,
-        ]
-      },
-    }
-
+  constructor(scope: Construct, id: string, { db, vpc, ...props }: DatabaseFuncProps) {
     super(scope, id, {
+      vpc,
       ...props,
-      layers,
-      bundling,
     })
 
     // allow DB access

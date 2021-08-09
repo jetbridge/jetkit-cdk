@@ -55,6 +55,7 @@ export class AppLayer extends LayerVersion {
     if (prismaPath) {
       // generate + bundle prisma client
       prismaCmds.push(
+        // copy prisma config/schema/migrations
         `cp -r ${prismaPath} /asset-output/nodejs/`,
         "pushd /asset-output/nodejs",
         "HOME=/tmp npx prisma generate",
