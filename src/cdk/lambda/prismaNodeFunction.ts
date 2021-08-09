@@ -4,18 +4,14 @@ import { DB_SECRET_ENV, Node14Func, Node14FuncProps, SlsPgDb } from "../.."
 import { DB_URL_ENV } from "../generator"
 
 export interface DatabaseFuncProps extends Node14FuncProps {
-  /**
-   * Path to prisma directory containing schema and migrations.
-   */
-  prismaPath: string
-
   vpc: Vpc
   db: SlsPgDb
 }
 
 /**
- * Lambda function with Prisma layer and generated client.
+ * Lambda function with database access.
  * Grants access to DB and secret.
+ * To use be sure to provide bundling.layer = [appLayer] and externalModules = appLayer.externalModules.
  * @alpha
  */
 export class PrismaNode14Func extends Node14Func {
