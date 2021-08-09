@@ -22,6 +22,24 @@ export interface AppLayerProps extends Partial<LayerVersionProps> {
  * Construct a lambda layer with some base common dependencies.
  * Copies over selected node_modules.
  * Be sure to omit the layer modules from your function bundles with the `externalModules` option.
+ *
+ * @example With Generator
+ * ```ts
+ *   // shared lambda layer
+ *   const appLayer = new AppLayer(this, "AppLayer", {
+ *     layerVersionName: `${id}-app`,
+ *     removalPolicy: isProduction ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
+ *     projectRoot: path.join(__dirname, "..", "..", ".."),
+ *     prismaPath: path.join("packages", "repo", "prisma"),
+ *   })
+ *
+ *   // default lambda function options
+ *   const functionOptions: FunctionOptions = {
+ *     layers: [appLayer],
+ *     bundling: {
+ *       externalModules: appLayer.externalModules,
+ *     },
+ *   }
  */
 export class AppLayer extends LayerVersion {
   externalModules: string[]
@@ -78,7 +96,6 @@ export class AppLayer extends LayerVersion {
         "prisma",
         ".prisma",
         ".prisma/client",
-        "@prisma/migrate",
         "@prisma/engines",
         "@prisma/client",
       ])

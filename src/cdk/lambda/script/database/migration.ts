@@ -17,7 +17,7 @@ export class DatabaseMigrationScript extends PrismaNode14Func {
     // by default this uses migration.script.ts
     entry ||= `${__dirname}/migration.script.js` // already compiled
 
-    timeout ||= Duration.seconds(30)
+    timeout ||= Duration.seconds(120)
 
     super(scope, id, { ...props, entry, memorySize, depsLockFilePath, timeout, handler })
 
