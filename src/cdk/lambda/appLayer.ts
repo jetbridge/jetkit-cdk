@@ -84,7 +84,7 @@ export class AppLayer extends LayerVersion {
         // remove unused engine files
         `rm -f ${nm}/@prisma/engines/prisma-fmt-*`,
         `rm -f ${nm}/@prisma/engines/introspection-engine-*`,
-        `rm -f ${nm}/@prisma/engines/migration-engine-*`,
+        // `rm -f ${nm}/@prisma/engines/migration-engine-*`,
         // remove macOS clients if present
         `rm -f ${nm}/prisma/*-engine-darwin`,
         // remove docs
@@ -96,6 +96,7 @@ export class AppLayer extends LayerVersion {
         "prisma",
         ".prisma",
         ".prisma/client",
+        "@prisma/migrate",
         "@prisma/engines",
         "@prisma/client",
       ])
