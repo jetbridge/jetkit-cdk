@@ -1,5 +1,6 @@
 import { Code, LayerVersion, LayerVersionProps, Runtime } from "@aws-cdk/aws-lambda"
 import { Construct, IgnoreMode } from "@aws-cdk/core"
+import { unique } from "../../util/list"
 
 export interface AppLayerProps extends Partial<LayerVersionProps> {
   // Path to directory containing node_modules to bundle
@@ -49,6 +50,7 @@ export class AppLayer extends LayerVersion {
     id: string,
     { code, bundleCommand, projectRoot, nodeModules, prismaPath, ...props }: AppLayerProps
   ) {
+    nodeModules ||= []
     let externalModules = ["aws-sdk", ...(nodeModules || [])]
 
     // node_modules output (in docker)
@@ -56,21 +58,13 @@ export class AppLayer extends LayerVersion {
 
     // exclude from copying to build environment to speed things up
     const exclude: string[] = ["*", "!node_modules/.prisma", "!node_modules/@prisma", "!node_modules/prisma"]
-    if (prismaPath) exclude.push(`!${prismaPath}`)
-
-    // other node_modules to move to layer
-    let nodeModulesCopy: string[] = []
-    if (nodeModules) {
-      // what node modules to copy to layer
-      const nodeModulesPaths = nodeModules.map((dir) => `node_modules/${dir}`)
-      nodeModulesCopy = nodeModules.map(
-        (dir) => `mkdir -p "${nm}/${dir}" && cp -rT "node_modules/${dir}" "${nm}/${dir}"`
-      )
-      exclude.push(...nodeModulesPaths.map((d) => `!${d}`))
-    }
 
     const prismaCmds: string[] = []
     if (prismaPath) {
+      // extras - only needed for migrations
+      nodeModules.push("@prisma/sdk", "@prisma/migrate", "execa")
+
+      exclude.push(`!${prismaPath}`)
       // generate + bundle prisma client
       prismaCmds.push(
         // copy prisma config/schema/migrations
@@ -102,15 +96,29 @@ export class AppLayer extends LayerVersion {
       ])
     }
 
+    // other node_modules to move to layer
+    let nodeModulesCopy: string[] = []
+    if (nodeModules) {
+      nodeModules = unique(nodeModules)
+      // what node modules to copy to layer
+      const nodeModulesPaths = nodeModules.map((dir) => `node_modules/${dir}`)
+      nodeModulesCopy = nodeModules.map(
+        (dir) => `mkdir -p "${nm}/${dir}" && cp -rT "node_modules/${dir}" "${nm}/${dir}"`
+      )
+      exclude.push(...nodeModulesPaths.map((d) => `!${d}`))
+    }
+
     // commands to create bundle
     const commands = [
       // run user-supplied command
       bundleCommand,
-      // copy over node modules
-      ...nodeModulesCopy,
       // prisma client
       ...prismaCmds,
+      // copy over node modules
+      ...nodeModulesCopy,
     ].filter((c) => c)
+    console.log(exclude)
+    console.log(commands)
 
     // create asset bundle
     try {
@@ -130,6 +138,7 @@ export class AppLayer extends LayerVersion {
 
     super(scope, id, { ...props, code })
 
-    this.externalModules = externalModules
+    // unique
+    this.externalModules = unique(externalModules)
   }
 }
