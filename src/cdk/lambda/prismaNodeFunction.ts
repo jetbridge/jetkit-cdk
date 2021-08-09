@@ -28,11 +28,11 @@ export class PrismaNode14Func extends Node14Func {
     commandHooks = {
       beforeInstall: (): string[] => [],
       afterBundling: (_inputDir: string, outputDir: string): string[] => [
-        // don't need these - get from layer
         `rm -rf ${outputDir}/package-lock.json`,
+        // don't need these - get from layer
         `rm -rf ${outputDir}/node_modules/@prisma/engines`,
         `rm -rf ${outputDir}/node_modules/@prisma/sdk/node_modules/@prisma/engines`,
-        `rm -rf ${outputDir}/node_modules/@prisma/engine-core`,
+        `rm -rf ${outputDir}/node_modules/@prisma/engine-core/node_modules/@prisma/engines`,
       ],
       beforeBundling: (inputDir: string, outputDir: string): string[] => [
         // need to copy over migration files
