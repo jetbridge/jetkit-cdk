@@ -19,7 +19,7 @@ export type ScriptProps = DatabaseFuncProps
  *      externalModules: appLayer.externalModules,
  *    },
  *    layers: [appLayer],
- *  })
+ * })
  * ```
  */
 export class DatabaseMigrationScript extends PrismaNode14Func {
