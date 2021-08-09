@@ -7,6 +7,20 @@ export type ScriptProps = DatabaseFuncProps
  * Lambda function to run database migrations.
  *
  * @category Construct
+ *
+ * @example
+ * ```ts
+ * new DatabaseMigrationScript(this, "MigrationScript", {
+ *    vpc,
+ *    db,
+ *    functionName: `${id}-migrate`,
+ *    prismaPath: 'path/to/prisma',
+ *    bundling: {
+ *      externalModules: appLayer.externalModules,
+ *    },
+ *    layers: [appLayer],
+ *  })
+ * ```
  */
 export class DatabaseMigrationScript extends PrismaNode14Func {
   constructor(
