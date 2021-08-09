@@ -16,7 +16,8 @@ export interface AppLayerProps extends Partial<LayerVersionProps> {
 
   // Bash script to run in projectPath for bundle
   // Layer contents are in /asset-output
-  bundleCommand?: string
+  bundlePreCommand?: string
+  bundlePostCommand?: string
 }
 
 /**
@@ -48,7 +49,7 @@ export class AppLayer extends LayerVersion {
   constructor(
     scope: Construct,
     id: string,
-    { code, bundleCommand, projectRoot, nodeModules, prismaPath, ...props }: AppLayerProps
+    { code, bundlePreCommand, bundlePostCommand, projectRoot, nodeModules, prismaPath, ...props }: AppLayerProps
   ) {
     nodeModules ||= []
     let externalModules = ["aws-sdk", ...(nodeModules || [])]
@@ -61,10 +62,6 @@ export class AppLayer extends LayerVersion {
 
     const prismaCmds: string[] = []
     if (prismaPath) {
-      // extras - only needed for migrations
-      nodeModules.push("@prisma/sdk", "@prisma/migrate")
-      externalModules.push("@prisma/sdk", "@prisma/migrate")
-
       exclude.push(`!${prismaPath}`)
       // generate + bundle prisma client
       prismaCmds.push(
@@ -91,10 +88,8 @@ export class AppLayer extends LayerVersion {
         "prisma",
         ".prisma",
         ".prisma/client",
-        "@prisma/migrate",
         "@prisma/engines",
         "@prisma/client",
-        "@prisma/sdk",
       ])
     }
 
@@ -113,14 +108,14 @@ export class AppLayer extends LayerVersion {
     // commands to create bundle
     const commands = [
       // run user-supplied command
-      bundleCommand,
+      bundlePreCommand,
       // prisma client
       ...prismaCmds,
       // copy over node modules
       ...nodeModulesCopy,
+      // run user-supplied command
+      bundlePostCommand,
     ].filter((c) => c)
-    console.log(exclude)
-    console.log(commands)
 
     // create asset bundle
     try {

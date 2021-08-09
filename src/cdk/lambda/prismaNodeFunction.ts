@@ -6,6 +6,11 @@ import { DB_URL_ENV } from "../generator"
 export interface DatabaseFuncProps extends Node14FuncProps {
   vpc: Vpc
   db: SlsPgDb
+
+  /**
+   * Path to prisma directory containing schema and migrations.
+   */
+  prismaPath: string
 }
 
 /**
@@ -15,8 +20,28 @@ export interface DatabaseFuncProps extends Node14FuncProps {
  * @alpha
  */
 export class PrismaNode14Func extends Node14Func {
-  constructor(scope: Construct, id: string, { db, vpc, ...props }: DatabaseFuncProps) {
+  constructor(scope: Construct, id: string, { db, vpc, bundling, prismaPath, ...props }: DatabaseFuncProps) {
+    // add bundling command hooks
+    bundling ||= {}
+    let { commandHooks, ...bundlingRest } = bundling
+    if (commandHooks) throw new Error("Cannot specify commandHooks")
+    commandHooks = {
+      beforeInstall: (): string[] => [],
+      afterBundling: (_inputDir: string, outputDir: string): string[] => [
+        // don't need these - get from layer
+        `rm -rf ${outputDir}/package-lock.json`,
+        `rm -rf ${outputDir}/node_modules/@prisma/engines`,
+        `rm -rf ${outputDir}/node_modules/@prisma/sdk/node_modules/@prisma/engines`,
+        `rm -rf ${outputDir}/node_modules/@prisma/engine-core`,
+      ],
+      beforeBundling: (inputDir: string, outputDir: string): string[] => [
+        // need to copy over migration files
+        `cp -r "${inputDir}/${prismaPath}" "${outputDir}"`,
+      ],
+    }
+
     super(scope, id, {
+      bundling: { commandHooks, ...bundlingRest },
       vpc,
       ...props,
     })

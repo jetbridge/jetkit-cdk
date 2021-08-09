@@ -4,6 +4,7 @@ import { printFilesFromMigrationIds } from "@prisma/migrate/dist/utils/printFile
 import chalk from "chalk"
 import "@prisma/client" // needed for bundling
 import "@prisma/sdk" // needed for bundling
+import "execa" // needed for bundling
 
 export const handler = async (): Promise<string> => {
   const schemaPath = "./prisma/schema.prisma"
