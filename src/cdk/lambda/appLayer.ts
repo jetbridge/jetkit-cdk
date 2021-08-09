@@ -62,7 +62,8 @@ export class AppLayer extends LayerVersion {
     const prismaCmds: string[] = []
     if (prismaPath) {
       // extras - only needed for migrations
-      nodeModules.push("@prisma/sdk", "@prisma/migrate", "execa")
+      nodeModules.push("@prisma/sdk", "@prisma/migrate")
+      externalModules.push("@prisma/sdk", "@prisma/migrate")
 
       exclude.push(`!${prismaPath}`)
       // generate + bundle prisma client
@@ -93,6 +94,7 @@ export class AppLayer extends LayerVersion {
         "@prisma/migrate",
         "@prisma/engines",
         "@prisma/client",
+        "@prisma/sdk",
       ])
     }
 
