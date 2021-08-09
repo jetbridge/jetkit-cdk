@@ -31,7 +31,7 @@ export class AppLayer extends LayerVersion {
     id: string,
     { code, bundleCommand, projectRoot, nodeModules, prismaPath, ...props }: AppLayerProps
   ) {
-    const externalModules = ["aws-sdk", ...(nodeModules || [])]
+    let externalModules = ["aws-sdk", ...(nodeModules || [])]
 
     // node_modules output (in docker)
     const nm = "/asset-output/nodejs/node_modules"
@@ -74,7 +74,7 @@ export class AppLayer extends LayerVersion {
         // invalid symlinks
         `rm -rf ${nm}/.bin`
       )
-      externalModules.concat([
+      externalModules = externalModules.concat([
         "prisma",
         ".prisma",
         ".prisma/client",
