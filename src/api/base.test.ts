@@ -2,14 +2,22 @@ import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { ApiEvent, ApiViewBase } from "./base"
 import { ApiView, SubRoute } from "../registry"
 import { AlbumApi } from "../test/sampleApp"
+import { Context } from "aws-lambda"
 
 interface IMakeApiEvent {
   method: HttpMethod
   path?: string
   routeKey: string
 }
-function makeApiEvent({ method, routeKey, path = "/" }: IMakeApiEvent): Partial<ApiEvent> {
+function makeApiEvent({ method, routeKey, path = "/" }: IMakeApiEvent): ApiEvent {
+  routeKey = `${method.toUpperCase()} ${routeKey}`
   return {
+    version: "2.0",
+    rawPath: path,
+    rawQueryString: "",
+    cookies: ["s_fid=7AABXMPL1AFD9BBF-0643XMPL09956DE2", "regStatus=pre-register"],
+    headers: {},
+    isBase64Encoded: true,
     requestContext: {
       accountId: "foo",
       apiId: "bar",
@@ -23,17 +31,40 @@ function makeApiEvent({ method, routeKey, path = "/" }: IMakeApiEvent): Partial<
         userAgent: "Konqueror",
       },
       requestId: "a",
-      routeKey: `${method.toUpperCase()} ${routeKey}`,
+      routeKey,
       stage: "prod",
       time: "abc",
       timeEpoch: 123,
     },
-    routeKey: `${method.toUpperCase()} ${routeKey}`,
+    routeKey,
   }
 }
 
 describe("ApiViewBase", () => {
   const view = new AlbumApi()
+
+  describe("dispatch", () => {
+    it("dispatches with proper 'this' context", async () => {
+      @ApiView({
+        path: "/a",
+      })
+      class CoolViewClass extends ApiViewBase {
+        @SubRoute({ path: "/sub", methods: [HttpMethod.ANY] })
+        async handler() {
+          return this.okay()
+        }
+        okay() {
+          return "OK"
+        }
+      }
+      const inst = new CoolViewClass()
+      const result = await inst.dispatch(
+        makeApiEvent({ method: HttpMethod.GET, path: "/a/sub", routeKey: "/a/sub" }),
+        {} as Context
+      )
+      expect(result).toEqual("OK")
+    })
+  })
 
   describe("findHandler", () => {
     it("locates handler method based on method", () => {

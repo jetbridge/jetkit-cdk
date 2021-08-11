@@ -146,8 +146,7 @@ export class ApiViewBase {
       const handlerMethod = this.findHandler(event)
       if (handlerMethod) {
         // call handler
-        // TODO: might need to call `apply` here with this
-        return await handlerMethod(event, context)
+        return await handlerMethod.call(this, event, context)
       } else {
         // 404
         throw notFound(`The path ${method} ${path} was not found`)
