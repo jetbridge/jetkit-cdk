@@ -191,7 +191,6 @@ export class ResourceGenerator extends Construct {
     const handlerFunction = new JetKitLambdaFunction(this, `F${this.funcCounter++}-${name}`, {
       ...rest,
       functionName,
-
       name,
       metadataTarget,
     })

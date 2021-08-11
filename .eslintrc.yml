@@ -21,3 +21,4 @@ ignorePatterns:
   - jest.config.js
 rules:
   "@typescript-eslint/explicit-module-boundary-types": off
+  "prefer-const": off

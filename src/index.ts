@@ -6,7 +6,9 @@ export { ApiFunction as ApiViewConstruct, ApiProps as ApiViewConstructProps } fr
 export * from "./cdk/lambda/node14func"
 export * from "./cdk/lambda/prismaNodeFunction"
 export { DatabaseMigrationScript } from "./cdk/lambda/script/database/migration"
+export * from "./cdk/lambda/appLayer"
 export { SlsPgDb, SlsPgDbProps } from "./cdk/database/serverless-pg"
+
 export {
   ResourceGenerator as ResourceGeneratorConstruct,
   ResourceGeneratorProps,
