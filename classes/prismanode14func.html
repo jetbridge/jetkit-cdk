@@ -68,8 +68,9 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Lambda function with Prisma layer and generated client.
-						Grants access to DB and secret.</p>
+						<p>Lambda function with database access.
+							Grants access to DB and secret.
+						To use be sure to provide bundling.layer = [appLayer] and externalModules = appLayer.externalModules.</p>
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>alpha</dt>
@@ -201,7 +202,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="node14func.html">Node14Func</a>.<a href="node14func.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2cf495e/src/cdk/lambda/prismaNodeFunction.ts#L21">src/cdk/lambda/prismaNodeFunction.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/cf2207c/src/cdk/lambda/prismaNodeFunction.ts#L22">src/cdk/lambda/prismaNodeFunction.ts:22</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -271,7 +272,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="node14func.html">Node14Func</a>.<a href="node14func.html#bundling">bundling</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2cf495e/src/cdk/lambda/node14func.ts#L57">src/cdk/lambda/node14func.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/cf2207c/src/cdk/lambda/node14func.ts#L57">src/cdk/lambda/node14func.ts:57</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -416,7 +417,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="node14func.html">Node14Func</a>.<a href="node14func.html#metadatatarget">metadataTarget</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2cf495e/src/cdk/lambda/node14func.ts#L58">src/cdk/lambda/node14func.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/cf2207c/src/cdk/lambda/node14func.ts#L58">src/cdk/lambda/node14func.ts:58</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -427,7 +428,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="node14func.html">Node14Func</a>.<a href="node14func.html#name">name</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2cf495e/src/cdk/lambda/node14func.ts#L59">src/cdk/lambda/node14func.ts:59</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/cf2207c/src/cdk/lambda/node14func.ts#L59">src/cdk/lambda/node14func.ts:59</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1285,7 +1286,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="node14func.html">Node14Func</a>.<a href="node14func.html#getmetadatatarget">getMetadataTarget</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/2cf495e/src/cdk/lambda/node14func.ts#L73">src/cdk/lambda/node14func.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/cf2207c/src/cdk/lambda/node14func.ts#L73">src/cdk/lambda/node14func.ts:73</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></h4>
@@ -2312,6 +2313,9 @@
 						<a href="apiviewconstruct.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="applayer.html" class="tsd-kind-icon">App<wbr>Layer</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="databasemigrationscript.html" class="tsd-kind-icon">Database<wbr>Migration<wbr>Script</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
@@ -2541,6 +2545,9 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/apiviewconstructprops.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/applayerprops.html" class="tsd-kind-icon">App<wbr>Layer<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/databasefuncprops.html" class="tsd-kind-icon">Database<wbr>Func<wbr>Props</a>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SlsPgDb | @jetkit/cdk</title>
+	<title>AppLayer | @jetkit/cdk</title>
 	<meta name="description" content="Documentation for @jetkit/cdk">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">@jetkit/cdk</a>
 				</li>
 				<li>
-					<a href="slspgdb.html">SlsPgDb</a>
+					<a href="applayer.html">AppLayer</a>
 				</li>
 			</ul>
-			<h1>Class SlsPgDb</h1>
+			<h1>Class AppLayer</h1>
 		</div>
 	</div>
 </header>
@@ -68,21 +68,41 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Quickest and easiest way to get a Postgres database.
-							Uses Aurora Serverless.
-							Generates secret.
-						and <a href="https://docs.aws.amazon.com/cdk/api/latest/docs/aws-rds-readme.html#data-api">https://docs.aws.amazon.com/cdk/api/latest/docs/aws-rds-readme.html#data-api</a></p>
+						<p>Construct a lambda layer with some base common dependencies.
+							Copies over selected node_modules.
+						Be sure to omit the layer modules from your function bundles with the <code>externalModules</code> option.</p>
 					</div>
+					<dl class="tsd-comment-tags">
+						<dt>example</dt>
+						<dd><p>With Generator</p>
+							<pre><code class="language-ts"><span style="color: #000000">  </span><span style="color: #008000">// shared lambda layer</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">appLayer</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">AppLayer</span><span style="color: #000000">(</span><span style="color: #0000FF">this</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;AppLayer&quot;</span><span style="color: #000000">, {</span>
+<span style="color: #000000">    </span><span style="color: #001080">layerVersionName:</span><span style="color: #000000"> </span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">id</span><span style="color: #0000FF">}</span><span style="color: #A31515">-app`</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">removalPolicy:</span><span style="color: #000000"> </span><span style="color: #001080">isProduction</span><span style="color: #000000"> ? </span><span style="color: #001080">RemovalPolicy</span><span style="color: #000000">.</span><span style="color: #0070C1">RETAIN</span><span style="color: #000000"> : </span><span style="color: #001080">RemovalPolicy</span><span style="color: #000000">.</span><span style="color: #0070C1">DESTROY</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">projectRoot:</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;..&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;..&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;..&quot;</span><span style="color: #000000">),</span>
+<span style="color: #000000">    </span><span style="color: #001080">prismaPath:</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;packages&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;repo&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;prisma&quot;</span><span style="color: #000000">),</span>
+<span style="color: #000000">  })</span>
+
+<span style="color: #000000">  </span><span style="color: #008000">// default lambda function options</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">functionOptions</span><span style="color: #000000">: </span><span style="color: #267F99">FunctionOptions</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">    </span><span style="color: #001080">layers:</span><span style="color: #000000"> [</span><span style="color: #001080">appLayer</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">bundling:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #001080">externalModules:</span><span style="color: #000000"> </span><span style="color: #001080">appLayer</span><span style="color: #000000">.</span><span style="color: #001080">externalModules</span><span style="color: #000000">,</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">  }</span>
+</code></pre>
+						</dd>
+					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="tsd-signature-type">ServerlessCluster</span>
+						<span class="tsd-signature-type">LayerVersion</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">SlsPgDb</span>
+								<span class="target">AppLayer</span>
 							</li>
 						</ul>
 					</li>
@@ -95,57 +115,41 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="slspgdb.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="applayer.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#clusterendpoint" class="tsd-kind-icon">cluster<wbr>Endpoint</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#clusteridentifier" class="tsd-kind-icon">cluster<wbr>Identifier</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#clusterreadendpoint" class="tsd-kind-icon">cluster<wbr>Read<wbr>Endpoint</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#connections" class="tsd-kind-icon">connections</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="slspgdb.html#defaultdatabasename" class="tsd-kind-icon">default<wbr>Database<wbr>Name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="slspgdb.html#enabledataapi" class="tsd-kind-icon">enable<wbr>Data<wbr>Api</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#env" class="tsd-kind-icon">env</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#node" class="tsd-kind-icon">node</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="slspgdb.html#physicalname" class="tsd-kind-icon">physical<wbr>Name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="slspgdb.html#prismaconnectionlimit" class="tsd-kind-icon">prisma<wbr>Connection<wbr>Limit</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#secret" class="tsd-kind-icon">secret</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#stack" class="tsd-kind-icon">stack</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="slspgdb.html#vpc_" class="tsd-kind-icon">vpc_</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#compatibleruntimes" class="tsd-kind-icon">compatible<wbr>Runtimes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#env" class="tsd-kind-icon">env</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="applayer.html#externalmodules" class="tsd-kind-icon">external<wbr>Modules</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#layerversionarn" class="tsd-kind-icon">layer<wbr>Version<wbr>Arn</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#node" class="tsd-kind-icon">node</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#physicalname" class="tsd-kind-icon">physical<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#stack" class="tsd-kind-icon">stack</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-external">
-							<h3>Accessors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-external"><a href="slspgdb.html#clusterarn" class="tsd-kind-icon">cluster<wbr>Arn</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited tsd-is-external">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#_enablecrossenvironment" class="tsd-kind-icon">_enable<wbr>Cross<wbr>Environment</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#addrotationmultiuser" class="tsd-kind-icon">add<wbr>Rotation<wbr>Multi<wbr>User</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#addrotationsingleuser" class="tsd-kind-icon">add<wbr>Rotation<wbr>Single<wbr>User</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#applyremovalpolicy" class="tsd-kind-icon">apply<wbr>Removal<wbr>Policy</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#assecretattachmenttarget" class="tsd-kind-icon">as<wbr>Secret<wbr>Attachment<wbr>Target</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="slspgdb.html#generatephysicalname" class="tsd-kind-icon">generate<wbr>Physical<wbr>Name</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="slspgdb.html#getdataapiparams" class="tsd-kind-icon">get<wbr>Data<wbr>Api<wbr>Params</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="slspgdb.html#getresourcearnattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Arn<wbr>Attribute</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="slspgdb.html#getresourcenameattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Name<wbr>Attribute</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#grantdataapiaccess" class="tsd-kind-icon">grant<wbr>Data<wbr>Api<wbr>Access</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="slspgdb.html#makedatabaseurl" class="tsd-kind-icon">make<wbr>Database<wbr>Url</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="slspgdb.html#onprepare" class="tsd-kind-icon">on<wbr>Prepare</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="slspgdb.html#onsynthesize" class="tsd-kind-icon">on<wbr>Synthesize</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="slspgdb.html#onvalidate" class="tsd-kind-icon">on<wbr>Validate</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="slspgdb.html#prepare" class="tsd-kind-icon">prepare</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="slspgdb.html#synthesize" class="tsd-kind-icon">synthesize</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="slspgdb.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="slspgdb.html#validate" class="tsd-kind-icon">validate</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external"><a href="slspgdb.html#fromserverlessclusterattributes" class="tsd-kind-icon">from<wbr>Serverless<wbr>Cluster<wbr>Attributes</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external"><a href="slspgdb.html#isconstruct" class="tsd-kind-icon">is<wbr>Construct</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external"><a href="slspgdb.html#isresource" class="tsd-kind-icon">is<wbr>Resource</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#_enablecrossenvironment" class="tsd-kind-icon">_enable<wbr>Cross<wbr>Environment</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#addpermission" class="tsd-kind-icon">add<wbr>Permission</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#applyremovalpolicy" class="tsd-kind-icon">apply<wbr>Removal<wbr>Policy</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#generatephysicalname" class="tsd-kind-icon">generate<wbr>Physical<wbr>Name</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#getresourcearnattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Arn<wbr>Attribute</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#getresourcenameattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Name<wbr>Attribute</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#onprepare" class="tsd-kind-icon">on<wbr>Prepare</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#onsynthesize" class="tsd-kind-icon">on<wbr>Synthesize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#onvalidate" class="tsd-kind-icon">on<wbr>Validate</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#prepare" class="tsd-kind-icon">prepare</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#synthesize" class="tsd-kind-icon">synthesize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#validate" class="tsd-kind-icon">validate</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external"><a href="applayer.html#fromlayerversionarn" class="tsd-kind-icon">from<wbr>Layer<wbr>Version<wbr>Arn</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external"><a href="applayer.html#fromlayerversionattributes" class="tsd-kind-icon">from<wbr>Layer<wbr>Version<wbr>Attributes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external"><a href="applayer.html#isconstruct" class="tsd-kind-icon">is<wbr>Construct</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external"><a href="applayer.html#isresource" class="tsd-kind-icon">is<wbr>Resource</a></li>
 							</ul>
 						</section>
 					</div>
@@ -157,14 +161,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Sls<wbr>PgDb<span class="tsd-signature-symbol">(</span>scope<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Construct</span>, id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, __namedParameters<span class="tsd-signature-symbol">: </span><a href="../interfaces/slspgdbprops.html" class="tsd-signature-type" data-tsd-kind="Interface">SlsPgDbProps</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="slspgdb.html" class="tsd-signature-type" data-tsd-kind="Class">SlsPgDb</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>App<wbr>Layer<span class="tsd-signature-symbol">(</span>scope<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Construct</span>, id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, __namedParameters<span class="tsd-signature-symbol">: </span><a href="../interfaces/applayerprops.html" class="tsd-signature-type" data-tsd-kind="Interface">AppLayerProps</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="applayer.html" class="tsd-signature-type" data-tsd-kind="Class">AppLayer</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides ServerlessCluster.constructor</p>
+								<p>Overrides LayerVersion.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/cf2207c/src/cdk/database/serverless-pg.ts#L27">src/cdk/database/serverless-pg.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/cf2207c/src/cdk/lambda/appLayer.ts#L47">src/cdk/lambda/appLayer.ts:47</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -176,10 +180,10 @@
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>__namedParameters: <a href="../interfaces/slspgdbprops.html" class="tsd-signature-type" data-tsd-kind="Interface">SlsPgDbProps</a></h5>
+									<h5>__namedParameters: <a href="../interfaces/applayerprops.html" class="tsd-signature-type" data-tsd-kind="Interface">AppLayerProps</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="slspgdb.html" class="tsd-signature-type" data-tsd-kind="Class">SlsPgDb</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="applayer.html" class="tsd-signature-type" data-tsd-kind="Class">AppLayer</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -187,110 +191,19 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-					<a name="clusterendpoint" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> cluster<wbr>Endpoint</h3>
-					<div class="tsd-signature tsd-kind-icon">cluster<wbr>Endpoint<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Endpoint</span></div>
+					<a name="compatibleruntimes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> compatible<wbr>Runtimes</h3>
+					<div class="tsd-signature tsd-kind-icon">compatible<wbr>Runtimes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Runtime</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from ServerlessCluster.clusterEndpoint</p>
+						<p>Inherited from LayerVersion.compatibleRuntimes</p>
 						<ul>
-							<li>Defined in node_modules/@aws-cdk/aws-rds/lib/serverless-cluster.d.ts:398</li>
+							<li>Defined in node_modules/@aws-cdk/aws-lambda/lib/layers.d.ts:191</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The endpoint to use for read/write operations.</p>
+							<p>The runtimes compatible with this Layer.</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>stability</dt>
-							<dd><p>stable</p>
-							</dd>
-						</dl>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-					<a name="clusteridentifier" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> cluster<wbr>Identifier</h3>
-					<div class="tsd-signature tsd-kind-icon">cluster<wbr>Identifier<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from ServerlessCluster.clusterIdentifier</p>
-						<ul>
-							<li>Defined in node_modules/@aws-cdk/aws-rds/lib/serverless-cluster.d.ts:392</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Identifier of the cluster.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>stability</dt>
-							<dd><p>stable</p>
-							</dd>
-						</dl>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-					<a name="clusterreadendpoint" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> cluster<wbr>Read<wbr>Endpoint</h3>
-					<div class="tsd-signature tsd-kind-icon">cluster<wbr>Read<wbr>Endpoint<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Endpoint</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from ServerlessCluster.clusterReadEndpoint</p>
-						<ul>
-							<li>Defined in node_modules/@aws-cdk/aws-rds/lib/serverless-cluster.d.ts:404</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The endpoint to use for read/write operations.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>stability</dt>
-							<dd><p>stable</p>
-							</dd>
-						</dl>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-					<a name="connections" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> connections</h3>
-					<div class="tsd-signature tsd-kind-icon">connections<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Connections</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from ServerlessCluster.connections</p>
-						<ul>
-							<li>Defined in node_modules/@aws-cdk/aws-rds/lib/serverless-cluster.d.ts:410</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Access to the network connections.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>stability</dt>
-							<dd><p>stable</p>
-							</dd>
-						</dl>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="defaultdatabasename" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> default<wbr>Database<wbr>Name</h3>
-					<div class="tsd-signature tsd-kind-icon">default<wbr>Database<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/cf2207c/src/cdk/database/serverless-pg.ts#L23">src/cdk/database/serverless-pg.ts:23</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-					<a name="enabledataapi" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagOptional">Optional</span> enable<wbr>Data<wbr>Api</h3>
-					<div class="tsd-signature tsd-kind-icon">enable<wbr>Data<wbr>Api<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from ServerlessCluster.enableDataApi</p>
-						<ul>
-							<li>Defined in node_modules/@aws-cdk/aws-rds/lib/serverless-cluster.d.ts:420</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
 						<dl class="tsd-comment-tags">
 							<dt>stability</dt>
 							<dd><p>stable</p>
@@ -303,7 +216,7 @@
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> env</h3>
 					<div class="tsd-signature tsd-kind-icon">env<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ResourceEnvironment</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from ServerlessCluster.env</p>
+						<p>Inherited from LayerVersion.env</p>
 						<ul>
 							<li>Defined in node_modules/@aws-cdk/core/lib/resource.d.ts:140</li>
 						</ul>
@@ -325,12 +238,43 @@
 						</dl>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="externalmodules" class="tsd-anchor"></a>
+					<h3>external<wbr>Modules</h3>
+					<div class="tsd-signature tsd-kind-icon">external<wbr>Modules<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/cf2207c/src/cdk/lambda/appLayer.ts#L47">src/cdk/lambda/appLayer.ts:47</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+					<a name="layerversionarn" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> layer<wbr>Version<wbr>Arn</h3>
+					<div class="tsd-signature tsd-kind-icon">layer<wbr>Version<wbr>Arn<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from LayerVersion.layerVersionArn</p>
+						<ul>
+							<li>Defined in node_modules/@aws-cdk/aws-lambda/lib/layers.d.ts:185</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The ARN of the Lambda Layer version that this Layer defines.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>stability</dt>
+							<dd><p>stable</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="node" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> node</h3>
 					<div class="tsd-signature tsd-kind-icon">node<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ConstructNode</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from ServerlessCluster.node</p>
+						<p>Inherited from LayerVersion.node</p>
 						<ul>
 							<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:77</li>
 						</ul>
@@ -351,7 +295,7 @@
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> physical<wbr>Name</h3>
 					<div class="tsd-signature tsd-kind-icon">physical<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from ServerlessCluster.physicalName</p>
+						<p>Inherited from LayerVersion.physicalName</p>
 						<ul>
 							<li>Defined in node_modules/@aws-cdk/core/lib/resource.d.ts:152</li>
 						</ul>
@@ -374,43 +318,12 @@
 						</dl>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="prismaconnectionlimit" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> prisma<wbr>Connection<wbr>Limit</h3>
-					<div class="tsd-signature tsd-kind-icon">prisma<wbr>Connection<wbr>Limit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/cf2207c/src/cdk/database/serverless-pg.ts#L24">src/cdk/database/serverless-pg.ts:24</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-					<a name="secret" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> secret</h3>
-					<div class="tsd-signature tsd-kind-icon">secret<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ISecret</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from ServerlessCluster.secret</p>
-						<ul>
-							<li>Defined in node_modules/@aws-cdk/aws-rds/lib/serverless-cluster.d.ts:416</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The secret attached to this cluster.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>stability</dt>
-							<dd><p>stable</p>
-							</dd>
-						</dl>
-					</div>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="stack" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> stack</h3>
 					<div class="tsd-signature tsd-kind-icon">stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Stack</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from ServerlessCluster.stack</p>
+						<p>Inherited from LayerVersion.stack</p>
 						<ul>
 							<li>Defined in node_modules/@aws-cdk/core/lib/resource.d.ts:127</li>
 						</ul>
@@ -426,48 +339,8 @@
 						</dl>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="vpc_" class="tsd-anchor"></a>
-					<h3>vpc_</h3>
-					<div class="tsd-signature tsd-kind-icon">vpc_<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">IVpc</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/cf2207c/src/cdk/database/serverless-pg.ts#L27">src/cdk/database/serverless-pg.ts:27</a></li>
-						</ul>
-					</aside>
-				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-external">
-				<h2>Accessors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-external">
-					<a name="clusterarn" class="tsd-anchor"></a>
-					<h3>cluster<wbr>Arn</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> clusterArn<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in node_modules/@aws-cdk/aws-rds/lib/serverless-cluster.d.ts:359</li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>The ARN of the cluster.</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>stability</dt>
-									<dd><p>stable</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited tsd-is-external">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="_enablecrossenvironment" class="tsd-anchor"></a>
@@ -478,7 +351,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster._enableCrossEnvironment</p>
+								<p>Inherited from LayerVersion._enableCrossEnvironment</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/resource.d.ts:167</li>
 								</ul>
@@ -500,23 +373,29 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-					<a name="addrotationmultiuser" class="tsd-anchor"></a>
-					<h3>add<wbr>Rotation<wbr>Multi<wbr>User</h3>
+					<a name="addpermission" class="tsd-anchor"></a>
+					<h3>add<wbr>Permission</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Rotation<wbr>Multi<wbr>User<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RotationMultiUserOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">SecretRotation</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Permission<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, permission<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">LayerVersionPermission</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.addRotationMultiUser</p>
+								<p>Inherited from LayerVersion.addPermission</p>
 								<ul>
-									<li>Defined in node_modules/@aws-cdk/aws-rds/lib/serverless-cluster.d.ts:441</li>
+									<li>Defined in node_modules/@aws-cdk/aws-lambda/lib/layers.d.ts:112</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Adds the multi user rotation to this cluster.</p>
+									<p>Add permission for this layer version to specific entities.</p>
 								</div>
+								<p>Usage within
+									the same account where the layer is defined is always allowed and does not
+									require calling this method. Note that the principal that creates the
+									Lambda function using the layer (for example, a CloudFormation changeset
+									execution role) also needs to have the <code>lambda:GetLayerVersion</code>
+								permission on the layer version.</p>
 								<dl class="tsd-comment-tags">
 									<dt>stability</dt>
 									<dd><p>stable</p>
@@ -529,44 +408,10 @@
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>options: <span class="tsd-signature-type">RotationMultiUserOptions</span></h5>
+									<h5>permission: <span class="tsd-signature-type">LayerVersionPermission</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">SecretRotation</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-					<a name="addrotationsingleuser" class="tsd-anchor"></a>
-					<h3>add<wbr>Rotation<wbr>Single<wbr>User</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Rotation<wbr>Single<wbr>User<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">RotationSingleUserOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">SecretRotation</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.addRotationSingleUser</p>
-								<ul>
-									<li>Defined in node_modules/@aws-cdk/aws-rds/lib/serverless-cluster.d.ts:435</li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Adds the single user rotation of the master password to this cluster.</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>stability</dt>
-									<dd><p>stable</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">RotationSingleUserOptions</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">SecretRotation</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -579,7 +424,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.applyRemovalPolicy</p>
+								<p>Inherited from LayerVersion.applyRemovalPolicy</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/resource.d.ts:181</li>
 								</ul>
@@ -610,34 +455,6 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-					<a name="assecretattachmenttarget" class="tsd-anchor"></a>
-					<h3>as<wbr>Secret<wbr>Attachment<wbr>Target</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">as<wbr>Secret<wbr>Attachment<wbr>Target<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">SecretAttachmentTargetProps</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.asSecretAttachmentTarget</p>
-								<ul>
-									<li>Defined in node_modules/@aws-cdk/aws-rds/lib/serverless-cluster.d.ts:372</li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Renders the secret attachment target specifications.</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>stability</dt>
-									<dd><p>stable</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">SecretAttachmentTargetProps</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
 					<a name="generatephysicalname" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> generate<wbr>Physical<wbr>Name</h3>
@@ -647,7 +464,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.generatePhysicalName</p>
+								<p>Inherited from LayerVersion.generatePhysicalName</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/resource.d.ts:185</li>
 								</ul>
@@ -663,38 +480,6 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getdataapiparams" class="tsd-anchor"></a>
-					<h3>get<wbr>Data<wbr>Api<wbr>Params</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Data<wbr>Api<wbr>Params<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>clusterArn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>secretArn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/cf2207c/src/cdk/database/serverless-pg.ts#L75">src/cdk/database/serverless-pg.ts:75</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Get params for connecting via data API.
-										Make sure you set enableDataApi: true
-									or call grantDataApiAccess()</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>clusterArn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>secretArn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h4>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter">
-									<h5>cluster<wbr>Arn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li class="tsd-parameter">
-									<h5>secret<wbr>Arn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
 					<a name="getresourcearnattribute" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> get<wbr>Resource<wbr>Arn<wbr>Attribute</h3>
@@ -704,7 +489,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.getResourceArnAttribute</p>
+								<p>Inherited from LayerVersion.getResourceArnAttribute</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/resource.d.ts:209</li>
 								</ul>
@@ -751,7 +536,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.getResourceNameAttribute</p>
+								<p>Inherited from LayerVersion.getResourceNameAttribute</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/resource.d.ts:196</li>
 								</ul>
@@ -782,65 +567,6 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-					<a name="grantdataapiaccess" class="tsd-anchor"></a>
-					<h3>grant<wbr>Data<wbr>Api<wbr>Access</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">grant<wbr>Data<wbr>Api<wbr>Access<span class="tsd-signature-symbol">(</span>grantee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IGrantable</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Grant</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.grantDataApiAccess</p>
-								<ul>
-									<li>Defined in node_modules/@aws-cdk/aws-rds/lib/serverless-cluster.d.ts:366</li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Grant the given identity to access to the Data API, including read access to the secret attached to the cluster if present.</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>stability</dt>
-									<dd><p>stable</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>grantee: <span class="tsd-signature-type">IGrantable</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The principal to grant access to.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Grant</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="makedatabaseurl" class="tsd-anchor"></a>
-					<h3>make<wbr>Database<wbr>Url</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">make<wbr>Database<wbr>Url<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/cf2207c/src/cdk/database/serverless-pg.ts#L55">src/cdk/database/serverless-pg.ts:55</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Generate a database connection string (DSN).</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
 					<a name="onprepare" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> on<wbr>Prepare</h3>
@@ -850,7 +576,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.onPrepare</p>
+								<p>Inherited from LayerVersion.onPrepare</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:104</li>
 								</ul>
@@ -883,7 +609,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.onSynthesize</p>
+								<p>Inherited from LayerVersion.onSynthesize</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:114</li>
 								</ul>
@@ -922,7 +648,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.onValidate</p>
+								<p>Inherited from LayerVersion.onValidate</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:91</li>
 								</ul>
@@ -953,7 +679,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.prepare</p>
+								<p>Inherited from LayerVersion.prepare</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:137</li>
 								</ul>
@@ -986,7 +712,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.synthesize</p>
+								<p>Inherited from LayerVersion.synthesize</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:147</li>
 								</ul>
@@ -1025,7 +751,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.toString</p>
+								<p>Inherited from LayerVersion.toString</p>
 								<ul>
 									<li>Defined in node_modules/constructs/lib/construct.d.ts:363</li>
 								</ul>
@@ -1053,7 +779,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.validate</p>
+								<p>Inherited from LayerVersion.validate</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:124</li>
 								</ul>
@@ -1076,23 +802,24 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external">
-					<a name="fromserverlessclusterattributes" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> from<wbr>Serverless<wbr>Cluster<wbr>Attributes</h3>
+					<a name="fromlayerversionarn" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> from<wbr>Layer<wbr>Version<wbr>Arn</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">from<wbr>Serverless<wbr>Cluster<wbr>Attributes<span class="tsd-signature-symbol">(</span>scope<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Construct</span>, id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, attrs<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ServerlessClusterAttributes</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IServerlessCluster</span></li>
+						<li class="tsd-signature tsd-kind-icon">from<wbr>Layer<wbr>Version<wbr>Arn<span class="tsd-signature-symbol">(</span>scope<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Construct</span>, id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, layerVersionArn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ILayerVersion</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.fromServerlessClusterAttributes</p>
+								<p>Inherited from LayerVersion.fromLayerVersionArn</p>
 								<ul>
-									<li>Defined in node_modules/@aws-cdk/aws-rds/lib/serverless-cluster.d.ts:386</li>
+									<li>Defined in node_modules/@aws-cdk/aws-lambda/lib/layers.d.ts:170</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Import an existing DatabaseCluster from properties.</p>
+									<p>Imports a layer version by ARN.</p>
 								</div>
+								<p>Assumes it is compatible with all Lambda runtimes.</p>
 								<dl class="tsd-comment-tags">
 									<dt>stability</dt>
 									<dd><p>stable</p>
@@ -1108,10 +835,59 @@
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>attrs: <span class="tsd-signature-type">ServerlessClusterAttributes</span></h5>
+									<h5>layerVersionArn: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IServerlessCluster</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ILayerVersion</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external">
+					<a name="fromlayerversionattributes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> from<wbr>Layer<wbr>Version<wbr>Attributes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">from<wbr>Layer<wbr>Version<wbr>Attributes<span class="tsd-signature-symbol">(</span>scope<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Construct</span>, id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, attrs<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">LayerVersionAttributes</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ILayerVersion</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from LayerVersion.fromLayerVersionAttributes</p>
+								<ul>
+									<li>Defined in node_modules/@aws-cdk/aws-lambda/lib/layers.d.ts:179</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Imports a Layer that has been defined externally.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>stability</dt>
+									<dd><p>stable</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>scope: <span class="tsd-signature-type">Construct</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the parent Construct that will use the imported layer.</p>
+									</div>
+								</li>
+								<li>
+									<h5>id: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the id of the imported layer in the construct tree.</p>
+									</div>
+								</li>
+								<li>
+									<h5>attrs: <span class="tsd-signature-type">LayerVersionAttributes</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the properties of the imported layer.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ILayerVersion</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1124,7 +900,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.isConstruct</p>
+								<p>Inherited from LayerVersion.isConstruct</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/construct-compat.d.ts:71</li>
 								</ul>
@@ -1158,7 +934,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from ServerlessCluster.isResource</p>
+								<p>Inherited from LayerVersion.isResource</p>
 								<ul>
 									<li>Defined in node_modules/@aws-cdk/core/lib/resource.d.ts:121</li>
 								</ul>
@@ -1210,9 +986,90 @@
 					<li class=" tsd-kind-class">
 						<a href="apiviewconstruct.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct</a>
 					</li>
-					<li class=" tsd-kind-class">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
 						<a href="applayer.html" class="tsd-kind-icon">App<wbr>Layer</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="applayer.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+								<a href="applayer.html#compatibleruntimes" class="tsd-kind-icon">compatible<wbr>Runtimes</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+								<a href="applayer.html#env" class="tsd-kind-icon">env</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="applayer.html#externalmodules" class="tsd-kind-icon">external<wbr>Modules</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+								<a href="applayer.html#layerversionarn" class="tsd-kind-icon">layer<wbr>Version<wbr>Arn</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+								<a href="applayer.html#node" class="tsd-kind-icon">node</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
+								<a href="applayer.html#physicalname" class="tsd-kind-icon">physical<wbr>Name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+								<a href="applayer.html#stack" class="tsd-kind-icon">stack</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+								<a href="applayer.html#_enablecrossenvironment" class="tsd-kind-icon">_enable<wbr>Cross<wbr>Environment</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+								<a href="applayer.html#addpermission" class="tsd-kind-icon">add<wbr>Permission</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+								<a href="applayer.html#applyremovalpolicy" class="tsd-kind-icon">apply<wbr>Removal<wbr>Policy</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
+								<a href="applayer.html#generatephysicalname" class="tsd-kind-icon">generate<wbr>Physical<wbr>Name</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
+								<a href="applayer.html#getresourcearnattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Arn<wbr>Attribute</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
+								<a href="applayer.html#getresourcenameattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Name<wbr>Attribute</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
+								<a href="applayer.html#onprepare" class="tsd-kind-icon">on<wbr>Prepare</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
+								<a href="applayer.html#onsynthesize" class="tsd-kind-icon">on<wbr>Synthesize</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
+								<a href="applayer.html#onvalidate" class="tsd-kind-icon">on<wbr>Validate</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
+								<a href="applayer.html#prepare" class="tsd-kind-icon">prepare</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
+								<a href="applayer.html#synthesize" class="tsd-kind-icon">synthesize</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
+								<a href="applayer.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
+								<a href="applayer.html#validate" class="tsd-kind-icon">validate</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external">
+								<a href="applayer.html#fromlayerversionarn" class="tsd-kind-icon">from<wbr>Layer<wbr>Version<wbr>Arn</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external">
+								<a href="applayer.html#fromlayerversionattributes" class="tsd-kind-icon">from<wbr>Layer<wbr>Version<wbr>Attributes</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external">
+								<a href="applayer.html#isconstruct" class="tsd-kind-icon">is<wbr>Construct</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external">
+								<a href="applayer.html#isresource" class="tsd-kind-icon">is<wbr>Resource</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="databasemigrationscript.html" class="tsd-kind-icon">Database<wbr>Migration<wbr>Script</a>
 					</li>
@@ -1231,123 +1088,9 @@
 					<li class=" tsd-kind-class">
 						<a href="resourcegeneratorconstruct.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Construct</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class">
+					<li class=" tsd-kind-class">
 						<a href="slspgdb.html" class="tsd-kind-icon">Sls<wbr>PgDb</a>
-						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-								<a href="slspgdb.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="slspgdb.html#clusterendpoint" class="tsd-kind-icon">cluster<wbr>Endpoint</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="slspgdb.html#clusteridentifier" class="tsd-kind-icon">cluster<wbr>Identifier</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="slspgdb.html#clusterreadendpoint" class="tsd-kind-icon">cluster<wbr>Read<wbr>Endpoint</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="slspgdb.html#connections" class="tsd-kind-icon">connections</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="slspgdb.html#defaultdatabasename" class="tsd-kind-icon">default<wbr>Database<wbr>Name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="slspgdb.html#enabledataapi" class="tsd-kind-icon">enable<wbr>Data<wbr>Api</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="slspgdb.html#env" class="tsd-kind-icon">env</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="slspgdb.html#node" class="tsd-kind-icon">node</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="slspgdb.html#physicalname" class="tsd-kind-icon">physical<wbr>Name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="slspgdb.html#prismaconnectionlimit" class="tsd-kind-icon">prisma<wbr>Connection<wbr>Limit</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="slspgdb.html#secret" class="tsd-kind-icon">secret</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="slspgdb.html#stack" class="tsd-kind-icon">stack</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="slspgdb.html#vpc_" class="tsd-kind-icon">vpc_</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-external">
-								<a href="slspgdb.html#clusterarn" class="tsd-kind-icon">cluster<wbr>Arn</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="slspgdb.html#_enablecrossenvironment" class="tsd-kind-icon">_enable<wbr>Cross<wbr>Environment</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="slspgdb.html#addrotationmultiuser" class="tsd-kind-icon">add<wbr>Rotation<wbr>Multi<wbr>User</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="slspgdb.html#addrotationsingleuser" class="tsd-kind-icon">add<wbr>Rotation<wbr>Single<wbr>User</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="slspgdb.html#applyremovalpolicy" class="tsd-kind-icon">apply<wbr>Removal<wbr>Policy</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="slspgdb.html#assecretattachmenttarget" class="tsd-kind-icon">as<wbr>Secret<wbr>Attachment<wbr>Target</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="slspgdb.html#generatephysicalname" class="tsd-kind-icon">generate<wbr>Physical<wbr>Name</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="slspgdb.html#getdataapiparams" class="tsd-kind-icon">get<wbr>Data<wbr>Api<wbr>Params</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="slspgdb.html#getresourcearnattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Arn<wbr>Attribute</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="slspgdb.html#getresourcenameattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Name<wbr>Attribute</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="slspgdb.html#grantdataapiaccess" class="tsd-kind-icon">grant<wbr>Data<wbr>Api<wbr>Access</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="slspgdb.html#makedatabaseurl" class="tsd-kind-icon">make<wbr>Database<wbr>Url</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="slspgdb.html#onprepare" class="tsd-kind-icon">on<wbr>Prepare</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="slspgdb.html#onsynthesize" class="tsd-kind-icon">on<wbr>Synthesize</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="slspgdb.html#onvalidate" class="tsd-kind-icon">on<wbr>Validate</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="slspgdb.html#prepare" class="tsd-kind-icon">prepare</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="slspgdb.html#synthesize" class="tsd-kind-icon">synthesize</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="slspgdb.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="slspgdb.html#validate" class="tsd-kind-icon">validate</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external">
-								<a href="slspgdb.html#fromserverlessclusterattributes" class="tsd-kind-icon">from<wbr>Serverless<wbr>Cluster<wbr>Attributes</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external">
-								<a href="slspgdb.html#isconstruct" class="tsd-kind-icon">is<wbr>Construct</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external">
-								<a href="slspgdb.html#isresource" class="tsd-kind-icon">is<wbr>Resource</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-is-external">
 						<a href="../interfaces/apievent.html" class="tsd-kind-icon">Api<wbr>Event</a>
 					</li>
