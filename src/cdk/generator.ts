@@ -100,7 +100,7 @@ export class ResourceGenerator extends Construct {
   /**
    * Lambda functions that were generated.
    */
-  generatedFunctions: GeneratedFunction[]
+  generatedLambdas: GeneratedFunction[]
 
   functionPrefix?: string
 
@@ -122,7 +122,7 @@ export class ResourceGenerator extends Construct {
     this.httpApi = httpApi
     this.functionPrefix = functionPrefix
 
-    this.generatedFunctions = []
+    this.generatedLambdas = []
     this.seenFunctionNames = {}
 
     if (functionOptions) this.functionOptions = functionOptions
@@ -199,7 +199,7 @@ export class ResourceGenerator extends Construct {
     this.grantFunctionAccess(functionOptions, handlerFunction)
 
     // track
-    this.generatedFunctions.push(handlerFunction)
+    this.generatedLambdas.push(handlerFunction)
 
     return handlerFunction
   }
@@ -374,7 +374,7 @@ export class ResourceGenerator extends Construct {
    * Look up a generated function.
    */
   getFunction(filter: { ctor?: MetadataTarget; name?: string }): Node14Func | undefined {
-    let fns = this.generatedFunctions
+    let fns = this.generatedLambdas
     if (!fns) return undefined
 
     // filter

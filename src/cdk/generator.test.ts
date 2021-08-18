@@ -79,8 +79,8 @@ describe("@ApiView construct generation", () => {
   })
 
   it("saves generated functions", () => {
-    expect(generator.generatedFunctions).toHaveLength(1)
-    expect(generator.generatedFunctions[0]).toBeInstanceOf(NodejsFunction)
+    expect(generator.generatedLambdas).toHaveLength(1)
+    expect(generator.generatedLambdas[0]).toBeInstanceOf(NodejsFunction)
   })
 
   it("can find APIView function by name", () => {
@@ -222,9 +222,9 @@ describe("Lambda() construct generation of APIs", () => {
   })
 
   it("saves generated functions", () => {
-    expect(generator.generatedFunctions).toHaveLength(2)
-    expect(generator.generatedFunctions[0]).toBeInstanceOf(NodejsFunction)
-    expect(generator.generatedFunctions[1]).toBeInstanceOf(NodejsFunction)
+    expect(generator.generatedLambdas).toHaveLength(2)
+    expect(generator.generatedLambdas[0]).toBeInstanceOf(NodejsFunction)
+    expect(generator.generatedLambdas[1]).toBeInstanceOf(NodejsFunction)
   })
 
   it("can find Lambda function by ctor", () => {
