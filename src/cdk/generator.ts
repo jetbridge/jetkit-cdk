@@ -137,7 +137,7 @@ export class ResourceGenerator extends Construct {
 
     // it's handy to have the API base URL as a stack output
     if (this.httpApi?.url)
-      new CfnOutput(this, outputName, { value: this.httpApi.url, exportName: Fn.join("-", [Aws.STACK_NAME, this.httpApi.apiName]) })
+      new CfnOutput(this, outputName, { value: this.httpApi.url, exportName: Fn.join("-", [Aws.STACK_NAME, this.httpApi.apiId]) })
   }
 
   generateConstructsForResource(resource: MetadataTarget) {
