@@ -8,7 +8,7 @@ import { Code, Function, FunctionOptions, Runtime } from "@aws-cdk/aws-lambda"
 import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs"
 import { Duration, Stack } from "@aws-cdk/core"
 import * as path from "path"
-import { ApiViewConstruct, ResourceGeneratorConstruct } from ".."
+import { ResourceGeneratorConstruct } from ".."
 import {
   AlbumApi,
   authFunc,
