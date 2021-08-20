@@ -168,7 +168,6 @@ describe("@SubRoute construct generation", () => {
       outputValue: "POST /album",
     })
     expect(stack).toHaveOutput({
-      outputName: "GenApiBase123427DCC3AB",
       outputValue: {
         "Fn::Join": [
           "",
