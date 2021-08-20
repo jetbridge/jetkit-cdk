@@ -167,38 +167,40 @@ describe("@SubRoute construct generation", () => {
       outputName: "GenSRAlbumApipostRoute5F0E8C334",
       outputValue: "POST /album",
     })
-
     expect(stack).toHaveOutput({
-      exportName: {
-        "Fn::Join": [
-          "-",
-          [
-            {
-              Ref: "AWS::StackName",
-            },
-            "ApiBase",
-          ],
-        ],
-      },
+      outputName: "GenApiBase123427DCC3AB",
       outputValue: {
         "Fn::Join": [
           "",
           [
             "https://",
             {
-              Ref: "API62EA1CFF",
+              "Ref": "API62EA1CFF"
             },
             ".execute-api.",
             {
-              Ref: "AWS::Region",
+              "Ref": "AWS::Region"
             },
             ".",
             {
-              Ref: "AWS::URLSuffix",
+              "Ref": "AWS::URLSuffix"
             },
-            "/",
-          ],
-        ],
+            "/"
+          ]
+        ]
+      },
+      exportName: {
+        "Fn::Join": [
+          "-",
+          [
+            {
+              "Ref": "AWS::StackName"
+            },
+            {
+              "Ref": "API62EA1CFF"
+            }
+          ]
+        ]
       },
     })
   })
