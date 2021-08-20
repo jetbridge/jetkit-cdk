@@ -15,6 +15,7 @@ import * as targets from "@aws-cdk/aws-events-targets"
 import { SlsPgDb } from "./database/serverless-pg"
 import { IVpc } from "@aws-cdk/aws-ec2"
 import { debug } from "../util/log"
+import { randomBetweenNAndM } from "../util/math"
 import { Node14Func, Node14FuncProps } from "./lambda/node14func"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
 import slugify from "slugify"
@@ -131,9 +132,12 @@ export class ResourceGenerator extends Construct {
     // emit CDK constructs for specified resources
     resources.forEach((resource) => this.generateConstructsForResource(resource))
 
+    const namePostfix = randomBetweenNAndM(1000, 2000)
+    const outputName = `ApiBase${namePostfix}`
+
     // it's handy to have the API base URL as a stack output
     if (this.httpApi?.url)
-      new CfnOutput(this, "ApiBase", { value: this.httpApi.url, exportName: Fn.join("-", [Aws.STACK_NAME, "ApiBase"]) })
+      new CfnOutput(this, outputName, { value: this.httpApi.url, exportName: Fn.join("-", [Aws.STACK_NAME, outputName]) })
   }
 
   generateConstructsForResource(resource: MetadataTarget) {
