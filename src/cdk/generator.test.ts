@@ -168,36 +168,36 @@ describe("@SubRoute construct generation", () => {
       outputValue: "POST /album",
     })
     expect(stack).toHaveOutput({
+      exportName: {
+        "Fn::Join": [
+          "-",
+          [
+            {
+              Ref: "AWS::StackName",
+            },
+            httpApi.httpApiName
+          ],
+        ],
+      },
       outputValue: {
         "Fn::Join": [
           "",
           [
             "https://",
             {
-              "Ref": "API62EA1CFF"
+              Ref: "API62EA1CFF",
             },
             ".execute-api.",
             {
-              "Ref": "AWS::Region"
+              Ref: "AWS::Region",
             },
             ".",
             {
-              "Ref": "AWS::URLSuffix"
+              Ref: "AWS::URLSuffix",
             },
-            "/"
-          ]
-        ]
-      },
-      exportName: {
-        "Fn::Join": [
-          "-",
-          [
-            {
-              "Ref": "AWS::StackName"
-            },
-            httpApi.httpApiName
-          ]
-        ]
+            "/",
+          ],
+        ],
       },
     })
   })
