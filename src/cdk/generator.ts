@@ -136,8 +136,10 @@ export class ResourceGenerator extends Construct {
     const outputName = `ApiBase${namePostfix}`
 
     // it's handy to have the API base URL as a stack output
-    if (this.httpApi?.url)
-      new CfnOutput(this, outputName, { value: this.httpApi.url, exportName: Fn.join("-", [Aws.STACK_NAME, this.httpApi.apiId]) })
+    if (this.httpApi?.url) {
+      const apiName: string = this.httpApi.httpApiName || outputName
+      new CfnOutput(this, outputName, { value: this.httpApi.url, exportName: Fn.join("-", [Aws.STACK_NAME, apiName]) })
+    }
   }
 
   generateConstructsForResource(resource: MetadataTarget) {

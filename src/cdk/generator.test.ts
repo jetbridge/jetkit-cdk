@@ -195,9 +195,7 @@ describe("@SubRoute construct generation", () => {
             {
               "Ref": "AWS::StackName"
             },
-            {
-              "Ref": "API62EA1CFF"
-            }
+            httpApi.httpApiName
           ]
         ]
       },
