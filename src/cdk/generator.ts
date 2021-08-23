@@ -133,8 +133,8 @@ export class ResourceGenerator extends Construct {
 
     // it's handy to have the API base URL as a stack output
     if (this.httpApi?.url) {
-      const apiName: string = this.httpApi.httpApiName || "ApiBase"
-      new CfnOutput(this, apiName, { value: this.httpApi.url, exportName: Fn.join("-", [Aws.STACK_NAME, apiName]) })
+      const apiName = this.httpApi.httpApiName
+      new CfnOutput(this, apiName, { value: this.httpApi.url, ...(apiName ? {exportName: Fn.join("-", [Aws.STACK_NAME, apiName]) : {}) })
     }
   }
 
