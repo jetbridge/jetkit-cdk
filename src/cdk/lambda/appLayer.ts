@@ -73,6 +73,8 @@ export class AppLayer extends LayerVersion {
       prismaCmds.push(
         // copy prisma config/schema/migrations
         `cp -r ${prismaPath} /asset-output/nodejs/`,
+        // will be regenerated
+        `rm -rf ${prismaPath}/generated`,
         "pushd /asset-output/nodejs",
         "HOME=/tmp PATH=$PATH:/asset-output/nodejs/node_modules/.bin npx prisma generate",
         "popd",
