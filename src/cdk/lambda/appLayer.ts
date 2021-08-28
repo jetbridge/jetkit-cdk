@@ -58,7 +58,13 @@ export class AppLayer extends LayerVersion {
     const nm = "/asset-output/nodejs/node_modules"
 
     // exclude from copying to build environment to speed things up
-    const exclude: string[] = ["*", "!node_modules/.prisma", "!node_modules/@prisma", "!node_modules/prisma"]
+    const exclude: string[] = [
+      "*",
+      "!node_modules/.prisma",
+      "!node_modules/@prisma",
+      "!node_modules/prisma",
+      "!node_modules/prisma-appsync",
+    ]
 
     const prismaCmds: string[] = []
     if (prismaPath) {
@@ -68,7 +74,6 @@ export class AppLayer extends LayerVersion {
         // copy prisma config/schema/migrations
         `cp -r ${prismaPath} /asset-output/nodejs/`,
         "pushd /asset-output/nodejs",
-        "HOME=/tmp npm install prisma-appsync",
         "HOME=/tmp PATH=$PATH:/asset-output/nodejs/node_modules/.bin npx prisma generate",
         "popd",
         // don't need two sets of engines
@@ -91,6 +96,7 @@ export class AppLayer extends LayerVersion {
         ".prisma/client",
         "@prisma/engines",
         "@prisma/client",
+        "prisma-appsync",
       ])
     }
 
