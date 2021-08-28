@@ -68,7 +68,8 @@ export class AppLayer extends LayerVersion {
         // copy prisma config/schema/migrations
         `cp -r ${prismaPath} /asset-output/nodejs/`,
         "pushd /asset-output/nodejs",
-        "HOME=/tmp npx prisma generate",
+        "HOME=/tmp npm install prisma-appsync",
+        "HOME=/tmp PATH=$PATH:/asset-output/nodejs/node_modules/.bin npx prisma generate",
         "popd",
         // don't need two sets of engines
         `rm -f ${nm}/.prisma/client/*-engine-*`,
@@ -116,6 +117,8 @@ export class AppLayer extends LayerVersion {
       // run user-supplied command
       bundlePostCommand,
     ].filter((c) => c)
+
+    console.debug(commands)
 
     // create asset bundle
     try {

@@ -1,5 +1,4 @@
 /* eslint-disable prefer-const */
-import "source-map-support/register"
 import { BundlingOptions, NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { Construct } from "@aws-cdk/core"
 import { Runtime } from "@aws-cdk/aws-lambda"
