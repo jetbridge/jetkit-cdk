@@ -134,7 +134,10 @@ export class ResourceGenerator extends Construct {
     // it's handy to have the API base URL as a stack output
     if (this.httpApi?.url) {
       const apiName = this.httpApi.httpApiName || "ApiBase"
-      new CfnOutput(this, apiName, { value: this.httpApi.url, ...(apiName ? {exportName: Fn.join("-", [Aws.STACK_NAME, apiName])} : {}) })
+      new CfnOutput(this, apiName, {
+        value: this.httpApi.url,
+        ...(apiName ? { exportName: Fn.join("-", [Aws.STACK_NAME, apiName]) } : {}),
+      })
     }
   }
 
@@ -352,7 +355,7 @@ export class ResourceGenerator extends Construct {
     db.grantDataApiAccess(func)
 
     // network access
-    db.connections.allowDefaultPortFrom(func)
+    func.connections.allowToDefaultPort(db)
 
     // secret access
     if (db.secret) {
