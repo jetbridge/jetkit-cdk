@@ -75,7 +75,8 @@ export class AppLayer extends LayerVersion {
         // copy prisma config/schema/migrations
         `cp -r ${prismaPath} /asset-output/nodejs/`,
         // will be regenerated
-        `rm -rf /asset-output/nodejs/prisma/generated/*`,
+        `rm -rf /asset-output/nodejs/prisma/generated`,
+        `mkdir -p /asset-output/nodejs/prisma/generated/prisma-appsync/client`,
         // generate
         "pushd /asset-output/nodejs",
         `HOME=/tmp PATH=$PATH:${nm}/.bin npx prisma generate`,
