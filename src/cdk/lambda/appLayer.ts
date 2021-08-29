@@ -138,8 +138,6 @@ export class AppLayer extends LayerVersion {
       bundlePostCommand,
     ].filter((c) => c)
 
-    console.debug(commands)
-
     // create asset bundle
     try {
       code ||= Code.fromAsset(projectRoot, {
