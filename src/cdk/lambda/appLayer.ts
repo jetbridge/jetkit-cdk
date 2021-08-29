@@ -60,6 +60,7 @@ export class AppLayer extends LayerVersion {
     // exclude from copying to build environment to speed things up
     const exclude: string[] = [
       "*",
+      "!node_modules/.bin",
       "!node_modules/.prisma",
       "!node_modules/@prisma",
       "!node_modules/prisma",
@@ -74,9 +75,10 @@ export class AppLayer extends LayerVersion {
         // copy prisma config/schema/migrations
         `cp -r ${prismaPath} /asset-output/nodejs/`,
         // will be regenerated
-        `rm -rf /asset-output/nodejs/prisma/generated`,
+        `rm -rf /asset-output/nodejs/prisma/generated/*`,
+        // generate
         "pushd /asset-output/nodejs",
-        "HOME=/tmp PATH=$PATH:/asset-output/nodejs/node_modules/.bin npx prisma generate",
+        `HOME=/tmp PATH=$PATH:${nm}/.bin npx prisma generate`,
         "popd",
         // don't need two sets of engines
         `rm -f ${nm}/.prisma/client/*-engine-*`,
