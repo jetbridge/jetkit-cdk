@@ -57,30 +57,37 @@ export class AppLayer extends LayerVersion {
     // node_modules output (in docker)
     const nm = "/asset-output/nodejs/node_modules"
 
+    const prismaDirs = ["prisma", ".prisma", "@prisma", "prisma-appsync"]
+
     // exclude from copying to build environment to speed things up
-    const exclude: string[] = [
-      "*",
-      "!node_modules/.bin",
-      "!node_modules/.prisma",
-      "!node_modules/@prisma",
-      "!node_modules/prisma",
-      "!node_modules/prisma-appsync",
-    ]
+    const exclude: string[] = ["*", "!node_modules/.bin", ...prismaDirs.map((d) => `!node_modules/${d}`)]
 
     const prismaCmds: string[] = []
     if (prismaPath) {
       exclude.push(`!${prismaPath}`)
-      // generate + bundle prisma client
+      // generate + bundle prisma client and libraries
       prismaCmds.push(
-        // copy prisma config/schema/migrations
-        `cp -r ${prismaPath} /asset-output/nodejs/`,
+        // create node_modules
+        `mkdir -p ${nm}`,
+
+        // generate prisma clients in root project
+        `HOME=/tmp PATH=$PATH:node_modules/.bin npx prisma generate --schema "${prismaPath}/schema.prisma"`,
+        // copy prisma config/schema/migrations/generated clients
+        `cp -r "${prismaPath}" /asset-output/nodejs/`,
+
+        // copy prisma libraries
+        ...prismaDirs.map((d) => `cp -rp node_modules/${d} ${nm}/`),
+
+        // SKIP FOR NOW
         // will be regenerated
-        `rm -rf /asset-output/nodejs/prisma/generated`,
-        `mkdir -p /asset-output/nodejs/prisma/generated/prisma-appsync/client`,
+        // `rm -rf /asset-output/nodejs/prisma/generated`,
+        // `mkdir -p /asset-output/nodejs/prisma/generated/prisma-appsync/client`,
         // generate
-        "pushd /asset-output/nodejs",
-        `HOME=/tmp PATH=$PATH:${nm}/.bin npx prisma generate`,
-        "popd",
+        // "pushd /asset-output/nodejs",
+        // `HOME=/tmp PATH=$PATH:${nm}/.bin npx prisma generate`,
+        // "popd",
+
+        // CLEANUP + SHRINK
         // don't need two sets of engines
         `rm -f ${nm}/.prisma/client/*-engine-*`,
         `rm -f ${nm}/prisma/client/*-engine-*`,
@@ -95,14 +102,16 @@ export class AppLayer extends LayerVersion {
         // invalid symlinks
         `rm -rf ${nm}/.bin`
       )
-      externalModules = externalModules.concat([
+
+      // modules provided by layer
+      externalModules = externalModules.concat(
         "prisma",
         ".prisma",
         ".prisma/client",
         "@prisma/engines",
         "@prisma/client",
-        "prisma-appsync",
-      ])
+        "prisma-appsync"
+      )
     }
 
     // other node_modules to move to layer
