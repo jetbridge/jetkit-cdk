@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 import { HttpApi, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
 import { Rule } from "@aws-cdk/aws-events"
-import { Function, LayerVersion } from "@aws-cdk/aws-lambda"
+import { Alias, Function, LayerVersion } from "@aws-cdk/aws-lambda"
 import { Aws, CfnOutput, Construct, Fn, Stack } from "@aws-cdk/core"
 import deepmerge from "deepmerge"
 import isPlainObject from "is-plain-object"
@@ -18,6 +18,7 @@ import { debug } from "../util/log"
 import { Node14Func, Node14FuncProps } from "./lambda/node14func"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
 import slugify from "slugify"
+import { AutoScalingOptions } from "@aws-cdk/aws-lambda"
 
 // env vars
 export const DB_CLUSTER_ENV = "DB_CLUSTER_ARN"
@@ -40,6 +41,11 @@ export interface FunctionOptions extends Node14FuncProps {
    * Defaults to database VPC if grantDatabaseAccess is true.
    */
   vpc?: IVpc
+
+  /**
+   * Autoscaling and provisioned concurrency settings.
+   */
+  autoScalingOptions?: AutoScalingOptions
 }
 
 /**
@@ -203,10 +209,24 @@ export class ResourceGenerator extends Construct {
     // grant access
     this.grantFunctionAccess(functionOptions, handlerFunction)
 
+    // configure autoscaling
+    this.configureAutoScaling(functionOptions, handlerFunction)
+
     // track
     this.generatedLambdas.push(handlerFunction)
 
     return handlerFunction
+  }
+
+  protected configureAutoScaling(functionOptions: FunctionOptions, lambdaFunction: JetKitLambdaFunction) {
+    if (!functionOptions.autoScalingOptions) return
+
+    // https://docs.aws.amazon.com/cdk/api/latest/docs/aws-lambda-readme.html#autoscaling
+    const positionApiAlias = new Alias(this, "PositionApiAlias", {
+      aliasName: "current",
+      version: lambdaFunction.currentVersion,
+    })
+    positionApiAlias.addAutoScaling(functionOptions.autoScalingOptions)
   }
 
   protected generateFunctionName(name: string, functionOptions: FunctionOptions): string | undefined {
