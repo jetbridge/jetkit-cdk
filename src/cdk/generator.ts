@@ -270,7 +270,7 @@ export class ResourceGenerator extends Construct {
   /**
    * Create function handler for a simple routed function.
    */
-  generateConstructsForFunction(resource: PossibleLambdaHandlers) {
+  generateConstructsForFunction(resource: PossibleLambdaHandlers): JetKitLambdaFunction | undefined {
     const funcMeta = getFunctionMetadata(resource)
     if (!funcMeta) return
 
@@ -301,16 +301,19 @@ export class ResourceGenerator extends Construct {
         targets: [new targets.LambdaFunction(handlerFunction)],
       })
     }
+
+    return handlerFunction
   }
 
   /**
    * Create a single handler function for the class and any additional
    * routed methods inside it.
    */
-  generateConstructsForClass(resource: MetadataTarget) {
+  generateConstructsForClass(resource: MetadataTarget): JetKitLambdaFunction | undefined {
     // API view
     const apiViewMeta = getApiViewMetadata(resource)
     let className: string
+    let handlerFunction: undefined | JetKitLambdaFunction
     let lambdaApiIntegration: undefined | LambdaProxyIntegration
 
     // parse @ApiView meta and create lambda
@@ -323,7 +326,7 @@ export class ResourceGenerator extends Construct {
         throw new Error("schedule is not supported on ApiView for now (it could be easily added if desired)")
 
       // create lambda function
-      const handlerFunction = this.createLambdaFunction(className, resource, mergedOptions)
+      handlerFunction = this.createLambdaFunction(className, resource, mergedOptions)
       // create lambda proxy integration for APIGW
       lambdaApiIntegration = new LambdaProxyIntegration({
         handler: handlerFunction,
@@ -357,6 +360,8 @@ export class ResourceGenerator extends Construct {
         })
       })
     }
+
+    return handlerFunction
   }
 
   /**
