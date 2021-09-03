@@ -199,7 +199,8 @@ export class ResourceGenerator extends Construct {
     functionName ||= this.generateFunctionName(name, functionOptions)
 
     // build Node Lambda function
-    const handlerFunction = new JetKitLambdaFunction(this, `F${this.funcCounter++}-${name}`, {
+    const funcId = `F${this.funcCounter++}-${name}` // must be unique
+    const handlerFunction = new JetKitLambdaFunction(this, funcId, {
       ...rest,
       functionName,
       name,
@@ -210,7 +211,7 @@ export class ResourceGenerator extends Construct {
     this.grantFunctionAccess(functionOptions, handlerFunction)
 
     // configure autoscaling
-    this.configureAutoScaling(functionOptions, handlerFunction)
+    this.configureAutoScaling(funcId, functionOptions, handlerFunction)
 
     // track
     this.generatedLambdas.push(handlerFunction)
@@ -218,15 +219,15 @@ export class ResourceGenerator extends Construct {
     return handlerFunction
   }
 
-  protected configureAutoScaling(functionOptions: FunctionOptions, lambdaFunction: JetKitLambdaFunction) {
+  protected configureAutoScaling(id: string, functionOptions: FunctionOptions, lambdaFunction: JetKitLambdaFunction) {
     if (!functionOptions.autoScalingOptions) return
 
     // https://docs.aws.amazon.com/cdk/api/latest/docs/aws-lambda-readme.html#autoscaling
-    const positionApiAlias = new Alias(this, "PositionApiAlias", {
+    const currentAlias = new Alias(this, `${id}Alias`, {
       aliasName: "current",
       version: lambdaFunction.currentVersion,
     })
-    positionApiAlias.addAutoScaling(functionOptions.autoScalingOptions)
+    currentAlias.addAutoScaling(functionOptions.autoScalingOptions)
   }
 
   protected generateFunctionName(name: string, functionOptions: FunctionOptions): string | undefined {
