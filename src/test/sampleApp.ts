@@ -5,6 +5,9 @@ import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
 import { ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "../api/base"
 import { ApiView, Lambda, SubRoute } from "../registry"
 
+/**
+ * @internal
+ */
 @ApiView({
   path: "/album",
   memorySize: 512,
@@ -40,9 +43,15 @@ export class AlbumApi extends ApiViewBase {
     else return methodNotAllowed()
   }
 }
+/**
+ * @internal
+ */
 export const handler = apiViewHandler(__filename, AlbumApi)
 
 // a simple standalone function with a route attached
+/**
+ * @internal
+ */
 export async function topSongsHandler(event: ApiEvent) {
   return JSON.stringify({
     message: "function route",
@@ -60,6 +69,9 @@ Lambda({
 })(topSongsHandler)
 
 // alternate, uglier way of writing the same thing
+/**
+ * @internal
+ */
 const topSongsFuncInner = Lambda({
   path: "/top-songs-inner",
   methods: [HttpMethod.PUT],
