@@ -1,5 +1,5 @@
 import { Code, LayerVersion, LayerVersionProps, Runtime } from "@aws-cdk/aws-lambda"
-import { Construct, IgnoreMode } from "@aws-cdk/core"
+import { AssetHashType, Construct, IgnoreMode } from "@aws-cdk/core"
 import { unique } from "../../util/list"
 
 export interface AppLayerProps extends Partial<LayerVersionProps> {
@@ -141,6 +141,7 @@ export class AppLayer extends LayerVersion {
     // create asset bundle
     try {
       code ||= Code.fromAsset(projectRoot, {
+        assetHashType: AssetHashType.OUTPUT,
         ignoreMode: IgnoreMode.DOCKER,
         exclude,
         bundling: {
