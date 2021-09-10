@@ -5,6 +5,9 @@ import path from "path"
 import fs from "fs"
 import crypto from "crypto"
 
+// node_modules directories we care about
+const prismaDirs = ["prisma", ".prisma", "@prisma", "prisma-appsync"]
+
 export interface PrismaLayerProps extends Partial<LayerVersionProps> {
   // Path to directory containing node_modules to bundle
   projectRoot: string
@@ -48,12 +51,16 @@ function hashModTimes(directory: string, modTimes?: string[]): string {
 // calculate a hash of dependent directories and files
 // if the hash hasn't changed we don't need to re-bundle
 function hashInputs(projectRoot: string, prismaPath: string): string {
+  const hash = crypto.createHash("sha1")
+
+  // hash prisma dir
   const prismaPathAbs = path.join(projectRoot, prismaPath)
-  const prismaHash = hashModTimes(prismaPathAbs)
+  hash.update(hashModTimes(prismaPathAbs))
 
-  // TODO: check hashes of prisma deps
+  // hash dependencies
+  prismaDirs.forEach((dir) => hash.update(hashModTimes(path.join(projectRoot, prismaPath))))
 
-  return prismaHash
+  return hash.digest("hex")
 }
 
 /**
@@ -92,8 +99,6 @@ export class PrismaLayer extends LayerVersion {
 
     // node_modules output (in docker)
     const nm = "/asset-output/nodejs/node_modules"
-
-    const prismaDirs = ["prisma", ".prisma", "@prisma", "prisma-appsync"]
 
     // exclude from copying to build environment to speed things up
     const exclude: string[] = ["*", "!node_modules/.bin", ...prismaDirs.map((d) => `!node_modules/${d}`)]
