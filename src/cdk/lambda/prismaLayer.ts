@@ -1,5 +1,5 @@
 import { Code, LayerVersion, LayerVersionProps, Runtime } from "@aws-cdk/aws-lambda"
-import { AssetHashType, Construct, IgnoreMode } from "@aws-cdk/core"
+import { Construct, IgnoreMode } from "@aws-cdk/core"
 import { unique } from "../../util/list"
 import path from "path"
 import fs from "fs"
@@ -26,26 +26,34 @@ export interface PrismaLayerProps extends Partial<LayerVersionProps> {
   bundlePostCommand?: string
 }
 
-// recursively gather mod times of all files and hash them together
-function hashModTimes(directory: string, modTimes?: string[]): string {
-  modTimes = modTimes || []
+// recursively gather hashes of all files in directory
+function dirDigest(directory: string): string[] {
+  const digests: string[] = []
 
   fs.readdirSync(directory).forEach((fileName) => {
     const filePath = path.join(directory, fileName)
     const fileStat = fs.statSync(filePath)
     if (fileStat.isDirectory()) {
-      hashModTimes(filePath, modTimes)
+      digests.push(...dirDigest(filePath))
     } else {
-      modTimes!.push(`${filePath}:${fileStat.mtime}`)
+      // hash file if source file
+      // else just use size for digest
+      let dgst: string
+      if (fileName.endsWith(".js") || fileName.endsWith(".ts")) {
+        // hash the source file
+        const fileBuffer = fs.readFileSync(filePath)
+        const hashSum = crypto.createHash("sha1")
+        hashSum.update(fileBuffer)
+        dgst = hashSum.digest("hex")
+      } else {
+        dgst = String(fileStat.size)
+      }
+      digests.push(`${filePath}:${dgst}`)
     }
   })
 
-  if (!modTimes.length) console.warn(`Didn't find any directories to hash in ${directory}`)
-
-  // hash all modtimes
-  const hash = crypto.createHash("sha1")
-  modTimes.forEach((mt) => hash.update(mt))
-  return hash.digest("hex")
+  if (!digests.length) console.warn(`Didn't find any directories to hash in ${directory}`)
+  return digests.sort()
 }
 
 // calculate a hash of dependent directories and files
@@ -55,10 +63,12 @@ function hashInputs(projectRoot: string, prismaPath: string): string {
 
   // hash prisma dir
   const prismaPathAbs = path.join(projectRoot, prismaPath)
-  hash.update(hashModTimes(prismaPathAbs))
+  dirDigest(prismaPathAbs).forEach((dgst) => hash.update(dgst))
 
   // hash dependencies
-  prismaDirs.forEach((dir) => hash.update(hashModTimes(path.join(projectRoot, prismaPath))))
+  prismaDirs.forEach((dir) =>
+    dirDigest(path.join(projectRoot, "node_modules", dir)).forEach((dgst) => hash.update(dgst))
+  )
 
   return hash.digest("hex")
 }
@@ -186,7 +196,6 @@ export class PrismaLayer extends LayerVersion {
     try {
       code ||= Code.fromAsset(projectRoot, {
         assetHash,
-        assetHashType: AssetHashType.CUSTOM,
         ignoreMode: IgnoreMode.DOCKER,
         exclude,
         bundling: {
