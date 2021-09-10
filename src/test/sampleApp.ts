@@ -2,6 +2,7 @@ import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { Schedule } from "@aws-cdk/aws-events"
 import { Duration } from "@aws-cdk/core"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
+import { PreSignUpTriggerHandler } from "aws-lambda"
 import { ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "../api/base"
 import { ApiView, Lambda, SubRoute } from "../registry"
 
@@ -130,3 +131,9 @@ Lambda({
   authorizationScopes: ["charts:write"],
   path: "/authorized",
 })(authFunc)
+
+// sample cognito trigger handler
+export const preSignUpHandler: PreSignUpTriggerHandler = async (event) => {
+  return event
+}
+Lambda({})(preSignUpHandler)

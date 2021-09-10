@@ -1,6 +1,6 @@
 import { HttpMethod, HttpRouteProps } from "@aws-cdk/aws-apigatewayv2"
 import { Schedule } from "@aws-cdk/aws-events"
-import { Context, ScheduledHandler } from "aws-lambda"
+import { Context, Handler } from "aws-lambda"
 import fs from "fs"
 import { ApiViewBase, ApiHandler } from "./api/base"
 import { FunctionOptions } from "./cdk/generator"
@@ -135,8 +135,7 @@ export function SubRoute({ path, methods }: ISubRouteProps) {
 }
 
 // supported function signatures for Lambda() handlers
-export type GenericHandler = (event: any, context: Context) => any
-export type PossibleLambdaHandlers = GenericHandler
+export type PossibleLambdaHandlers = Handler // from aws-lambda - very generic
 
 /**
  * Defines a Lambda function.
