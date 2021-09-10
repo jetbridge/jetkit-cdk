@@ -1,9 +1,9 @@
 import { Code, LayerVersion, LayerVersionProps, Runtime } from "@aws-cdk/aws-lambda"
 import { AssetHashType, Construct, IgnoreMode } from "@aws-cdk/core"
 import { unique } from "../../util/list"
-import { hashElement } from "folder-hash"
 import path from "path"
-import deasync from "deasync"
+import fs from "fs"
+import crypto from "crypto"
 
 export interface PrismaLayerProps extends Partial<LayerVersionProps> {
   // Path to directory containing node_modules to bundle
@@ -23,17 +23,37 @@ export interface PrismaLayerProps extends Partial<LayerVersionProps> {
   bundlePostCommand?: string
 }
 
+// recursively gather mod times of all files and hash them together
+function hashModTimes(directory: string, modTimes?: string[]): string {
+  modTimes = modTimes || []
+
+  fs.readdirSync(directory).forEach((fileName) => {
+    const filePath = path.join(directory, fileName)
+    const fileStat = fs.statSync(filePath)
+    if (fileStat.isDirectory()) {
+      hashModTimes(filePath, modTimes)
+    } else {
+      modTimes!.push(`${filePath}:${fileStat.mtime}`)
+    }
+  })
+
+  if (!modTimes.length) console.warn(`Didn't find any directories to hash in ${directory}`)
+
+  // hash all modtimes
+  const hash = crypto.createHash("sha1")
+  modTimes.forEach((mt) => hash.update(mt))
+  return hash.digest("hex")
+}
+
 // calculate a hash of dependent directories and files
 // if the hash hasn't changed we don't need to re-bundle
-async function hashInputs(projectRoot: string, prismaPath: string): Promise<string> {
+function hashInputs(projectRoot: string, prismaPath: string): string {
   const prismaPathAbs = path.join(projectRoot, prismaPath)
-  console.log({ prismaPathAbs })
-  const prismaHash = await hashElement(prismaPathAbs, {})
+  const prismaHash = hashModTimes(prismaPathAbs)
 
   // TODO: check hashes of prisma deps
-  console.log("prisma hash", prismaHash)
 
-  return prismaHash.hash
+  return prismaHash
 }
 
 /**
@@ -154,13 +174,8 @@ export class PrismaLayer extends LayerVersion {
       bundlePostCommand,
     ].filter((c) => c)
 
-    // call async hashing function synchronously
-    const hashInputsSync = deasync(hashInputs)
-    let assetHash = hashInputsSync(projectRoot, prismaPath)
-    if (!assetHash) {
-      console.warn(`Failed to read ${projectRoot}, ${prismaPath}`)
-    }
-    console.log("hash", assetHash)
+    // check if prisma or deps changed
+    const assetHash = hashInputs(projectRoot, prismaPath)
 
     // create asset bundle
     try {
