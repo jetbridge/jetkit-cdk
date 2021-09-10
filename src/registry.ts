@@ -136,7 +136,7 @@ export function SubRoute({ path, methods }: ISubRouteProps) {
 
 // supported function signatures for Lambda() handlers
 export type GenericHandler = (event: Record<string, unknown>, context: Context) => unknown
-export type PossibleLambdaHandlers = ApiHandler | ScheduledHandler | GenericHandler
+export type PossibleLambdaHandlers = GenericHandler
 
 /**
  * Defines a Lambda function.
