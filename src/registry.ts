@@ -135,7 +135,7 @@ export function SubRoute({ path, methods }: ISubRouteProps) {
 }
 
 // supported function signatures for Lambda() handlers
-export type GenericHandler = (event: Record<string, unknown>, context: Context) => unknown
+export type GenericHandler = (event: any, context: Context) => any
 export type PossibleLambdaHandlers = GenericHandler
 
 /**
