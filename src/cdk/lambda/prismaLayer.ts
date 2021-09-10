@@ -52,7 +52,6 @@ function dirDigest(directory: string): string[] {
     }
   })
 
-  if (!digests.length) console.warn(`Didn't find any directories to hash in ${directory}`)
   return digests.sort()
 }
 
