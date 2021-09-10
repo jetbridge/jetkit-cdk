@@ -44,7 +44,6 @@ export type ApiResponse = Promise<APIGatewayProxyResultV2>
  * @category Helper
  */
 export type ApiHandler = (event: ApiEvent, context: Context) => ApiResponse
-export type GenericHandler = (event: Record<string, unknown>, context: Context) => ApiResponse
 
 async function raiseNotAllowed(event: ApiEvent) {
   throw methodNotAllowed(`${event.requestContext.http.method.toUpperCase()} not allowed`)
