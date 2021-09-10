@@ -1,15 +1,18 @@
 import { Code, LayerVersion, LayerVersionProps, Runtime } from "@aws-cdk/aws-lambda"
 import { AssetHashType, Construct, IgnoreMode } from "@aws-cdk/core"
 import { unique } from "../../util/list"
+import { hashElement } from "folder-hash"
+import path from "path"
+import deasync from "deasync"
 
-export interface AppLayerProps extends Partial<LayerVersionProps> {
+export interface PrismaLayerProps extends Partial<LayerVersionProps> {
   // Path to directory containing node_modules to bundle
   projectRoot: string
 
   // Path to prisma directory
-  // If specified, prisma client will be generated from here and
+  // Prisma client will be generated from here and
   // prisma clients will be provided by layer automatically.
-  prismaPath?: string
+  prismaPath: string
 
   // Directories to copy from node_modules to layer
   nodeModules?: string[]
@@ -20,15 +23,28 @@ export interface AppLayerProps extends Partial<LayerVersionProps> {
   bundlePostCommand?: string
 }
 
+// calculate a hash of dependent directories and files
+// if the hash hasn't changed we don't need to re-bundle
+async function hashInputs(projectRoot: string, prismaPath: string): Promise<string> {
+  const prismaPathAbs = path.join(projectRoot, prismaPath)
+  console.log({ prismaPathAbs })
+  const prismaHash = await hashElement(prismaPathAbs, {})
+
+  // TODO: check hashes of prisma deps
+  console.log("prisma hash", prismaHash)
+
+  return prismaHash.hash
+}
+
 /**
- * Construct a lambda layer with some base common dependencies.
+ * Construct a lambda layer with Prisma libraries and generated clients.
  * Copies over selected node_modules.
- * Be sure to omit the layer modules from your function bundles with the `externalModules` option.
+ * Be sure to omit the prisma layer modules from your function bundles with the `externalModules` option.
  *
  * @example With Generator
  * ```ts
  *   // shared lambda layer
- *   const appLayer = new AppLayer(this, "AppLayer", {
+ *   const prismaLayer = new PrismaLayer(this, "PrismaLayer", {
  *     layerVersionName: `${id}-app`,
  *     removalPolicy: isProduction ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
  *     projectRoot: path.join(__dirname, "..", "..", ".."),
@@ -37,19 +53,19 @@ export interface AppLayerProps extends Partial<LayerVersionProps> {
  *
  *   // default lambda function options
  *   const functionOptions: FunctionOptions = {
- *     layers: [appLayer],
+ *     layers: [prismaLayer],
  *     bundling: {
  *       externalModules: appLayer.externalModules,
  *     },
  *   }
  */
-export class AppLayer extends LayerVersion {
+export class PrismaLayer extends LayerVersion {
   externalModules: string[]
 
   constructor(
     scope: Construct,
     id: string,
-    { code, bundlePreCommand, bundlePostCommand, projectRoot, nodeModules, prismaPath, ...props }: AppLayerProps
+    { code, bundlePreCommand, bundlePostCommand, projectRoot, nodeModules, prismaPath, ...props }: PrismaLayerProps
   ) {
     nodeModules ||= []
     let externalModules = ["aws-sdk", ...(nodeModules || [])]
@@ -138,10 +154,19 @@ export class AppLayer extends LayerVersion {
       bundlePostCommand,
     ].filter((c) => c)
 
+    // call async hashing function synchronously
+    const hashInputsSync = deasync(hashInputs)
+    let assetHash = hashInputsSync(projectRoot, prismaPath)
+    if (!assetHash) {
+      console.warn(`Failed to read ${projectRoot}, ${prismaPath}`)
+    }
+    console.log("hash", assetHash)
+
     // create asset bundle
     try {
       code ||= Code.fromAsset(projectRoot, {
-        assetHashType: AssetHashType.OUTPUT,
+        assetHash,
+        assetHashType: AssetHashType.CUSTOM,
         ignoreMode: IgnoreMode.DOCKER,
         exclude,
         bundling: {
@@ -152,7 +177,7 @@ export class AppLayer extends LayerVersion {
         },
       })
     } catch (ex) {
-      throw new Error(`Creating AppLayer failed: ${ex}\n\nBundling commands run: ${commands}`)
+      throw new Error(`Creating PrismaLayer failed: ${ex}\n\nBundling commands run: ${commands}`)
     }
 
     super(scope, id, { ...props, code })
