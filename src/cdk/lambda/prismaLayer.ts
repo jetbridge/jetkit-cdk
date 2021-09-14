@@ -39,7 +39,9 @@ function dirDigest(directory: string): string[] {
       // hash file if source file
       // else just use size for digest
       let dgst: string
-      if (fileName.endsWith(".js") || fileName.endsWith(".ts")) {
+      // extensions to hash
+      const hashFileTypes = [".js", ".ts", ".prisma", ".gql"]
+      if (hashFileTypes.find((ext) => fileName.endsWith(ext))) {
         // hash the source file
         const fileBuffer = fs.readFileSync(filePath)
         const hashSum = crypto.createHash("sha1")
