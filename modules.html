@@ -81,9 +81,9 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-class"><a href="classes/albumapi.html" class="tsd-kind-icon">Album<wbr>Api</a></li>
 								<li class="tsd-kind-class"><a href="classes/apiviewbase.html" class="tsd-kind-icon">Api<wbr>View<wbr>Base</a></li>
-								<li class="tsd-kind-class"><a href="classes/applayer.html" class="tsd-kind-icon">App<wbr>Layer</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/duration.html" class="tsd-kind-icon">Duration</a></li>
 								<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/jetkitcdkapp.html" class="tsd-kind-icon">Jet<wbr>Kit<wbr>Cdk<wbr>App</a></li>
+								<li class="tsd-kind-class"><a href="classes/prismalayer.html" class="tsd-kind-icon">Prisma<wbr>Layer</a></li>
 								<li class="tsd-kind-class"><a href="classes/prismanode14func.html" class="tsd-kind-icon">Prisma<wbr>Node14<wbr>Func</a></li>
 								<li class="tsd-kind-class"><a href="classes/slspgdb.html" class="tsd-kind-icon">Sls<wbr>PgDb</a></li>
 							</ul>
@@ -93,7 +93,6 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/apievent.html" class="tsd-kind-icon">Api<wbr>Event</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/apiviewconstructprops.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct<wbr>Props</a></li>
-								<li class="tsd-kind-interface"><a href="interfaces/applayerprops.html" class="tsd-kind-icon">App<wbr>Layer<wbr>Props</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/databasefuncprops.html" class="tsd-kind-icon">Database<wbr>Func<wbr>Props</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/functionoptions.html" class="tsd-kind-icon">Function<wbr>Options</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/iapimetadata.html" class="tsd-kind-icon">IApi<wbr>Metadata</a></li>
@@ -104,6 +103,7 @@
 								<li class="tsd-kind-interface"><a href="interfaces/isubrouteprops.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Props</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/jetkitlambdafunctionprops.html" class="tsd-kind-icon">Jet<wbr>Kit<wbr>Lambda<wbr>Function<wbr>Props</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/node14funcprops.html" class="tsd-kind-icon">Node14<wbr>Func<wbr>Props</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/prismalayerprops.html" class="tsd-kind-icon">Prisma<wbr>Layer<wbr>Props</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/resourcegeneratorprops.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Props</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/slspgdbprops.html" class="tsd-kind-icon">Sls<wbr>PgDb<wbr>Props</a></li>
 							</ul>
@@ -156,7 +156,7 @@
 					<div class="tsd-signature tsd-kind-icon">Api<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="interfaces/apievent.html" class="tsd-signature-type" data-tsd-kind="Interface">ApiEvent</a>, context<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Context</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="modules.html#apiresponse" class="tsd-signature-type" data-tsd-kind="Type alias">ApiResponse</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/f5aa7a0/src/api/base.ts#L46">src/api/base.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/56e2944/src/api/base.ts#L46">src/api/base.ts:46</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -198,7 +198,7 @@
 					<div class="tsd-signature tsd-kind-icon">Api<wbr>Response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">APIGatewayProxyResultV2</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/f5aa7a0/src/api/base.ts#L39">src/api/base.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/56e2944/src/api/base.ts#L39">src/api/base.ts:39</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -213,7 +213,7 @@
 					<div class="tsd-signature tsd-kind-icon">Generated<wbr>Function<span class="tsd-signature-symbol">:</span> <a href="classes/jetkitlambdafunction.html" class="tsd-signature-type" data-tsd-kind="Class">JetKitLambdaFunction</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/f5aa7a0/src/cdk/generator.ts#L29">src/cdk/generator.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/56e2944/src/cdk/generator.ts#L29">src/cdk/generator.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -223,7 +223,7 @@
 					<div class="tsd-signature tsd-kind-icon">Metadata<wbr>Target<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PossibleLambdaHandlers</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">MetadataTargetConstructor</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/f5aa7a0/src/metadata.ts#L30">src/metadata.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/56e2944/src/metadata.ts#L30">src/metadata.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -236,7 +236,7 @@
 					<div class="tsd-signature tsd-kind-icon">DB_<wbr>CLUSTER_<wbr>ENV<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;DB_CLUSTER_ARN&quot;</span><span class="tsd-signature-symbol"> = &quot;DB_CLUSTER_ARN&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/f5aa7a0/src/cdk/generator.ts#L24">src/cdk/generator.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/56e2944/src/cdk/generator.ts#L24">src/cdk/generator.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -246,7 +246,7 @@
 					<div class="tsd-signature tsd-kind-icon">DB_<wbr>NAME_<wbr>ENV<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;DB_NAME&quot;</span><span class="tsd-signature-symbol"> = &quot;DB_NAME&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/f5aa7a0/src/cdk/generator.ts#L26">src/cdk/generator.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/56e2944/src/cdk/generator.ts#L26">src/cdk/generator.ts:26</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -256,7 +256,7 @@
 					<div class="tsd-signature tsd-kind-icon">DB_<wbr>SECRET_<wbr>ENV<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;DB_SECRET_ARN&quot;</span><span class="tsd-signature-symbol"> = &quot;DB_SECRET_ARN&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/f5aa7a0/src/cdk/generator.ts#L25">src/cdk/generator.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/56e2944/src/cdk/generator.ts#L25">src/cdk/generator.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -266,7 +266,7 @@
 					<div class="tsd-signature tsd-kind-icon">DB_<wbr>URL_<wbr>ENV<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;DATABASE_URL&quot;</span><span class="tsd-signature-symbol"> = &quot;DATABASE_URL&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/f5aa7a0/src/cdk/generator.ts#L27">src/cdk/generator.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/56e2944/src/cdk/generator.ts#L27">src/cdk/generator.ts:27</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -283,7 +283,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/f5aa7a0/src/api/base.ts#L197">src/api/base.ts:197</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/56e2944/src/api/base.ts#L196">src/api/base.ts:196</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -333,7 +333,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/f5aa7a0/src/registry.ts#L35">src/registry.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/56e2944/src/registry.ts#L35">src/registry.ts:35</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -386,7 +386,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/f5aa7a0/src/registry.ts#L152">src/registry.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/56e2944/src/registry.ts#L152">src/registry.ts:152</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -444,7 +444,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/f5aa7a0/src/registry.ts#L103">src/registry.ts:103</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/56e2944/src/registry.ts#L103">src/registry.ts:103</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -501,7 +501,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/f5aa7a0/src/test/sampleApp.ts#L55">src/test/sampleApp.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/56e2944/src/test/sampleApp.ts#L56">src/test/sampleApp.ts:56</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -548,9 +548,6 @@
 						<a href="classes/apiviewconstruct.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/applayer.html" class="tsd-kind-icon">App<wbr>Layer</a>
-					</li>
-					<li class=" tsd-kind-class">
 						<a href="classes/databasemigrationscript.html" class="tsd-kind-icon">Database<wbr>Migration<wbr>Script</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
@@ -566,6 +563,9 @@
 						<a href="classes/node14func.html" class="tsd-kind-icon">Node14<wbr>Func</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="classes/prismalayer.html" class="tsd-kind-icon">Prisma<wbr>Layer</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="classes/prismanode14func.html" class="tsd-kind-icon">Prisma<wbr>Node14<wbr>Func</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -579,9 +579,6 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/apiviewconstructprops.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct<wbr>Props</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/applayerprops.html" class="tsd-kind-icon">App<wbr>Layer<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/databasefuncprops.html" class="tsd-kind-icon">Database<wbr>Func<wbr>Props</a>
@@ -612,6 +609,9 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/node14funcprops.html" class="tsd-kind-icon">Node14<wbr>Func<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/prismalayerprops.html" class="tsd-kind-icon">Prisma<wbr>Layer<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/resourcegeneratorprops.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Props</a>

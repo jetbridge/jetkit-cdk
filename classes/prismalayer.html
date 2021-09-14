@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AppLayer | @jetkit/cdk</title>
+	<title>PrismaLayer | @jetkit/cdk</title>
 	<meta name="description" content="Documentation for @jetkit/cdk">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">@jetkit/cdk</a>
 				</li>
 				<li>
-					<a href="applayer.html">AppLayer</a>
+					<a href="prismalayer.html">PrismaLayer</a>
 				</li>
 			</ul>
-			<h1>Class AppLayer</h1>
+			<h1>Class PrismaLayer</h1>
 		</div>
 	</div>
 </header>
@@ -68,15 +68,15 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Construct a lambda layer with some base common dependencies.
+						<p>Construct a lambda layer with Prisma libraries and generated clients.
 							Copies over selected node_modules.
-						Be sure to omit the layer modules from your function bundles with the <code>externalModules</code> option.</p>
+						Be sure to omit the prisma layer modules from your function bundles with the <code>externalModules</code> option.</p>
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>example</dt>
 						<dd><p>With Generator</p>
 							<pre><code class="language-ts"><span style="color: #000000">  </span><span style="color: #008000">// shared lambda layer</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">appLayer</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">AppLayer</span><span style="color: #000000">(</span><span style="color: #0000FF">this</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;AppLayer&quot;</span><span style="color: #000000">, {</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">prismaLayer</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">PrismaLayer</span><span style="color: #000000">(</span><span style="color: #0000FF">this</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;PrismaLayer&quot;</span><span style="color: #000000">, {</span>
 <span style="color: #000000">    </span><span style="color: #001080">layerVersionName:</span><span style="color: #000000"> </span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">id</span><span style="color: #0000FF">}</span><span style="color: #A31515">-app`</span><span style="color: #000000">,</span>
 <span style="color: #000000">    </span><span style="color: #001080">removalPolicy:</span><span style="color: #000000"> </span><span style="color: #001080">isProduction</span><span style="color: #000000"> ? </span><span style="color: #001080">RemovalPolicy</span><span style="color: #000000">.</span><span style="color: #0070C1">RETAIN</span><span style="color: #000000"> : </span><span style="color: #001080">RemovalPolicy</span><span style="color: #000000">.</span><span style="color: #0070C1">DESTROY</span><span style="color: #000000">,</span>
 <span style="color: #000000">    </span><span style="color: #001080">projectRoot:</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;..&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;..&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;..&quot;</span><span style="color: #000000">),</span>
@@ -85,7 +85,7 @@
 
 <span style="color: #000000">  </span><span style="color: #008000">// default lambda function options</span>
 <span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">functionOptions</span><span style="color: #000000">: </span><span style="color: #267F99">FunctionOptions</span><span style="color: #000000"> = {</span>
-<span style="color: #000000">    </span><span style="color: #001080">layers:</span><span style="color: #000000"> [</span><span style="color: #001080">appLayer</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">layers:</span><span style="color: #000000"> [</span><span style="color: #001080">prismaLayer</span><span style="color: #000000">],</span>
 <span style="color: #000000">    </span><span style="color: #001080">bundling:</span><span style="color: #000000"> {</span>
 <span style="color: #000000">      </span><span style="color: #001080">externalModules:</span><span style="color: #000000"> </span><span style="color: #001080">appLayer</span><span style="color: #000000">.</span><span style="color: #001080">externalModules</span><span style="color: #000000">,</span>
 <span style="color: #000000">    },</span>
@@ -102,7 +102,7 @@
 						<span class="tsd-signature-type">LayerVersion</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">AppLayer</span>
+								<span class="target">PrismaLayer</span>
 							</li>
 						</ul>
 					</li>
@@ -115,41 +115,41 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="applayer.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="prismalayer.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#compatibleruntimes" class="tsd-kind-icon">compatible<wbr>Runtimes</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#env" class="tsd-kind-icon">env</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="applayer.html#externalmodules" class="tsd-kind-icon">external<wbr>Modules</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#layerversionarn" class="tsd-kind-icon">layer<wbr>Version<wbr>Arn</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#node" class="tsd-kind-icon">node</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#physicalname" class="tsd-kind-icon">physical<wbr>Name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#stack" class="tsd-kind-icon">stack</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="prismalayer.html#compatibleruntimes" class="tsd-kind-icon">compatible<wbr>Runtimes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="prismalayer.html#env" class="tsd-kind-icon">env</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="prismalayer.html#externalmodules" class="tsd-kind-icon">external<wbr>Modules</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="prismalayer.html#layerversionarn" class="tsd-kind-icon">layer<wbr>Version<wbr>Arn</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="prismalayer.html#node" class="tsd-kind-icon">node</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="prismalayer.html#physicalname" class="tsd-kind-icon">physical<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="prismalayer.html#stack" class="tsd-kind-icon">stack</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-inherited tsd-is-external">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#_enablecrossenvironment" class="tsd-kind-icon">_enable<wbr>Cross<wbr>Environment</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#addpermission" class="tsd-kind-icon">add<wbr>Permission</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#applyremovalpolicy" class="tsd-kind-icon">apply<wbr>Removal<wbr>Policy</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#generatephysicalname" class="tsd-kind-icon">generate<wbr>Physical<wbr>Name</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#getresourcearnattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Arn<wbr>Attribute</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#getresourcenameattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Name<wbr>Attribute</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#onprepare" class="tsd-kind-icon">on<wbr>Prepare</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#onsynthesize" class="tsd-kind-icon">on<wbr>Synthesize</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#onvalidate" class="tsd-kind-icon">on<wbr>Validate</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#prepare" class="tsd-kind-icon">prepare</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#synthesize" class="tsd-kind-icon">synthesize</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="applayer.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="applayer.html#validate" class="tsd-kind-icon">validate</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external"><a href="applayer.html#fromlayerversionarn" class="tsd-kind-icon">from<wbr>Layer<wbr>Version<wbr>Arn</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external"><a href="applayer.html#fromlayerversionattributes" class="tsd-kind-icon">from<wbr>Layer<wbr>Version<wbr>Attributes</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external"><a href="applayer.html#isconstruct" class="tsd-kind-icon">is<wbr>Construct</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external"><a href="applayer.html#isresource" class="tsd-kind-icon">is<wbr>Resource</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="prismalayer.html#_enablecrossenvironment" class="tsd-kind-icon">_enable<wbr>Cross<wbr>Environment</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="prismalayer.html#addpermission" class="tsd-kind-icon">add<wbr>Permission</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="prismalayer.html#applyremovalpolicy" class="tsd-kind-icon">apply<wbr>Removal<wbr>Policy</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="prismalayer.html#generatephysicalname" class="tsd-kind-icon">generate<wbr>Physical<wbr>Name</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="prismalayer.html#getresourcearnattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Arn<wbr>Attribute</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="prismalayer.html#getresourcenameattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Name<wbr>Attribute</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="prismalayer.html#onprepare" class="tsd-kind-icon">on<wbr>Prepare</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="prismalayer.html#onsynthesize" class="tsd-kind-icon">on<wbr>Synthesize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="prismalayer.html#onvalidate" class="tsd-kind-icon">on<wbr>Validate</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="prismalayer.html#prepare" class="tsd-kind-icon">prepare</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="prismalayer.html#synthesize" class="tsd-kind-icon">synthesize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="prismalayer.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external"><a href="prismalayer.html#validate" class="tsd-kind-icon">validate</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external"><a href="prismalayer.html#fromlayerversionarn" class="tsd-kind-icon">from<wbr>Layer<wbr>Version<wbr>Arn</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external"><a href="prismalayer.html#fromlayerversionattributes" class="tsd-kind-icon">from<wbr>Layer<wbr>Version<wbr>Attributes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external"><a href="prismalayer.html#isconstruct" class="tsd-kind-icon">is<wbr>Construct</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external"><a href="prismalayer.html#isresource" class="tsd-kind-icon">is<wbr>Resource</a></li>
 							</ul>
 						</section>
 					</div>
@@ -161,14 +161,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>App<wbr>Layer<span class="tsd-signature-symbol">(</span>scope<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Construct</span>, id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, __namedParameters<span class="tsd-signature-symbol">: </span><a href="../interfaces/applayerprops.html" class="tsd-signature-type" data-tsd-kind="Interface">AppLayerProps</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="applayer.html" class="tsd-signature-type" data-tsd-kind="Class">AppLayer</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Prisma<wbr>Layer<span class="tsd-signature-symbol">(</span>scope<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Construct</span>, id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, __namedParameters<span class="tsd-signature-symbol">: </span><a href="../interfaces/prismalayerprops.html" class="tsd-signature-type" data-tsd-kind="Interface">PrismaLayerProps</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="prismalayer.html" class="tsd-signature-type" data-tsd-kind="Class">PrismaLayer</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides LayerVersion.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/f5aa7a0/src/cdk/lambda/appLayer.ts#L47">src/cdk/lambda/appLayer.ts:47</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/56e2944/src/cdk/lambda/prismaLayer.ts#L101">src/cdk/lambda/prismaLayer.ts:101</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -180,10 +180,10 @@
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>__namedParameters: <a href="../interfaces/applayerprops.html" class="tsd-signature-type" data-tsd-kind="Interface">AppLayerProps</a></h5>
+									<h5>__namedParameters: <a href="../interfaces/prismalayerprops.html" class="tsd-signature-type" data-tsd-kind="Interface">PrismaLayerProps</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="applayer.html" class="tsd-signature-type" data-tsd-kind="Class">AppLayer</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="prismalayer.html" class="tsd-signature-type" data-tsd-kind="Class">PrismaLayer</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -244,7 +244,7 @@
 					<div class="tsd-signature tsd-kind-icon">external<wbr>Modules<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/f5aa7a0/src/cdk/lambda/appLayer.ts#L47">src/cdk/lambda/appLayer.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/56e2944/src/cdk/lambda/prismaLayer.ts#L101">src/cdk/lambda/prismaLayer.ts:101</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -974,82 +974,82 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="applayer.html" class="tsd-kind-icon">App<wbr>Layer</a>
+						<a href="prismalayer.html" class="tsd-kind-icon">Prisma<wbr>Layer</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-								<a href="applayer.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="prismalayer.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="applayer.html#compatibleruntimes" class="tsd-kind-icon">compatible<wbr>Runtimes</a>
+								<a href="prismalayer.html#compatibleruntimes" class="tsd-kind-icon">compatible<wbr>Runtimes</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="applayer.html#env" class="tsd-kind-icon">env</a>
+								<a href="prismalayer.html#env" class="tsd-kind-icon">env</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="applayer.html#externalmodules" class="tsd-kind-icon">external<wbr>Modules</a>
+								<a href="prismalayer.html#externalmodules" class="tsd-kind-icon">external<wbr>Modules</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="applayer.html#layerversionarn" class="tsd-kind-icon">layer<wbr>Version<wbr>Arn</a>
+								<a href="prismalayer.html#layerversionarn" class="tsd-kind-icon">layer<wbr>Version<wbr>Arn</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="applayer.html#node" class="tsd-kind-icon">node</a>
+								<a href="prismalayer.html#node" class="tsd-kind-icon">node</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="applayer.html#physicalname" class="tsd-kind-icon">physical<wbr>Name</a>
+								<a href="prismalayer.html#physicalname" class="tsd-kind-icon">physical<wbr>Name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="applayer.html#stack" class="tsd-kind-icon">stack</a>
+								<a href="prismalayer.html#stack" class="tsd-kind-icon">stack</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="applayer.html#_enablecrossenvironment" class="tsd-kind-icon">_enable<wbr>Cross<wbr>Environment</a>
+								<a href="prismalayer.html#_enablecrossenvironment" class="tsd-kind-icon">_enable<wbr>Cross<wbr>Environment</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="applayer.html#addpermission" class="tsd-kind-icon">add<wbr>Permission</a>
+								<a href="prismalayer.html#addpermission" class="tsd-kind-icon">add<wbr>Permission</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="applayer.html#applyremovalpolicy" class="tsd-kind-icon">apply<wbr>Removal<wbr>Policy</a>
+								<a href="prismalayer.html#applyremovalpolicy" class="tsd-kind-icon">apply<wbr>Removal<wbr>Policy</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="applayer.html#generatephysicalname" class="tsd-kind-icon">generate<wbr>Physical<wbr>Name</a>
+								<a href="prismalayer.html#generatephysicalname" class="tsd-kind-icon">generate<wbr>Physical<wbr>Name</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="applayer.html#getresourcearnattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Arn<wbr>Attribute</a>
+								<a href="prismalayer.html#getresourcearnattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Arn<wbr>Attribute</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="applayer.html#getresourcenameattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Name<wbr>Attribute</a>
+								<a href="prismalayer.html#getresourcenameattribute" class="tsd-kind-icon">get<wbr>Resource<wbr>Name<wbr>Attribute</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="applayer.html#onprepare" class="tsd-kind-icon">on<wbr>Prepare</a>
+								<a href="prismalayer.html#onprepare" class="tsd-kind-icon">on<wbr>Prepare</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="applayer.html#onsynthesize" class="tsd-kind-icon">on<wbr>Synthesize</a>
+								<a href="prismalayer.html#onsynthesize" class="tsd-kind-icon">on<wbr>Synthesize</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="applayer.html#onvalidate" class="tsd-kind-icon">on<wbr>Validate</a>
+								<a href="prismalayer.html#onvalidate" class="tsd-kind-icon">on<wbr>Validate</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="applayer.html#prepare" class="tsd-kind-icon">prepare</a>
+								<a href="prismalayer.html#prepare" class="tsd-kind-icon">prepare</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="applayer.html#synthesize" class="tsd-kind-icon">synthesize</a>
+								<a href="prismalayer.html#synthesize" class="tsd-kind-icon">synthesize</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="applayer.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
+								<a href="prismalayer.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-external">
-								<a href="applayer.html#validate" class="tsd-kind-icon">validate</a>
+								<a href="prismalayer.html#validate" class="tsd-kind-icon">validate</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external">
-								<a href="applayer.html#fromlayerversionarn" class="tsd-kind-icon">from<wbr>Layer<wbr>Version<wbr>Arn</a>
+								<a href="prismalayer.html#fromlayerversionarn" class="tsd-kind-icon">from<wbr>Layer<wbr>Version<wbr>Arn</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external">
-								<a href="applayer.html#fromlayerversionattributes" class="tsd-kind-icon">from<wbr>Layer<wbr>Version<wbr>Attributes</a>
+								<a href="prismalayer.html#fromlayerversionattributes" class="tsd-kind-icon">from<wbr>Layer<wbr>Version<wbr>Attributes</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external">
-								<a href="applayer.html#isconstruct" class="tsd-kind-icon">is<wbr>Construct</a>
+								<a href="prismalayer.html#isconstruct" class="tsd-kind-icon">is<wbr>Construct</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external">
-								<a href="applayer.html#isresource" class="tsd-kind-icon">is<wbr>Resource</a>
+								<a href="prismalayer.html#isresource" class="tsd-kind-icon">is<wbr>Resource</a>
 							</li>
 						</ul>
 					</li>
