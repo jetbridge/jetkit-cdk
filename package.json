@@ -1,6 +1,6 @@
 {
   "name": "@jetkit/cdk",
-  "version": "1.122.5",
+  "version": "1.122.9",
   "description": "Cloud-native serverless anti-framework",
   "types": "build/esm/index.d.ts",
   "main": "build/cjs/index.js",
@@ -27,6 +27,7 @@
   "author": "JetBridge Software Inc.",
   "license": "MIT",
   "devDependencies": {
+    "constructs": "3.3.141",
     "@aws-cdk/assert": "1.122.0",
     "@aws-cdk/core": "1.122.0",
     "@babel/plugin-proposal-decorators": "^7.13.15",

@@ -1,15 +1,21 @@
 import { Code, LayerVersion, LayerVersionProps, Runtime } from "@aws-cdk/aws-lambda"
 import { Construct, IgnoreMode } from "@aws-cdk/core"
 import { unique } from "../../util/list"
+import path from "path"
+import fs from "fs"
+import crypto from "crypto"
 
-export interface AppLayerProps extends Partial<LayerVersionProps> {
+// node_modules directories we care about
+const prismaDirs = ["prisma", ".prisma", "@prisma", "prisma-appsync"]
+
+export interface PrismaLayerProps extends Partial<LayerVersionProps> {
   // Path to directory containing node_modules to bundle
   projectRoot: string
 
   // Path to prisma directory
-  // If specified, prisma client will be generated from here and
+  // Prisma client will be generated from here and
   // prisma clients will be provided by layer automatically.
-  prismaPath?: string
+  prismaPath: string
 
   // Directories to copy from node_modules to layer
   nodeModules?: string[]
@@ -20,15 +26,63 @@ export interface AppLayerProps extends Partial<LayerVersionProps> {
   bundlePostCommand?: string
 }
 
+// recursively gather hashes of all files in directory
+function dirDigest(directory: string): string[] {
+  const digests: string[] = []
+
+  fs.readdirSync(directory).forEach((fileName) => {
+    const filePath = path.join(directory, fileName)
+    const fileStat = fs.statSync(filePath)
+    if (fileStat.isDirectory()) {
+      digests.push(...dirDigest(filePath))
+    } else {
+      // hash file if source file
+      // else just use size for digest
+      let dgst: string
+      // extensions to hash
+      const hashFileTypes = [".js", ".ts", ".prisma", ".gql"]
+      if (hashFileTypes.find((ext) => fileName.endsWith(ext))) {
+        // hash the source file
+        const fileBuffer = fs.readFileSync(filePath)
+        const hashSum = crypto.createHash("sha1")
+        hashSum.update(fileBuffer)
+        dgst = hashSum.digest("hex")
+      } else {
+        dgst = String(fileStat.size)
+      }
+      digests.push(`${filePath}:${dgst}`)
+    }
+  })
+
+  return digests.sort()
+}
+
+// calculate a hash of dependent directories and files
+// if the hash hasn't changed we don't need to re-bundle
+function hashInputs(projectRoot: string, prismaPath: string): string {
+  const hash = crypto.createHash("sha1")
+
+  // hash prisma dir
+  const prismaPathAbs = path.join(projectRoot, prismaPath)
+  dirDigest(prismaPathAbs).forEach((dgst) => hash.update(dgst))
+
+  // hash dependencies
+  prismaDirs.forEach((dir) =>
+    dirDigest(path.join(projectRoot, "node_modules", dir)).forEach((dgst) => hash.update(dgst))
+  )
+
+  return hash.digest("hex")
+}
+
 /**
- * Construct a lambda layer with some base common dependencies.
+ * Construct a lambda layer with Prisma libraries and generated clients.
  * Copies over selected node_modules.
- * Be sure to omit the layer modules from your function bundles with the `externalModules` option.
+ * Be sure to omit the prisma layer modules from your function bundles with the `externalModules` option.
  *
  * @example With Generator
  * ```ts
  *   // shared lambda layer
- *   const appLayer = new AppLayer(this, "AppLayer", {
+ *   const prismaLayer = new PrismaLayer(this, "PrismaLayer", {
  *     layerVersionName: `${id}-app`,
  *     removalPolicy: isProduction ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
  *     projectRoot: path.join(__dirname, "..", "..", ".."),
@@ -37,27 +91,25 @@ export interface AppLayerProps extends Partial<LayerVersionProps> {
  *
  *   // default lambda function options
  *   const functionOptions: FunctionOptions = {
- *     layers: [appLayer],
+ *     layers: [prismaLayer],
  *     bundling: {
  *       externalModules: appLayer.externalModules,
  *     },
  *   }
  */
-export class AppLayer extends LayerVersion {
+export class PrismaLayer extends LayerVersion {
   externalModules: string[]
 
   constructor(
     scope: Construct,
     id: string,
-    { code, bundlePreCommand, bundlePostCommand, projectRoot, nodeModules, prismaPath, ...props }: AppLayerProps
+    { code, bundlePreCommand, bundlePostCommand, projectRoot, nodeModules, prismaPath, ...props }: PrismaLayerProps
   ) {
     nodeModules ||= []
     let externalModules = ["aws-sdk", ...(nodeModules || [])]
 
     // node_modules output (in docker)
     const nm = "/asset-output/nodejs/node_modules"
-
-    const prismaDirs = ["prisma", ".prisma", "@prisma", "prisma-appsync"]
 
     // exclude from copying to build environment to speed things up
     const exclude: string[] = ["*", "!node_modules/.bin", ...prismaDirs.map((d) => `!node_modules/${d}`)]
@@ -138,9 +190,13 @@ export class AppLayer extends LayerVersion {
       bundlePostCommand,
     ].filter((c) => c)
 
+    // check if prisma or deps changed
+    const assetHash = hashInputs(projectRoot, prismaPath)
+
     // create asset bundle
     try {
       code ||= Code.fromAsset(projectRoot, {
+        assetHash,
         ignoreMode: IgnoreMode.DOCKER,
         exclude,
         bundling: {
@@ -151,7 +207,7 @@ export class AppLayer extends LayerVersion {
         },
       })
     } catch (ex) {
-      throw new Error(`Creating AppLayer failed: ${ex}\n\nBundling commands run: ${commands}`)
+      throw new Error(`Creating PrismaLayer failed: ${ex}\n\nBundling commands run: ${commands}`)
     }
 
     super(scope, id, { ...props, code })
