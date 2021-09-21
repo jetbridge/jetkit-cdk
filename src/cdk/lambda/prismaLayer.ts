@@ -141,6 +141,9 @@ export class PrismaLayer extends LayerVersion {
 
         // CLEANUP + SHRINK
         // don't need two sets of engines
+        `ls ${nm}/.prisma/client`,
+        `ls ${nm}/prisma/`,
+        `ls ${nm}/@prisma/engines`,
         `rm -f ${nm}/.prisma/client/*-engine-*`,
         `rm -f ${nm}/prisma/client/*-engine-*`,
         // remove unused engine files
