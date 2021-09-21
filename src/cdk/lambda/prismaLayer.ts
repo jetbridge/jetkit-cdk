@@ -130,19 +130,11 @@ export class PrismaLayer extends LayerVersion {
         // copy prisma libraries
         ...prismaDirs.map((d) => `cp -rp node_modules/${d} ${nm}/`),
 
-        // SKIP FOR NOW
-        // will be regenerated
-        // `rm -rf /asset-output/nodejs/prisma/generated`,
-        // `mkdir -p /asset-output/nodejs/prisma/generated/prisma-appsync/client`,
-        // generate
-        // "pushd /asset-output/nodejs",
-        // `HOME=/tmp PATH=$PATH:${nm}/.bin npx prisma generate`,
-        // "popd",
-
         // CLEANUP + SHRINK
-        // don't need two sets of engines
+          // don't need three sets of engines
         `rm -f ${nm}/.prisma/client/*{-,_}engine-*`,
-        `rm -f ${nm}/prisma/*{-,_}engine-*`,
+        `rm -f ${nm}/prisma/client/*{-,_}engine-*`,
+          `rm -f ${nm}/prisma/*{-,_}engine-*`,
         // remove unused engine files
         `rm -f ${nm}/@prisma/engines/prisma-fmt-*`,
         `rm -f ${nm}/@prisma/engines/introspection-engine-*`,
@@ -150,8 +142,11 @@ export class PrismaLayer extends LayerVersion {
         // `rm -f ${nm}/@prisma/engines/migration-engine-*`,
         // remove macOS clients if present
         `rm -f ${nm}/prisma/*-darwin*`,
+        `rm -f ${nm}/@prisma/engines/*-darwin*`,
         // remove docs
         `rm -rf ${nm}/prisma/build`,
+        // remove appsync generator
+        `rm -rf ${nm}/prisma-appsync/dist/generator.js`,
         // invalid symlinks
         `rm -rf ${nm}/.bin`,
         // extraneous scripts
