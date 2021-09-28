@@ -30,29 +30,33 @@ export interface PrismaLayerProps extends Partial<LayerVersionProps> {
 function dirDigest(directory: string): string[] {
   const digests: string[] = []
 
-  fs.readdirSync(directory).forEach((fileName) => {
-    const filePath = path.join(directory, fileName)
-    const fileStat = fs.statSync(filePath)
-    if (fileStat.isDirectory()) {
-      digests.push(...dirDigest(filePath))
-    } else {
-      // hash file if source file
-      // else just use size for digest
-      let dgst: string
-      // extensions to hash
-      const hashFileTypes = [".js", ".ts", ".prisma", ".gql"]
-      if (hashFileTypes.find((ext) => fileName.endsWith(ext))) {
-        // hash the source file
-        const fileBuffer = fs.readFileSync(filePath)
-        const hashSum = crypto.createHash("sha1")
-        hashSum.update(fileBuffer)
-        dgst = hashSum.digest("hex")
+  fs.readdirSync(directory)
+    .sort()
+    .forEach((fileName) => {
+      const filePath = path.join(directory, fileName)
+      const fileStat = fs.statSync(filePath)
+      if (fileStat.isDirectory()) {
+        digests.push(...dirDigest(filePath))
+      } else if (fileName == ".DS_Store") {
+        // ignore
       } else {
-        dgst = String(fileStat.size)
+        // hash file if source file
+        // else just use size for digest
+        let dgst: string
+        // extensions to hash
+        const hashFileTypes = [".js", ".ts", ".prisma", ".gql", ".graphql"]
+        if (hashFileTypes.find((ext) => fileName.endsWith(ext))) {
+          // hash the source file
+          const fileBuffer = fs.readFileSync(filePath)
+          const hashSum = crypto.createHash("sha1")
+          hashSum.update(fileBuffer)
+          dgst = hashSum.digest("hex")
+        } else {
+          dgst = String(fileStat.size)
+        }
+        digests.push(`${filePath}:${dgst}`)
       }
-      digests.push(`${filePath}:${dgst}`)
-    }
-  })
+    })
 
   return digests.sort()
 }
