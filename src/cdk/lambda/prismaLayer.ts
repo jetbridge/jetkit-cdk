@@ -135,23 +135,28 @@ export class PrismaLayer extends LayerVersion {
         ...prismaDirs.map((d) => `cp -rp node_modules/${d} ${nm}/`),
 
         // CLEANUP + SHRINK
-        // don't need three sets of engines
-        `rm -f ${nm}/.prisma/client/*-engine-*`,
-        `rm -f ${nm}/prisma/client/*-engine-*`,
-        `rm -f ${nm}/prisma/*-engine-*`,
+          // don't need three sets of engines
+        `rm -f ${nm}/.prisma/client/*{-,_}engine-*`,
+        `rm -f ${nm}/prisma/client/*{-,_}engine-*`,
+          `rm -f ${nm}/prisma/*{-,_}engine-*`,
         // remove unused engine files
         `rm -f ${nm}/@prisma/engines/prisma-fmt-*`,
         `rm -f ${nm}/@prisma/engines/introspection-engine-*`,
+        `rm -f ${nm}/@prisma/engines/*-darwin*`,
         // `rm -f ${nm}/@prisma/engines/migration-engine-*`,
         // remove macOS clients if present
-        `rm -f ${nm}/prisma/*-engine-darwin`,
-        `rm -f ${nm}/@prisma/engines/*-darwin`,
+        `rm -f ${nm}/prisma/*-darwin*`,
+        `rm -f ${nm}/@prisma/engines/*-darwin*`,
         // remove docs
         `rm -rf ${nm}/prisma/build`,
         // remove appsync generator
         `rm -rf ${nm}/prisma-appsync/dist/generator.js`,
         // invalid symlinks
-        `rm -rf ${nm}/.bin`
+        `rm -rf ${nm}/.bin`,
+        // extraneous scripts
+        `rm -rf ${nm}/prisma-appsync/dist/generator.js`,
+        `rm -rf ${nm}/prisma-appsync/pnpm-lock.yaml`,
+        `rm -rf ${nm}/prisma/prisma-client/src/__tests__`
       )
 
       // modules provided by layer
