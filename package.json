@@ -87,9 +87,9 @@
     }
   },
   "peerDependencies": {
-    "@prisma/client": "^3.0.1",
-    "@prisma/migrate": "^3.0.1",
-    "prisma": "^3.0.1"
+    "@prisma/client": "*",
+    "@prisma/migrate": "*",
+    "prisma": "*"
   },
   "lint-staged": {
     "*.{js,css,md}": "prettier --write"
