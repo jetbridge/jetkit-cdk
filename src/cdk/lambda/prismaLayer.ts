@@ -6,7 +6,7 @@ import fs from "fs"
 import crypto from "crypto"
 
 // node_modules directories we care about
-const prismaDirs = ["prisma", ".prisma", "@prisma", "prisma-appsync"]
+const prismaDirs = ["prisma", "@prisma", "prisma-appsync"]
 
 export interface PrismaLayerProps extends Partial<LayerVersionProps> {
   // Path to directory containing node_modules to bundle
@@ -26,6 +26,9 @@ export interface PrismaLayerProps extends Partial<LayerVersionProps> {
   bundlePostCommand?: string
 }
 
+const hashFileTypes = [".js", ".ts"]
+const ignoreFileTypes = [".prisma", ".gql", ".graphql", "DS_Store"]
+
 // recursively gather hashes of all files in directory
 function dirDigest(directory: string): string[] {
   const digests: string[] = []
@@ -37,14 +40,13 @@ function dirDigest(directory: string): string[] {
       const fileStat = fs.statSync(filePath)
       if (fileStat.isDirectory()) {
         digests.push(...dirDigest(filePath))
-      } else if (fileName == ".DS_Store") {
+      } else if (ignoreFileTypes.find((ext) => fileName.endsWith(ext))) {
         // ignore
       } else {
         // hash file if source file
         // else just use size for digest
         let dgst: string
         // extensions to hash
-        const hashFileTypes = [".js", ".ts", ".prisma", ".gql", ".graphql"]
         if (hashFileTypes.find((ext) => fileName.endsWith(ext))) {
           // hash the source file
           const fileBuffer = fs.readFileSync(filePath)
@@ -133,8 +135,10 @@ export class PrismaLayer extends LayerVersion {
         ...prismaDirs.map((d) => `cp -rp node_modules/${d} ${nm}/`),
 
         // CLEANUP + SHRINK
-        // don't need three sets of engines
-        `rm -f ${nm}/.prisma/client/*{-,_}engine-*`,
+        // remove generated client
+        `rm -rf ${nm}/.prisma`,
+        `rm -rf ${nm}/@prisma/client`, // can't find .prisma/client from layer
+        // don't need extra sets of engines
         `rm -f ${nm}/prisma/client/*{-,_}engine-*`,
         `rm -f ${nm}/prisma/*{-,_}engine-*`,
         // remove unused engine files
