@@ -370,7 +370,7 @@ export class ResourceGenerator extends Construct {
    */
   // eslint-disable-next-line @typescript-eslint/ban-types
   protected grantFunctionAccess(options: FunctionOptions, func: Function): void {
-    // aurora data API access
+    // check options
     if (!options.grantDatabaseAccess || !this.databaseCluster) return
 
     const db = this.databaseCluster
