@@ -79,7 +79,7 @@ function hashInputs(projectRoot: string, prismaPath: string): string {
 }
 
 /**
- * Construct a lambda layer with Prisma libraries and generated clients.
+ * Construct a lambda layer with Prisma libraries.
  * Copies over selected node_modules.
  * Be sure to omit the prisma layer modules from your function bundles with the `externalModules` option.
  *
@@ -97,7 +97,7 @@ function hashInputs(projectRoot: string, prismaPath: string): string {
  *   const functionOptions: FunctionOptions = {
  *     layers: [prismaLayer],
  *     bundling: {
- *       externalModules: appLayer.externalModules,
+ *       externalModules: prismaLayer.externalModules,
  *     },
  *   }
  */
@@ -121,13 +121,11 @@ export class PrismaLayer extends LayerVersion {
     const prismaCmds: string[] = []
     if (prismaPath) {
       exclude.push(`!${prismaPath}`)
-      // generate + bundle prisma client and libraries
+      // bundle prisma libraries
       prismaCmds.push(
         // create node_modules
         `mkdir -p ${nm}`,
 
-        // generate prisma clients in root project
-        `HOME=/tmp PATH=$PATH:node_modules/.bin npx prisma generate --schema "${prismaPath}/schema.prisma"`,
         // copy prisma config/schema/migrations/generated clients
         `cp -r "${prismaPath}" /asset-output/nodejs/`,
 
@@ -135,10 +133,10 @@ export class PrismaLayer extends LayerVersion {
         ...prismaDirs.map((d) => `cp -rp node_modules/${d} ${nm}/`),
 
         // CLEANUP + SHRINK
-          // don't need three sets of engines
+        // don't need three sets of engines
         `rm -f ${nm}/.prisma/client/*{-,_}engine-*`,
         `rm -f ${nm}/prisma/client/*{-,_}engine-*`,
-          `rm -f ${nm}/prisma/*{-,_}engine-*`,
+        `rm -f ${nm}/prisma/*{-,_}engine-*`,
         // remove unused engine files
         `rm -f ${nm}/@prisma/engines/prisma-fmt-*`,
         `rm -f ${nm}/@prisma/engines/introspection-engine-*`,
@@ -160,14 +158,7 @@ export class PrismaLayer extends LayerVersion {
       )
 
       // modules provided by layer
-      externalModules = externalModules.concat(
-        "prisma",
-        ".prisma",
-        ".prisma/client",
-        "@prisma/engines",
-        "@prisma/client",
-        "prisma-appsync"
-      )
+      externalModules = externalModules.concat("prisma", "@prisma/engines", "prisma-appsync")
     }
 
     // other node_modules to move to layer
