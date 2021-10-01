@@ -140,7 +140,6 @@ export class PrismaLayer extends LayerVersion {
         // remove unused engine files
         `rm -f ${nm}/@prisma/engines/prisma-fmt-*`,
         `rm -f ${nm}/@prisma/engines/introspection-engine-*`,
-        `rm -f ${nm}/@prisma/engines/*-darwin*`,
         // `rm -f ${nm}/@prisma/engines/migration-engine-*`,
         // remove macOS clients if present
         `rm -f ${nm}/prisma/*-darwin*`,
