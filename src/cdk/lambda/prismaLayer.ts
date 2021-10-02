@@ -1,7 +1,7 @@
 import { Code, LayerVersion, LayerVersionProps, Runtime } from "@aws-cdk/aws-lambda"
 import { Construct } from "@aws-cdk/core"
 
-// const PRISMA_DEPS = "prisma"
+const PRISMA_DEPS = ["prisma", "@prisma/client", "@prisma/migrate", "@prisma/sdk"]
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface PrismaLayerProps extends Omit<LayerVersionProps, "code"> {}
@@ -13,9 +13,8 @@ export interface PrismaLayerProps extends Omit<LayerVersionProps, "code"> {}
  *
  * @example
  * ```ts
- *   // shared lambda layer
  *   const prismaLayer = new PrismaLayer(this, "PrismaLayer", {
- *     layerVersionName: `${id}-app`,
+ *     layerVersionName: `${id}-prisma`,
  *     removalPolicy: isProduction ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
  *   })
  *
@@ -41,10 +40,7 @@ export class PrismaLayer extends LayerVersion {
         command: [
           "bash",
           "-c",
-          [
-            `mkdir -p ${layerDir}`,
-            `cd ${layerDir} && HOME=/tmp npm install prisma @prisma/client @prisma/migrate @prisma/sdk`,
-          ].join(" && "),
+          [`mkdir -p ${layerDir}`, `cd ${layerDir} && HOME=/tmp npm install ${PRISMA_DEPS.join(" ")}`].join(" && "),
         ],
       },
     })
@@ -56,6 +52,6 @@ export class PrismaLayer extends LayerVersion {
       PRISMA_QUERY_ENGINE_LIBRARY: "/opt/nodejs/node_modules/prisma/libquery_engine-rhel-openssl-1.0.x.so.node",
     }
     // modules provided by layer
-    this.externalModules = ["aws-sdk", "prisma", "@prisma/engines", "prisma-appsync"]
+    this.externalModules = ["aws-sdk", ...PRISMA_DEPS]
   }
 }
