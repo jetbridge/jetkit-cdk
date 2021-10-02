@@ -38,7 +38,7 @@ export class DatabaseMigrationScript extends PrismaNode14Func {
     // only works as actual files - can't be bundled
     // https://github.com/prisma/prisma/issues/8337#issuecomment-895380661
     nodeModules ||= []
-    nodeModules.push("@prisma/migrate", "@prisma/sdk", "prisma", ".prisma")
+    nodeModules.push("@prisma/migrate", "@prisma/sdk")
 
     environment ||= {}
     // environment.PRISMA_QUERY_ENGINE_LIBRARY =

@@ -11,7 +11,7 @@ export {
 export * from "./cdk/lambda/node14func"
 export * from "./cdk/lambda/prismaNodeFunction"
 export { DatabaseMigrationScript } from "./cdk/lambda/script/database/migration"
-export * from "./cdk/lambda/prismaLayer"
+export * from "./cdk/lambda/prismaLayer/prismaLayer"
 export { SlsPgDb, SlsPgDbProps } from "./cdk/database/serverless-pg"
 
 export {
