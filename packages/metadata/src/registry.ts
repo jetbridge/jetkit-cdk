@@ -6,7 +6,6 @@ import {
   getSubRouteMetadata,
   IApiViewClassMetadata,
   IFunctionMetadata,
-  IFunctionMetadataBase,
   ISubRouteApiMetadata,
   MetadataTarget,
   MetadataTargetConstructor,
@@ -17,9 +16,17 @@ import {
 import { ApiViewMetaBase, HttpMethod } from "./types"
 import { findDefiningFile } from "./function"
 
-export type ApiViewOpts = Omit<IFunctionMetadataBase, "methods">
+/**
+ * Metadata describing any Lambda function.
+ */
+export interface IFunctionMetadataBase extends Partial<IRoutePropsBase> {
+  /**
+   * Path to the file containing the handler.
+   * Normally shouldn't need to be specified and can be guessed.
+   */
+  entry?: string
+}
 
-// any
 /**
  * This module is responsible for attaching metadata to classes, methods, and properties to
  * assist in routing API endpoints.
@@ -81,7 +88,13 @@ export interface IRoutePropsBase {
    * if your routes normally require it.
    */
   unauthorized?: boolean
+
+  /**
+   * Require auth scopes.
+   */
+  authorizationScopes?: string[]
 }
+export type ApiViewOpts = Omit<IFunctionMetadataBase, "methods">
 
 export interface ISubRouteProps extends Omit<IRoutePropsBase, "path"> {
   // make path optional in @SubRoute

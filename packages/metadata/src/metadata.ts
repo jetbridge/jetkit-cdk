@@ -5,7 +5,7 @@
  * Wrappers for getting/setting metadata on classes and class properties
  */
 import "reflect-metadata"
-import { ApiViewOpts, IRoutePropsBase, PossibleLambdaHandlers } from "./registry"
+import { ApiViewOpts, IFunctionMetadataBase, PossibleLambdaHandlers } from "./registry"
 
 /**
  * A class we can apply @ApiView to.
@@ -25,17 +25,6 @@ export type ApiMetadataMap<V extends IFunctionMetadataBase> = Map<string, V>
 
 // what types of objects can have metadata attached?
 export type MetadataTarget = PossibleLambdaHandlers | MetadataTargetConstructor
-
-/**
- * Metadata describing any Lambda function.
- */
-export interface IFunctionMetadataBase extends Partial<IRoutePropsBase> {
-  /**
-   * Path to the file containing the handler.
-   * Normally shouldn't need to be specified and can be guessed.
-   */
-  entry?: string
-}
 
 /**
  * A Lambda function.
@@ -79,19 +68,19 @@ export const setMemberMetadata = (target: MetadataTarget, propertyKey: string | 
 export const getMetadataKeys = (target: MetadataTarget, key: string | symbol) => Reflect.getOwnMetadataKeys(target, key)
 
 // API view
-export const getApiViewMetadata = (cls: MetadataTarget): IApiViewClassMetadata | undefined =>
+export const getApiViewMetadata = <T extends IApiViewClassMetadata>(cls: MetadataTarget): T | undefined =>
   getMemberMetadata(cls, JK_V2_METADATA_API_VIEW_KEY)
 export const setApiViewMetadata = (cls: MetadataTarget, value: IApiViewClassMetadata) =>
   setMemberMetadata(cls, JK_V2_METADATA_API_VIEW_KEY, value)
 
 // sub-routes
-export const getSubRouteMetadata = (target: MetadataTarget): ApiMetadataMap<ISubRouteApiMetadata> =>
+export const getSubRouteMetadata = <T extends ISubRouteApiMetadata>(target: MetadataTarget): ApiMetadataMap<T> =>
   getMemberMetadata(target, JK_V2_METADATA_SUBROUTES_KEY) || new Map()
 export const setSubRouteMetadata = (target: MetadataTarget, value: ApiMetadataMap<ISubRouteApiMetadata>) =>
   setMemberMetadata(target, JK_V2_METADATA_SUBROUTES_KEY, value)
 
 // plain function
-export const getFunctionMetadata = (target: PossibleLambdaHandlers): IFunctionMetadata | undefined =>
+export const getFunctionMetadata = <T extends IFunctionMetadata>(target: PossibleLambdaHandlers): T | undefined =>
   getMemberMetadata(target, JK_V2_METADATA_FUNCTION_KEY)
 export const setFunctionMetadata = (target: PossibleLambdaHandlers, value: IFunctionMetadata) =>
   setMemberMetadata(target, JK_V2_METADATA_FUNCTION_KEY, value)

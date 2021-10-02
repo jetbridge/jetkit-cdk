@@ -2,12 +2,10 @@
 import { HttpApi, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
 import { Rule } from "@aws-cdk/aws-events"
 import { Alias, Function, LayerVersion } from "@aws-cdk/aws-lambda"
-import { Aws, CfnOutput, Construct, Fn, Stack } from "@aws-cdk/core"
+import { Aws, CfnOutput, Construct, Fn } from "@aws-cdk/core"
 import deepmerge from "deepmerge"
 import isPlainObject from "is-plain-object"
-import { ApiHandler } from "../api/base"
-import { getApiViewMetadata, getFunctionMetadata, getSubRouteMetadata, MetadataTarget } from "../metadata"
-import { PossibleLambdaHandlers } from "../registry"
+import { ApiViewClassMetadata, FunctionMetadata, SubRouteApiMetadata } from "../metadata"
 import { ApiFunction, JetKitLambdaFunction } from "./api/api"
 import { SubRouteApi } from "./api/subRoute"
 import * as targets from "@aws-cdk/aws-events-targets"
@@ -19,6 +17,14 @@ import { Node14Func, Node14FuncProps } from "./lambda/node14func"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
 import slugify from "slugify"
 import { AutoScalingOptions } from "@aws-cdk/aws-lambda"
+import {
+  ApiHandler,
+  getApiViewMetadata,
+  getFunctionMetadata,
+  getSubRouteMetadata,
+  MetadataTarget,
+  PossibleLambdaHandlers,
+} from "@jetkit/cdk-metadata"
 
 // env vars
 export const DB_CLUSTER_ENV = "DB_CLUSTER_ARN"
@@ -272,7 +278,7 @@ export class ResourceGenerator extends Construct {
    * Create function handler for a simple routed function.
    */
   generateConstructsForFunction(resource: PossibleLambdaHandlers): JetKitLambdaFunction | undefined {
-    const funcMeta = getFunctionMetadata(resource)
+    const funcMeta = getFunctionMetadata<FunctionMetadata>(resource)
     if (!funcMeta) return
 
     // get function config
@@ -289,6 +295,7 @@ export class ResourceGenerator extends Construct {
       // generate APIGW integration
       new ApiFunction(this, `View-${name}-${this.viewCounter++}`, {
         ...mergedOptions,
+        path: funcMeta.path,
         handlerFunction,
         httpApi: this.httpApi,
       })
@@ -312,7 +319,7 @@ export class ResourceGenerator extends Construct {
    */
   generateConstructsForClass(resource: MetadataTarget): JetKitLambdaFunction | undefined {
     // API view
-    const apiViewMeta = getApiViewMetadata(resource)
+    const apiViewMeta = getApiViewMetadata<ApiViewClassMetadata>(resource)
     let className: string
     let handlerFunction: undefined | JetKitLambdaFunction
     let lambdaApiIntegration: undefined | LambdaProxyIntegration
@@ -337,7 +344,7 @@ export class ResourceGenerator extends Construct {
 
     // SubRoutes - methods with their own routes
     // handled by the class's handler
-    const subRoutes = getSubRouteMetadata(resource)
+    const subRoutes = getSubRouteMetadata<SubRouteApiMetadata>(resource)
     if (subRoutes) {
       subRoutes.forEach((meta) => {
         const { path: metaPath, propertyKey, ...metaRest } = meta

@@ -1,8 +1,9 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
-import { ApiEvent, ApiViewBase } from "./base"
-import { ApiView, SubRoute } from "../registry"
-import { AlbumApi } from "../test/sampleApp"
-import { Context } from "aws-lambda"
+import { ApiViewBase } from "./base"
+// import { AlbumApi } from "../test/sampleApp"
+import { APIGatewayProxyEventV2, APIGatewayProxyResultV2, Context } from "aws-lambda"
+import { ApiEvent, ApiView, SubRoute } from "@jetkit/cdk-metadata"
+import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
 
 interface IMakeApiEvent {
   method: HttpMethod
@@ -37,6 +38,36 @@ function makeApiEvent({ method, routeKey, path = "/" }: IMakeApiEvent): ApiEvent
       timeEpoch: 123,
     },
     routeKey,
+  }
+}
+
+@ApiView({
+  path: "/album",
+})
+export class AlbumApi extends ApiViewBase {
+  // define POST handler
+  @SubRoute({ methods: [HttpMethod.POST] })
+  async post() {
+    return "Created new album"
+  }
+
+  // custom endpoint in the view
+  // routes to the ApiView function
+  @SubRoute({
+    path: "/{albumId}/like", // will be /album/123/like
+    methods: [HttpMethod.POST, HttpMethod.DELETE],
+  })
+  async like(event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2<never>> {
+    const albumId = event.pathParameters?.albumId
+    if (!albumId) throw badRequest("albumId is required in path")
+
+    const method = event.requestContext.http.method
+
+    // POST - mark album as liked
+    if (method == HttpMethod.POST) return `Liked album ${albumId}`
+    // DELETE - unmark album as liked
+    else if (method == HttpMethod.DELETE) return `Unliked album ${albumId}`
+    else return methodNotAllowed()
   }
 }
 

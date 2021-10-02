@@ -1,6 +1,5 @@
-import HttpError, { methodNotAllowed, notFound } from "@jdpnielsen/http-error"
-import { APIGatewayProxyEventV2, APIGatewayProxyResultV2, Context } from "aws-lambda"
-import { ApiEvent, HttpMethod } from ".."
+import HttpError, { notFound } from "@jdpnielsen/http-error"
+import { APIGatewayProxyResultV2, Context } from "aws-lambda"
 import {
   ApiMetadataMap,
   getApiViewMetadata,
@@ -8,7 +7,11 @@ import {
   IApiViewClassMetadata,
   ISubRouteApiMetadata,
   MetadataTarget,
-} from "../metadata"
+  HttpMethod,
+  ApiEvent,
+  ApiHandler,
+  ApiResponse,
+} from "@jetkit/cdk-metadata"
 
 /**
  * JetKit supports using API View classes to organize your RESTful endpoints.
@@ -25,29 +28,6 @@ import {
  *
  * @module
  */
-
-/**
- * HTTP request payload.
- *
- * @category Helper
- */
-export { APIGatewayProxyEventV2 as ApiEvent }
-/**
- * Valid reponse types from a {@link ApiHandler}.
- */
-export type ApiResponse = Promise<APIGatewayProxyResultV2>
-
-/**
- * Type of an API request handler.
- *
- * @category Helper
- */
-export type ApiHandler = (event: ApiEvent, context: Context) => ApiResponse
-
-async function raiseNotAllowed(event: ApiEvent) {
-  throw methodNotAllowed(`${event.requestContext.http.method.toUpperCase()} not allowed`)
-  return "error"
-}
 
 /**
  * A view with method-based routing.
@@ -101,7 +81,7 @@ export class ApiViewBase {
 
       // full path is parent path + subRoute path
       const fullPath = viewMeta.path + (path || "")
-      if (this.matchesRouteKey(routeKey, method, fullPath, methods)) return HandlerFunc
+      if (this.matchesRouteKey(routeKey, method, fullPath, methods)) return HandlerFunc as ApiHandler
     }
 
     return undefined

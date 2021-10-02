@@ -1,6 +1,5 @@
 import { Code, LayerVersion, LayerVersionProps, Runtime } from "@aws-cdk/aws-lambda"
 import { Construct, IgnoreMode } from "@aws-cdk/core"
-import { unique } from "../../util/list"
 import path from "path"
 import fs from "fs"
 import crypto from "crypto"
@@ -135,10 +134,10 @@ export class PrismaLayer extends LayerVersion {
         ...prismaDirs.map((d) => `cp -rp node_modules/${d} ${nm}/`),
 
         // CLEANUP + SHRINK
-          // don't need three sets of engines
+        // don't need three sets of engines
         `rm -f ${nm}/.prisma/client/*{-,_}engine-*`,
         `rm -f ${nm}/prisma/client/*{-,_}engine-*`,
-          `rm -f ${nm}/prisma/*{-,_}engine-*`,
+        `rm -f ${nm}/prisma/*{-,_}engine-*`,
         // remove unused engine files
         `rm -f ${nm}/@prisma/engines/prisma-fmt-*`,
         `rm -f ${nm}/@prisma/engines/introspection-engine-*`,
@@ -173,7 +172,6 @@ export class PrismaLayer extends LayerVersion {
     // other node_modules to move to layer
     let nodeModulesCopy: string[] = []
     if (nodeModules) {
-      nodeModules = unique(nodeModules)
       // what node modules to copy to layer
       const nodeModulesPaths = nodeModules.map((dir) => `node_modules/${dir}`)
       nodeModulesCopy = nodeModules.map(
@@ -217,6 +215,6 @@ export class PrismaLayer extends LayerVersion {
     super(scope, id, { ...props, code })
 
     // unique
-    this.externalModules = unique(externalModules)
+    this.externalModules = externalModules
   }
 }

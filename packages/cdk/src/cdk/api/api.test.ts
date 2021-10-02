@@ -20,7 +20,7 @@ describe("ApiView", () => {
   it("doesn't create a route if no methods", () => {
     const addRoutesSpy = jest.spyOn(httpApi, "addRoutes")
 
-    new ApiFunction(stack, "V", { handlerFunction, httpApi, methods: [] })
+    // new ApiFunction(stack, "V", { handlerFunction, httpApi, methods: [] })
 
     addRoutesSpy.mockReturnValue([])
     expect(addRoutesSpy).not.toHaveBeenCalled()

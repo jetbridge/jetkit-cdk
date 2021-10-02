@@ -1,11 +1,18 @@
 import { HttpApi, HttpMethod, HttpNoneAuthorizer, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
 import { CfnOutput, Construct } from "@aws-cdk/core"
-import { IFunctionMetadataBase } from "@jetkit/cdk-metadata"
+import { IRoutePropsBase } from "@jetkit/cdk-metadata"
 import { FunctionOptions } from "../generator"
 import { Node14Func as JetKitLambdaFunction, Node14FuncProps as JetKitLambdaFunctionProps } from "../lambda/node14func"
 
 export { JetKitLambdaFunction, JetKitLambdaFunctionProps }
+
+export interface IEndpoint extends IRoutePropsBase {
+  /**
+   * API Gateway HTTP API
+   */
+  httpApi: HttpApi
+}
 
 /**
  * @category Construct
@@ -14,14 +21,6 @@ export interface ApiConfig extends FunctionOptions, IEndpoint {}
 
 export interface ApiProps extends ApiConfig {
   handlerFunction: JetKitLambdaFunction
-}
-
-export interface IEndpoint
-  extends Pick<IFunctionMetadataBase, "path" | "methods" | "unauthorized" | "authorizationScopes"> {
-  /**
-   * API Gateway HTTP API
-   */
-  httpApi: HttpApi
 }
 
 let routeOutputId = 1
@@ -60,7 +59,7 @@ export abstract class ApiViewMixin extends Construct {
  */
 export class ApiFunction extends ApiViewMixin implements IEndpoint {
   httpApi: HttpApi
-  path?: string
+  path: string
   methods?: HttpMethod[]
 
   handlerFunction: JetKitLambdaFunction
