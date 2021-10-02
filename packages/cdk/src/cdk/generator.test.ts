@@ -21,6 +21,8 @@ import {
 } from "../test/sampleApp"
 import { ApiFunction, JetKitLambdaFunction } from "./api/api"
 import { Node14Func } from "./lambda/node14func"
+import { dirname } from "dirname-filename-esm"
+const __dirname = dirname(import.meta)
 
 const bundleBannerMsg = "--- cool bundlings mon ---"
 
@@ -175,7 +177,7 @@ describe("@SubRoute construct generation", () => {
             {
               Ref: "AWS::StackName",
             },
-            httpApi.httpApiName
+            httpApi.httpApiName,
           ],
         ],
       },

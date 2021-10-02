@@ -5,6 +5,8 @@ import { ParameterGroup } from "@aws-cdk/aws-rds"
 import { Stack } from "@aws-cdk/core"
 import { SlsPgDb } from "../../../database/serverless-pg"
 import { DatabaseMigrationScript } from "./migration"
+import { dirname } from "dirname-filename-esm"
+const __dirname = dirname(import.meta)
 
 describe("DatabaseMigrationScript", () => {
   let stack: Stack

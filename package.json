@@ -2,6 +2,7 @@
   "name": "jetkit",
   "description": "Cloud-native serverless anti-framework",
   "private": false,
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/jetbridge/jetkit-cdk.git"
