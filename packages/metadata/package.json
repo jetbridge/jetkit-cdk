@@ -2,8 +2,8 @@
   "name": "@jetkit/cdk-metadata",
   "version": "2.0.0",
   "description": "Shared types and metadata",
-  "types": "build/esm/index.d.ts",
-  "module": "build/esm/index.js",
+  "types": "build/esm/src/index.d.ts",
+  "module": "build/esm/src/index.js",
   "private": false,
   "repository": {
     "type": "git",
