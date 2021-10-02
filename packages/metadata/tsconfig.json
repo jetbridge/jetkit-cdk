@@ -6,7 +6,10 @@
     "module": "es2020",
     "lib": ["ESNext"]
   },
-  "include": ["src"],
+  "files": [
+    "src/**"
+],
+  // "include": ["src"],
   "typedocOptions": {
     "entryPoints": ["src/index.ts"],
     "out": "site/docs"

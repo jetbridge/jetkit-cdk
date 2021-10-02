@@ -1,6 +1,5 @@
 import { Schedule } from "@aws-cdk/aws-events"
 import fs from "fs"
-import { ApiHandler } from "./api/base"
 import { FunctionOptions } from "./cdk/generator"
 import {
   getSubRouteMetadata,
@@ -14,7 +13,7 @@ import {
   setFunctionMetadata,
   setSubRouteMetadata,
 } from "./metadata"
-import { ApiViewMetaBase, Lambda as BaseLambda, PossibleLambdaHandlers } from "@jetkit/cdk-metadata"
+import { ApiViewMetaBase, Lambda as BaseLambda, PossibleLambdaHandlers, ApiHandler } from "@jetkit/cdk-metadata"
 
 /**
  * Define API view class routing properties.

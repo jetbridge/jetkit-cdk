@@ -3,10 +3,9 @@
 
   "compilerOptions": {
     "outDir": "./build/esm",
-    "module": "es2020",
     "lib": ["ESNext"]
   },
-  "include": ["src"],
+  "files": ["src/**/*"]
   "typedocOptions": {
     "entryPoints": ["src/index.ts"],
     "out": "site/docs"

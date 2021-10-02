@@ -12,5 +12,7 @@
       "path": "packages/runtime"
     }
   ],
-  "compilerOptions": {}
+  "compilerOptions": {
+      "module": "ES2020"
+  }
 }
