@@ -1,5 +1,8 @@
 import { Code, LayerVersion, LayerVersionProps, Runtime } from "@aws-cdk/aws-lambda"
 import { Construct } from "@aws-cdk/core"
+import { dirname } from "dirname-filename-esm"
+
+const __dirname = dirname(import.meta)
 
 const PRISMA_DEPS = ["prisma", "@prisma/client", "@prisma/migrate", "@prisma/sdk"]
 
