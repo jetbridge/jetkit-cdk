@@ -38,11 +38,11 @@ export class DatabaseMigrationScript extends PrismaNode14Func {
     // only works as actual files - can't be bundled
     // https://github.com/prisma/prisma/issues/8337#issuecomment-895380661
     nodeModules ||= []
-    nodeModules.push("@prisma/migrate", "@prisma/sdk")
+    nodeModules.push("@prisma/migrate", "@prisma/sdk", "prisma", ".prisma")
 
     environment ||= {}
-    environment.PRISMA_QUERY_ENGINE_LIBRARY =
-      "/opt/nodejs/node_modules/@prisma/engines/libquery_engine-rhel-openssl-1.0.x.so.node"
+    // environment.PRISMA_QUERY_ENGINE_LIBRARY =
+    // "/opt/nodejs/node_modules/prisma/libquery_engine-rhel-openssl-1.0.x.so.node"
 
     super(scope, id, {
       ...props,
