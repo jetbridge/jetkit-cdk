@@ -1,12 +1,12 @@
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
 import { Construct } from "@aws-cdk/core"
-import { IApiViewClassMetadata } from "../../metadata"
+import { ApiViewClassMetadata } from "../../metadata"
 import { ApiViewMixin, IEndpoint } from "./api"
 
 export interface SubRouteApiProps extends Omit<IEndpoint, "httpApi"> {
   lambdaApiIntegration: LambdaProxyIntegration
-  parentApiMeta: IApiViewClassMetadata
+  parentApiMeta: ApiViewClassMetadata
   parentPath: string
   path?: string
   httpApi: HttpApi

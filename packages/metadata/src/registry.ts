@@ -1,8 +1,12 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 /* eslint-disable @typescript-eslint/ban-types */
 import { Handler } from "aws-lambda"
+import isPlainObject from "is-plain-object"
+import deepmerge from "deepmerge"
 import * as fs from "fs"
 import {
+  getApiViewMetadata,
+  getFunctionMetadata,
   getSubRouteMetadata,
   IApiViewClassMetadata,
   IFunctionMetadata,
@@ -15,6 +19,7 @@ import {
 } from "./metadata"
 import { ApiViewMetaBase, HttpMethod } from "./types"
 import { findDefiningFile } from "./function"
+import { filename } from "dirname-filename-esm"
 
 /**
  * Metadata describing any Lambda function.
@@ -26,6 +31,12 @@ export interface IFunctionMetadataBase extends Partial<IRoutePropsBase> {
    */
   entry?: string
 }
+
+const mergeMetadata = (meta1: IFunctionMetadataBase, meta2: IFunctionMetadataBase): any => ({
+  ...deepmerge(meta1, meta2, {
+    isMergeableObject: isPlainObject,
+  }),
+})
 
 /**
  * This module is responsible for attaching metadata to classes, methods, and properties to
@@ -51,13 +62,16 @@ export function ApiView(opts: ApiViewOpts) {
 
   // return decorator
   return function <T extends MetadataTargetConstructor>(constructor: T) {
+    // merge with existing metadata
+    const existingMeta = getApiViewMetadata(constructor) || {}
+
     // save metadata
     const meta: IApiViewClassMetadata = {
       ...opts,
       apiClass: constructor,
     }
 
-    setApiViewMetadata(constructor, meta)
+    setApiViewMetadata(constructor, mergeMetadata(existingMeta, meta))
     return constructor
   }
 }
@@ -73,7 +87,7 @@ export interface IRoutePropsBase {
    *
    * e.g. "/v1/foo/bar"
    */
-  path: string
+  path?: string
 
   /**
    * Enabled {@link HttpMethod}s for route.
@@ -164,7 +178,11 @@ export type PossibleLambdaHandlers = Handler // from aws-lambda - very generic
  *
  * @category Metadata Decorator
  */
-export function Lambda<HandlerT extends PossibleLambdaHandlers = PossibleLambdaHandlers>(props: Partial<IRouteProps>) {
+export function Lambda<HandlerT extends PossibleLambdaHandlers = PossibleLambdaHandlers>(
+  props_?: Partial<IRouteProps>
+) {
+  const props = props_ || ({} as Partial<IRouteProps>)
+
   return (wrapped: HandlerT) => {
     // here we figure out the entrypoint path and function handler name:
 
@@ -183,6 +201,8 @@ export function Lambda<HandlerT extends PossibleLambdaHandlers = PossibleLambdaH
         `This function is unnamed. Please define it using "async function foo() {...}" or explicitly pass the exported handler name to Lambda().\nFunction:\n${wrapped}\n\nThis is necessary to define the entrypoint handler name for the lambda function configuration.`
       )
     }
+    // merge with existing metadata
+    const existingMeta = getFunctionMetadata(wrapped) || {}
 
     const meta: IFunctionMetadata = {
       ...props,
@@ -191,10 +211,17 @@ export function Lambda<HandlerT extends PossibleLambdaHandlers = PossibleLambdaH
     }
     if (entry) meta.entry = entry
 
-    setFunctionMetadata(wrapped, meta)
+    setFunctionMetadata(wrapped, mergeMetadata(existingMeta, meta))
     return wrapped
   }
 }
+
+/**
+ * Keeps track of `entry` path to our lambda handler so you don't need to specify the file
+ * path when constructing the Lambda construct.
+ */
+export const LambdaEs = (importMeta: ImportMeta, props?: Partial<IRouteProps>) =>
+  Lambda({ entry: filename(importMeta), ...props })
 
 /**
  * Search call stack for a function with a given name.

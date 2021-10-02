@@ -1,5 +1,5 @@
 import HttpError, { notFound } from "@jdpnielsen/http-error"
-import { APIGatewayProxyResultV2, Context } from "aws-lambda"
+import { APIGatewayProxyResultV2, Context, APIGatewayProxyEventV2 as ApiEvent } from "aws-lambda"
 import {
   ApiMetadataMap,
   getApiViewMetadata,
@@ -8,10 +8,8 @@ import {
   ISubRouteApiMetadata,
   MetadataTarget,
   HttpMethod,
-  ApiEvent,
-  ApiHandler,
-  ApiResponse,
 } from "@jetkit/cdk-metadata"
+import { filename } from "dirname-filename-esm"
 
 /**
  * JetKit supports using API View classes to organize your RESTful endpoints.
@@ -155,6 +153,10 @@ export class ApiViewBase {
   }
 }
 
+// copied so return type of apiViewHandler doesn't need a type ref to jkcdk-metadata
+type ApiResponse = Promise<APIGatewayProxyResultV2>
+type ApiHandler = (event: ApiEvent, context: Context) => ApiResponse
+
 /**
  * Helper function to generate a lambda handler for an {@link ApiViewBase} class.
  * It should be exported as `handler`. This is the default `handler` name used when generating
@@ -178,6 +180,33 @@ export const apiViewHandler = (filename: string, apiView: typeof ApiViewBase): A
   if (!viewMeta) throw new Error(`apiViewHandler() called on ${apiView} but it is not decorated with @ApiView`)
 
   if (!viewMeta.entry && filename) viewMeta.entry = filename
+
+  return new apiView().dispatch
+}
+
+/**
+ * Helper function to generate a lambda handler for an {@link ApiViewBase} class.
+ * It should be exported as `handler`. This is the default `handler` name used when generating
+ * the lambda function. You may change it but be sure the exported name matches the
+ * {@link IApiMetadata.handler} parameter.
+ *
+ * @param importMeta Should be `import.meta`. Tells Lambda where to find your entrypoint
+ * @param apiView A subclass of ApiViewBase
+ * @returns Lambda entrypoint handler to dispatch to the appropriate view method
+ *
+ * @category Helper
+ *
+ * @example
+ * ```typescript
+ * export const handler = apiViewHandler(import.meta, MyApiView)
+ * ```
+ */
+export const apiViewHandlerEs = (importMeta: ImportMeta, apiView: typeof ApiViewBase): ApiHandler => {
+  // add entry=filename to metadata
+  const viewMeta = getApiViewMetadata(apiView)
+  if (!viewMeta) throw new Error(`apiViewHandler() called on ${apiView} but it is not decorated with @ApiView`)
+
+  if (!viewMeta.entry && filename) viewMeta.entry = filename(importMeta)
 
   return new apiView().dispatch
 }

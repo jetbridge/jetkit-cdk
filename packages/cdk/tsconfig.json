@@ -2,8 +2,7 @@
   "extends": "../../tsconfig.base.json",
 
   "compilerOptions": {
-    "outDir": "./build/esm",
-    "lib": ["ESNext"]
+    "outDir": "./build/esm"
   },
   "include": ["src"],
   "typedocOptions": {
@@ -13,6 +12,9 @@
   "references": [
     {
       "path": "../metadata"
+    },
+    {
+      "path": "../runtime"
     }
   ]
 }

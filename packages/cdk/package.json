@@ -4,7 +4,8 @@
   "description": "Cloud-native serverless anti-framework",
   "types": "build/esm/src/index.d.ts",
   "main": "build/cjs/src/index.js",
-  "module": "build/esm/index.js",
+  "exports": "./build/esm/src/index.js",
+  "type": "module",
   "private": false,
   "repository": {
     "type": "git",
@@ -16,7 +17,7 @@
     "test:watch": "jest --watch",
     "start": "tsc --build -w -p tsconfig-cjs.json",
     "build": "npm run tsc",
-    "tsc": "tsc --build -p tsconfig.json && tsc --build -p tsconfig-cjs.json",
+    "tsc": "tsc --build tsconfig.json && tsc --build tsconfig-cjs.json",
     "docs": "typedoc",
     "prepack": "npm run build",
     "rel:patch": "npm version patch && npm publish",

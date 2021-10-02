@@ -3,8 +3,16 @@
   "version": "2.0.0",
   "description": "Shared types and metadata",
   "types": "build/esm/src/index.d.ts",
+  "main": "./build/cjs/src/index.js",
   "module": "build/esm/src/index.js",
+  "exports": "./build/esm/src/index.js",
+  "type": "module",
   "private": false,
+  "scripts": {
+    "rel:patch": "npm version patch && npm publish",
+    "rel:minor": "npm version minor && npm publish",
+    "rel:next": "npm version patch && npm publish --tag next"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/jetbridge/jetkit-cdk.git"

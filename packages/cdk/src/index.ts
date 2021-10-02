@@ -27,4 +27,7 @@ export { CorsHttpMethod, HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 export { Duration } from "@aws-cdk/core"
 
 // metadata
-// export { ApiView, Lambda, SubRoute, IRouteProps, ISubRouteProps } from "./registry"
+export { LambdaCdk, ApiViewCdk, ApiViewOpts, IRouteProps, IScheduledProps } from "./registry"
+
+// re-export metadata?
+export {} from "@jetkit/cdk-metadata"

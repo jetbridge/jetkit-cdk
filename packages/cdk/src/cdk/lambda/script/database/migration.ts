@@ -1,6 +1,8 @@
 import { CfnOutput, Construct, Duration } from "@aws-cdk/core"
 import { DatabaseFuncProps, PrismaNode14Func } from "../../prismaNodeFunction"
+import { dirname } from "dirname-filename-esm"
 
+const __dirname = dirname(import.meta)
 export type ScriptProps = DatabaseFuncProps
 
 /**

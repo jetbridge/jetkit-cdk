@@ -2,7 +2,9 @@
   "extends": "@tsconfig/node14/tsconfig.json",
 
   "compilerOptions": {
-    "module": "ES2020",
+    "module": "ESNext",
+    "lib": ["ESNext"],
+    "esModuleInterop": true,
 
     "composite": true,
     "moduleResolution": "node", // modern
