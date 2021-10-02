@@ -9,7 +9,7 @@
   },
   "homepage": "https://jetbridge.github.io/jetkit-cdk/",
   "scripts": {
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "prepare": "husky install",
     "build": "tsc --build && concurrently --kill-others npm:build:*",
     "build:cdk": "npm run build -w @jetkit/cdk",
