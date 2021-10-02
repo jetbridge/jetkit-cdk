@@ -1,6 +1,5 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { ApiViewBase } from "./base"
-// import { AlbumApi } from "../test/sampleApp"
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2, Context } from "aws-lambda"
 import { ApiEvent, ApiView, SubRoute } from "@jetkit/cdk-metadata"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"

@@ -293,6 +293,7 @@ export class ResourceGenerator extends Construct {
       if (!this.httpApi) throw new Error(`API paths defined but httpApi was not provided to ${this}`)
 
       // generate APIGW integration
+      // TODO: hash name + entry + handler and use as suffix not viewCounter
       new ApiFunction(this, `View-${name}-${this.viewCounter++}`, {
         ...mergedOptions,
         path: funcMeta.path,
