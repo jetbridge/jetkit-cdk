@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+
+  "compilerOptions": {
+    "outDir": "./build/esm",
+    "module": "es2020",
+    "lib": ["ESNext"]
+  },
+  "include": ["src"],
+  "typedocOptions": {
+    "entryPoints": ["src/index.ts"],
+    "out": "site/docs"
+  },
+  "references": [{ "path": "../metadata" }]
+}

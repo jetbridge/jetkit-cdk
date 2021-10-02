@@ -1,7 +1,7 @@
 import { HttpApi, HttpMethod, HttpNoneAuthorizer, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
 import { CfnOutput, Construct } from "@aws-cdk/core"
-import { IFunctionMetadataBase } from "../../metadata"
+import { IFunctionMetadataBase } from "@jetkit/cdk-metadata"
 import { FunctionOptions } from "../generator"
 import { Node14Func as JetKitLambdaFunction, Node14FuncProps as JetKitLambdaFunctionProps } from "../lambda/node14func"
 

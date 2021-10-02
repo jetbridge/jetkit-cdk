@@ -1,0 +1,85 @@
+{
+  "name": "@jetkit/cdk",
+  "version": "2.0.0",
+  "description": "Cloud-native serverless anti-framework",
+  "types": "build/esm/index.d.ts",
+  "main": "build/cjs/index.js",
+  "module": "build/esm/index.js",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jetbridge/jetkit-cdk.git"
+  },
+  "homepage": "https://jetbridge.github.io/jetkit-cdk/",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "start": "tsc --build -w -p tsconfig-cjs.json",
+    "build": "npm run tsc",
+    "tsc": "tsc --build -p tsconfig.json && tsc --build -p tsconfig-cjs.json",
+    "docs": "typedoc",
+    "prepack": "npm run build",
+    "rel:patch": "npm version patch && npm publish",
+    "rel:minor": "npm version minor && npm publish",
+    "rel:next": "npm version patch && npm publish --tag next"
+  },
+  "author": "JetBridge Software Inc.",
+  "license": "MIT",
+  "devDependencies": {
+    "constructs": "3.3.141",
+    "@aws-cdk/assert": "1.122.0",
+    "@aws-cdk/core": "1.122.0",
+    "@prisma/client": "^3.0.1",
+    "@prisma/migrate": "^3.0.1",
+    "aws-cdk": "1.122.0",
+    "callsites": "^3.1.0",
+    "prisma": "^3.0.1"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-apigatewayv2": "1.122.0",
+    "@aws-cdk/aws-apigatewayv2-authorizers": "1.122.0",
+    "@aws-cdk/aws-apigatewayv2-integrations": "1.122.0",
+    "@aws-cdk/aws-ec2": "1.122.0",
+    "@aws-cdk/aws-events": "1.122.0",
+    "@aws-cdk/aws-events-targets": "1.122.0",
+    "@aws-cdk/aws-iam": "1.122.0",
+    "@aws-cdk/aws-lambda": "1.122.0",
+    "@aws-cdk/aws-lambda-nodejs": "1.122.0",
+    "@aws-cdk/aws-rds": "1.122.0",
+    "@aws-cdk/aws-secretsmanager": "1.122.0",
+    "deepmerge": "^4.2.2",
+    "is-plain-object": "^2.0.4",
+    "reflect-metadata": "^0.1.13",
+    "slugify": "^1.6.0"
+  },
+  "peerDependenciesMeta": {
+    "prisma": {
+      "optional": true
+    },
+    "@prisma/migrate": {
+      "optional": true
+    },
+    "@prisma/client": {
+      "optional": true
+    }
+  },
+  "peerDependencies": {
+    "@prisma/client": "*",
+    "@prisma/migrate": "*",
+    "prisma": "*"
+  },
+  "keywords": [
+    "aws",
+    "cdk",
+    "serverless",
+    "lambda",
+    "iac",
+    "rest",
+    "typescript",
+    "api",
+    "prisma",
+    "postgres",
+    "postgresql",
+    "pg"
+  ]
+}

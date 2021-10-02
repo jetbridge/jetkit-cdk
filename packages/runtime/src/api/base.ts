@@ -1,7 +1,6 @@
-import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import HttpError, { methodNotAllowed, notFound } from "@jdpnielsen/http-error"
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2, Context } from "aws-lambda"
-import { ApiEvent } from ".."
+import { ApiEvent, HttpMethod } from ".."
 import {
   ApiMetadataMap,
   getApiViewMetadata,

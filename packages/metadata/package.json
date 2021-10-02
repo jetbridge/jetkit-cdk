@@ -1,0 +1,19 @@
+{
+  "name": "@jetkit/cdk-metadata",
+  "version": "2.0.0",
+  "description": "Shared types and metadata",
+  "types": "build/esm/index.d.ts",
+  "main": "build/cjs/index.js",
+  "module": "build/esm/index.js",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jetbridge/jetkit-cdk.git"
+  },
+  "homepage": "https://jetbridge.github.io/jetkit-cdk/",
+  "scripts": {},
+  "author": "JetBridge Software Inc.",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}

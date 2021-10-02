@@ -1,9 +1,7 @@
-import { HttpMethod, HttpRouteProps } from "@aws-cdk/aws-apigatewayv2"
-import { Schedule } from "@aws-cdk/aws-events"
-import { Context, Handler } from "aws-lambda"
-import fs from "fs"
-import { ApiViewBase, ApiHandler } from "./api/base"
-import { FunctionOptions } from "./cdk/generator"
+/* eslint-disable @typescript-eslint/no-empty-interface */
+/* eslint-disable @typescript-eslint/ban-types */
+import { Handler } from "aws-lambda"
+import * as fs from "fs"
 import {
   getSubRouteMetadata,
   IApiViewClassMetadata,
@@ -16,11 +14,15 @@ import {
   setFunctionMetadata,
   setSubRouteMetadata,
 } from "./metadata"
-import { findDefiningFile } from "./util/function"
+import { ApiViewMetaBase, HttpMethod } from "./types"
+import { findDefiningFile } from "./function"
 
+export type ApiViewOpts = Omit<IFunctionMetadataBase, "methods">
+
+// any
 /**
  * This module is responsible for attaching metadata to classes, methods, and properties to
- * assist in the automated generation of cloud resources from application code.
+ * assist in routing API endpoints.
  *
  * @module
  */
@@ -52,13 +54,13 @@ export function ApiView(opts: ApiViewOpts) {
     return constructor
   }
 }
-export type ApiViewOpts = Omit<IFunctionMetadataBase, "methods">
 
-interface RoutePropertyDescriptor extends PropertyDescriptor {
-  value?: ApiHandler
+export interface ILambdaMetadata {
+  entry?: string
+  handler?: string
 }
 
-export interface IRoutePropsBase extends Pick<HttpRouteProps, "authorizer" | "authorizationScopes"> {
+export interface IRoutePropsBase {
   /**
    * An optional API Gateway path to trigger this function.
    *
@@ -86,10 +88,10 @@ export interface ISubRouteProps extends Omit<IRoutePropsBase, "path"> {
   path?: string
 }
 
-export interface IRouteProps extends FunctionOptions, IRoutePropsBase {}
+export interface IRouteProps extends IRoutePropsBase, ILambdaMetadata {}
 
-export interface IScheduledProps extends FunctionOptions {
-  schedule: Schedule
+interface RoutePropertyDescriptor extends PropertyDescriptor {
+  value?: Function
 }
 
 /**
@@ -102,7 +104,7 @@ export interface IScheduledProps extends FunctionOptions {
  */
 export function SubRoute({ path, methods }: ISubRouteProps) {
   return function (
-    target: ApiViewBase, // parent class
+    target: ApiViewMetaBase, // parent class
     propertyKey: string,
     descriptor: RoutePropertyDescriptor
   ) {
@@ -121,7 +123,7 @@ export function SubRoute({ path, methods }: ISubRouteProps) {
     // update target class subroutes metadata map with our metadata
 
     // assuming the function signature is correct - no way to check at runtime
-    const metadataTarget: MetadataTarget = target.constructor as ApiHandler
+    const metadataTarget: MetadataTarget = target.constructor
 
     // get map
     const subroutesMap = getSubRouteMetadata(metadataTarget)
@@ -149,9 +151,7 @@ export type PossibleLambdaHandlers = Handler // from aws-lambda - very generic
  *
  * @category Metadata Decorator
  */
-export function Lambda<HandlerT extends PossibleLambdaHandlers = PossibleLambdaHandlers>(
-  props: Partial<IRouteProps> | IScheduledProps
-) {
+export function Lambda<HandlerT extends PossibleLambdaHandlers = PossibleLambdaHandlers>(props: Partial<IRouteProps>) {
   return (wrapped: HandlerT) => {
     // here we figure out the entrypoint path and function handler name:
 
