@@ -13,7 +13,7 @@ describe("PrismaLayer", () => {
   })
 
   it("builds layer", () => {
-    new PrismaLayer(stack, "PL", { prismaPath })
+    new PrismaLayer(stack, "PL")
 
     expect(stack).toHaveResource("AWS::Lambda::LayerVersion", {})
   })
