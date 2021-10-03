@@ -4,10 +4,13 @@ import { dirname } from "dirname-filename-esm"
 
 const __dirname = dirname(import.meta)
 
+// deps to npm install to the layer
 const PRISMA_DEPS = ["prisma", "@prisma/migrate", "@prisma/sdk"]
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface PrismaLayerProps extends Omit<LayerVersionProps, "code"> {}
+export interface PrismaLayerProps extends Omit<LayerVersionProps, "code"> {
+  // e.g. 3.1.1
+  prismaVersion?: string
+}
 
 /**
  * Construct a lambda layer with Prisma libraries.
@@ -34,16 +37,37 @@ export class PrismaLayer extends LayerVersion {
   externalModules: string[]
   environment: Record<string, string>
 
-  constructor(scope: Construct, id: string, props?: PrismaLayerProps) {
-    // create asset bundle in docker
+  constructor(scope: Construct, id: string, props: PrismaLayerProps = {}) {
+    const { prismaVersion } = props
+
     const layerDir = "/asset-output/nodejs"
+    const nm = `${layerDir}/node_modules`
+    const engineDir = `${nm}/@prisma/engines`
+
+    // what are we asking npm to install?
+    let modulesToInstall = PRISMA_DEPS
+    if (prismaVersion) modulesToInstall = modulesToInstall.map((dep) => `${dep}@${prismaVersion}`)
+    const modulesToInstallArgs = modulesToInstall.join(" ")
+
+    // bundle
     const code = Code.fromAsset(__dirname, {
       bundling: {
         image: Runtime.NODEJS_14_X.bundlingImage,
         command: [
+          // create asset bundle in docker
           "bash",
           "-c",
-          [`mkdir -p ${layerDir}`, `cd ${layerDir} && HOME=/tmp npm install ${PRISMA_DEPS.join(" ")}`].join(" && "),
+          [
+            `mkdir -p ${layerDir}`,
+            // install PRISMA_DEPS
+            `cd ${layerDir} && HOME=/tmp npm install ${modulesToInstallArgs}`,
+            // delete unneeded engines
+            `rm -f ${engineDir}/introspection-engine* ${engineDir}/prisma-fmt*`,
+            // get rid of some junk
+            `rm -rf ${nm}/prisma/build/public`,
+            `rm -rf ${nm}/prisma/prisma-client/src/__tests__`,
+            `rm -rf ${nm}/@types`,
+          ].join(" && "),
         ],
       },
     })
@@ -57,6 +81,6 @@ export class PrismaLayer extends LayerVersion {
         "/opt/nodejs/node_modules/@prisma/engines/libquery_engine-rhel-openssl-1.0.x.so.node",
     }
     // modules provided by layer
-    this.externalModules = ["aws-sdk", ...PRISMA_DEPS, "@prisma/engines-version"]
+    this.externalModules = ["aws-sdk", "@prisma/migrate", "@prisma/sdk", "@prisma/engines", "@prisma/engines-version"]
   }
 }
