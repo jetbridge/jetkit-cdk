@@ -9,7 +9,6 @@ import { ApiViewClassMetadata, FunctionMetadata, SubRouteApiMetadata } from "../
 import { ApiFunction, JetKitLambdaFunction } from "./api/api"
 import { SubRouteApi } from "./api/subRoute"
 import * as targets from "@aws-cdk/aws-events-targets"
-
 import { SlsPgDb } from "./database/serverless-pg"
 import { IVpc } from "@aws-cdk/aws-ec2"
 import { debug } from "../util/log"
@@ -25,6 +24,7 @@ import {
   MetadataTarget,
   PossibleLambdaHandlers,
 } from "@jetkit/cdk-metadata"
+import * as crypto from "crypto"
 
 // env vars
 export const DB_CLUSTER_ENV = "DB_CLUSTER_ARN"
@@ -118,7 +118,6 @@ export class ResourceGenerator extends Construct {
 
   private layerCounter = 1
   private funcCounter = 1
-  private viewCounter = 1
   private ruleCounter = 1
   private seenFunctionNames: Record<string, number>
   httpApi?: HttpApi
@@ -205,7 +204,8 @@ export class ResourceGenerator extends Construct {
     functionName ||= this.generateFunctionName(name, functionOptions)
 
     // build Node Lambda function
-    const funcId = `F${this.funcCounter++}-${name}` // must be unique
+    const funcHash = hashik(name, functionOptions.entry, functionOptions.handler)
+    const funcId = `F${funcHash}-${name}` // must be unique
     const handlerFunction = new JetKitLambdaFunction(this, funcId, {
       ...rest,
       functionName,
@@ -293,8 +293,9 @@ export class ResourceGenerator extends Construct {
       if (!this.httpApi) throw new Error(`API paths defined but httpApi was not provided to ${this}`)
 
       // generate APIGW integration
-      // TODO: hash name + entry + handler and use as suffix not viewCounter
-      new ApiFunction(this, `View-${name}-${this.viewCounter++}`, {
+      // hash name + entry + handler and use as suffix
+      const funcHash = hashik(name, mergedOptions.entry, mergedOptions.handler)
+      new ApiFunction(this, `View-${name}-${funcHash}`, {
         ...mergedOptions,
         path: funcMeta.path,
         handlerFunction,
@@ -427,4 +428,10 @@ export class ResourceGenerator extends Construct {
 
     return fns[0]
   }
+}
+
+function hashik(...inputs: Array<string | undefined>): string {
+  let hasher = crypto.createHash("sha1")
+  inputs.forEach((inp) => hasher.update(inp || ""))
+  return hasher.digest("hex").substr(0, 5)
 }

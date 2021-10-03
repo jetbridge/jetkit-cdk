@@ -4,7 +4,7 @@ import { dirname } from "dirname-filename-esm"
 
 const __dirname = dirname(import.meta)
 
-const PRISMA_DEPS = ["prisma", "@prisma/client", "@prisma/migrate", "@prisma/sdk"]
+const PRISMA_DEPS = ["prisma", "@prisma/migrate", "@prisma/sdk"]
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface PrismaLayerProps extends Omit<LayerVersionProps, "code"> {}
@@ -52,9 +52,11 @@ export class PrismaLayer extends LayerVersion {
 
     // hint for prisma to find the engine
     this.environment = {
-      PRISMA_QUERY_ENGINE_LIBRARY: "/opt/nodejs/node_modules/prisma/libquery_engine-rhel-openssl-1.0.x.so.node",
+      // PRISMA_QUERY_ENGINE_LIBRARY: "/opt/nodejs/node_modules/prisma/libquery_engine-rhel-openssl-1.0.x.so.node",
+      PRISMA_QUERY_ENGINE_LIBRARY:
+        "/opt/nodejs/node_modules/@prisma/engines/libquery_engine-rhel-openssl-1.0.x.so.node",
     }
     // modules provided by layer
-    this.externalModules = ["aws-sdk", ...PRISMA_DEPS]
+    this.externalModules = ["aws-sdk", ...PRISMA_DEPS, "@prisma/engines-version"]
   }
 }
