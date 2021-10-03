@@ -10,6 +10,9 @@ const PRISMA_DEPS = ["prisma", "@prisma/migrate", "@prisma/sdk", "@prisma/client
 export interface PrismaLayerProps extends Omit<LayerVersionProps, "code"> {
   // e.g. 3.1.1
   prismaVersion?: string
+
+  // some more modules to add to the layer
+  nodeModules?: string[]
 }
 
 /**
@@ -39,13 +42,14 @@ export class PrismaLayer extends LayerVersion {
 
   constructor(scope: Construct, id: string, props: PrismaLayerProps = {}) {
     const { prismaVersion } = props
+    const nodeModules = props.nodeModules || []
 
     const layerDir = "/asset-output/nodejs"
     const nm = `${layerDir}/node_modules`
     const engineDir = `${nm}/@prisma/engines`
 
     // what are we asking npm to install?
-    let modulesToInstall = PRISMA_DEPS
+    let modulesToInstall = PRISMA_DEPS.concat(nodeModules)
     if (prismaVersion) modulesToInstall = modulesToInstall.map((dep) => `${dep}@${prismaVersion}`)
     const modulesToInstallArgs = modulesToInstall.join(" ")
 
@@ -81,6 +85,13 @@ export class PrismaLayer extends LayerVersion {
         "/opt/nodejs/node_modules/@prisma/engines/libquery_engine-rhel-openssl-1.0.x.so.node",
     }
     // modules provided by layer
-    this.externalModules = ["aws-sdk", "@prisma/migrate", "@prisma/sdk", "@prisma/engines", "@prisma/engines-version"]
+    this.externalModules = [
+      "aws-sdk",
+      "@prisma/migrate",
+      "@prisma/sdk",
+      "@prisma/engines",
+      "@prisma/engines-version",
+      ...nodeModules,
+    ]
   }
 }
