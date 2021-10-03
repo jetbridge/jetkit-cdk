@@ -5,7 +5,7 @@ import { dirname } from "dirname-filename-esm"
 const __dirname = dirname(import.meta)
 
 // deps to npm install to the layer
-const PRISMA_DEPS = ["prisma", "@prisma/migrate", "@prisma/sdk"]
+const PRISMA_DEPS = ["prisma", "@prisma/migrate", "@prisma/sdk", "@prisma/client"]
 
 export interface PrismaLayerProps extends Omit<LayerVersionProps, "code"> {
   // e.g. 3.1.1
