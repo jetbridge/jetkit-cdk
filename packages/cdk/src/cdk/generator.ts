@@ -1,4 +1,5 @@
 /* eslint-disable prefer-const */
+import path from "path"
 import { HttpApi, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
 import { Rule } from "@aws-cdk/aws-events"
 import { Alias, Function, LayerVersion } from "@aws-cdk/aws-lambda"
@@ -204,8 +205,8 @@ export class ResourceGenerator extends Construct {
     functionName ||= this.generateFunctionName(name, functionOptions)
 
     // build Node Lambda function
-    const funcHash = hashik(name, functionOptions.entry, functionOptions.handler)
-    const funcId = `F${funcHash}-${name}` // must be unique
+    // const funcHash = hashik(name, path.basename(functionOptions.entry || ""), functionOptions.handler)
+    const funcId = `Func-${name}` // must be unique
     const handlerFunction = new JetKitLambdaFunction(this, funcId, {
       ...rest,
       functionName,
@@ -294,8 +295,8 @@ export class ResourceGenerator extends Construct {
 
       // generate APIGW integration
       // hash name + entry + handler and use as suffix
-      const funcHash = hashik(name, mergedOptions.entry, mergedOptions.handler)
-      new ApiFunction(this, `View-${name}-${funcHash}`, {
+      // const funcHash = hashik(name, path.basename(mergedOptions.entry || ""), mergedOptions.handler)
+      new ApiFunction(this, `View-${name}`, {
         ...mergedOptions,
         path: funcMeta.path,
         handlerFunction,
@@ -430,8 +431,9 @@ export class ResourceGenerator extends Construct {
   }
 }
 
-function hashik(...inputs: Array<string | undefined>): string {
-  let hasher = crypto.createHash("sha1")
-  inputs.forEach((inp) => hasher.update(inp || ""))
-  return hasher.digest("hex").substr(0, 3)
-}
+// function hashik(...inputs: Array<string | undefined>): string {
+//   console.log({ inputs })
+//   let hasher = crypto.createHash("sha1")
+//   inputs.forEach((inp) => hasher.update(inp || ""))
+//   return hasher.digest("hex").substr(0, 3)
+// }
