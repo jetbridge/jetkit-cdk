@@ -23,7 +23,7 @@ import {
   getSubRouteMetadata,
   MetadataTarget,
   PossibleLambdaHandlers,
-} from "@jetkit/cdk-metadata"
+} from "@jetkit/cdk-runtime"
 import * as crypto from "crypto"
 
 // env vars

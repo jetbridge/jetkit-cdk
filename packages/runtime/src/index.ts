@@ -1,5 +1,9 @@
 // api
 export * from "./api/base"
 
-// re-export metadata
-export * from "@jetkit/cdk-metadata"
+// types
+export * from "./types"
+
+// metadata
+export * from "./registry"
+export * from "./metadata"

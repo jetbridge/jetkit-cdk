@@ -6,7 +6,7 @@ import {
   IFunctionMetadataBase,
   IRoutePropsBase,
   ApiView,
-} from "@jetkit/cdk-metadata"
+} from "@jetkit/cdk-runtime"
 import { LambdaFunctionMetadata } from "./metadata"
 
 /**

@@ -1,5 +1,6 @@
 import HttpError, { notFound } from "@jdpnielsen/http-error"
 import { APIGatewayProxyResultV2, Context, APIGatewayProxyEventV2 as ApiEvent } from "aws-lambda"
+import { filename } from "dirname-filename-esm"
 import {
   ApiMetadataMap,
   getApiViewMetadata,
@@ -7,9 +8,8 @@ import {
   IApiViewClassMetadata,
   ISubRouteApiMetadata,
   MetadataTarget,
-  HttpMethod,
-} from "@jetkit/cdk-metadata"
-import { filename } from "dirname-filename-esm"
+} from "../metadata"
+import { HttpMethod } from "../types"
 
 /**
  * JetKit supports using API View classes to organize your RESTful endpoints.

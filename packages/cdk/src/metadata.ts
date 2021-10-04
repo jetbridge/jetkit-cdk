@@ -11,7 +11,7 @@ import {
   MetadataTargetConstructor,
   PossibleLambdaHandlers,
   IFunctionMetadata as IFunctionMetadataBase,
-} from "@jetkit/cdk-metadata"
+} from "@jetkit/cdk-runtime"
 import "reflect-metadata"
 import { FunctionOptions } from "./cdk/generator"
 import { ApiViewOpts } from "./registry"

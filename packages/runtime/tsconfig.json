@@ -8,6 +8,5 @@
   "typedocOptions": {
     "entryPoints": ["src/index.ts"],
     "out": "site/docs"
-  },
-  "references": [{ "path": "../metadata" }]
+  }
 }

@@ -2,7 +2,7 @@
 import { BundlingOptions, NodejsFunction, NodejsFunctionProps } from "@aws-cdk/aws-lambda-nodejs"
 import { Construct } from "@aws-cdk/core"
 import { Runtime } from "@aws-cdk/aws-lambda"
-import { MetadataTarget } from "@jetkit/cdk-metadata"
+import { MetadataTarget } from "@jetkit/cdk-runtime"
 
 export interface Node14FuncProps extends NodejsFunctionProps {
   // reference to metadata used to generate this function

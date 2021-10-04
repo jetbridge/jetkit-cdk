@@ -14,7 +14,7 @@
     "build": "tsc --build && concurrently npm:build:*",
     "build:cdk": "npm run build -w @jetkit/cdk",
     "build:runtime": "npm run build -w @jetkit/cdk-runtime",
-    "rel:next": "npm run rel:next -w @jetkit/cdk-metdata && npm run rel:next -w @jetkit/cdk-runtime && npm run rel:next -w @jetkit/cdk",
+    "rel:next": "npm run rel:next -w @jetkit/cdk-runtime && npm run rel:next -w @jetkit/cdk",
     "start": "tsc --build --watch"
   },
   "author": "JetBridge Software Inc.",

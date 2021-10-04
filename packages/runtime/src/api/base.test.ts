@@ -1,7 +1,8 @@
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { ApiViewBase } from "./base"
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2, Context } from "aws-lambda"
-import { ApiEvent, ApiView, SubRoute } from "@jetkit/cdk-metadata"
+import { ApiView, SubRoute } from "../registry"
+import { ApiEvent } from "../types"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
 
 interface IMakeApiEvent {

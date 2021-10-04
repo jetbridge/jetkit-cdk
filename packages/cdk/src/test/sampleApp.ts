@@ -4,7 +4,7 @@ import { Duration } from "@aws-cdk/core"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
 import { PreSignUpTriggerHandler } from "aws-lambda"
 import { ApiViewBase, apiViewHandler } from "@jetkit/cdk-runtime"
-import { ApiEvent, ApiResponse, ApiView, Lambda, SubRoute } from "@jetkit/cdk-metadata"
+import { ApiEvent, ApiResponse, ApiView, Lambda, SubRoute } from "@jetkit/cdk-runtime"
 import { ApiViewCdk, LambdaCdk } from "../registry"
 
 /**

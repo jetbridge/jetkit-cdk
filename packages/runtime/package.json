@@ -29,7 +29,6 @@
   "devDependencies": {
   },
   "dependencies": {
-      "@jetkit/cdk-metadata": "../metadata"
   },
   "keywords": [
     "aws",

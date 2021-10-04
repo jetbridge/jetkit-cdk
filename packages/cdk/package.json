@@ -65,6 +65,7 @@
     }
   },
   "peerDependencies": {
+      "@jetkit/cdk-runtime": "*",
     "@prisma/client": "*",
     "@prisma/migrate": "*",
     "prisma": "*"
