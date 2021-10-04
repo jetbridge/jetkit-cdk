@@ -28,7 +28,6 @@ describe("DatabaseMigrationScript", () => {
     expect(stack).toHaveResource("AWS::Lambda::Function", {
       Environment: {
         Variables: {
-          PRISMA_QUERY_ENGINE_LIBRARY: "/opt/nodejs/node_modules/prisma/libquery_engine-rhel-openssl-1.0.x.so.node",
           NODE_OPTIONS: "--enable-source-maps",
           AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
           DB_SECRET_ARN: {
