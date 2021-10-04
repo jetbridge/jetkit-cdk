@@ -433,5 +433,5 @@ export class ResourceGenerator extends Construct {
 function hashik(...inputs: Array<string | undefined>): string {
   let hasher = crypto.createHash("sha1")
   inputs.forEach((inp) => hasher.update(inp || ""))
-  return hasher.digest("hex").substr(0, 5)
+  return hasher.digest("hex").substr(0, 3)
 }
