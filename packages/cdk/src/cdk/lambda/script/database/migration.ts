@@ -25,39 +25,17 @@ export type ScriptProps = DatabaseFuncProps
  * ```
  */
 export class DatabaseMigrationScript extends PrismaNode14Func {
-  constructor(
-    scope: Construct,
-    id: string,
-    { handler, depsLockFilePath, environment, entry, timeout, bundling, memorySize = 512, ...props }: ScriptProps
-  ) {
+  constructor(scope: Construct, id: string, { entry, timeout, memorySize = 512, ...props }: ScriptProps) {
     // by default this uses migration.script.ts
     entry ||= `${__dirname}/migration.script.js` // it will have been already compiled
 
     timeout ||= Duration.seconds(120)
-    bundling ||= {}
-
-    let { nodeModules, ...bundlingRest } = bundling
-    // only works as actual files - can't be bundled
-    // https://github.com/prisma/prisma/issues/8337#issuecomment-895380661
-    nodeModules ||= []
-    // nodeModules.push("@prisma/migrate", "@prisma/sdk")
-
-    environment ||= {}
-    // environment.PRISMA_QUERY_ENGINE_LIBRARY =
-    // "/opt/nodejs/node_modules/prisma/libquery_engine-rhel-openssl-1.0.x.so.node"
 
     super(scope, id, {
       ...props,
-      environment,
       entry,
       memorySize,
-      depsLockFilePath,
       timeout,
-      handler,
-      bundling: {
-        nodeModules,
-        ...bundlingRest,
-      },
     })
 
     new CfnOutput(this, "MigrationScriptArn", {

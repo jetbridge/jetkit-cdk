@@ -16,7 +16,7 @@ export interface DatabaseFuncProps extends Node14FuncProps {
 /**
  * Lambda function with database access.
  * Grants access to DB and secret.
- * To use be sure to provide bundling.layer = [appLayer] and externalModules = appLayer.externalModules.
+ * To use be sure to provide bundling.layer = [prismaLayer] and externalModules = prismaLayer.externalModules.
  * @alpha
  */
 export class PrismaNode14Func extends Node14Func {

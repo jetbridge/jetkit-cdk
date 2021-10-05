@@ -28,7 +28,9 @@
   "author": "JetBridge Software Inc.",
   "license": "MIT",
   "devDependencies": {},
-  "dependencies": {},
+  "dependencies": {
+    "reflect-metadata": "*"
+  },
   "keywords": [
     "aws",
     "cdk",
