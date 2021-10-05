@@ -193,6 +193,7 @@ export class ResourceGenerator extends Construct {
 
     mergedOptions = this.configureVpc(mergedOptions)
 
+    console.log({ functionOptions, mergedOptions })
     return this.resolveLayerReferences(mergedOptions)
   }
 
