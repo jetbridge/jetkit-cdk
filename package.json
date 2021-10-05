@@ -20,8 +20,6 @@
   "author": "JetBridge Software Inc.",
   "license": "MIT",
   "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.13.15",
-    "@magic-works/commonjs-import.meta": "^1.0.1",
     "@ts-morph/bootstrap": "^0.9.1",
     "@tsconfig/node14": "^1.0.0",
     "@types/aws-lambda": "^8.10.75",
@@ -42,10 +40,8 @@
     "simple-markdown": "^0.7.3",
     "ts-jest": "^27.0.5",
     "ts-node": "^9.0.0",
-    "ttypescript": "^1.5.12",
     "typedoc": "^0.20.36",
-    "typescript": "^4.2.4",
-    "typescript-esm": "^2.0.0"
+    "typescript": "^4.2.4"
   },
   "dependencies": {
     "@jdpnielsen/http-error": "^1.2.0",

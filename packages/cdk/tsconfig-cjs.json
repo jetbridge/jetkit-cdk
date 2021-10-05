@@ -2,13 +2,6 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "CommonJS",
-    "outDir": "./build/cjs",
-    "plugins": [
-      {
-        "transform": "@magic-works/commonjs-import.meta"
-      }
-    ]
-  },
-  "compiler": "ttypescript",
-  "ignoreDiagnostics": [1343]
+    "outDir": "./build/cjs"
+  }
 }
