@@ -2,8 +2,8 @@
 
 import { stringLike } from "@aws-cdk/assert"
 import "@aws-cdk/assert/jest"
-import { HttpApi, HttpMethod } from "@aws-cdk/aws-apigatewayv2"
-import { HttpLambdaAuthorizer, HttpLambdaResponseType } from "@aws-cdk/aws-apigatewayv2-authorizers"
+import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
+import { HttpLambdaAuthorizer } from "@aws-cdk/aws-apigatewayv2-authorizers"
 import { Code, Function, FunctionOptions, Runtime } from "@aws-cdk/aws-lambda"
 import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs"
 import { Duration, Stack } from "@aws-cdk/core"

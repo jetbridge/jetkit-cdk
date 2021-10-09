@@ -2,7 +2,7 @@
 import path from "path"
 import { HttpApi, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
 import { Rule } from "@aws-cdk/aws-events"
-import { Alias, Function, LayerVersion } from "@aws-cdk/aws-lambda"
+import { Alias, Function, LayerVersion , AutoScalingOptions } from "@aws-cdk/aws-lambda"
 import { Aws, CfnOutput, Construct, Fn } from "@aws-cdk/core"
 import deepmerge from "deepmerge"
 import isPlainObject from "is-plain-object"
@@ -16,7 +16,6 @@ import { debug } from "../util/log"
 import { Node14Func, Node14FuncProps } from "./lambda/node14func"
 import { LambdaProxyIntegration } from "@aws-cdk/aws-apigatewayv2-integrations"
 import slugify from "slugify"
-import { AutoScalingOptions } from "@aws-cdk/aws-lambda"
 import {
   ApiHandler,
   getApiViewMetadata,

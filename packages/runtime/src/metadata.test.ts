@@ -8,11 +8,7 @@ describe("Metadata decorators", () => {
       expect(getApiViewMetadata(AlbumApi)).toMatchObject({
         apiClass: AlbumApi,
         entry: /sample-app.ts$/,
-        memorySize: 512,
         path: "/album",
-        environment: {
-          LOG_LEVEL: "DEBUG",
-        },
       })
     })
   })
@@ -46,9 +42,6 @@ describe("Metadata decorators", () => {
         HandlerFunc: topSongsHandler,
         path: "/top-songs",
         methods: [HttpMethod.PUT],
-        environment: {
-          LOG_LEVEL: "WARN",
-        },
       })
     })
     it("stores metadata on functions wrapped with Lambda()", () => {
@@ -59,9 +52,6 @@ describe("Metadata decorators", () => {
         HandlerFunc: topSongsFuncInner,
         path: "/top-songs-inner",
         methods: [HttpMethod.PUT],
-        environment: {
-          LOG_LEVEL: "WARN",
-        },
       })
     })
   })

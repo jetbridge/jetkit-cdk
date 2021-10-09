@@ -1,8 +1,8 @@
 import { defaults } from "jest-config"
 
 export default {
-  preset: "ts-jest/presets/default-esm", // or other ESM presets
-  // moduleFileExtensions: [...defaults.moduleFileExtensions, "ts", "tsx", "js"],
+    preset: "ts-jest/presets/js-with-ts-esm", // or other ESM presets
+  // moduleFileExtensions: [...defaults.moduleFileExtensions, "ts"],
   roots: ["./packages"],
   globals: {
     "ts-jest": {
@@ -11,12 +11,9 @@ export default {
     },
   },
   testMatch: ["**/__tests__/**/*.+(ts|tsx)", "**/?(*.)+(spec|test).+(ts|tsx)"],
-  // transform: {
-  // "^.+\\.tsx?$": "ts-jest",
-  // },
-  // transformIgnorePatterns: ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$"],
+    modulePathIgnorePatterns: ["build/"],
   collectCoverageFrom: ["**/*.{ts,tsx}", "!**/node_modules/**", "!**/vendor/**"],
-  extensionsToTreatAsEsm: [...defaults.extensionsToTreatAsEsm, ".ts"],
+  // extensionsToTreatAsEsm: [...defaults.extensionsToTreatAsEsm, ".ts"],
   moduleNameMapper: {
     "^(\\.{1,2}/.*)\\.js$": "$1",
   },
