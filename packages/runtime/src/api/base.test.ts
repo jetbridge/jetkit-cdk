@@ -44,7 +44,7 @@ function makeApiEvent({ method, routeKey, path = "/" }: IMakeApiEvent): ApiEvent
 @ApiView({
   path: "/album",
 })
-export class AlbumApi extends ApiViewBase {
+class AlbumApi extends ApiViewBase {
   // define POST handler
   @SubRoute({ methods: [HttpMethod.POST] })
   async post() {

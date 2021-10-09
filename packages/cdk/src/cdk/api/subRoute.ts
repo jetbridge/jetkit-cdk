@@ -4,7 +4,7 @@ import { Construct } from "@aws-cdk/core"
 import { ApiViewClassMetadata } from "../../metadata"
 import { ApiViewMixin, IEndpoint } from "./api"
 
-export interface SubRouteApiProps extends Omit<IEndpoint, "httpApi"> {
+interface SubRouteApiProps extends Omit<IEndpoint, "httpApi"> {
   lambdaApiIntegration: LambdaProxyIntegration
   parentApiMeta: ApiViewClassMetadata
   parentPath: string

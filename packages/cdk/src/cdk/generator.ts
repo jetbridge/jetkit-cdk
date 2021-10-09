@@ -1,8 +1,7 @@
 /* eslint-disable prefer-const */
-import path from "path"
 import { HttpApi, PayloadFormatVersion } from "@aws-cdk/aws-apigatewayv2"
 import { Rule } from "@aws-cdk/aws-events"
-import { Alias, Function, LayerVersion , AutoScalingOptions } from "@aws-cdk/aws-lambda"
+import { Alias, Function, LayerVersion, AutoScalingOptions } from "@aws-cdk/aws-lambda"
 import { Aws, CfnOutput, Construct, Fn } from "@aws-cdk/core"
 import deepmerge from "deepmerge"
 import isPlainObject from "is-plain-object"
@@ -24,7 +23,6 @@ import {
   MetadataTarget,
   PossibleLambdaHandlers,
 } from "@jetkit/cdk-runtime"
-import * as crypto from "crypto"
 
 // env vars
 export const DB_CLUSTER_ENV = "DB_CLUSTER_ARN"

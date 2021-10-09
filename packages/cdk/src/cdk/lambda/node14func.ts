@@ -12,7 +12,7 @@ export interface Node14FuncProps extends NodejsFunctionProps {
   name?: string
 }
 
-function addPropDefaults({ environment, runtime, metadataTarget, name, ...rest }: Node14FuncProps): Node14FuncProps {
+function addPropDefaults({ environment, runtime, metadataTarget, ...rest }: Node14FuncProps): Node14FuncProps {
   // default to source map support in node enabled
   // makes your stack traces look nicer if sourceMap is turned on
   environment ||= {}

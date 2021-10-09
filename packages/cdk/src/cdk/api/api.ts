@@ -17,7 +17,7 @@ export interface IEndpoint extends IRoutePropsBase {
 /**
  * @category Construct
  */
-export interface ApiConfig extends FunctionOptions, IEndpoint {}
+interface ApiConfig extends FunctionOptions, IEndpoint {}
 
 export interface ApiProps extends ApiConfig {
   handlerFunction: JetKitLambdaFunction
@@ -25,7 +25,7 @@ export interface ApiProps extends ApiConfig {
 
 let routeOutputId = 1
 
-export interface IAddRoutes extends IEndpoint {
+interface IAddRoutes extends IEndpoint {
   lambdaApiIntegration: LambdaProxyIntegration
 }
 export abstract class ApiViewMixin extends Construct {

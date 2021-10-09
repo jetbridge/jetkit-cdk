@@ -30,10 +30,12 @@ rules:
       missingExports: true
       ignoreExports:
         - packages/cdk/src/index.ts
+        - packages/cdk/src/test/sampleApp.ts
         - packages/runtime/src/index.ts
+        - '**/*.test.ts'
 settings:
   import/ignore:
-    - \.test\.ts$ 
+    - .test.ts$ 
     - node_modules
     - build/
   import/resolver:
