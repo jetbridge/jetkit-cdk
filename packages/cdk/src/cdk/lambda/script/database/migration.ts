@@ -1,8 +1,6 @@
 import { CfnOutput, Construct, Duration } from "@aws-cdk/core"
 import { DatabaseFuncProps, PrismaNode14Func } from "../../prismaNodeFunction"
-import { dirname } from "dirname-filename-esm"
 
-const __dirname = dirname(import.meta)
 type ScriptProps = DatabaseFuncProps
 
 /**
@@ -27,7 +25,7 @@ type ScriptProps = DatabaseFuncProps
 export class DatabaseMigrationScript extends PrismaNode14Func {
   constructor(scope: Construct, id: string, { entry, timeout, memorySize = 512, ...props }: ScriptProps) {
     // by default this uses migration.script.ts
-    entry ||= `${__dirname}/migration.script.js` // it will have been already compiled
+    entry ||= `./migration.script.js` // it will have been already transpiled to js
 
     timeout ||= Duration.seconds(120)
 

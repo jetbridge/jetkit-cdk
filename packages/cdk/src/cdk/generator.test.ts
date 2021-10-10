@@ -21,8 +21,6 @@ import {
 } from "../test/sampleApp"
 import { ApiFunction, JetKitLambdaFunction } from "./api/api"
 import { Node14Func } from "./lambda/node14func"
-import { dirname } from "dirname-filename-esm"
-const __dirname = dirname(import.meta)
 
 const bundleBannerMsg = "--- cool bundlings mon ---"
 
@@ -124,7 +122,7 @@ describe("@ApiView construct generation", () => {
   })
 
   it("doesn't create routes for empty api view", () => {
-    const entry = path.join(__dirname, "..", "test", "sampleApp.ts")
+    const entry = path.join("..", "test", "sampleApp.ts")
     const addRoutesSpy = jest.spyOn(httpApi, "addRoutes")
     const handlerFunction = new JetKitLambdaFunction(stack, "Func", { entry })
 

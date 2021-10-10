@@ -2,10 +2,8 @@ import { createProjectSync, ts } from "@ts-morph/bootstrap"
 import * as fs from "fs"
 import * as path from "path"
 import { default as SimpleMarkdown } from "simple-markdown"
-import { dirname } from "dirname-filename-esm"
-const __dirname = dirname(import.meta)
 
-const projectRootDir = path.join(__dirname, "..", "..", "..", "..")
+const projectRootDir = path.join("..", "..", "..", "..")
 
 describe("README examples", () => {
   const readmePath = path.join(projectRootDir, "README.md")

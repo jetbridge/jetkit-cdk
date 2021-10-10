@@ -3,11 +3,9 @@ import { HttpApi } from "@aws-cdk/aws-apigatewayv2"
 import { Stack } from "@aws-cdk/core"
 import * as path from "path"
 import { ApiFunction, JetKitLambdaFunction } from "./api"
-import { dirname } from "dirname-filename-esm"
 import { jest } from "@jest/globals"
-const __dirname = dirname(import.meta)
 
-const entry = path.join(__dirname, "..", "..", "test", "sampleApp.ts")
+const entry = path.join("..", "..", "test", "sampleApp.ts")
 
 describe("ApiView", () => {
   let stack: Stack
