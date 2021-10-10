@@ -3,7 +3,7 @@ import { Schedule } from "@aws-cdk/aws-events"
 import { Duration } from "@aws-cdk/core"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
 import { PreSignUpTriggerHandler } from "aws-lambda"
-import { ApiViewBase, apiViewHandler , ApiEvent, ApiResponse, ApiView, Lambda, SubRoute } from "@jetkit/cdk-runtime"
+import { ApiViewBase, ApiEvent, ApiResponse, ApiView, Lambda, SubRoute, apiViewHandlerEs } from "@jetkit/cdk-runtime"
 import { ApiViewCdk, LambdaCdk } from "../registry"
 
 /**
@@ -47,7 +47,7 @@ export class AlbumApi extends ApiViewBase {
 /**
  * @internal
  */
-export const handler = apiViewHandler(__filename, AlbumApi)
+export const handler = apiViewHandlerEs(import.meta, AlbumApi)
 
 // a simple standalone function with a route attached
 /**

@@ -3,7 +3,7 @@ import * as fs from "fs"
 import * as path from "path"
 import { default as SimpleMarkdown } from "simple-markdown"
 
-const projectRootDir = path.join("..", "..", "..", "..")
+const projectRootDir = path.join(".")
 
 describe("README examples", () => {
   const readmePath = path.join(projectRootDir, "README.md")

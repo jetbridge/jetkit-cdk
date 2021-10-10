@@ -1,6 +1,6 @@
 {
   "name": "@jetkit/cdk-runtime",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "Cloud-native serverless anti-framework",
   "type": "module",
   "module": "build/esm/index.js",
@@ -14,9 +14,12 @@
       "require": "./build/cjs/*.js"
     }
   },
-  "main": "build/cjs/index.js",
-  "types": "build/cjs/index.d.ts",
+  "main": "build/esm/index.js",
+  "types": "build/esm/index.d.ts",
   "private": false,
+  "engines": {
+    "node": ">=0.14"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/jetbridge/jetkit-cdk.git"

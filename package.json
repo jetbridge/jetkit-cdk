@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/jetbridge/jetkit-cdk.git"
   },
+  "engines": {
+    "node": ">=0.14"
+  },
   "homepage": "https://jetbridge.github.io/jetkit-cdk/",
   "scripts": {
     "lint": "eslint --ext .ts packages/",

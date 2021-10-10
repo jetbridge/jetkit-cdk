@@ -5,7 +5,7 @@ import * as path from "path"
 import { ApiFunction, JetKitLambdaFunction } from "./api"
 import { jest } from "@jest/globals"
 
-const entry = path.join("..", "..", "test", "sampleApp.ts")
+const entry = path.join("packages", "cdk", "src", "test", "sampleApp.ts")
 
 describe("ApiView", () => {
   let stack: Stack
