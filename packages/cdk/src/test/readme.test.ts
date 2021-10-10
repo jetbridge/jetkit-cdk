@@ -3,7 +3,9 @@ import * as fs from "fs"
 import * as path from "path"
 import { default as SimpleMarkdown } from "simple-markdown"
 
-const projectRootDir = path.join(".")
+const projectRootDir = "."
+// const runtimeSrcDir = path.join(projectRootDir, "packages", "runtime", "src")
+// const cdkSrcDir = path.join(projectRootDir, "packages", "cdk", "src")
 
 describe("README examples", () => {
   const readmePath = path.join(projectRootDir, "README.md")
@@ -26,18 +28,23 @@ describe("README examples", () => {
 
 function compile(input: string): void {
   const project = createProjectSync({
-    tsConfigFilePath: "tsconfig.json",
+    tsConfigFilePath: "packages/cdk/tsconfig.json",
+    // tsConfigFilePath: "tsconfig.json",
     compilerOptions: {
-      baseUrl: projectRootDir,
+      noEmit: true,
+      // rootDir: "./packages",
+      // baseUrl: projectRootDir,
+      // include: [`packages/cdk/src/**/*`],
       paths: {
-        "@jetkit/cdk": ["packages/cdk/src/index"],
-        "@jetkit/cdk-runtime": ["packages/runtime/src/index"],
+        myapp: ["./src/test/sampleApp"],
+        // "@jetkit/cdk": ["./cdk/src/index"],
+        // "@jetkit/cdk-runtime": ["./runtime/src/index"],
       },
     },
   })
 
   // build program
-  project.createSourceFile("example.ts", input)
+  project.createSourceFile("packages/cdk/src/example.ts", input)
   const program = project.createProgram()
 
   // try to compile
