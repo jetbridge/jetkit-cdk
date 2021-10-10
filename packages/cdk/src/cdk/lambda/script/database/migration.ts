@@ -3,7 +3,7 @@ import { DatabaseFuncProps, PrismaNode14Func } from "../../prismaNodeFunction"
 import { dirname } from "dirname-filename-esm"
 
 const __dirname = dirname(import.meta)
-export type ScriptProps = DatabaseFuncProps
+type ScriptProps = DatabaseFuncProps
 
 /**
  * Lambda function to run database migrations.

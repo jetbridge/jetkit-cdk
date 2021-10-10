@@ -20,7 +20,7 @@ describe("README examples", () => {
     if (block.type !== "codeBlock" || block.lang != "typescript") return
 
     describe(`compiles example ${exampleNum++}`, () => {
-      // compile(block.content)
+      compile(block.content)
       expect(true).toBeTruthy()
     })
   })

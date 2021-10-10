@@ -115,7 +115,6 @@ export class ResourceGenerator extends Construct {
   functionPrefix?: string
 
   private layerCounter = 1
-  private funcCounter = 1
   private ruleCounter = 1
   private seenFunctionNames: Record<string, number>
   httpApi?: HttpApi

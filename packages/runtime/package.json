@@ -5,8 +5,14 @@
   "type": "module",
   "module": "build/esm/index.js",
   "exports": {
-    "import": "./build/esm/index.js",
-    "require": "./build/cjs/index.js"
+    ".": {
+      "import": "./build/esm/index.js",
+      "require": "./build/cjs/index.js"
+    },
+    "./*": {
+      "import": "./build/esm/*.js",
+      "require": "./build/cjs/*.js"
+    }
   },
   "main": "build/cjs/index.js",
   "types": "build/cjs/index.d.ts",
