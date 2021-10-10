@@ -12,6 +12,7 @@ export interface Node14FuncProps extends NodejsFunctionProps {
   name?: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function addPropDefaults({ environment, runtime, metadataTarget, ...rest }: Node14FuncProps): Node14FuncProps {
   // default to source map support in node enabled
   // makes your stack traces look nicer if sourceMap is turned on
