@@ -4,8 +4,6 @@ import * as path from "path"
 import { default as SimpleMarkdown } from "simple-markdown"
 
 const projectRootDir = "."
-// const runtimeSrcDir = path.join(projectRootDir, "packages", "runtime", "src")
-// const cdkSrcDir = path.join(projectRootDir, "packages", "cdk", "src")
 
 describe("README examples", () => {
   const readmePath = path.join(projectRootDir, "README.md")
@@ -29,17 +27,8 @@ describe("README examples", () => {
 function compile(input: string): void {
   const project = createProjectSync({
     tsConfigFilePath: "packages/cdk/tsconfig.json",
-    // tsConfigFilePath: "tsconfig.json",
     compilerOptions: {
       noEmit: true,
-      // rootDir: "./packages",
-      // baseUrl: projectRootDir,
-      // include: [`packages/cdk/src/**/*`],
-      paths: {
-        myapp: ["./src/test/sampleApp"],
-        // "@jetkit/cdk": ["./cdk/src/index"],
-        // "@jetkit/cdk-runtime": ["./runtime/src/index"],
-      },
     },
   })
 
