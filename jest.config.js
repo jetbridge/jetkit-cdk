@@ -1,17 +1,25 @@
 import { defaults } from "jest-config"
 
 export default {
-    preset: "ts-jest/presets/js-with-ts-esm", // or other ESM presets
-  // moduleFileExtensions: [...defaults.moduleFileExtensions, "ts"],
-  roots: ["./packages"],
+  extensionsToTreatAsEsm: [".ts"],
+  preset: "ts-jest/presets/js-with-ts-esm", // or other ESM presets
+  moduleDirectories: ["node_modules", "<rootDir>/packages/runtime/src"],
+  // moduleFileExtensions: ["ts", "js", "json"],
+  // roots: [
+    // "<rootDir>/packages/cdk/src",
+    // "<rootDir>/packages/cdk/src",
+    // "<rootDir>/packages/cdk/build",
+    // "<rootDir>/packages/runtime/src",
+    // "<rootDir>/packages/runtime/build",
+  // ],
   globals: {
     "ts-jest": {
-      tsconfig: "tsconfig.json",
+      // tsconfig: "tsconfig.json",
       useESM: true,
     },
   },
-  testMatch: ["**/__tests__/**/*.+(ts|tsx)", "**/?(*.)+(spec|test).+(ts|tsx)"],
-    modulePathIgnorePatterns: ["build/"],
+  testMatch: ["**/__tests__/**/*.+(ts)", "**/?(*.)+(test).+(ts)"],
+  // modulePathIgnorePatterns: ["build/"],
   collectCoverageFrom: ["**/*.{ts,tsx}", "!**/node_modules/**", "!**/vendor/**"],
   // extensionsToTreatAsEsm: [...defaults.extensionsToTreatAsEsm, ".ts"],
   moduleNameMapper: {
