@@ -32,8 +32,8 @@ export interface IFunctionMetadataBase extends Partial<IRoutePropsBase> {
   entry?: string
 }
 
-const mergeMetadata = (meta1: IFunctionMetadataBase, meta2: IFunctionMetadataBase) => ({
-  ...deepmerge(meta1, meta2, {
+const mergeMetadata = <T extends IFunctionMetadataBase>(meta1: object, meta2: T) => ({
+  ...deepmerge<object, T>(meta1, meta2, {
     isMergeableObject: isPlainObject,
   }),
 })
