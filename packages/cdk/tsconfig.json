@@ -2,16 +2,13 @@
   "extends": "../../tsconfig.base.json",
 
   "compilerOptions": {
-    "outDir": "./build/esm"
+    "outDir": "./build/esm",
+    "rootDir": "src"
   },
   "include": ["src"],
   "typedocOptions": {
     "entryPoints": ["src/index.ts"],
     "out": "site/docs"
   },
-  "references": [
-    {
-      "path": "../runtime"
-    }
-  ]
+  "references": [{ "path": "../runtime" }]
 }

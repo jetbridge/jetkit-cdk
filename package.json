@@ -7,12 +7,15 @@
     "type": "git",
     "url": "https://github.com/jetbridge/jetkit-cdk.git"
   },
+  "engines": {
+    "node": ">=0.14"
+  },
   "homepage": "https://jetbridge.github.io/jetkit-cdk/",
   "scripts": {
     "lint": "eslint --ext .ts packages/",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "prepare": "husky install",
-    "build": "tsc --build && concurrently npm:build:*",
+    "build": "npm run build:runtime && npm run build:cdk && tsc --build",
     "build:cdk": "npm run build -w @jetkit/cdk",
     "build:runtime": "npm run build -w @jetkit/cdk-runtime",
     "rel:next": "npm run rel:next -w @jetkit/cdk-runtime && npm run rel:next -w @jetkit/cdk",
@@ -24,16 +27,16 @@
     "@ts-morph/bootstrap": "^0.9.1",
     "@tsconfig/node14": "^1.0.0",
     "@types/aws-lambda": "^8.10.75",
-    "@types/convict": "^6.0.2",
     "@types/jest": "^27.0.0",
     "@types/node": "10.17.27",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "aws-lambda": "^1.0.6",
     "callsites": "^3.1.0",
     "concurrently": "^6.3.0",
-    "constructs": "3.3.141",
+    "constructs": "3.3.161",
     "dirname-filename-esm": "^1.1.1",
     "esbuild": "^0.13.3",
+    "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.24.2",
     "husky": "^6.0.0",
     "jest": "^27.2.4",
@@ -42,8 +45,8 @@
     "simple-markdown": "^0.7.3",
     "ts-jest": "^27.0.5",
     "ts-node": "^9.0.0",
-    "typedoc": "^0.20.36",
-    "typescript": "^4.2.4"
+    "typedoc": "^0.22.5",
+    "typescript": "4.4"
   },
   "dependencies": {
     "@jdpnielsen/http-error": "^1.2.0",

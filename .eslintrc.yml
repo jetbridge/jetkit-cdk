@@ -31,6 +31,7 @@ rules:
       ignoreExports:
         - packages/cdk/src/index.ts
         - packages/cdk/src/test/sampleApp.ts
+        - packages/cdk/src/cdk/lambda/script/database/migration.script.ts
         - packages/runtime/src/index.ts
         - '**/*.test.ts'
 settings:

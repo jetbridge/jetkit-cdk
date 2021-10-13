@@ -2,10 +2,8 @@ import { createProjectSync, ts } from "@ts-morph/bootstrap"
 import * as fs from "fs"
 import * as path from "path"
 import { default as SimpleMarkdown } from "simple-markdown"
-import { dirname } from "dirname-filename-esm"
-const __dirname = dirname(import.meta)
 
-const projectRootDir = path.join(__dirname, "..", "..", "..", "..")
+const projectRootDir = "."
 
 describe("README examples", () => {
   const readmePath = path.join(projectRootDir, "README.md")
@@ -20,7 +18,7 @@ describe("README examples", () => {
     if (block.type !== "codeBlock" || block.lang != "typescript") return
 
     describe(`compiles example ${exampleNum++}`, () => {
-      // compile(block.content)
+      compile(block.content)
       expect(true).toBeTruthy()
     })
   })
@@ -28,18 +26,14 @@ describe("README examples", () => {
 
 function compile(input: string): void {
   const project = createProjectSync({
-    tsConfigFilePath: "tsconfig.json",
+    tsConfigFilePath: "packages/cdk/tsconfig.json",
     compilerOptions: {
-      baseUrl: projectRootDir,
-      paths: {
-        "@jetkit/cdk": ["packages/cdk/src/index"],
-        "@jetkit/cdk-runtime": ["packages/runtime/src/index"],
-      },
+      noEmit: true,
     },
   })
 
   // build program
-  project.createSourceFile("example.ts", input)
+  project.createSourceFile("packages/cdk/src/example.ts", input)
   const program = project.createProgram()
 
   // try to compile

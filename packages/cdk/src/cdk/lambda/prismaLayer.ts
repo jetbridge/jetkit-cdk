@@ -1,8 +1,5 @@
 import { Code, LayerVersion, LayerVersionProps, Runtime } from "@aws-cdk/aws-lambda"
 import { Construct } from "@aws-cdk/core"
-import { dirname } from "dirname-filename-esm"
-
-const __dirname = dirname(import.meta)
 
 // deps to npm install to the layer
 const PRISMA_DEPS = ["prisma", "@prisma/migrate", "@prisma/sdk", "@prisma/client"]
@@ -54,7 +51,7 @@ export class PrismaLayer extends LayerVersion {
     const modulesToInstallArgs = modulesToInstall.join(" ")
 
     // bundle
-    const code = Code.fromAsset(__dirname, {
+    const code = Code.fromAsset(".", {
       bundling: {
         image: Runtime.NODEJS_14_X.bundlingImage,
         command: [

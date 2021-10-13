@@ -38,18 +38,15 @@ npm install @jetkit/cdk
 
 ### API View
 
+Combine related functionality and routes into a single Lambda function bundle.
+
 ```typescript
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
 import { badRequest, methodNotAllowed } from "@jdpnielsen/http-error"
-import { ApiView, SubRoute, ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "@jetkit/cdk"
+import { ApiView, SubRoute, ApiEvent, ApiResponse, ApiViewBase, apiViewHandler } from "@jetkit/cdk-runtime"
 
 @ApiView({
   path: "/album",
-  memorySize: 512,
-  environment: {
-    LOG_LEVEL: "DEBUG",
-  },
-  bundling: { minify: true, metafile: true, sourceMap: true },
 })
 export class AlbumApi extends ApiViewBase {
   // define POST /album handler
@@ -78,41 +75,38 @@ export class AlbumApi extends ApiViewBase {
     else return methodNotAllowed()
   }
 }
+// Not required but lets you omit specifying the `entry` path to this file for convenience.
 export const handler = apiViewHandler(__filename, AlbumApi)
+// If using ES modules
+// export const handler = apiViewHandlerEs(import.meta, AlbumApi)
 ```
 
 ### Handler Function With Route
 
 ```typescript
 import { HttpMethod } from "@aws-cdk/aws-apigatewayv2"
-import { Lambda, ApiEvent } from "@jetkit/cdk"
+import { Lambda, ApiEvent } from "@jetkit/cdk-runtime"
 
 // a simple standalone function with a route attached
 export async function topSongsHandler(event: ApiEvent) {
-  return "top songs"
+  return JSON.stringify(event.headers)
 }
 // define route and lambda properties
 Lambda({
   path: "/top-songs",
   methods: [HttpMethod.GET],
-  memorySize: 384,
-  environment: {
-    LOG_LEVEL: "WARN",
-  },
 })(topSongsHandler)
+// If using ES modules:
+// LambdaEs(import.meta, { path: "/top-songs" })(topSongsHandler)
 
 // alternate, uglier way of writing the same thing
 const topSongsFuncInner = Lambda({
   path: "/top-songs-inner",
   methods: [HttpMethod.GET],
-  memorySize: 384,
-  environment: {
-    LOG_LEVEL: "WARN",
-  },
   // this function name should match the exported name
   // or you must specify the exported function name in `handler`
 })(async function topSongsFuncInner(event: ApiEvent) {
-  return "top songs"
+  return JSON.stringify(event.headers)
 })
 export { topSongsFuncInner }
 ```
@@ -141,8 +135,9 @@ To generate API Gateway routes and Lambda function handlers from your applicatio
 
 ```typescript
 import { CorsHttpMethod, HttpApi } from "@aws-cdk/aws-apigatewayv2"
-import { Construct, Duration, Stack, StackProps, App } from "@aws-cdk/core"
-import { ResourceGeneratorConstruct, AlbumApi, topSongsHandler } from "@jetkit/cdk"
+import { Duration, Stack, StackProps, App } from "@aws-cdk/core"
+import { ResourceGeneratorConstruct, ApiViewCdk } from "@jetkit/cdk"
+import { topSongsHandler, AlbumApi } from "./test/sampleApp"
 
 export class InfraStack extends Stack {
   constructor(scope: App, id: string, props?: StackProps) {
@@ -160,7 +155,13 @@ export class InfraStack extends Stack {
 
     // transmute your app code into infrastructure
     new ResourceGeneratorConstruct(this, "Generator", {
-      resources: [AlbumApi, topSongsHandler], // supply your functions and view classes here
+      resources: [
+          // supply your functions and view classes here
+          topSongsHandler,
+          
+          // can add additional lambda attributes here if desired
+          ApiViewCdk({ memorySize: 1024, bundling: { minify: true }})(AlbumApi)
+      ], 
       httpApi,
     })
   }

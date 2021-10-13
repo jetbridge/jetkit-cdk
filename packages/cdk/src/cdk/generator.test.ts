@@ -7,6 +7,7 @@ import { HttpLambdaAuthorizer } from "@aws-cdk/aws-apigatewayv2-authorizers"
 import { Code, Function, FunctionOptions, Runtime } from "@aws-cdk/aws-lambda"
 import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs"
 import { Duration, Stack } from "@aws-cdk/core"
+import { jest } from "@jest/globals"
 import * as path from "path"
 import { ResourceGeneratorConstruct } from ".."
 import {
@@ -21,8 +22,6 @@ import {
 } from "../test/sampleApp"
 import { ApiFunction, JetKitLambdaFunction } from "./api/api"
 import { Node14Func } from "./lambda/node14func"
-import { dirname } from "dirname-filename-esm"
-const __dirname = dirname(import.meta)
 
 const bundleBannerMsg = "--- cool bundlings mon ---"
 
@@ -113,7 +112,7 @@ describe("@ApiView construct generation", () => {
     })
 
     // are defaults passed through?
-    const handlerFunction = generator.node.findChild("F1-AlbumApi") as JetKitLambdaFunction
+    const handlerFunction = generator.node.findChild("Func-AlbumApi") as JetKitLambdaFunction
     expect(handlerFunction.bundling).toMatchObject({ banner: bundleBannerMsg })
 
     // ensure we don't override the defaults with function-specific settings
@@ -124,7 +123,7 @@ describe("@ApiView construct generation", () => {
   })
 
   it("doesn't create routes for empty api view", () => {
-    const entry = path.join(__dirname, "..", "test", "sampleApp.ts")
+    const entry = path.join("packages", "cdk", "src", "test", "sampleApp.ts")
     const addRoutesSpy = jest.spyOn(httpApi, "addRoutes")
     const handlerFunction = new JetKitLambdaFunction(stack, "Func", { entry })
 
