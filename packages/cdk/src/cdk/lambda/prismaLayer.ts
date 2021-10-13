@@ -1,5 +1,6 @@
 import { Code, LayerVersion, LayerVersionProps, Runtime } from "@aws-cdk/aws-lambda"
-import { Construct } from "@aws-cdk/core"
+import { AssetHashType, Construct, IgnoreMode } from "@aws-cdk/core"
+import crypto from "crypto"
 
 // deps to npm install to the layer
 const PRISMA_DEPS = ["prisma", "@prisma/migrate", "@prisma/sdk", "@prisma/client"]
@@ -50,26 +51,40 @@ export class PrismaLayer extends LayerVersion {
     if (prismaVersion) modulesToInstall = modulesToInstall.map((dep) => `${dep}@${prismaVersion}`)
     const modulesToInstallArgs = modulesToInstall.join(" ")
 
+    const createBundleCommand = [
+      // create asset bundle in docker
+      "bash",
+      "-c",
+      [
+        `mkdir -p ${layerDir}`,
+        // install PRISMA_DEPS
+        `cd ${layerDir} && HOME=/tmp npm install ${modulesToInstallArgs}`,
+        // delete unneeded engines
+        `rm -f ${engineDir}/introspection-engine* ${engineDir}/prisma-fmt*`,
+        // get rid of some junk
+        `rm -rf ${nm}/prisma/build/public`,
+        `rm -rf ${nm}/prisma/prisma-client/src/__tests__`,
+        `rm -rf ${nm}/@types`,
+      ].join(" && "),
+    ]
+
+    // hash our parameters so we know when we need to rebuild
+    const bundleCommandHash = crypto.createHash("sha256")
+    bundleCommandHash.update(JSON.stringify(createBundleCommand))
+
     // bundle
     const code = Code.fromAsset(".", {
+      // don't send all our files to docker (slow)
+      ignoreMode: IgnoreMode.GLOB,
+      exclude: ["*"],
+
+      // if our bundle commands (basically our "dockerfile") changes then rebuild the image
+      assetHashType: AssetHashType.CUSTOM,
+      assetHash: bundleCommandHash.digest("hex"),
+
       bundling: {
         image: Runtime.NODEJS_14_X.bundlingImage,
-        command: [
-          // create asset bundle in docker
-          "bash",
-          "-c",
-          [
-            `mkdir -p ${layerDir}`,
-            // install PRISMA_DEPS
-            `cd ${layerDir} && HOME=/tmp npm install ${modulesToInstallArgs}`,
-            // delete unneeded engines
-            `rm -f ${engineDir}/introspection-engine* ${engineDir}/prisma-fmt*`,
-            // get rid of some junk
-            `rm -rf ${nm}/prisma/build/public`,
-            `rm -rf ${nm}/prisma/prisma-client/src/__tests__`,
-            `rm -rf ${nm}/@types`,
-          ].join(" && "),
-        ],
+        command: createBundleCommand,
       },
     })
 
