@@ -33,7 +33,7 @@
     "aws-lambda": "^1.0.6",
     "callsites": "^3.1.0",
     "concurrently": "^6.3.0",
-    "constructs": "3.3.141",
+    "constructs": "3.3.161",
     "dirname-filename-esm": "^1.1.1",
     "esbuild": "^0.13.3",
     "eslint": "^7.32.0",
