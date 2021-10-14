@@ -65,7 +65,7 @@ export interface ResourceGeneratorProps {
    *
    * Generates API Gateway routes and Lambda functions.
    */
-  resources: MetadataTarget[]
+  resources?: MetadataTarget[]
 
   /**
    * The {@link HttpApi} to attach routes to.
@@ -137,7 +137,7 @@ export class ResourceGenerator extends Construct {
     if (databaseCluster) this.databaseCluster = databaseCluster
 
     // emit CDK constructs for specified resources
-    resources.forEach((resource) => this.generateConstructsForResource(resource))
+    resources?.forEach((resource) => this.generateConstructsForResource(resource))
 
     // it's handy to have the API base URL as a stack output
     if (this.httpApi?.url) {
