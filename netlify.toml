@@ -1,7 +1,7 @@
 [build]
   command = "npm run build && npm run -w @jetkit/cdk docs"
   base = "."
-  publish = "packages/cdk/docs"
+  publish = "packages/cdk/site/docs"
 
 [build.environment]
   # use node 16 (comes with NPM 7)
