@@ -78,9 +78,10 @@
 <span style="color: #000000">   </span><span style="color: #001080">functionName:</span><span style="color: #000000"> </span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">id</span><span style="color: #0000FF">}</span><span style="color: #A31515">-migrate`</span><span style="color: #000000">,</span>
 <span style="color: #000000">   </span><span style="color: #001080">prismaPath:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path/to/prisma&#039;</span><span style="color: #000000">,</span>
 <span style="color: #000000">   </span><span style="color: #001080">bundling:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">     </span><span style="color: #001080">externalModules:</span><span style="color: #000000"> </span><span style="color: #001080">appLayer</span><span style="color: #000000">.</span><span style="color: #001080">externalModules</span><span style="color: #000000">,</span>
+<span style="color: #000000">     </span><span style="color: #001080">externalModules:</span><span style="color: #000000"> </span><span style="color: #001080">prismaLayer</span><span style="color: #000000">.</span><span style="color: #001080">externalModules</span><span style="color: #000000">,</span>
 <span style="color: #000000">   },</span>
-<span style="color: #000000">   </span><span style="color: #001080">layers:</span><span style="color: #000000"> [</span><span style="color: #001080">appLayer</span><span style="color: #000000">],</span>
+<span style="color: #000000">   </span><span style="color: #001080">environment:</span><span style="color: #000000"> </span><span style="color: #001080">prismaLayer</span><span style="color: #000000">.</span><span style="color: #001080">environment</span><span style="color: #000000">,</span>
+<span style="color: #000000">   </span><span style="color: #001080">layers:</span><span style="color: #000000"> [</span><span style="color: #001080">prismaLayer</span><span style="color: #000000">],</span>
 <span style="color: #000000">})</span>
 </code></pre>
 						</dd>
@@ -206,7 +207,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="prismanode14func.html">PrismaNode14Func</a>.<a href="prismanode14func.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/e8a4369/src/cdk/lambda/script/database/migration.ts#L25">src/cdk/lambda/script/database/migration.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/307f0a1/src/cdk/lambda/script/database/migration.ts#L26">src/cdk/lambda/script/database/migration.ts:26</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -276,7 +277,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="prismanode14func.html">PrismaNode14Func</a>.<a href="prismanode14func.html#bundling">bundling</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/e8a4369/src/cdk/lambda/node14func.ts#L56">src/cdk/lambda/node14func.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/307f0a1/src/cdk/lambda/node14func.ts#L56">src/cdk/lambda/node14func.ts:56</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -421,7 +422,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="prismanode14func.html">PrismaNode14Func</a>.<a href="prismanode14func.html#metadatatarget">metadataTarget</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/e8a4369/src/cdk/lambda/node14func.ts#L57">src/cdk/lambda/node14func.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/307f0a1/src/cdk/lambda/node14func.ts#L57">src/cdk/lambda/node14func.ts:57</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -432,7 +433,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="prismanode14func.html">PrismaNode14Func</a>.<a href="prismanode14func.html#name">name</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/e8a4369/src/cdk/lambda/node14func.ts#L58">src/cdk/lambda/node14func.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/307f0a1/src/cdk/lambda/node14func.ts#L58">src/cdk/lambda/node14func.ts:58</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1290,7 +1291,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="prismanode14func.html">PrismaNode14Func</a>.<a href="prismanode14func.html#getmetadatatarget">getMetadataTarget</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/e8a4369/src/cdk/lambda/node14func.ts#L72">src/cdk/lambda/node14func.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/307f0a1/src/cdk/lambda/node14func.ts#L72">src/cdk/lambda/node14func.ts:72</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../modules.html#metadatatarget" class="tsd-signature-type" data-tsd-kind="Type alias">MetadataTarget</a></h4>

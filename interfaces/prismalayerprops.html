@@ -69,7 +69,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LayerVersionProps</span><span class="tsd-signature-symbol">&gt;</span>
+						<span class="tsd-signature-type">Omit</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LayerVersionProps</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">&quot;code&quot;</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">PrismaLayerProps</span>
@@ -85,16 +85,12 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="prismalayerprops.html#bundlepostcommand" class="tsd-kind-icon">bundle<wbr>Post<wbr>Command</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="prismalayerprops.html#bundleprecommand" class="tsd-kind-icon">bundle<wbr>Pre<wbr>Command</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="prismalayerprops.html#code" class="tsd-kind-icon">code</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="prismalayerprops.html#compatibleruntimes" class="tsd-kind-icon">compatible<wbr>Runtimes</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="prismalayerprops.html#description" class="tsd-kind-icon">description</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="prismalayerprops.html#layerversionname" class="tsd-kind-icon">layer<wbr>Version<wbr>Name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="prismalayerprops.html#license" class="tsd-kind-icon">license</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="prismalayerprops.html#nodemodules" class="tsd-kind-icon">node<wbr>Modules</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="prismalayerprops.html#prismapath" class="tsd-kind-icon">prisma<wbr>Path</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="prismalayerprops.html#projectroot" class="tsd-kind-icon">project<wbr>Root</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="prismalayerprops.html#prismaversion" class="tsd-kind-icon">prisma<wbr>Version</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="prismalayerprops.html#removalpolicy" class="tsd-kind-icon">removal<wbr>Policy</a></li>
 							</ul>
 						</section>
@@ -103,54 +99,12 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="bundlepostcommand" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> bundle<wbr>Post<wbr>Command</h3>
-					<div class="tsd-signature tsd-kind-icon">bundle<wbr>Post<wbr>Command<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/e8a4369/src/cdk/lambda/prismaLayer.ts#L26">src/cdk/lambda/prismaLayer.ts:26</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="bundleprecommand" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> bundle<wbr>Pre<wbr>Command</h3>
-					<div class="tsd-signature tsd-kind-icon">bundle<wbr>Pre<wbr>Command<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/e8a4369/src/cdk/lambda/prismaLayer.ts#L25">src/cdk/lambda/prismaLayer.ts:25</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
-					<a name="code" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> code</h3>
-					<div class="tsd-signature tsd-kind-icon">code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Code</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from Partial.code</p>
-						<ul>
-							<li>Defined in node_modules/@aws-cdk/aws-lambda/lib/layers.d.ts:58</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The content of this Layer.</p>
-						</div>
-						<p>Using <code>Code.fromInline</code> is not supported.</p>
-						<dl class="tsd-comment-tags">
-							<dt>stability</dt>
-							<dd><p>stable</p>
-							</dd>
-						</dl>
-					</div>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 					<a name="compatibleruntimes" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> compatible<wbr>Runtimes</h3>
 					<div class="tsd-signature tsd-kind-icon">compatible<wbr>Runtimes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Runtime</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from Partial.compatibleRuntimes</p>
+						<p>Inherited from Omit.compatibleRuntimes</p>
 						<ul>
 							<li>Defined in node_modules/@aws-cdk/aws-lambda/lib/layers.d.ts:50</li>
 						</ul>
@@ -176,7 +130,7 @@
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> description</h3>
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from Partial.description</p>
+						<p>Inherited from Omit.description</p>
 						<ul>
 							<li>Defined in node_modules/@aws-cdk/aws-lambda/lib/layers.d.ts:17</li>
 						</ul>
@@ -202,7 +156,7 @@
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> layer<wbr>Version<wbr>Name</h3>
 					<div class="tsd-signature tsd-kind-icon">layer<wbr>Version<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from Partial.layerVersionName</p>
+						<p>Inherited from Omit.layerVersionName</p>
 						<ul>
 							<li>Defined in node_modules/@aws-cdk/aws-lambda/lib/layers.d.ts:31</li>
 						</ul>
@@ -228,7 +182,7 @@
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> license</h3>
 					<div class="tsd-signature tsd-kind-icon">license<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from Partial.license</p>
+						<p>Inherited from Omit.license</p>
 						<ul>
 							<li>Defined in node_modules/@aws-cdk/aws-lambda/lib/layers.d.ts:24</li>
 						</ul>
@@ -255,27 +209,17 @@
 					<div class="tsd-signature tsd-kind-icon">node<wbr>Modules<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/e8a4369/src/cdk/lambda/prismaLayer.ts#L21">src/cdk/lambda/prismaLayer.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/307f0a1/src/cdk/lambda/prismaLayer.ts#L12">src/cdk/lambda/prismaLayer.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="prismapath" class="tsd-anchor"></a>
-					<h3>prisma<wbr>Path</h3>
-					<div class="tsd-signature tsd-kind-icon">prisma<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="prismaversion" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> prisma<wbr>Version</h3>
+					<div class="tsd-signature tsd-kind-icon">prisma<wbr>Version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/e8a4369/src/cdk/lambda/prismaLayer.ts#L18">src/cdk/lambda/prismaLayer.ts:18</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="projectroot" class="tsd-anchor"></a>
-					<h3>project<wbr>Root</h3>
-					<div class="tsd-signature tsd-kind-icon">project<wbr>Root<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/e8a4369/src/cdk/lambda/prismaLayer.ts#L13">src/cdk/lambda/prismaLayer.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/307f0a1/src/cdk/lambda/prismaLayer.ts#L9">src/cdk/lambda/prismaLayer.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -284,7 +228,7 @@
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> removal<wbr>Policy</h3>
 					<div class="tsd-signature tsd-kind-icon">removal<wbr>Policy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RemovalPolicy</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from Partial.removalPolicy</p>
+						<p>Inherited from Omit.removalPolicy</p>
 						<ul>
 							<li>Defined in node_modules/@aws-cdk/aws-lambda/lib/layers.d.ts:38</li>
 						</ul>
@@ -320,15 +264,6 @@
 					<li class="current tsd-kind-interface">
 						<a href="prismalayerprops.html" class="tsd-kind-icon">Prisma<wbr>Layer<wbr>Props</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="prismalayerprops.html#bundlepostcommand" class="tsd-kind-icon">bundle<wbr>Post<wbr>Command</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="prismalayerprops.html#bundleprecommand" class="tsd-kind-icon">bundle<wbr>Pre<wbr>Command</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
-								<a href="prismalayerprops.html#code" class="tsd-kind-icon">code</a>
-							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 								<a href="prismalayerprops.html#compatibleruntimes" class="tsd-kind-icon">compatible<wbr>Runtimes</a>
 							</li>
@@ -345,10 +280,7 @@
 								<a href="prismalayerprops.html#nodemodules" class="tsd-kind-icon">node<wbr>Modules</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="prismalayerprops.html#prismapath" class="tsd-kind-icon">prisma<wbr>Path</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="prismalayerprops.html#projectroot" class="tsd-kind-icon">project<wbr>Root</a>
+								<a href="prismalayerprops.html#prismaversion" class="tsd-kind-icon">prisma<wbr>Version</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 								<a href="prismalayerprops.html#removalpolicy" class="tsd-kind-icon">removal<wbr>Policy</a>

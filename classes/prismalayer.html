@@ -68,26 +68,23 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Construct a lambda layer with Prisma libraries and generated clients.
-							Copies over selected node_modules.
-						Be sure to omit the prisma layer modules from your function bundles with the <code>externalModules</code> option.</p>
+						<p>Construct a lambda layer with Prisma libraries.
+							Be sure to omit the prisma layer modules from your function bundles with the <code>externalModules</code> option.
+						Include <code>environment</code> to point prisma at the right library location.</p>
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>example</dt>
-						<dd><p>With Generator</p>
-							<pre><code class="language-ts"><span style="color: #000000">  </span><span style="color: #008000">// shared lambda layer</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">prismaLayer</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">PrismaLayer</span><span style="color: #000000">(</span><span style="color: #0000FF">this</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;PrismaLayer&quot;</span><span style="color: #000000">, {</span>
-<span style="color: #000000">    </span><span style="color: #001080">layerVersionName:</span><span style="color: #000000"> </span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">id</span><span style="color: #0000FF">}</span><span style="color: #A31515">-app`</span><span style="color: #000000">,</span>
+						<dd><pre><code class="language-ts"><span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">prismaLayer</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">PrismaLayer</span><span style="color: #000000">(</span><span style="color: #0000FF">this</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;PrismaLayer&quot;</span><span style="color: #000000">, {</span>
+<span style="color: #000000">    </span><span style="color: #001080">layerVersionName:</span><span style="color: #000000"> </span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">id</span><span style="color: #0000FF">}</span><span style="color: #A31515">-prisma`</span><span style="color: #000000">,</span>
 <span style="color: #000000">    </span><span style="color: #001080">removalPolicy:</span><span style="color: #000000"> </span><span style="color: #001080">isProduction</span><span style="color: #000000"> ? </span><span style="color: #001080">RemovalPolicy</span><span style="color: #000000">.</span><span style="color: #0070C1">RETAIN</span><span style="color: #000000"> : </span><span style="color: #001080">RemovalPolicy</span><span style="color: #000000">.</span><span style="color: #0070C1">DESTROY</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">projectRoot:</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;..&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;..&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;..&quot;</span><span style="color: #000000">),</span>
-<span style="color: #000000">    </span><span style="color: #001080">prismaPath:</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;packages&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;repo&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;prisma&quot;</span><span style="color: #000000">),</span>
 <span style="color: #000000">  })</span>
 
 <span style="color: #000000">  </span><span style="color: #008000">// default lambda function options</span>
 <span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">functionOptions</span><span style="color: #000000">: </span><span style="color: #267F99">FunctionOptions</span><span style="color: #000000"> = {</span>
 <span style="color: #000000">    </span><span style="color: #001080">layers:</span><span style="color: #000000"> [</span><span style="color: #001080">prismaLayer</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">environment:</span><span style="color: #000000"> { ...</span><span style="color: #001080">prismaLayer</span><span style="color: #000000">.</span><span style="color: #001080">environment</span><span style="color: #000000">, </span><span style="color: #001080">DEBUG:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;*&quot;</span><span style="color: #000000"> },</span>
 <span style="color: #000000">    </span><span style="color: #001080">bundling:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">      </span><span style="color: #001080">externalModules:</span><span style="color: #000000"> </span><span style="color: #001080">appLayer</span><span style="color: #000000">.</span><span style="color: #001080">externalModules</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">externalModules:</span><span style="color: #000000"> </span><span style="color: #001080">prismaLayer</span><span style="color: #000000">.</span><span style="color: #001080">externalModules</span><span style="color: #000000">,</span>
 <span style="color: #000000">    },</span>
 <span style="color: #000000">  }</span>
 </code></pre>
@@ -123,6 +120,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="prismalayer.html#compatibleruntimes" class="tsd-kind-icon">compatible<wbr>Runtimes</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="prismalayer.html#env" class="tsd-kind-icon">env</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="prismalayer.html#environment" class="tsd-kind-icon">environment</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="prismalayer.html#externalmodules" class="tsd-kind-icon">external<wbr>Modules</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="prismalayer.html#layerversionarn" class="tsd-kind-icon">layer<wbr>Version<wbr>Arn</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="prismalayer.html#node" class="tsd-kind-icon">node</a></li>
@@ -161,14 +159,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Prisma<wbr>Layer<span class="tsd-signature-symbol">(</span>scope<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Construct</span>, id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, __namedParameters<span class="tsd-signature-symbol">: </span><a href="../interfaces/prismalayerprops.html" class="tsd-signature-type" data-tsd-kind="Interface">PrismaLayerProps</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="prismalayer.html" class="tsd-signature-type" data-tsd-kind="Class">PrismaLayer</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Prisma<wbr>Layer<span class="tsd-signature-symbol">(</span>scope<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Construct</span>, id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, props<span class="tsd-signature-symbol">?: </span><a href="../interfaces/prismalayerprops.html" class="tsd-signature-type" data-tsd-kind="Interface">PrismaLayerProps</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="prismalayer.html" class="tsd-signature-type" data-tsd-kind="Class">PrismaLayer</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides LayerVersion.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/e8a4369/src/cdk/lambda/prismaLayer.ts#L105">src/cdk/lambda/prismaLayer.ts:105</a></li>
+									<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/307f0a1/src/cdk/lambda/prismaLayer.ts#L38">src/cdk/lambda/prismaLayer.ts:38</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -180,7 +178,7 @@
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>__namedParameters: <a href="../interfaces/prismalayerprops.html" class="tsd-signature-type" data-tsd-kind="Interface">PrismaLayerProps</a></h5>
+									<h5>props: <a href="../interfaces/prismalayerprops.html" class="tsd-signature-type" data-tsd-kind="Interface">PrismaLayerProps</a><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="prismalayer.html" class="tsd-signature-type" data-tsd-kind="Class">PrismaLayer</a></h4>
@@ -239,12 +237,22 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="environment" class="tsd-anchor"></a>
+					<h3>environment</h3>
+					<div class="tsd-signature tsd-kind-icon">environment<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/307f0a1/src/cdk/lambda/prismaLayer.ts#L38">src/cdk/lambda/prismaLayer.ts:38</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="externalmodules" class="tsd-anchor"></a>
 					<h3>external<wbr>Modules</h3>
 					<div class="tsd-signature tsd-kind-icon">external<wbr>Modules<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/e8a4369/src/cdk/lambda/prismaLayer.ts#L105">src/cdk/lambda/prismaLayer.ts:105</a></li>
+							<li>Defined in <a href="https://github.com/jetbridge/jetkit-cdk/blob/307f0a1/src/cdk/lambda/prismaLayer.ts#L37">src/cdk/lambda/prismaLayer.ts:37</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -984,6 +992,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="prismalayer.html#env" class="tsd-kind-icon">env</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="prismalayer.html#environment" class="tsd-kind-icon">environment</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="prismalayer.html#externalmodules" class="tsd-kind-icon">external<wbr>Modules</a>
