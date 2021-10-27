@@ -40,6 +40,8 @@ jobs:
         env:
           PACKAGEJSON_DIR: packages/cdk
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          skip-tag: true
       - name: Publish (CDK)
         run: npm publish -w @jetkit/cdk
         env:
