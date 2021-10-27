@@ -1,398 +1,79 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>@jetkit/cdk</title>
-	<meta name="description" content="Documentation for @jetkit/cdk">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">@jetkit/cdk</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>@jetkit/cdk</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#jetkitcdk" id="jetkitcdk" style="color: inherit; text-decoration: none;">
-					<h1>JetKit/CDK</h1>
-				</a>
-				<p><a href="https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml"><img src="https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml/badge.svg" alt="Tests"></a>
-					<a href="https://badge.fury.io/js/%40jetkit%2Fcdk"><img src="https://badge.fury.io/js/%40jetkit%2Fcdk.svg" alt="npm version"></a>
-				<a href="https://open.vscode.dev/jetbridge/jetkit-cdk"><img src="https://open.vscode.dev/badges/open-in-vscode.svg" alt="Open in Visual Studio Code"></a></p>
-				<p>An <a href="https://spiegelmock.com/2021/05/29/frameworkless-web-applications-aws-cdk/">anti-framework</a> for building cloud-native serverless applications.</p>
-				<p>This module provides convenient tools for writing Lambda functions, RESTful API views,
-				and generating cloud infrastructure with <a href="https://docs.aws.amazon.com/cdk/latest/guide/home.html">AWS CDK</a>.</p>
-				<a href="#motivation" id="motivation" style="color: inherit; text-decoration: none;">
-					<h2>Motivation</h2>
-				</a>
-				<p><a href="https://spiegelmock.com/2021/05/29/frameworkless-web-applications-aws-cdk/">Frameworkless web applications</a>.</p>
-				<p>We want to build maintainable and scalable cloud-first applications, with cloud resources generated from application code.</p>
-				<p>Using AWS CDK we can automate generating API Gateway routes and Lambda functions from class and function metadata.</p>
-				<p>Each class or function view is a self-contained Lambda function that only pulls in the dependencies needed for its
-				functioning, keeping startup times low and applications modular.</p>
-				<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
-					<h2>Documentation</h2>
-				</a>
-				<p>Guides and API reference can be found at <a href="https://jetkit.dev/docs/">https://jetkit.dev/docs/</a>.</p>
-				<a href="#super-quickstart" id="super-quickstart" style="color: inherit; text-decoration: none;">
-					<h3>Super Quickstart</h3>
-				</a>
-				<p>Use this monorepo project template: <a href="https://github.com/jetbridge/typescript-cdk-template">typescript-cdk-template</a>.</p>
-				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
-					<h2>Installation</h2>
-				</a>
-				<pre><code class="language-shell"><span style="color: #000000">npm install @jetkit/cdk</span>
+<!DOCTYPE html><html class="default no-js"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>@jetkit/cdk</title><meta name="description" content="Documentation for @jetkit/cdk"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">@jetkit/cdk</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>@jetkit/cdk</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#jetkitcdk" id="jetkitcdk" style="color: inherit; text-decoration: none;">
+  <h1>JetKit/CDK</h1>
+</a>
+<p><a href="https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml"><img src="https://github.com/jetbridge/jetkit-cdk/actions/workflows/ci.yml/badge.svg" alt="Tests"></a>
+<a href="https://badge.fury.io/js/%40jetkit%2Fcdk"><img src="https://badge.fury.io/js/%40jetkit%2Fcdk.svg" alt="npm version"></a>
+<a href="https://open.vscode.dev/jetbridge/jetkit-cdk"><img src="https://open.vscode.dev/badges/open-in-vscode.svg" alt="Open in Visual Studio Code"></a></p>
+<p>An <a href="https://spiegelmock.com/2021/05/29/frameworkless-web-applications-aws-cdk/">anti-framework</a> for building cloud-native serverless applications.</p>
+<p>This module provides convenient tools for writing Lambda functions, RESTful API views,
+and generating cloud infrastructure with <a href="https://docs.aws.amazon.com/cdk/latest/guide/home.html">AWS CDK</a>.</p>
+
+<a href="#motivation" id="motivation" style="color: inherit; text-decoration: none;">
+  <h2>Motivation</h2>
+</a>
+<p><a href="https://spiegelmock.com/2021/05/29/frameworkless-web-applications-aws-cdk/">Frameworkless web applications</a>.</p>
+<p>We want to build maintainable and scalable cloud-first applications, with cloud resources generated from application code.</p>
+<p>Using AWS CDK we can automate generating API Gateway routes and Lambda functions from class and function metadata.</p>
+<p>Each class or function view is a self-contained Lambda function that only pulls in the dependencies needed for its
+functioning, keeping startup times low and applications modular.</p>
+
+<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+  <h2>Documentation</h2>
+</a>
+<p>Guides and API reference can be found at <a href="https://jetkit.dev/docs/">https://jetkit.dev/docs/</a>.</p>
+
+<a href="#super-quickstart" id="super-quickstart" style="color: inherit; text-decoration: none;">
+  <h3>Super Quickstart</h3>
+</a>
+<p>Use this monorepo project template: <a href="https://github.com/jetbridge/typescript-cdk-template">typescript-cdk-template</a>.</p>
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h2>Installation</h2>
+</a>
+<pre><code class="language-shell"><span class="hl-0">npm install @jetkit/cdk</span>
 </code></pre>
-				<a href="#synopsis" id="synopsis" style="color: inherit; text-decoration: none;">
-					<h2>Synopsis</h2>
-				</a>
-				<a href="#api-view" id="api-view" style="color: inherit; text-decoration: none;">
-					<h3>API View</h3>
-				</a>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">HttpMethod</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@aws-cdk/aws-apigatewayv2&quot;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">badRequest</span><span style="color: #000000">, </span><span style="color: #001080">methodNotAllowed</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@jdpnielsen/http-error&quot;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">ApiView</span><span style="color: #000000">, </span><span style="color: #001080">SubRoute</span><span style="color: #000000">, </span><span style="color: #001080">ApiEvent</span><span style="color: #000000">, </span><span style="color: #001080">ApiResponse</span><span style="color: #000000">, </span><span style="color: #001080">ApiViewBase</span><span style="color: #000000">, </span><span style="color: #001080">apiViewHandler</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@jetkit/cdk&quot;</span>
 
-<span style="color: #000000">@</span><span style="color: #795E26">ApiView</span><span style="color: #000000">({</span>
-<span style="color: #000000">  </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/album&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">memorySize:</span><span style="color: #000000"> </span><span style="color: #098658">512</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">environment:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">LOG_LEVEL:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;DEBUG&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">  </span><span style="color: #001080">bundling:</span><span style="color: #000000"> { </span><span style="color: #001080">minify:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">, </span><span style="color: #001080">metafile:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">, </span><span style="color: #001080">sourceMap:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> },</span>
-<span style="color: #000000">})</span>
-<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">AlbumApi</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">ApiViewBase</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #008000">// define POST /album handler</span>
-<span style="color: #000000">  @</span><span style="color: #795E26">SubRoute</span><span style="color: #000000">({ </span><span style="color: #001080">methods:</span><span style="color: #000000"> [</span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">POST</span><span style="color: #000000">] })</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #795E26">post</span><span style="color: #000000">() {</span>
-<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;Created new album&quot;</span>
-<span style="color: #000000">  }</span>
+<a href="#synopsis" id="synopsis" style="color: inherit; text-decoration: none;">
+  <h2>Synopsis</h2>
+</a>
 
-<span style="color: #000000">  </span><span style="color: #008000">// custom endpoint in the view</span>
-<span style="color: #000000">  </span><span style="color: #008000">// routes to the ApiView function</span>
-<span style="color: #000000">  @</span><span style="color: #795E26">SubRoute</span><span style="color: #000000">({</span>
-<span style="color: #000000">    </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/{albumId}/like&quot;</span><span style="color: #000000">, </span><span style="color: #008000">// will be /album/123/like</span>
-<span style="color: #000000">    </span><span style="color: #001080">methods:</span><span style="color: #000000"> [</span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">POST</span><span style="color: #000000">, </span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">DELETE</span><span style="color: #000000">],</span>
-<span style="color: #000000">  })</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #795E26">like</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000">: </span><span style="color: #267F99">ApiEvent</span><span style="color: #000000">): </span><span style="color: #267F99">ApiResponse</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">albumId</span><span style="color: #000000"> = </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">pathParameters</span><span style="color: #000000">?.</span><span style="color: #001080">albumId</span>
-<span style="color: #000000">    </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (!</span><span style="color: #001080">albumId</span><span style="color: #000000">) </span><span style="color: #AF00DB">throw</span><span style="color: #000000"> </span><span style="color: #795E26">badRequest</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;albumId is required in path&quot;</span><span style="color: #000000">)</span>
-
-<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">method</span><span style="color: #000000"> = </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">requestContext</span><span style="color: #000000">.</span><span style="color: #001080">http</span><span style="color: #000000">.</span><span style="color: #001080">method</span>
-
-<span style="color: #000000">    </span><span style="color: #008000">// POST - mark album as liked</span>
-<span style="color: #000000">    </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">method</span><span style="color: #000000"> == </span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">POST</span><span style="color: #000000">) </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #A31515">`Liked album </span><span style="color: #0000FF">${</span><span style="color: #001080">albumId</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span>
-<span style="color: #000000">    </span><span style="color: #008000">// DELETE - unmark album as liked</span>
-<span style="color: #000000">    </span><span style="color: #AF00DB">else</span><span style="color: #000000"> </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">method</span><span style="color: #000000"> == </span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">DELETE</span><span style="color: #000000">) </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #A31515">`Unliked album </span><span style="color: #0000FF">${</span><span style="color: #001080">albumId</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span>
-<span style="color: #000000">    </span><span style="color: #008000">// should never be reached</span>
-<span style="color: #000000">    </span><span style="color: #AF00DB">else</span><span style="color: #000000"> </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #795E26">methodNotAllowed</span><span style="color: #000000">()</span>
-<span style="color: #000000">  }</span>
-<span style="color: #000000">}</span>
-<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">handler</span><span style="color: #000000"> = </span><span style="color: #795E26">apiViewHandler</span><span style="color: #000000">(</span><span style="color: #001080">__filename</span><span style="color: #000000">, </span><span style="color: #001080">AlbumApi</span><span style="color: #000000">)</span>
+<a href="#api-view" id="api-view" style="color: inherit; text-decoration: none;">
+  <h3>API View</h3>
+</a>
+<p>Combine related functionality and routes into a single Lambda function bundle.</p>
+<pre><code class="language-typescript"><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">HttpMethod</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&quot;@aws-cdk/aws-apigatewayv2&quot;</span><br/><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">badRequest</span><span class="hl-0">, </span><span class="hl-2">methodNotAllowed</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&quot;@jdpnielsen/http-error&quot;</span><br/><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">ApiView</span><span class="hl-0">, </span><span class="hl-2">SubRoute</span><span class="hl-0">, </span><span class="hl-2">ApiEvent</span><span class="hl-0">, </span><span class="hl-2">ApiResponse</span><span class="hl-0">, </span><span class="hl-2">ApiViewBase</span><span class="hl-0">, </span><span class="hl-2">apiViewHandler</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&quot;@jetkit/cdk-runtime&quot;</span><br/><br/><span class="hl-0">@</span><span class="hl-4">ApiView</span><span class="hl-0">({</span><br/><span class="hl-0">  </span><span class="hl-2">path:</span><span class="hl-0"> </span><span class="hl-3">&quot;/album&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">})</span><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-5">class</span><span class="hl-0"> </span><span class="hl-6">AlbumApi</span><span class="hl-0"> </span><span class="hl-5">extends</span><span class="hl-0"> </span><span class="hl-6">ApiViewBase</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-7">// define POST /album handler</span><br/><span class="hl-0">  @</span><span class="hl-4">SubRoute</span><span class="hl-0">({ </span><span class="hl-2">methods:</span><span class="hl-0"> [</span><span class="hl-2">HttpMethod</span><span class="hl-0">.</span><span class="hl-8">POST</span><span class="hl-0">] })</span><br/><span class="hl-0">  </span><span class="hl-5">async</span><span class="hl-0"> </span><span class="hl-4">post</span><span class="hl-0">() {</span><br/><span class="hl-0">    </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-3">&quot;Created new album&quot;</span><br/><span class="hl-0">  }</span><br/><br/><span class="hl-0">  </span><span class="hl-7">// custom endpoint in the view</span><br/><span class="hl-0">  </span><span class="hl-7">// routes to the ApiView function</span><br/><span class="hl-0">  @</span><span class="hl-4">SubRoute</span><span class="hl-0">({</span><br/><span class="hl-0">    </span><span class="hl-2">path:</span><span class="hl-0"> </span><span class="hl-3">&quot;/{albumId}/like&quot;</span><span class="hl-0">, </span><span class="hl-7">// will be /album/123/like</span><br/><span class="hl-0">    </span><span class="hl-2">methods:</span><span class="hl-0"> [</span><span class="hl-2">HttpMethod</span><span class="hl-0">.</span><span class="hl-8">POST</span><span class="hl-0">, </span><span class="hl-2">HttpMethod</span><span class="hl-0">.</span><span class="hl-8">DELETE</span><span class="hl-0">],</span><br/><span class="hl-0">  })</span><br/><span class="hl-0">  </span><span class="hl-5">async</span><span class="hl-0"> </span><span class="hl-4">like</span><span class="hl-0">(</span><span class="hl-2">event</span><span class="hl-0">: </span><span class="hl-6">ApiEvent</span><span class="hl-0">): </span><span class="hl-6">ApiResponse</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-8">albumId</span><span class="hl-0"> = </span><span class="hl-2">event</span><span class="hl-0">.</span><span class="hl-2">pathParameters</span><span class="hl-0">?.</span><span class="hl-2">albumId</span><br/><span class="hl-0">    </span><span class="hl-1">if</span><span class="hl-0"> (!</span><span class="hl-2">albumId</span><span class="hl-0">) </span><span class="hl-1">throw</span><span class="hl-0"> </span><span class="hl-4">badRequest</span><span class="hl-0">(</span><span class="hl-3">&quot;albumId is required in path&quot;</span><span class="hl-0">)</span><br/><br/><span class="hl-0">    </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-8">method</span><span class="hl-0"> = </span><span class="hl-2">event</span><span class="hl-0">.</span><span class="hl-2">requestContext</span><span class="hl-0">.</span><span class="hl-2">http</span><span class="hl-0">.</span><span class="hl-2">method</span><br/><br/><span class="hl-0">    </span><span class="hl-7">// POST - mark album as liked</span><br/><span class="hl-0">    </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">method</span><span class="hl-0"> == </span><span class="hl-2">HttpMethod</span><span class="hl-0">.</span><span class="hl-8">POST</span><span class="hl-0">) </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-3">`Liked album </span><span class="hl-5">${</span><span class="hl-2">albumId</span><span class="hl-5">}</span><span class="hl-3">`</span><br/><span class="hl-0">    </span><span class="hl-7">// DELETE - unmark album as liked</span><br/><span class="hl-0">    </span><span class="hl-1">else</span><span class="hl-0"> </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">method</span><span class="hl-0"> == </span><span class="hl-2">HttpMethod</span><span class="hl-0">.</span><span class="hl-8">DELETE</span><span class="hl-0">) </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-3">`Unliked album </span><span class="hl-5">${</span><span class="hl-2">albumId</span><span class="hl-5">}</span><span class="hl-3">`</span><br/><span class="hl-0">    </span><span class="hl-7">// should never be reached</span><br/><span class="hl-0">    </span><span class="hl-1">else</span><span class="hl-0"> </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-4">methodNotAllowed</span><span class="hl-0">()</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">}</span><br/><span class="hl-7">// Not required but lets you omit specifying the `entry` path to this file for convenience.</span><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-8">handler</span><span class="hl-0"> = </span><span class="hl-4">apiViewHandler</span><span class="hl-0">(</span><span class="hl-2">__filename</span><span class="hl-0">, </span><span class="hl-2">AlbumApi</span><span class="hl-0">)</span><br/><span class="hl-7">// If using ES modules</span><br/><span class="hl-7">// export const handler = apiViewHandlerEs(import.meta, AlbumApi)</span>
 </code></pre>
-				<a href="#handler-function-with-route" id="handler-function-with-route" style="color: inherit; text-decoration: none;">
-					<h3>Handler Function With Route</h3>
-				</a>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">HttpMethod</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@aws-cdk/aws-apigatewayv2&quot;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Lambda</span><span style="color: #000000">, </span><span style="color: #001080">ApiEvent</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@jetkit/cdk&quot;</span>
 
-<span style="color: #008000">// a simple standalone function with a route attached</span>
-<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">topSongsHandler</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000">: </span><span style="color: #267F99">ApiEvent</span><span style="color: #000000">) {</span>
-<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;top songs&quot;</span>
-<span style="color: #000000">}</span>
-<span style="color: #008000">// define route and lambda properties</span>
-<span style="color: #795E26">Lambda</span><span style="color: #000000">({</span>
-<span style="color: #000000">  </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/top-songs&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">methods:</span><span style="color: #000000"> [</span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">GET</span><span style="color: #000000">],</span>
-<span style="color: #000000">  </span><span style="color: #001080">memorySize:</span><span style="color: #000000"> </span><span style="color: #098658">384</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">environment:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">LOG_LEVEL:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;WARN&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">})(</span><span style="color: #001080">topSongsHandler</span><span style="color: #000000">)</span>
-
-<span style="color: #008000">// alternate, uglier way of writing the same thing</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">topSongsFuncInner</span><span style="color: #000000"> = </span><span style="color: #795E26">Lambda</span><span style="color: #000000">({</span>
-<span style="color: #000000">  </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/top-songs-inner&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">methods:</span><span style="color: #000000"> [</span><span style="color: #001080">HttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">GET</span><span style="color: #000000">],</span>
-<span style="color: #000000">  </span><span style="color: #001080">memorySize:</span><span style="color: #000000"> </span><span style="color: #098658">384</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">environment:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">LOG_LEVEL:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;WARN&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">  </span><span style="color: #008000">// this function name should match the exported name</span>
-<span style="color: #000000">  </span><span style="color: #008000">// or you must specify the exported function name in `handler`</span>
-<span style="color: #000000">})(</span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">topSongsFuncInner</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000">: </span><span style="color: #267F99">ApiEvent</span><span style="color: #000000">) {</span>
-<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;top songs&quot;</span>
-<span style="color: #000000">})</span>
-<span style="color: #AF00DB">export</span><span style="color: #000000"> { </span><span style="color: #001080">topSongsFuncInner</span><span style="color: #000000"> }</span>
+<a href="#handler-function-with-route" id="handler-function-with-route" style="color: inherit; text-decoration: none;">
+  <h3>Handler Function With Route</h3>
+</a>
+<pre><code class="language-typescript"><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">HttpMethod</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&quot;@aws-cdk/aws-apigatewayv2&quot;</span><br/><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">Lambda</span><span class="hl-0">, </span><span class="hl-2">ApiEvent</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&quot;@jetkit/cdk-runtime&quot;</span><br/><br/><span class="hl-7">// a simple standalone function with a route attached</span><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-5">async</span><span class="hl-0"> </span><span class="hl-5">function</span><span class="hl-0"> </span><span class="hl-4">topSongsHandler</span><span class="hl-0">(</span><span class="hl-2">event</span><span class="hl-0">: </span><span class="hl-6">ApiEvent</span><span class="hl-0">) {</span><br/><span class="hl-0">  </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-6">JSON</span><span class="hl-0">.</span><span class="hl-4">stringify</span><span class="hl-0">(</span><span class="hl-2">event</span><span class="hl-0">.</span><span class="hl-2">headers</span><span class="hl-0">)</span><br/><span class="hl-0">}</span><br/><span class="hl-7">// define route and lambda properties</span><br/><span class="hl-4">Lambda</span><span class="hl-0">({</span><br/><span class="hl-0">  </span><span class="hl-2">path:</span><span class="hl-0"> </span><span class="hl-3">&quot;/top-songs&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">methods:</span><span class="hl-0"> [</span><span class="hl-2">HttpMethod</span><span class="hl-0">.</span><span class="hl-8">GET</span><span class="hl-0">],</span><br/><span class="hl-0">})(</span><span class="hl-2">topSongsHandler</span><span class="hl-0">)</span><br/><span class="hl-7">// If using ES modules:</span><br/><span class="hl-7">// LambdaEs(import.meta, { path: &quot;/top-songs&quot; })(topSongsHandler)</span><br/><br/><span class="hl-7">// alternate, uglier way of writing the same thing</span><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-8">topSongsFuncInner</span><span class="hl-0"> = </span><span class="hl-4">Lambda</span><span class="hl-0">({</span><br/><span class="hl-0">  </span><span class="hl-2">path:</span><span class="hl-0"> </span><span class="hl-3">&quot;/top-songs-inner&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">methods:</span><span class="hl-0"> [</span><span class="hl-2">HttpMethod</span><span class="hl-0">.</span><span class="hl-8">GET</span><span class="hl-0">],</span><br/><span class="hl-0">  </span><span class="hl-7">// this function name should match the exported name</span><br/><span class="hl-0">  </span><span class="hl-7">// or you must specify the exported function name in `handler`</span><br/><span class="hl-0">})(</span><span class="hl-5">async</span><span class="hl-0"> </span><span class="hl-5">function</span><span class="hl-0"> </span><span class="hl-4">topSongsFuncInner</span><span class="hl-0">(</span><span class="hl-2">event</span><span class="hl-0">: </span><span class="hl-6">ApiEvent</span><span class="hl-0">) {</span><br/><span class="hl-0">  </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-6">JSON</span><span class="hl-0">.</span><span class="hl-4">stringify</span><span class="hl-0">(</span><span class="hl-2">event</span><span class="hl-0">.</span><span class="hl-2">headers</span><span class="hl-0">)</span><br/><span class="hl-0">})</span><br/><span class="hl-1">export</span><span class="hl-0"> { </span><span class="hl-2">topSongsFuncInner</span><span class="hl-0"> }</span>
 </code></pre>
-				<a href="#cdk-stack" id="cdk-stack" style="color: inherit; text-decoration: none;">
-					<h3>CDK Stack</h3>
-				</a>
-				<p>To start from scratch:</p>
-				<pre><code class="language-shell"><span style="color: #000000">npm install -g aws-cdk</span>
-<span style="color: #000000">cdk init app --language typescript</span>
-<span style="color: #000000">npm install @jetkit/cdk @aws-cdk/core @aws-cdk/aws-apigatewayv2</span>
-</code></pre>
-				<p>See the <a href="https://docs.aws.amazon.com/cdk/latest/guide/hello_world.html">guide</a> for more details.</p>
-				<p>To deploy your stack:</p>
-				<pre><code class="language-shell"><span style="color: #000000">cdk deploy</span>
-</code></pre>
-				<hr>
-				<p>To generate API Gateway routes and Lambda function handlers from your application code:</p>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">CorsHttpMethod</span><span style="color: #000000">, </span><span style="color: #001080">HttpApi</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@aws-cdk/aws-apigatewayv2&quot;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Construct</span><span style="color: #000000">, </span><span style="color: #001080">Duration</span><span style="color: #000000">, </span><span style="color: #001080">Stack</span><span style="color: #000000">, </span><span style="color: #001080">StackProps</span><span style="color: #000000">, </span><span style="color: #001080">App</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@aws-cdk/core&quot;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">ResourceGeneratorConstruct</span><span style="color: #000000">, </span><span style="color: #001080">AlbumApi</span><span style="color: #000000">, </span><span style="color: #001080">topSongsHandler</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@jetkit/cdk&quot;</span>
 
-<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">InfraStack</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">Stack</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">constructor</span><span style="color: #000000">(</span><span style="color: #001080">scope</span><span style="color: #000000">: </span><span style="color: #267F99">App</span><span style="color: #000000">, </span><span style="color: #001080">id</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #001080">props</span><span style="color: #000000">?: </span><span style="color: #267F99">StackProps</span><span style="color: #000000">) {</span>
-<span style="color: #000000">    </span><span style="color: #0000FF">super</span><span style="color: #000000">(</span><span style="color: #001080">scope</span><span style="color: #000000">, </span><span style="color: #001080">id</span><span style="color: #000000">, </span><span style="color: #001080">props</span><span style="color: #000000">)</span>
-
-<span style="color: #000000">    </span><span style="color: #008000">// create API Gateway</span>
-<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">httpApi</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">HttpApi</span><span style="color: #000000">(</span><span style="color: #0000FF">this</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;Api&quot;</span><span style="color: #000000">, {</span>
-<span style="color: #000000">      </span><span style="color: #001080">corsPreflight:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">        </span><span style="color: #001080">allowHeaders:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;Authorization&quot;</span><span style="color: #000000">],</span>
-<span style="color: #000000">        </span><span style="color: #001080">allowMethods:</span><span style="color: #000000"> [</span><span style="color: #001080">CorsHttpMethod</span><span style="color: #000000">.</span><span style="color: #0070C1">ANY</span><span style="color: #000000">],</span>
-<span style="color: #000000">        </span><span style="color: #001080">allowOrigins:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;*&quot;</span><span style="color: #000000">],</span>
-<span style="color: #000000">        </span><span style="color: #001080">maxAge:</span><span style="color: #000000"> </span><span style="color: #001080">Duration</span><span style="color: #000000">.</span><span style="color: #795E26">days</span><span style="color: #000000">(</span><span style="color: #098658">10</span><span style="color: #000000">),</span>
-<span style="color: #000000">      },</span>
-<span style="color: #000000">    })</span>
-
-<span style="color: #000000">    </span><span style="color: #008000">// transmute your app code into infrastructure</span>
-<span style="color: #000000">    </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">ResourceGeneratorConstruct</span><span style="color: #000000">(</span><span style="color: #0000FF">this</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;Generator&quot;</span><span style="color: #000000">, {</span>
-<span style="color: #000000">      </span><span style="color: #001080">resources:</span><span style="color: #000000"> [</span><span style="color: #001080">AlbumApi</span><span style="color: #000000">, </span><span style="color: #001080">topSongsHandler</span><span style="color: #000000">], </span><span style="color: #008000">// supply your functions and view classes here</span>
-<span style="color: #000000">      </span><span style="color: #001080">httpApi</span><span style="color: #000000">,</span>
-<span style="color: #000000">    })</span>
-<span style="color: #000000">  }</span>
-<span style="color: #000000">}</span>
+<a href="#cdk-stack" id="cdk-stack" style="color: inherit; text-decoration: none;">
+  <h3>CDK Stack</h3>
+</a>
+<p>To start from scratch:</p>
+<pre><code class="language-shell"><span class="hl-0">npm install -g aws-cdk</span><br/><span class="hl-0">cdk init app --language typescript</span><br/><span class="hl-0">npm install @jetkit/cdk @aws-cdk/core @aws-cdk/aws-apigatewayv2</span>
 </code></pre>
-				<a href="#how-it-works" id="how-it-works" style="color: inherit; text-decoration: none;">
-					<h2>How It Works</h2>
-				</a>
-				<p>This library provides decorators that can be attached to view classes, methods, and functions. The decorator attaches metadata in the form of options for constructing the Lambda function and optionally API Gateway routes.</p>
-				<p>It also includes some convenient <a href="https://docs.aws.amazon.com/cdk/latest/guide/constructs.html">CDK L3 constructs</a> to generate the Lambda functions and API Gateway routes from your decorated application code.</p>
-				<a href="#local-development" id="local-development" style="color: inherit; text-decoration: none;">
-					<h3>Local Development</h3>
-				</a>
-				<p>AWS SAM supports <a href="https://aws.amazon.com/blogs/compute/better-together-aws-sam-and-aws-cdk/">running CDK applications locally</a> (in beta).</p>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Exports</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-					<li class=" tsd-kind-enum tsd-is-external">
-						<a href="enums/corshttpmethod.html" class="tsd-kind-icon">Cors<wbr>Http<wbr>Method</a>
-					</li>
-					<li class=" tsd-kind-enum tsd-is-external">
-						<a href="enums/httpmethod.html" class="tsd-kind-icon">Http<wbr>Method</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/albumapi.html" class="tsd-kind-icon">Album<wbr>Api</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/apiviewbase.html" class="tsd-kind-icon">Api<wbr>View<wbr>Base</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/apiviewconstruct.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/databasemigrationscript.html" class="tsd-kind-icon">Database<wbr>Migration<wbr>Script</a>
-					</li>
-					<li class=" tsd-kind-class tsd-is-external">
-						<a href="classes/duration.html" class="tsd-kind-icon">Duration</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/jetkitcdkapp.html" class="tsd-kind-icon">Jet<wbr>Kit<wbr>Cdk<wbr>App</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/jetkitlambdafunction.html" class="tsd-kind-icon">Jet<wbr>Kit<wbr>Lambda<wbr>Function</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/node14func.html" class="tsd-kind-icon">Node14<wbr>Func</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/prismalayer.html" class="tsd-kind-icon">Prisma<wbr>Layer</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/prismanode14func.html" class="tsd-kind-icon">Prisma<wbr>Node14<wbr>Func</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/resourcegeneratorconstruct.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Construct</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/slspgdb.html" class="tsd-kind-icon">Sls<wbr>PgDb</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-is-external">
-						<a href="interfaces/apievent.html" class="tsd-kind-icon">Api<wbr>Event</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/apiviewconstructprops.html" class="tsd-kind-icon">Api<wbr>View<wbr>Construct<wbr>Props</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/databasefuncprops.html" class="tsd-kind-icon">Database<wbr>Func<wbr>Props</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/functionoptions.html" class="tsd-kind-icon">Function<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/iapimetadata.html" class="tsd-kind-icon">IApi<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/iapiviewclassmetadata.html" class="tsd-kind-icon">IApi<wbr>View<wbr>Class<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/ifunctionmetadata.html" class="tsd-kind-icon">IFunction<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/irouteprops.html" class="tsd-kind-icon">IRoute<wbr>Props</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/isubrouteapimetadata.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Api<wbr>Metadata</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/isubrouteprops.html" class="tsd-kind-icon">ISub<wbr>Route<wbr>Props</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/jetkitlambdafunctionprops.html" class="tsd-kind-icon">Jet<wbr>Kit<wbr>Lambda<wbr>Function<wbr>Props</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/node14funcprops.html" class="tsd-kind-icon">Node14<wbr>Func<wbr>Props</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/prismalayerprops.html" class="tsd-kind-icon">Prisma<wbr>Layer<wbr>Props</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/resourcegeneratorprops.html" class="tsd-kind-icon">Resource<wbr>Generator<wbr>Props</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/slspgdbprops.html" class="tsd-kind-icon">Sls<wbr>PgDb<wbr>Props</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#apihandler" class="tsd-kind-icon">Api<wbr>Handler</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#apiresponse" class="tsd-kind-icon">Api<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#generatedfunction" class="tsd-kind-icon">Generated<wbr>Function</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#metadatatarget" class="tsd-kind-icon">Metadata<wbr>Target</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="modules.html#db_cluster_env" class="tsd-kind-icon">DB_<wbr>CLUSTER_<wbr>ENV</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="modules.html#db_name_env" class="tsd-kind-icon">DB_<wbr>NAME_<wbr>ENV</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="modules.html#db_secret_env" class="tsd-kind-icon">DB_<wbr>SECRET_<wbr>ENV</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="modules.html#db_url_env" class="tsd-kind-icon">DB_<wbr>URL_<wbr>ENV</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#apiview" class="tsd-kind-icon">Api<wbr>View</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="modules.html#lambda" class="tsd-kind-icon">Lambda</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#subroute" class="tsd-kind-icon">Sub<wbr>Route</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#apiviewhandler" class="tsd-kind-icon">api<wbr>View<wbr>Handler</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#topsongshandler" class="tsd-kind-icon">top<wbr>Songs<wbr>Handler</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+<p>See the <a href="https://docs.aws.amazon.com/cdk/latest/guide/hello_world.html">guide</a> for more details.</p>
+<p>To deploy your stack:</p>
+<pre><code class="language-shell"><span class="hl-0">cdk deploy</span>
+</code></pre>
+<hr>
+<p>To generate API Gateway routes and Lambda function handlers from your application code:</p>
+<pre><code class="language-typescript"><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">CorsHttpMethod</span><span class="hl-0">, </span><span class="hl-2">HttpApi</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&quot;@aws-cdk/aws-apigatewayv2&quot;</span><br/><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">Duration</span><span class="hl-0">, </span><span class="hl-2">Stack</span><span class="hl-0">, </span><span class="hl-2">StackProps</span><span class="hl-0">, </span><span class="hl-2">App</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&quot;@aws-cdk/core&quot;</span><br/><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">ResourceGeneratorConstruct</span><span class="hl-0">, </span><span class="hl-2">ApiViewCdk</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&quot;@jetkit/cdk&quot;</span><br/><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">topSongsHandler</span><span class="hl-0">, </span><span class="hl-2">AlbumApi</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&quot;./test/sampleApp&quot;</span><br/><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-5">class</span><span class="hl-0"> </span><span class="hl-6">InfraStack</span><span class="hl-0"> </span><span class="hl-5">extends</span><span class="hl-0"> </span><span class="hl-6">Stack</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-5">constructor</span><span class="hl-0">(</span><span class="hl-2">scope</span><span class="hl-0">: </span><span class="hl-6">App</span><span class="hl-0">, </span><span class="hl-2">id</span><span class="hl-0">: </span><span class="hl-6">string</span><span class="hl-0">, </span><span class="hl-2">props</span><span class="hl-0">?: </span><span class="hl-6">StackProps</span><span class="hl-0">) {</span><br/><span class="hl-0">    </span><span class="hl-5">super</span><span class="hl-0">(</span><span class="hl-2">scope</span><span class="hl-0">, </span><span class="hl-2">id</span><span class="hl-0">, </span><span class="hl-2">props</span><span class="hl-0">)</span><br/><br/><span class="hl-0">    </span><span class="hl-7">// create API Gateway</span><br/><span class="hl-0">    </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-8">httpApi</span><span class="hl-0"> = </span><span class="hl-5">new</span><span class="hl-0"> </span><span class="hl-4">HttpApi</span><span class="hl-0">(</span><span class="hl-5">this</span><span class="hl-0">, </span><span class="hl-3">&quot;Api&quot;</span><span class="hl-0">, {</span><br/><span class="hl-0">      </span><span class="hl-2">corsPreflight:</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-2">allowHeaders:</span><span class="hl-0"> [</span><span class="hl-3">&quot;Authorization&quot;</span><span class="hl-0">],</span><br/><span class="hl-0">        </span><span class="hl-2">allowMethods:</span><span class="hl-0"> [</span><span class="hl-2">CorsHttpMethod</span><span class="hl-0">.</span><span class="hl-8">ANY</span><span class="hl-0">],</span><br/><span class="hl-0">        </span><span class="hl-2">allowOrigins:</span><span class="hl-0"> [</span><span class="hl-3">&quot;*&quot;</span><span class="hl-0">],</span><br/><span class="hl-0">        </span><span class="hl-2">maxAge:</span><span class="hl-0"> </span><span class="hl-2">Duration</span><span class="hl-0">.</span><span class="hl-4">days</span><span class="hl-0">(</span><span class="hl-9">10</span><span class="hl-0">),</span><br/><span class="hl-0">      },</span><br/><span class="hl-0">    })</span><br/><br/><span class="hl-0">    </span><span class="hl-7">// transmute your app code into infrastructure</span><br/><span class="hl-0">    </span><span class="hl-5">new</span><span class="hl-0"> </span><span class="hl-4">ResourceGeneratorConstruct</span><span class="hl-0">(</span><span class="hl-5">this</span><span class="hl-0">, </span><span class="hl-3">&quot;Generator&quot;</span><span class="hl-0">, {</span><br/><span class="hl-0">      </span><span class="hl-2">resources:</span><span class="hl-0"> [</span><br/><span class="hl-0">          </span><span class="hl-7">// supply your functions and view classes here</span><br/><span class="hl-0">          </span><span class="hl-2">topSongsHandler</span><span class="hl-0">,</span><br/><span class="hl-0">          </span><br/><span class="hl-0">          </span><span class="hl-7">// can add additional lambda attributes here if desired</span><br/><span class="hl-0">          </span><span class="hl-4">ApiViewCdk</span><span class="hl-0">({ </span><span class="hl-2">memorySize:</span><span class="hl-0"> </span><span class="hl-9">1024</span><span class="hl-0">, </span><span class="hl-2">bundling:</span><span class="hl-0"> { </span><span class="hl-2">minify:</span><span class="hl-0"> </span><span class="hl-5">true</span><span class="hl-0"> }})(</span><span class="hl-2">AlbumApi</span><span class="hl-0">)</span><br/><span class="hl-0">      ], </span><br/><span class="hl-0">      </span><span class="hl-2">httpApi</span><span class="hl-0">,</span><br/><span class="hl-0">    })</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">}</span>
+</code></pre>
+
+<a href="#how-it-works" id="how-it-works" style="color: inherit; text-decoration: none;">
+  <h2>How It Works</h2>
+</a>
+<p>This library provides decorators that can be attached to view classes, methods, and functions. The decorator attaches metadata in the form of options for constructing the Lambda function and optionally API Gateway routes.</p>
+<p>It also includes some convenient <a href="https://docs.aws.amazon.com/cdk/latest/guide/constructs.html">CDK L3 constructs</a> to generate the Lambda functions and API Gateway routes from your decorated application code.</p>
+
+<a href="#local-development" id="local-development" style="color: inherit; text-decoration: none;">
+  <h3>Local Development</h3>
+</a>
+<p>AWS SAM supports <a href="https://aws.amazon.com/blogs/compute/better-together-aws-sam-and-aws-cdk/">running CDK applications locally</a> (in beta).</p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-reference"><a href="modules.html#Node14Func" class="tsd-kind-icon">Node14<wbr/>Func</a></li><li class="tsd-kind-reference"><a href="modules.html#Node14FuncProps" class="tsd-kind-icon">Node14<wbr/>Func<wbr/>Props</a></li><li class="tsd-kind-enum tsd-is-external"><a href="enums/CorsHttpMethod.html" class="tsd-kind-icon">Cors<wbr/>Http<wbr/>Method</a></li><li class="tsd-kind-enum tsd-is-external"><a href="enums/HttpMethod.html" class="tsd-kind-icon">Http<wbr/>Method</a></li><li class="tsd-kind-class"><a href="classes/ApiViewConstruct.html" class="tsd-kind-icon">Api<wbr/>View<wbr/>Construct</a></li><li class="tsd-kind-class"><a href="classes/DatabaseMigrationScript.html" class="tsd-kind-icon">Database<wbr/>Migration<wbr/>Script</a></li><li class="tsd-kind-class tsd-is-external"><a href="classes/Duration.html" class="tsd-kind-icon">Duration</a></li><li class="tsd-kind-class"><a href="classes/JetKitLambdaFunction.html" class="tsd-kind-icon">Jet<wbr/>Kit<wbr/>Lambda<wbr/>Function</a></li><li class="tsd-kind-class"><a href="classes/PrismaLayer.html" class="tsd-kind-icon">Prisma<wbr/>Layer</a></li><li class="tsd-kind-class"><a href="classes/PrismaNode14Func.html" class="tsd-kind-icon">Prisma<wbr/>Node14<wbr/>Func</a></li><li class="tsd-kind-class"><a href="classes/ResourceGeneratorConstruct.html" class="tsd-kind-icon">Resource<wbr/>Generator<wbr/>Construct</a></li><li class="tsd-kind-class"><a href="classes/SlsPgDb.html" class="tsd-kind-icon">Sls<wbr/>Pg<wbr/>Db</a></li><li class="tsd-kind-interface"><a href="interfaces/ApiViewConstructProps.html" class="tsd-kind-icon">Api<wbr/>View<wbr/>Construct<wbr/>Props</a></li><li class="tsd-kind-interface"><a href="interfaces/DatabaseFuncProps.html" class="tsd-kind-icon">Database<wbr/>Func<wbr/>Props</a></li><li class="tsd-kind-interface"><a href="interfaces/FunctionOptions.html" class="tsd-kind-icon">Function<wbr/>Options</a></li><li class="tsd-kind-interface"><a href="interfaces/IRouteProps.html" class="tsd-kind-icon">IRoute<wbr/>Props</a></li><li class="tsd-kind-interface"><a href="interfaces/IScheduledProps.html" class="tsd-kind-icon">IScheduled<wbr/>Props</a></li><li class="tsd-kind-interface"><a href="interfaces/JetKitLambdaFunctionProps.html" class="tsd-kind-icon">Jet<wbr/>Kit<wbr/>Lambda<wbr/>Function<wbr/>Props</a></li><li class="tsd-kind-interface"><a href="interfaces/PrismaLayerProps.html" class="tsd-kind-icon">Prisma<wbr/>Layer<wbr/>Props</a></li><li class="tsd-kind-interface"><a href="interfaces/ResourceGeneratorProps.html" class="tsd-kind-icon">Resource<wbr/>Generator<wbr/>Props</a></li><li class="tsd-kind-interface"><a href="interfaces/SlsPgDbProps.html" class="tsd-kind-icon">Sls<wbr/>Pg<wbr/>Db<wbr/>Props</a></li><li class="tsd-kind-type-alias"><a href="modules.html#ApiViewOpts" class="tsd-kind-icon">Api<wbr/>View<wbr/>Opts</a></li><li class="tsd-kind-type-alias"><a href="modules.html#GeneratedFunction" class="tsd-kind-icon">Generated<wbr/>Function</a></li><li class="tsd-kind-variable"><a href="modules.html#DB_CLUSTER_ENV" class="tsd-kind-icon">DB_<wbr/>CLUSTER_<wbr/>ENV</a></li><li class="tsd-kind-variable"><a href="modules.html#DB_NAME_ENV" class="tsd-kind-icon">DB_<wbr/>NAME_<wbr/>ENV</a></li><li class="tsd-kind-variable"><a href="modules.html#DB_SECRET_ENV" class="tsd-kind-icon">DB_<wbr/>SECRET_<wbr/>ENV</a></li><li class="tsd-kind-variable"><a href="modules.html#DB_URL_ENV" class="tsd-kind-icon">DB_<wbr/>URL_<wbr/>ENV</a></li><li class="tsd-kind-function"><a href="modules.html#ApiViewCdk" class="tsd-kind-icon">Api<wbr/>View<wbr/>Cdk</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#LambdaCdk" class="tsd-kind-icon">Lambda<wbr/>Cdk</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li><li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
