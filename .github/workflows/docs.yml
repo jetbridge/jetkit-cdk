@@ -25,9 +25,9 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm ci
       - name: Generate docs
-        run: npm run docs
+        run: npm run docs -w @jetkit/cdk
       - name: Publish generated content to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
           branch: gh-pages
-          folder: site/docs
+          folder: packages/cdk/site/docs
