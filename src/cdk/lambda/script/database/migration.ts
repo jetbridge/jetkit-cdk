@@ -16,9 +16,10 @@ export type ScriptProps = DatabaseFuncProps
  *    functionName: `${id}-migrate`,
  *    prismaPath: 'path/to/prisma',
  *    bundling: {
- *      externalModules: appLayer.externalModules,
+ *      externalModules: prismaLayer.externalModules,
  *    },
- *    layers: [appLayer],
+ *    environment: prismaLayer.environment,
+ *    layers: [prismaLayer],
  * })
  * ```
  */
