@@ -6,6 +6,8 @@ extends:
   - "eslint:recommended"
   - "plugin:@typescript-eslint/eslint-recommended"
   - "plugin:@typescript-eslint/recommended"
+  - "plugin:import/recommended"
+  - "plugin:import/typescript"
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
@@ -22,3 +24,27 @@ ignorePatterns:
 rules:
   "@typescript-eslint/explicit-module-boundary-types": off
   "prefer-const": off
+  "import/no-unused-modules":
+    - 1
+    - unusedExports: true
+      missingExports: true
+      ignoreExports:
+        - packages/cdk/src/index.ts
+        - packages/cdk/src/test/sampleApp.ts
+        - packages/cdk/src/cdk/lambda/script/database/migration.script.ts
+        - packages/runtime/src/index.ts
+        - '**/*.test.ts'
+settings:
+  import/ignore:
+    - .test.ts$ 
+    - node_modules
+    - build/
+  import/resolver:
+    node:
+      extensions:
+        - .js
+        - .ts
+      moduleDirectory:
+        - node_modules
+        - packages/cdk/src
+        - packages/runtime/src

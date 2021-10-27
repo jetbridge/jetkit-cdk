@@ -1,0 +1,61 @@
+{
+  "name": "@jetkit/cdk-runtime",
+  "version": "2.0.10",
+  "description": "Cloud-native serverless anti-framework",
+  "type": "module",
+  "module": "build/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./build/esm/index.js",
+      "require": "./build/cjs/index.js"
+    },
+    "./*": {
+      "import": "./build/esm/*.js",
+      "require": "./build/cjs/*.js"
+    }
+  },
+  "main": "build/esm/index.js",
+  "types": "build/esm/index.d.ts",
+  "private": false,
+  "engines": {
+    "node": ">=0.14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jetbridge/jetkit-cdk.git"
+  },
+  "homepage": "https://jetbridge.github.io/jetkit-cdk/",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "start": "tsc --build -w",
+    "build": "npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc --build tsconfig.json",
+    "build:cjs": "tsc --build tsconfig-cjs.json",
+    "docs": "typedoc",
+    "prepack": "npm run build",
+    "rel:patch": "npm version patch && npm publish",
+    "rel:minor": "npm version minor && npm publish",
+    "rel:next": "npm version patch && npm publish --tag next --access public"
+  },
+  "author": "JetBridge Software Inc.",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "reflect-metadata": "*"
+  },
+  "keywords": [
+    "aws",
+    "cdk",
+    "serverless",
+    "lambda",
+    "iac",
+    "rest",
+    "typescript",
+    "api",
+    "prisma",
+    "postgres",
+    "postgresql",
+    "pg"
+  ]
+}

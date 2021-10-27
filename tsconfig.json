@@ -1,33 +1,12 @@
 {
-  "extends": "@tsconfig/node14/tsconfig.json",
-
-  "compilerOptions": {
-    "outDir": "./build/esm", // redirect output structure to the directory
-
-    // I hope this works someday!
-    "module": "es2020" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
-
-    "lib": ["ESNext"],
-
-    "moduleResolution": "node", // modern
-    "resolveJsonModule": true, // allow importing JSON filees
-    "experimentalDecorators": true, // enable decorators
-    "emitDecoratorMetadata": true, // for runtime use of decorators
-
-    "noImplicitAny": true, // strictness
-    "noImplicitThis": true, // strictness
-    // "noUnusedLocals": true /* Report errors on unused locals. */,
-    // "noUnusedParameters": true /* Report errors on unused parameters. */,
-    "noImplicitReturns": true /* Report error when not all code paths in function return a value. */,
-    "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */,
-    "incremental": true /* Enable incremental compilation */,
-    "declaration": true /* Generates corresponding '.d.ts' file. */,
-    "declarationMap": true /* Generates a sourcemap for each corresponding '.d.ts' file. */,
-    "sourceMap": true /* Generates corresponding '.map' file. */
-  },
-  "include": ["src"],
-  "typedocOptions": {
-    "entryPoints": ["src/index.ts"],
-    "out": "site/docs"
-  }
+  "extends": "./tsconfig.base.json",
+  "files": [],
+  "references": [
+    {
+      "path": "packages/cdk"
+    },
+    {
+      "path": "packages/runtime"
+    }
+  ]
 }

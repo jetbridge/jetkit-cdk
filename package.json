@@ -1,111 +1,64 @@
 {
-  "name": "@jetkit/cdk",
-  "version": "1.122.21",
+  "name": "jetkit",
   "description": "Cloud-native serverless anti-framework",
-  "types": "build/esm/index.d.ts",
-  "main": "build/cjs/index.js",
-  "module": "build/esm/index.js",
   "private": false,
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/jetbridge/jetkit-cdk.git"
   },
+  "engines": {
+    "node": ">=0.14"
+  },
   "homepage": "https://jetbridge.github.io/jetkit-cdk/",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "start": "tsc -w -p tsconfig-cjs.json",
-    "build": "npm run tsc",
-    "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
-    "docs": "typedoc",
+    "lint": "eslint --ext .ts packages/",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "prepare": "husky install",
-    "prepack": "npm run build",
-    "rel:patch": "npm version patch && npm publish",
-    "rel:minor": "npm version minor && npm publish",
-    "rel:next": "npm version patch && npm publish --tag next"
+    "build": "npm run build:runtime && npm run build:cdk && tsc --build",
+    "build:cdk": "npm run build -w @jetkit/cdk",
+    "build:runtime": "npm run build -w @jetkit/cdk-runtime",
+    "rel:next": "npm run rel:next -w @jetkit/cdk-runtime && npm run rel:next -w @jetkit/cdk",
+    "start": "tsc --build --watch"
   },
   "author": "JetBridge Software Inc.",
   "license": "MIT",
   "devDependencies": {
-    "constructs": "3.3.141",
-    "@aws-cdk/assert": "1.122.0",
-    "@aws-cdk/core": "1.122.0",
-    "@babel/plugin-proposal-decorators": "^7.13.15",
-    "@prisma/client": "^3.0.1",
-    "@prisma/migrate": "^3.0.1",
     "@ts-morph/bootstrap": "^0.9.1",
     "@tsconfig/node14": "^1.0.0",
     "@types/aws-lambda": "^8.10.75",
-    "@types/convict": "^6.0.2",
-    "@types/jest": "26.0.23",
+    "@types/jest": "^27.0.0",
     "@types/node": "10.17.27",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "aws-cdk": "1.122.0",
     "aws-lambda": "^1.0.6",
     "callsites": "^3.1.0",
+    "concurrently": "^6.3.0",
+    "constructs": "3.3.161",
+    "dirname-filename-esm": "^1.1.1",
+    "esbuild": "^0.13.3",
+    "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.24.2",
     "husky": "^6.0.0",
-    "jest": "^26.4.2",
+    "jest": "^27.2.4",
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
-    "prisma": "^3.0.1",
     "simple-markdown": "^0.7.3",
-    "ts-jest": "^26.2.0",
+    "ts-jest": "^27.0.5",
     "ts-node": "^9.0.0",
-    "typedoc": "^0.20.36",
-    "typescript": "^4.2.4"
+    "typedoc": "^0.22.5",
+    "typescript": "4.4"
   },
   "dependencies": {
-    "@aws-cdk/aws-apigatewayv2": "1.122.0",
-    "@aws-cdk/aws-apigatewayv2-authorizers": "1.122.0",
-    "@aws-cdk/aws-apigatewayv2-integrations": "1.122.0",
-    "@aws-cdk/aws-ec2": "1.122.0",
-    "@aws-cdk/aws-events": "1.122.0",
-    "@aws-cdk/aws-events-targets": "1.122.0",
-    "@aws-cdk/aws-iam": "1.122.0",
-    "@aws-cdk/aws-lambda": "1.122.0",
-    "@aws-cdk/aws-lambda-nodejs": "1.122.0",
-    "@aws-cdk/aws-rds": "1.122.0",
-    "@aws-cdk/aws-secretsmanager": "1.122.0",
-    "@aws-sdk/client-secrets-manager": "^3.21.0",
     "@jdpnielsen/http-error": "^1.2.0",
-    "aws-xray-sdk": "^3.3.3",
-    "convict": "^6.1.0",
     "deepmerge": "^4.2.2",
     "is-plain-object": "^2.0.4",
     "reflect-metadata": "^0.1.13",
     "slugify": "^1.6.0"
   },
-  "peerDependenciesMeta": {
-    "prisma": {
-      "optional": true
-    },
-    "@prisma/migrate": {
-      "optional": true
-    },
-    "@prisma/client": {
-      "optional": true
-    }
-  },
-  "peerDependencies": {
-    "@prisma/client": "*",
-    "@prisma/migrate": "*",
-    "prisma": "*"
-  },
   "lint-staged": {
     "*.{js,css,md}": "prettier --write"
   },
-  "keywords": [
-    "aws",
-    "cdk",
-    "serverless",
-    "lambda",
-    "iac",
-    "rest",
-    "typescript",
-    "api",
-    "prisma",
-    "postgres",
-    "postgresql",
-    "pg"
+  "workspaces": [
+    "packages/*"
   ]
 }
