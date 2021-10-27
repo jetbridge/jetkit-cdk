@@ -30,11 +30,21 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm test
-      - name: Automated Version Bump
+      - name: Automated Version Bump (Runtime)
         uses: "phips28/gh-action-bump-version@master"
         env:
+          PACKAGEJSON_DIR: packages/runtime
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish
-        run: npm publish
+      - name: Automated Version Bump (CDK)
+        uses: "phips28/gh-action-bump-version@master"
+        env:
+          PACKAGEJSON_DIR: packages/cdk
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish (CDK)
+        run: npm publish -w @jetkit/cdk
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish (Runtime)
+        run: npm publish -w @jetkit/cdk-runtime
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
