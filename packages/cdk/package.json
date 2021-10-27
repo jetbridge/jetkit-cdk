@@ -26,7 +26,7 @@
   },
   "homepage": "https://jetbridge.github.io/jetkit-cdk/",
   "scripts": {
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "jest --watch",
     "start": "tsc --build --watch",
     "build": "npm run build:esm && npm run build:cjs",
