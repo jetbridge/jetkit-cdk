@@ -149,9 +149,13 @@ export class ResourceGenerator extends Construct {
     }
   }
 
-  generateConstructsForResource(resource: MetadataTarget) {
-    this.generateConstructsForClass(resource)
-    this.generateConstructsForFunction(resource as ApiHandler)
+  generateConstructsForResource(resource: MetadataTarget | PossibleLambdaHandlers) {
+    // class?
+    if (getApiViewMetadata(resource)) this.generateConstructsForClass(resource)
+
+    // function?
+    if (getFunctionMetadata(resource as PossibleLambdaHandlers))
+      this.generateConstructsForFunction(resource as ApiHandler)
   }
 
   /**
@@ -274,9 +278,12 @@ export class ResourceGenerator extends Construct {
   /**
    * Create function handler for a simple routed function.
    */
-  generateConstructsForFunction(resource: PossibleLambdaHandlers): JetKitLambdaFunction | undefined {
+  generateConstructsForFunction(resource: PossibleLambdaHandlers): JetKitLambdaFunction {
     const funcMeta = getFunctionMetadata<FunctionMetadata>(resource)
-    if (!funcMeta) return
+    if (!funcMeta)
+      throw new Error(
+        `No function metadata found on "${resource}" - did you forget to wrap it in Lambda() or LambdaCdk()?`
+      )
 
     // get function config
     const { HandlerFunc, schedule, ...funcMetaRest } = funcMeta
@@ -316,7 +323,7 @@ export class ResourceGenerator extends Construct {
    * Create a single handler function for the class and any additional
    * routed methods inside it.
    */
-  generateConstructsForClass(resource: MetadataTarget): JetKitLambdaFunction | undefined {
+  generateConstructsForClass(resource: MetadataTarget): JetKitLambdaFunction {
     // API view
     const apiViewMeta = getApiViewMetadata<ApiViewClassMetadata>(resource)
     let className: string
@@ -367,6 +374,8 @@ export class ResourceGenerator extends Construct {
         })
       })
     }
+
+    if (!apiViewMeta || !handlerFunction) throw new Error(`Class ${resource} is missing an @ApiView decorator`)
 
     return handlerFunction
   }
