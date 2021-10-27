@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  node_version: 15
+  node_version: 16
 
 jobs:
   publish:
@@ -24,6 +24,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - run: npm ci
+      - run: npm run build
       - name: Generate docs
         run: npm run docs -w @jetkit/cdk
       - name: Publish generated content to GitHub Pages
