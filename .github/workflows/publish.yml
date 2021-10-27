@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  node_version: 15
+  node_version: 16
 
 jobs:
   version_and_release:
