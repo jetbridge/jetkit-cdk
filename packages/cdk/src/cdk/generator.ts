@@ -396,7 +396,7 @@ export class ResourceGenerator extends Construct {
     db.grantDataApiAccess(func)
 
     // network access
-    db.connections.allowDefaultPortFrom(func)
+    func.connections.allowToDefaultPort(db)
 
     // secret access
     if (db.secret) {
