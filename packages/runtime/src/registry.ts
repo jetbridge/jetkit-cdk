@@ -164,7 +164,10 @@ export function SubRoute({ path, methods }: ISubRouteProps) {
 }
 
 // supported function signatures for Lambda() handlers
-export type PossibleLambdaHandlers = Handler // from aws-lambda - very generic
+export interface PossibleLambdaHandlers extends Handler {
+  // from aws-lambda - very generic
+  cdkInner?: Function // for wrapped functions
+}
 
 /**
  * Defines a Lambda function.
@@ -189,7 +192,9 @@ export function Lambda<HandlerT extends PossibleLambdaHandlers = PossibleLambdaH
     // super terrible hack to guess where decorator was applied
     // FIXME: figure out how to find file containing call site of decorator
     const entry = props.entry || guessEntrypoint(null)
-    const handler = props.handler || wrapped.name
+    const handler = props.handler || wrapped.cdkInner?.name || wrapped.name
+    console.log({ entry, handler })
+
     if (!handler) {
       // we need to know the name of the function and it needs to be exported
       // in order to define the lambda entrypoint handler.
